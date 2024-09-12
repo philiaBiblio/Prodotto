@@ -1,0 +1,17 @@
+
+/* 子画面1固有部分 */
+body {
+	background-color: whitesmoke;
+	margin-top: 0px;
+	margin-left: 0px;
+}
+#main_gamen1{
+	background-color: orange;
+	width: 500px;
+	border: solid 1px black;
+	margin-left: auto;
+	margin-right: auto;
+	padding-left: 50px;
+}
+
+

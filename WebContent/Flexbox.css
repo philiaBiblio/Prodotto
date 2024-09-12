@@ -1,0 +1,33 @@
+#x1{
+	border: solid 1px black;
+}
+
+#x2-1{
+	width:250;
+	border: solid 2px red;
+}
+#x2-2{
+	width:250;
+	border: solid 2px green;
+}
+#x2-3{
+	width:250;
+	border: solid 2px blue;
+}
+#x3{
+	border: solid 1px black;
+}
+
+#sub{
+	display: flex;
+}
+
+
+body{
+	background-color: #edede3;
+}
+header{
+	background-color: #ffffff;
+	margin-bottom: 30px;
+
+}
