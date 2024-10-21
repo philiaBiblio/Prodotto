@@ -7,7 +7,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-良い天気ですね
+ごきげんよう
 
 </body>
 </html>
