@@ -1,0 +1,396 @@
+body {
+  text-align: center;
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #000000;
+}
+
+table {
+    border: 1px solid #ffffff; /* テーブル全体の外枠 */
+    border-radius: 10px; /* テーブルの四隅を丸くする */
+    border-collapse: separate; /* セルのボーダーと外枠を分離 */
+    border-spacing: 0; /* セル間の余白をゼロに設定 */
+    width: 50%;
+    margin: 50px auto;
+    background-color: #000000;
+  }
+  
+  th,
+  td {
+    border: 1px solid #ffffff;
+    padding: 10px 15px;
+    text-align: center;
+    color: #fff;
+  }
+  
+  th {
+    background-color: #000000;
+  }
+  /* ID,PASS表示エリア */
+  th#idleft {
+    border-top-left-radius: 10px; /* 左上角を丸める */
+  }
+  
+ th#idright {
+  border-top-right-radius: 10px; /* 右上角を丸める */
+  overflow: hidden;
+}
+  
+  th#passleft {
+    border-bottom-left-radius: 10px; /* 左下角を丸める */
+  }
+  
+  th#passright {
+    border-bottom-right-radius: 10px; /* 右下角を丸める */
+    overflow: hidden;
+}
+  
+  footer th:first-child {
+    border-top-left-radius: 10px; /* 左上角を丸める */
+  }
+  
+  footer th:last-child {
+    border-top-right-radius: 10px; /* 右上角を丸める */
+  }
+  
+  footer tr:last-child td:first-child {
+    border-bottom-left-radius: 10px; /* 左下角を丸める */
+  }
+  
+  footer tr:last-child td:last-child {
+    border-bottom-right-radius: 10px; /* 右下角を丸める */
+}
+
+
+
+#checkPassword,
+#checkPassword2 {
+  display: none;
+}
+
+.hideText,
+.showText,
+.hideText2,
+.showText2 {
+  border: none;
+  outline: none;
+  background-color: #000000;
+  text-align: center;
+  color: #fff;
+}
+
+.togglePassword {
+  position: relative;
+  width: 205px;
+}
+
+.fa-eye,
+.fa-eye-slash {
+  position: absolute;
+  right: -20px;
+  top: 50%;
+  transform: translateY(-40%);
+  cursor: pointer;
+}
+
+.showText,
+.showText2 {
+  display: none;
+}
+
+.hideText,
+.hideText2 {
+  display: inline;
+}
+
+.fa-eye:before {
+  display: inline;
+}
+.fa-eye-slash:before {
+  display: none;
+}
+
+#checkPassword:checked + .togglePassword > .fa-eye:before {
+  display: none;
+}
+
+#checkPassword:checked + .togglePassword > .fa-eye-slash:before {
+  display: inline-block;
+}
+
+#checkPassword:checked + .togglePassword > .hideText {
+  display: none;
+}
+
+#checkPassword:checked + .togglePassword > .showText {
+  display: inline-block;
+}
+
+#checkPassword2:checked + .togglePassword > .fa-eye:before {
+  display: none;
+}
+
+#checkPassword2:checked + .togglePassword > .fa-eye-slash:before {
+  display: inline-block;
+}
+
+#checkPassword2:checked + .togglePassword > .hideText2 {
+  display: none;
+}
+
+#checkPassword2:checked + .togglePassword > .showText2 {
+  display: inline-block;
+}
+
+
+
+form {
+  width: 100%;
+  max-width: 400px;
+  padding: 20px;
+  border-radius: 10px;
+  margin-top: 20px;
+  margin: auto;
+  text-align: left;
+  border: 1px solid #fff;
+}
+form:hover{
+    border-color: #fcfcfc;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 10px;
+  color: #fff;
+}
+
+div {
+  padding: 10px 0 0 0;
+}
+
+label {
+  font-weight: bold;
+  font-size: 15px;
+  color: #fff;
+}
+
+.nakami {
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  width: 200px;
+}
+
+.soroe{
+  padding: 30px 0 0 0;
+}
+
+input,
+select {
+  margin: 0 0px 15px 0;
+}
+
+.nomargin {
+  margin: 1;
+}
+
+.sexM,
+.sexW {
+  width: 40%;
+  display: inline-block;
+  border: 1px solid #ffffff;
+  background-color: #000;
+  color: #ffffff;
+  border-radius: 10px;
+  padding: 0.8em 0;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.hovered{
+    border-color: #ee2522;
+    color: #ee2522;
+}
+
+.clicked {
+  background-color: #da4946;/*ここの色好きに決めていいよ*/
+  color: white;
+  border-color: #ee2522;/*ここの色好きに決めていいよ*/
+}
+
+
+.sexM {
+  margin-right: 3px;
+}
+
+.sexW {
+  margin-left: 3px;
+}
+
+.button {
+  text-align: center;
+}
+
+.right,
+.left {
+  width: 50%;
+}
+
+.textbox {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 10px;
+  margin: 5px;
+  border: 1px solid #ccc;
+  margin-left: 0;
+  box-sizing: border-box;
+}
+
+input[type="submit"] {
+  padding: 10px 20px;
+  border-radius: 10px;
+  border: none;
+  background-color: #ccc;
+  color: black;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+input[type="submit"]:hover {
+  background-color: #000;
+  color: white;
+}
+
+input[type="email"] {
+    border: 1px solid white;
+    background-color: black;
+    color: white;
+    caret-color: #ee2522;
+  }
+  
+  input[type="email"]:focus {
+    border-color: #ee2522;
+    background-color: black;
+    color: white;
+    caret-color: #ee2522;
+    outline: 0;
+  }
+
+input[type="date"] {
+    border: 1px solid white;
+    background-color: black;
+    color: white;
+    caret-color: #ee2522;
+  }
+  
+  input[type="date"]:focus {
+    border-color: #ee2522;
+    background-color: black;
+    color: white;
+    caret-color: #ee2522;
+    outline: 0;
+  }
+  
+  /* カレンダーアイコンの色を変更 */
+  input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(100%) sepia(100%) saturate(500%) hue-rotate(180deg);
+  }
+
+  /* ホバー時のカレンダーアイコンの色 */
+input[type="date"]:hover::-webkit-calendar-picker-indicator {
+    filter: invert(30%) sepia(100%) saturate(7500%) hue-rotate(1deg) brightness(120%) contrast(101%);
+  }
+
+
+
+.kakutei {
+  padding: 30px 0 0 0;
+  text-align: center;
+}
+
+#kakutei{
+    background-color: black;
+    color: #fff;
+    border: solid 1px #fff;
+    border-radius: 10px;
+}
+
+#kakutei:hover{
+    background-color: black;
+    color: #ee2522;
+    border: solid 1px #ee2522;
+    border-radius: 10px;
+}
+
+.search-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 40px;
+}
+
+.search-box {
+  width: 300px;
+  padding: 10px;
+  height: 23px;
+  border: 1px solid #000;
+  border-radius: 10px;
+  margin-right: 10px;
+}
+
+/* .search-box::placeholder {
+    color: rgb(155, 155, 155);
+  } */
+
+.search-button {
+  height: 45px;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 10px;
+  border: none;
+  background-color: #000000;
+  color: #fff;
+  border: solid 1px #fff;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.search-button:hover {
+  background-color: #000;
+  color: #ee2522;
+}
+button {
+    padding: 10px 20px;
+    border-radius: 10px;
+    border: none;
+    background-color: #000000;
+    color: rgb(255, 255, 255);
+    border: 1px solid #fff;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  button:hover {
+    background-color: #000;
+    color: #ee2522;
+    border: 1px solid #ee2522;
+  }
+  
+  input[type="text"]:not(#idtext,#passtext) {
+    border: 1px solid white;
+    background-color: black;
+    color: white;
+    caret-color: #ee2522;
+  }
+  
+  input[type="text"]:focus:not(#idtext,#passtext) {
+    border-color: #ee2522;
+    background-color: black;
+    color: white;
+    caret-color: #ee2522;
+    outline: 0;
+  }

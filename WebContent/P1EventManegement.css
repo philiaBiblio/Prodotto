@@ -1,0 +1,102 @@
+body {
+  text-align: center;
+  height: 100%;
+  width: 100%;
+  font-family: Arial, sans-serif;
+  background-color: #000000;
+  margin: 0;
+  padding: 0;
+}
+
+h1,
+h2 {
+  margin-top: 20px;
+  color: #ffffff;
+}
+
+form {
+  padding: 20px;
+  display: inline-block;
+  width: 90;
+  color: #ffffff;
+}
+
+input[type="text"],
+select {
+  width: 300px;
+  height: 40px;
+  font-size: 16px;
+  margin-top: 20px;
+  padding: 5px;
+  background-color: #000;
+  border: rgb(255, 255, 255) ffffff;
+  color: rgb(255, 255, 255);
+  border-radius: 10px;
+}
+select:focus {
+  border-color: #ee2522;
+  background-color: black;
+  color: white;
+  outline: 0;
+}
+
+
+
+#odai,
+#test input[type="text"] {
+  width: 650px;
+  height: 80px;
+  margin: 20px 0;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ffffff;
+  border-radius: 10px;
+}
+
+#odai:focus {
+  border-color: #ee2522;
+  background-color: black;
+  color: white;
+  outline: none;
+}
+
+.sousin {
+  text-align: center;
+}
+
+input[type="submit"] {
+  padding: 10px 20px;
+  border-radius: 10px;
+  border: none;
+  background-color: #000000;
+  color: rgb(255, 255, 255);
+  border: solid 1px #fff;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+input[type="submit"]:hover {
+  background-color: #000;
+  color: #ee2522;
+  border-color: #ee2522;
+}
+
+
+
+
+
+/* 下のテキストボックスを入力不可にする */
+#test input[type="text"] {
+  width: 650px;
+  height: 80px;
+  margin: 20px 0;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ffffff;
+  border-radius: 10px;
+  background-color: #000000; 
+  color: #888; 
+  pointer-events: none; /* 入力不可にする */
+  cursor: not-allowed;
+}

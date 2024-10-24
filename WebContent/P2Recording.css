@@ -1,0 +1,97 @@
+body {
+    background: #000000;
+    color: #ffffff;
+    font-family: Arial, sans-serif;
+    padding: 20px;
+  }
+  
+  #container {
+    height: 200px;
+    margin: 20px 0;
+    background: #000000;
+  }
+  
+  button {
+    margin-right: 10px;
+  }
+  
+  input[type="file"] {
+    margin-bottom: 10px;
+  }
+  
+  button {
+    margin-right: 10px;
+  }
+  
+  #record,
+  #stop {
+    background-color: #d72f21; /* 録音ボタンの色 */
+  }
+  
+  #stop {
+    display: none; /* 初期状態では停止ボタンを非表示にする */
+  }
+  
+  
+  /* gptcss↓ */
+  
+  /* ボタングループ全体のスタイル */
+  .btn-group {
+    margin: 10px 0;
+    justify-content: center;
+  }
+  
+  /* ボタンの共通スタイル */
+  .btn {
+    border-radius: 8px; /* ボタンを丸みのある形に */
+    padding: 10px 20px;
+    font-size: 16px; /* ボタンのテキストサイズを大きく */
+    transition: background-color 0.3s ease, transform 0.3s ease; /* ホバー時のアニメーションを追加 */
+  }
+  
+  /* ボタンのデフォルトスタイル */
+  .btn-outline-warning {
+    border-color: #ffc107;
+    color: #ffc107;
+  }
+  .btn-outline-warning:hover {
+    background-color: #ffc107;
+    color: white;
+    transform: scale(1.05); /* ホバー時に少し大きくなるエフェクト */
+  }
+  
+  /* 他のボタンのカスタムスタイル */
+  .btn-outline-success {
+    border-color: #28a745;
+    color: #28a745;
+  }
+  .btn-outline-success:hover {
+    background-color: #28a745;
+    color: white;
+    transform: scale(1.05);
+  }
+  
+  .btn-outline-danger {
+    border-color: #dc3545;
+    color: #dc3545;
+  }
+  .btn-outline-danger:hover {
+    background-color: #dc3545;
+    color: white;
+    transform: scale(1.05);
+  }
+  
+  /* ボタンのアクティブスタイル */
+  .btn:active {
+    background-color: #0056b3; /* アクティブ時の背景色 */
+    color: white;
+    box-shadow: 0 4px #999; /* クリック時に影を少し追加 */
+    transform: translateY(2px); /* クリック時に押し込まれるような効果 */
+  }
+  
+  /* カスタムホバーエフェクト */
+  .btn:hover {
+    cursor: pointer;
+  }
+  
+  

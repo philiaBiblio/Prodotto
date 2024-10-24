@@ -1,0 +1,315 @@
+body {
+  height: 100%;
+  width: 100%;
+  font-family: Arial, sans-serif;
+  background-color: #000000;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* height: 150vh; */
+  height: 100vh;
+}
+
+form {
+  width: 400px;
+  max-width: 500%;
+  padding: 20px;
+  border-radius: 10px;
+  margin-top: 20px;
+  border: solid 1px #fff;
+}
+
+form:hover {
+  border-color: #ffffff;
+}
+
+
+.icon {
+  text-align: center;
+  width: 100%;
+  /* padding: 15px; */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+.icon img {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 20px;
+  border: 2px solid #11dadd;
+}
+
+.icon input[type="file"] {
+  display: none;
+}
+
+.icon label {
+  background-color: #000000;
+  color: rgb(255, 255, 255);
+  padding: 10px 20px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  border: solid 1px #fff;
+}
+
+.icon label:hover {
+  background-color: #000000;
+  color: #11dadd;
+  border-color: #11dadd;
+}
+
+span {
+  color: #fff;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+div {
+  padding: 5px 0 0 0;
+}
+
+label {
+  font-weight: bold;
+  font-size: 15px;
+}
+
+.nakami {
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  width: 80%;
+  min-width: 80%;
+}
+
+input,
+select {
+  margin: 0 20px 15px 0;
+}
+.nomargin {
+  margin: 0;
+}
+
+/* ボタンを真ん中に配置 */
+.button {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.button div {
+    margin: 0 10px;
+}
+
+.sexM,
+.sexW {
+  width: 100px;
+  display: inline-block;
+  border: 1px solid #ffffff;
+  color: #ffffff;
+  background-color: #000000;
+  border-radius: 10px;
+  padding: 0.8em 0;
+  text-align: center;
+  box-sizing: border-box;
+}
+.sexM {
+  left: 0;
+  margin-right: 3px;
+  margin-right: 10px;
+}
+.sexW {
+  right: 0;
+  margin-left: 3px;
+}
+
+.right {
+  width: 50%;
+}
+
+.left {
+  width: 50%;
+}
+
+.hovered {
+  border-color: #11dadd;
+  color: #11dadd;
+}
+
+.clicked {
+  background-color: #4bc8ca;
+  border-color: #11dadd;
+  color: white;
+}
+
+.textbox {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 10px;
+  margin: 5px;
+  border: 1px solid #ccc;
+}
+input[type="text"] {
+  border: 1px solid white;
+  background-color: black;
+  color: white;
+  caret-color: #11dadd;
+}
+
+input[type="text"]:focus {
+  border-color: #11dadd;
+  background-color: black;
+  color: white;
+  caret-color: #11dadd;
+  outline: 0;
+}
+
+input[type="date"] {
+  border: 1px solid white;
+  background-color: black;
+  color: white;
+  caret-color: #11dadd;
+}
+
+input[type="date"]:focus {
+  border-color: #11dadd;
+  background-color: black;
+  color: white;
+  caret-color: #11dadd;
+  outline: 0;
+}
+
+/* カレンダーアイコンの色を変更 */
+input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(100%) sepia(100%) saturate(500%) hue-rotate(180deg);
+}
+
+/* ホバー時のカレンダーアイコンの色 */
+input[type="date"]:hover::-webkit-calendar-picker-indicator {
+    filter: invert(50%) sepia(100%) saturate(400%) hue-rotate(127deg);
+}
+
+.button-container {
+  margin-top: 30px;
+  text-align: right;
+  right: 0;
+}
+
+.submit-button {
+  width: 50%;
+  padding: 10px;
+  font-size: 16px;
+  color: white;
+  background-color: #000;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  border: solid 1px #fff;
+}
+
+.submit-button:hover {
+  color: #11dadd;
+  border-color: #11dadd;
+}
+
+.edit {
+  display: flex;
+}
+
+/* ペンマークCSS */
+
+.dli-create {
+  display: inline-block;
+  vertical-align: middle;
+  color: #ffffff;
+  line-height: 1;
+  position: relative;
+  width: 1.05em;
+  height: 0.2em;
+  background: currentColor;
+  border-radius: 0 0.075em 0.075em 0;
+  transform: rotate(-45deg);
+}
+
+.dli-create::before {
+  content: "";
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-color: transparent;
+  border-width: 0.1em 0.15em;
+  border-right-color: currentColor;
+  border-left: 0;
+  position: absolute;
+  top: 0;
+  right: 100%;
+  bottom: 0;
+  margin: auto;
+}
+
+.dli-create::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 0.15em;
+  border-left: 0.05em solid #000000;
+  box-sizing: content-box;
+}
+
+.dli-create:hover {
+    color: #11dadd;
+  }
+  
+  .dli-create:hover::after {
+    border-left-color: #11dadd;
+  }
+
+.profile-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.textbox {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 10px;
+  margin: 5px;
+  border: 1px solid #fff;
+  display: none; /* Initially hidden */
+}
+
+.edit-icon {
+  cursor: pointer;
+  color: #007bff;
+  font-size: 18px;
+}
+
+.edit-icon:hover {
+  color: #0056b3;
+}
+
+#sex-input {
+  display: none;
+}
+
+.button-container {
+  display: none; /* 最初に非表示 */
+}
+
+

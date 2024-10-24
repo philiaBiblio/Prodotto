@@ -1,0 +1,79 @@
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #000;
+   
+}
+
+.container {
+    padding: 20px;
+    width: 60%;
+    margin: 0 auto; 
+}
+
+.section {
+    margin-bottom: 30px;
+}
+
+h1 {
+    border-bottom: 2px solid rgb(255, 255, 255); /* セクションタイトルの下線 */
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+    color: #fff;
+}
+
+.session-content {
+    background-color: rgb(0, 0, 0);
+    border: solid 5px #fff;
+    color: #fff;
+    width: 100%;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    font-size: 20px;
+}
+
+.button-group {
+    display: flex;
+    gap: 15px;
+}
+
+.link-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%; /* 幅を親要素に合わせる */
+    height: 120px; /* 高さを増やす */
+    font-size: 20px; /* フォントサイズを大きくする */
+    font-weight: bold;
+    text-decoration: none;
+    color: #fff;
+    background-color: black;
+    text-align: center;
+    border-radius: 10px; /* 角を丸くする */
+    border: solid 1px #fff;
+    flex: 1; /* ボタンが均等に並ぶようにする */
+}
+
+.link-button:hover{
+    border-color: #11dadd;
+    color: #11dadd;
+}
+
+/* .start {
+    background-color: lightgreen;
+}
+
+.party {
+    background-color: lightcoral;
+}
+
+.recording {
+    background-color: lightgoldenrodyellow;
+}
+
+.upload {
+    background-color: lightpink;
+} */

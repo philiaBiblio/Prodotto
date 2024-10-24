@@ -1,0 +1,265 @@
+body {
+  width: 100%;
+  font-family: Arial, sans-serif;
+  background-color: #000000;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+}
+
+form {
+  max-width: 500px;
+  padding: 20px;
+  border-radius: 10px;
+  width: 400px;
+  margin-top: 20px;
+  /* margin-bottom: 100px; */
+  border: solid 1px #fff;
+}
+
+form:hover {
+  border-color: #ffffff;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 10px;
+  color: #fff;
+}
+
+div {
+  padding: 5px 0 0 0;
+}
+
+label {
+  font-weight: bold;
+  font-size: 15px;
+  color: #fff;
+}
+
+.nakami {
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  width: 250px;
+}
+
+input,
+select {
+  margin: 0 20px 15px 0;
+}
+
+.nomargin {
+  margin: 0;
+}
+
+.sexM,
+.sexW {
+  width: 40%;
+  display: inline-block;
+  background-color: #000000;
+  border: 1px solid #ffffff;
+  color: #ffffff;
+  border-radius: 10px;
+  padding: 0.8em 0;
+  text-align: center;
+  box-sizing: border-box;
+}
+.sexM {
+  margin-right: 10px;
+}
+.sexW {
+  margin-left: 3px;
+}
+
+.button {
+  text-align: center;
+}
+
+.right,
+.left {
+  width: 50%;
+}
+
+.hovered {
+  background-color: rgb(21, 22, 22);
+  color: #11dadd;
+  border-color: #11dadd;
+}
+
+.clicked {
+  background-color: #4bc8ca;
+  color: white;
+  border-color: #11dadd;
+}
+
+.textbox {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 10px;
+  margin: 5px;
+  margin-left: 0;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="date"] {
+  border: 1px solid white;
+  background-color: black;
+  color: white;
+  caret-color: #11dadd;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus,
+input[type="date"]:focus {
+  border-color: #11dadd;
+  background-color: black;
+  color: white;
+  outline: 0;
+}
+
+select {
+  border: 1px solid white;
+  background-color: black;
+  color: white;
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 10px;
+  margin: 5px;
+  box-sizing: border-box;
+}
+
+select:focus {
+  border-color: #11dadd;
+  background-color: black;
+  color: white;
+  outline: 0;
+}
+
+
+#checkPassword,
+#checkPassword2 {
+  display: none;
+}
+
+.hideText,
+.showText,
+.hideText2,
+.showText2 {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 10px;
+  margin: 5px;
+  margin-left: 0;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
+
+.togglePassword,
+.togglePassword2 {
+  position: relative;
+  width: 100%; 
+}
+
+
+.fa-eye,
+.fa-eye-slash {
+  position: absolute;
+  right: 10px; 
+  top: 50%;
+  transform: translateY(-50%); 
+  cursor: pointer;
+}
+
+.showText,
+.showText2 {
+  display: none;
+}
+
+.hideText {
+  display: inline;
+}
+
+.hideText2 {
+  display: inline;
+}
+
+.fa-eye:before {
+  display: inline;
+}
+
+.fa-eye-slash:before {
+  display: none;
+}
+
+#checkPassword:checked + .togglePassword > .fa-eye:before,
+#checkPassword2:checked + .togglePassword2 > .fa-eye:before {
+  display: none;
+}
+
+#checkPassword:checked + .togglePassword > .fa-eye-slash:before,
+#checkPassword2:checked + .togglePassword2 > .fa-eye-slash:before {
+  display: inline-block;
+}
+
+#checkPassword:checked + .togglePassword > .hideText,
+#checkPassword2:checked + .togglePassword2 > .hideText2 {
+  display: none;
+}
+
+#checkPassword:checked + .togglePassword > .showText,
+#checkPassword2:checked + .togglePassword2 > .showText2 {
+  display: inline-block;
+}
+
+/* カレンダーアイコンの色を変更 */
+input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(100%) sepia(100%) saturate(500%) hue-rotate(180deg);
+}
+
+/* ホバー時のカレンダーアイコンの色 */
+input[type="date"]:hover::-webkit-calendar-picker-indicator {
+  filter: invert(50%) sepia(100%) saturate(400%) hue-rotate(127deg);
+}
+
+footer {
+  margin-top: 40px;
+  margin-bottom: 100px;
+  text-align: center;
+  display: flex;
+  justify-content: space-around;
+}
+
+footer input[type="submit"] {
+  padding: 10px 20px;
+  border-radius: 10px;
+  background-color: #000000;
+  color: rgb(255, 255, 255);
+  font-size: 16px;
+  cursor: pointer;
+  border: solid 1px #fff;
+  transition: background-color 0.3s ease;
+}
+
+footer input[type="submit"]:hover {
+  background-color: #000000;
+  color: #11dadd;
+  border-color: #11dadd;
+}
+
+.all{
+  margin-bottom: 10px;
+}
+
+

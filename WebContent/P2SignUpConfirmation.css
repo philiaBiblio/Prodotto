@@ -1,0 +1,198 @@
+body {
+  height: 100%;
+  width: 100%;
+  font-family: "コーポレート明朝";
+  background-color: rgb(0, 0, 0);
+  color: #ffffff;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+header {
+  margin-top: 20px;
+}
+
+.mae {
+  text-align: left;
+  padding: 0 350px 0 0;
+}
+
+.icon {
+  text-align: center;
+  width: 100%;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+.icon img {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 10px;
+  border: 2px solid #11dadd;
+}
+
+.icon input[type="file"] {
+  display: none;
+}
+
+.icon label {
+  background-color: #000000;
+  color: rgb(255, 255, 255);
+  padding: 10px 20px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  border: solid 1px #fff;
+}
+
+.icon label:hover {
+  background-color: #000000;
+  color: #11dadd;
+  border-color: #11dadd;
+}
+
+
+.waku {
+  width: 110%;               
+  max-width: 400px;          
+  border-radius: 10px;
+  margin: 20px auto;          
+  border: solid 1px #fff;
+  box-sizing: border-box;
+  padding-bottom: 30px;
+}
+
+
+.midasi {
+  display: inline-block;
+  border-bottom: 2px solid #ffffff;
+  margin: 30px 0 15px 15px;
+  width: 120px;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+
+
+input[type="password"] {
+  background-color: black; 
+  color: white; 
+}
+
+input[type="password"]:focus {
+  background-color: black; 
+  color: white; 
+  outline: 0; 
+}
+
+
+#checkPassword {
+  display: none;
+}
+
+.hideText,
+.showText {
+  border: none;
+  outline: none;
+  background-color: white;
+  text-align: center;
+  margin: 15px 0 0 0px;
+  font-size: 18px;
+  padding: 0 0 0 70px;
+  font-family: "コーポレート明朝";
+  background-color: black; 
+  color: white; 
+  
+}
+
+.togglePassword {
+  position: relative;
+  width: 205px;
+}
+
+.fa-eye,
+.fa-eye-slash {
+  position: absolute;
+  right: -130px;
+  top: 60%;
+  transform: translateY(-40%);
+  cursor: pointer;
+}
+
+.showText {
+  display: none;
+}
+
+.hideText {
+  display: inline;
+}
+
+.fa-eye:before {
+  display: inline;
+}
+.fa-eye-slash:before {
+  display: none;
+}
+
+#checkPassword:checked + .togglePassword > .fa-eye:before {
+  display: none;
+}
+
+#checkPassword:checked + .togglePassword > .fa-eye-slash:before {
+  display: inline-block;
+}
+
+#checkPassword:checked + .togglePassword > .hideText {
+  display: none;
+}
+
+#checkPassword:checked + .togglePassword > .showText {
+  display: inline-block;
+}
+
+.uketori {
+  text-align: center;
+  margin: 15px 0 0 0px;
+  font-size: 18px;
+}
+
+footer {
+  margin-top: 40px;
+  margin-bottom: 40px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  gap: 100px;
+}
+
+footer input[type="submit"] {
+  padding: 10px 20px;
+  border-radius: 10px;
+  border: none;
+  background-color: #000000;
+  color: rgb(255, 255, 255);
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 10px;
+  border: solid 1px #fff;
+  transition: background-color 0.3s ease;
+}
+
+footer input[type="submit"]:hover {
+  background-color: #000000;
+  color: #11dadd;
+  border-color: #11dadd;
+}
+/* .all{
+  margin-right: 0;
+  margin-left: 0;
+} */

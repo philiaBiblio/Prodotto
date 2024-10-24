@@ -1,0 +1,130 @@
+
+body {
+  text-align: center;
+  font-family: Arial, sans-serif;
+  background-color: #000000;
+  margin: 0;
+  padding: 0;
+}
+
+h1{
+  color: #fff;
+}
+
+.search-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 40px;
+}
+
+.search-box {
+  width: 300px;
+  padding: 10px;
+  border: 1px solid #ffffff;
+  color: #fff;
+  background-color: #000;
+  border-radius: 10px;
+  margin-right: 10px;
+}
+
+.search-button {
+  padding: 10px 20px;
+  border-radius: 10px;
+  border: none;
+  background-color: #000000;
+  color: rgb(255, 255, 255);
+  border: 1px solid #ffffff;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  width: 80px; /* ボタンの幅を固定 */
+  text-align: center;
+}
+
+.search-button:hover {
+  background-color: #000000;
+  color: #ee2522;
+  border: 1px solid #ee2522;
+}
+
+
+
+
+
+
+table {
+  border: 1px solid #ffffff; /* テーブル全体の外枠 */
+  border-radius: 10px; /* テーブルの四隅を丸くする */
+  border-collapse: separate; /* セルのボーダーと外枠を分離 */
+  border-spacing: 0; /* セル間の余白をゼロに設定 */
+  width: 60%;
+  margin: 50px auto;
+  background-color: #000000;
+}
+
+th,
+td {
+  border: 1px solid #ffffff;
+  padding: 10px 15px;
+  text-align: left;
+  color: #fff;
+}
+
+.delete-button{
+  text-align: center;
+}
+
+th {
+  background-color: #000000;
+}
+
+th:first-child {
+  border-top-left-radius: 10px; /* 左上角を丸める */
+}
+
+th:last-child {
+  border-top-right-radius: 10px; /* 右上角を丸める */
+}
+
+tr:last-child td:first-child {
+  border-bottom-left-radius: 10px; /* 左下角を丸める */
+}
+
+tr:last-child td:last-child {
+  border-bottom-right-radius: 10px; /* 右下角を丸める */
+}
+
+
+button {
+  padding: 10px 20px;
+  border-radius: 10px;
+  border: none;
+  background-color: #000000;
+  color: rgb(255, 255, 255);
+  border: 1px solid #fff;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #000;
+  color: #ee2522;
+  border: 1px solid #ee2522;
+}
+
+input[type="text"] {
+  border: 1px solid white;
+  background-color: black;
+  color: white;
+  caret-color: #ee2522;
+}
+
+input[type="text"]:focus {
+  border-color: #ee2522;
+  background-color: black;
+  color: white;
+  caret-color: #ee2522;
+  outline: 0;
+}
+

@@ -1,0 +1,257 @@
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: #000000;
+  color: #ffffff;
+}
+
+header {
+  background-color: #000;
+  height: 100px; 
+  /* padding-left: 20px; */
+}
+
+.mae {
+  text-align: left;
+  margin: auto;
+}
+
+.thumbnail {
+  display: none;
+  max-width: 100%;
+  height: auto;
+}
+
+.container {
+  display: flex;
+  border: 1px solid #ffffff;
+  border-radius: 10px;
+  background-color: #000000;/* 黒 */
+  padding: 30px;
+}
+
+.sidebar {
+  width: 250px;
+  padding: 20px;
+  border-right: 1px solid #e0e0e0;
+  background-color: #000000;/* 黒 */
+  font-family: "Helvetica Neue", sans-serif;
+}
+
+.sidebar ul {
+  list-style-type: none;
+}
+
+.sidebar ul li {
+  margin-bottom: 25px;
+  font-size: 16px;
+  font-weight: 500;
+  position: relative;
+}
+
+.sidebar ul li input[type="checkbox"] {
+  margin-right: 10px;
+  vertical-align: middle;
+}
+
+.sidebar ul li label {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.sidebar ul li:hover label {
+  color: #11dadd;
+}
+
+.sidebar ul li::before {
+  content: "";
+  position: absolute;
+  left: -25px;
+  width: 5px;
+  height: 100%;
+  background-color: #11dadd;
+  border-radius: 10px;
+  transform: scaleY(0);
+  transition: transform 0.3s ease;
+}
+
+.sidebar ul li:hover::before {
+  transform: scaleY(1);
+}
+
+.sidebar ul li label input[type="checkbox"] {
+  accent-color: #ff2600;
+}
+
+.sidebar ul li label input[type="text"] {
+  width: 100%;
+  padding: 5px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  font-size: 14px;
+  transition: border 0.3s ease;
+}
+
+.sidebar ul li label input[type="text"]:focus {
+  border: 1px solid #11dadd;
+  outline: none;
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.main-content {
+  flex-grow: 1;
+  padding: 20px;
+  text-align: center;
+}
+
+.upload-area {
+  margin-bottom: 20px;
+}
+
+.custom-file-upload {
+  display: inline-block;
+  padding: 10px 20px;
+  cursor: pointer;
+  background-color: #ddd;
+  border-radius: 10px;
+}
+
+.waveform {
+  margin: 20px 0;
+}
+
+.waveform img {
+  width: 100%;
+  max-width: 500px;
+}
+
+.time {
+  display: block;
+  margin-top: 10px;
+  font-size: 16px;
+}
+
+.controls {
+  margin: 20px 0;
+}
+
+.controls button {
+  padding: 10px 20px;
+  margin: 0 10px;
+  border-radius: 10px;
+  border: none;
+  background-color: #000000;
+  color: rgb(255, 255, 255);
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 10px;
+  border: solid 1px #fff;
+  transition: background-color 0.3s ease;
+}
+
+.controls button:hover{
+  background-color: #000000;
+  color: #11dadd;
+  border-color: #11dadd;
+}
+
+.upload-button {
+  margin-top: 30px;
+}
+
+.post-button {
+  padding: 10px 30px;
+  background-color: #ff6347;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 16px;
+}
+.link-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 50px; /* 高さを増やす */
+  font-size:  14px; /* フォントサイズを大きくする */
+  font-weight: x;
+  text-decoration: none;
+  color: #ffffff;
+  background-color: rgb(0, 0, 0);
+  text-align: center;
+  border-radius: 10px; /* 角を丸くする */
+  border: 1px solid #ffffff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* ボタンに影をつける */
+  flex: 1; /* ボタンが均等に並ぶようにする */
+}
+
+/* サムネイルサイズ */
+.icon {
+  text-align: center;
+  width: 100%;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.icon img {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  margin-bottom: 10px;
+  border: 1px solid #000000;
+}
+
+.icon input[type="file"] {
+  display: none;
+}
+
+.icon label {
+  background-color: #000000;
+  color: rgb(255, 255, 255);
+  border: solid 1px #fff;
+  
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.icon label:hover {
+  background-color: #000000;
+  color: #11dadd;
+  border-color: #11dadd;
+}
+
+.link-button:hover {
+  background-color: #000000;
+  color: #11dadd;
+  border-color: #11dadd;
+}
+
+
+.arrow01 {
+  margin-left: 20px;
+  margin-top: 20px;
+  display: inline-block;
+  width: 15px;
+  height: 15px;
+  border-top: solid 3px #ffffff;
+  border-right: solid 3px #ffffff;
+  transform: rotate(225deg);
+}
+
+
+
+
+
+
+
+

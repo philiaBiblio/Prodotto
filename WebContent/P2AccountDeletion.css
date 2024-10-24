@@ -1,0 +1,89 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: #000000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+p,
+h2 {
+  text-align: center;
+  margin: 10px;
+  color: rgb(255, 255, 255);
+}
+
+.back-button {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  color: #ffffff;
+  padding: 10px 15px;
+  text-decoration: none;
+  font-size: 18px;
+  border-radius: 5px;
+}
+
+.container {
+  width: 100%;
+  max-width: 400px;
+  border-radius: 10px;
+  padding: 30px;
+  border: solid 1px #ffffff;
+}
+
+
+.container:hover{
+  border-color: #ffffff;
+}
+
+.menu {
+  text-align: center;
+}
+
+.menu ul {
+  list-style-type: none;
+  padding: 0;
+  display: flex; /* 横並びにする */
+  justify-content: center; /* 項目の間隔を均等にする */
+}
+
+.menu li {
+  margin: 10px 10px; /* 各項目に横の余白を追加 */
+  background-color: #000000;
+  border-radius: 10px;
+  padding: 10px;
+  width: 100px; /* 項目の幅を固定 */
+  border: solid 1px #ffffff;
+}
+
+.menu a {
+  color: rgb(255, 255, 255);
+  text-decoration: none;
+  font-size: 16px;
+  display: block;
+  text-align: center;
+}
+
+.menu a :hover {
+  color: #11dadd;
+  border-color: #11dadd;
+}
+
+.arrow01 {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-top: solid 3px #ffffff;
+  border-right: solid 3px #ffffff;
+  transform: rotate(225deg);
+}
+.arrow01:hover {
+  border-color: #11dadd;
+}
