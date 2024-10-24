@@ -1,4 +1,5 @@
-<!DOCTYPE html>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <html lang="ja">
   <head>
     <meta charset="UTF-8" />
@@ -14,7 +15,7 @@
     <div class="container">
       <h2>ログイン</h2>
 
-      <form action="P2Timeline.html">
+      <form action="P2LoginServlet">
         <div class="menu">
           <ul>
             <div class="textarea">
