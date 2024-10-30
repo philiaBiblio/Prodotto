@@ -56,10 +56,10 @@
             </div>
             <div class="nolog">
               <div class="new">
-                <a href="P2SignUp.html">新規登録の方はこちら</a>
+                <a href="P2SignUp.jsp">新規登録の方はこちら</a>
               </div>
               <div class="new">
-                <a href="P2PreLoginPasswordChange1.html">パスワード忘れた方</a>
+                <a href="P2PreLoginPasswordChange1.jsp">パスワード忘れた方</a>
               </div>
             </div>
               

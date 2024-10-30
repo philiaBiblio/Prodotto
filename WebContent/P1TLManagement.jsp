@@ -16,7 +16,7 @@
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=settings"
     />
-    <link rel="stylesheet" href="P2Timeline.css" />
+    <link rel="stylesheet" href="P1TLManagement.css" />
     <title>ProDotto</title>
   </head>
 
@@ -26,11 +26,10 @@
         <div class="none"></div>
         <div class="search">
           <!-- フィルターボタン -->
-          <select id="filter" class="filter-button" onChange="location.href=value;">
+          <select id="filter" class="filter-button">
             <option value="title">動画タイトル</option>
-            <option value="P2UserSearch.jsp">アカウント名</option>
+            <option value="account">アカウント名</option>
           </select>
-
           <!-- 検索バー -->
           <input type="text" id="search" placeholder="Search" />
           <i class="fa-solid fa-magnifying-glass"></i>
@@ -62,49 +61,33 @@
 
           <div class="nav_list">
             <div class="nav_items navtop">
-              <a href="P2Timeline.jsp" class="nav_link navtop active">
-                <i class="fa fa-house nav_icon"></i>
-                <span class="nav_name">タイムライン</span>
-              </a>
-
-              <a href="P2DM.jsp" class="nav_link navtop nav_soroe">
-                <!-- <i class="fa fa-compass nav_icon"></i> -->
-                <div class="nav_icon nav_soroe">
-                  <i class="gg-mail"></i>
-                </div>
-                <span class="nav_name">DM</span>
-              </a>
-
-              <a href="P2Ranking.jsp" class="nav_link navtop nav_soroe">
-                <!-- <i class="fa-brands fa-tiktok nav_icon"></i> -->
-                <div class="nav_icon nav_soroe">
-                  <i class="gg-crown"></i>
-                </div>
-                <span class="nav_name">ランキング</span>
-              </a>
-
-              <a href="P2PostAndRecording.jsp" class="nav_link navtop nav_soroe">
-                <!-- <i class="fa-solid fa-users nav_icon"></i> -->
+              <a href="P1UserManegement.jsp" class="nav_link navtop">
+                <!-- <i class="fa fa-house nav_icon"></i> -->
                 <div class="nav_icon">
-                  <i class="gg-add-r"></i>
+                  <i class="gg-profile"></i>
                 </div>
-                <span class="nav_name">投稿</span>
+                <span class="nav_name">ユーザー管理</span>
               </a>
 
-              <a href="P2ProfileMine.jsp" class="nav_link navtop nav_soroe">
-                <!-- <i class="fa-solid fa-users nav_icon"></i> -->
+              <a href="P1EventManegement.jsp" class="nav_link navtop">
+                <!-- <i class="fa fa-house nav_icon"></i> -->
                 <div class="nav_icon nav_soroe">
-                  <i class="gg-boy"></i>
+                  <i class="gg-flag-alt"></i>
                 </div>
-                <span class="nav_name">プロフィール</span>
+                <span class="nav_name">イベント管理</span>
               </a>
 
-              <a href="P2Settings.jsp" class="nav_link navtop">
+              <a href="P1AdminSetting.jsp" class="nav_link navtop">
                 <!-- <i class="fa-solid fa-video nav_icon"></i> -->
-                <div class="nav_icon nav_soroe">
+                <div class="nav_icon">
                   <span class="material-symbols-outlined"> settings </span>
                 </div>
                 <span class="nav_name">設定</span>
+              </a>
+
+              <a href="P1TLManagement.jsp" class="nav_link navtop active">
+                <i class="fa fa-house nav_icon"></i>
+                <span class="nav_name">管理者タイムライン</span>
               </a>
 
               <!-- <a href="#" class="nav_link navtop">
@@ -138,7 +121,7 @@
           </div>
 
           <div class="video-info">
-            <a href="P2ProfileStranger.jsp" class="profile-info">
+            <a href="プロフィール画面.jsp" class="profile-info">
               <img
                 src="image/ききゅう.jpg"
                 alt="profile icon"
@@ -164,6 +147,37 @@
                 />
                 <span>10</span>
               </button>
+
+              <button id="openDialogButton" onclick="test('trash')">
+                <span>
+                  <div class="trash">
+                    <i class="gg-trash"></i>
+                  </div>
+                </span>
+              </button>
+
+              <dialog id="myDialog">
+                <p>この投稿を削除しますか？</p>
+                <div class="buttonContainer">
+                  <button type="button" class="dialogButton" id="yesButton">
+                    はい
+                  </button>
+                  <button type="button" class="dialogButton" id="noButton">
+                    いいえ
+                  </button>
+                </div>
+              </dialog>
+
+              <dialog id="confirmationDialog">
+                <p>削除しました</p>
+                <button
+                  type="button"
+                  class="dialogButton"
+                  id="closeConfirmationButton"
+                >
+                  閉じる
+                </button>
+              </dialog>
             </div>
           </div>
         </div>
@@ -175,7 +189,7 @@
           </div>
 
           <div class="video-info">
-            <a href="P2ProfileStranger.jsp" class="profile-info">
+            <a href="プロフィール.jsp" class="profile-info">
               <img
                 src="image/アイコン卵.png"
                 alt="profile icon"
@@ -202,15 +216,26 @@
                 <span>10</span>
               </button>
 
-              <button>
+              <button id="openDialogButton1" onclick="test('trash')">
                 <span>
-                  <a href="P2Recording.jsp">
-                    <div class="nav_icon">
-                      <i class="gg-duplicate"></i>
-                    </div>
-                  </a>
+                  <div class="trash">
+                    <i class="gg-trash"></i>
+                  </div>
                 </span>
               </button>
+
+              <dialog id="myDialog1">
+                <p>この投稿を削除しますか？</p>
+                <div class="buttonContainer">
+                    <button type="button" class="dialogButton" id="yesButton1">はい</button>
+                    <button type="button" class="dialogButton" id="noButton1">いいえ</button>
+                </div>
+            </dialog>
+        
+            <dialog id="confirmationDialog1">
+                <p>削除しました</p>
+                <button type="button" class="dialogButton" id="closeConfirmationButton1">閉じる</button>
+            </dialog>
             </div>
           </div>
         </div>
@@ -258,6 +283,27 @@
                   </a>
                 </span>
               </button>
+
+              <button id="openDialogButton2" onclick="test('trash')">
+                <span>
+                  <div class="trash">
+                    <i class="gg-trash"></i>
+                  </div>
+                </span>
+              </button>
+
+              <dialog id="myDialog2">
+                <p>この投稿を削除しますか？</p>
+                <div class="buttonContainer">
+                    <button type="button" class="dialogButton" id="yesButton2">はい</button>
+                    <button type="button" class="dialogButton" id="noButton2">いいえ</button>
+                </div>
+            </dialog>
+        
+            <dialog id="confirmationDialog2">
+                <p>削除しました</p>
+                <button type="button" class="dialogButton" id="closeConfirmationButton2">閉じる</button>
+            </dialog>
             </div>
           </div>
         </div>
@@ -295,6 +341,28 @@
                 />
                 <span>0</span>
               </button>
+
+              <button id="openDialogButton3" onclick="test('trash')">
+                <span>
+                  <div class="trash">
+                    <i class="gg-trash"></i>
+                  </div>
+                </span>
+              </button>
+
+              <dialog id="myDialog3">
+                <p>この投稿を削除しますか？</p>
+                <div class="buttonContainer">
+                    <button type="button" class="dialogButton" id="yesButton3">はい</button>
+                    <button type="button" class="dialogButton" id="noButton3">いいえ</button>
+                </div>
+            </dialog>
+        
+            <dialog id="confirmationDialog3">
+                <p>削除しました</p>
+                <button type="button" class="dialogButton" id="closeConfirmationButton3">閉じる</button>
+            </dialog>
+              
             </div>
           </div>
         </div>
@@ -332,6 +400,28 @@
                 />
                 <span>1022</span>
               </button>
+
+              <button id="openDialogButton20" onclick="test('trash')">
+                <span>
+                  <div class="trash">
+                    <i class="gg-trash"></i>
+                  </div>
+                </span>
+              </button>
+
+              <dialog id="myDialog20">
+                <p>この投稿を削除しますか？</p>
+                <div class="buttonContainer">
+                    <button type="button" class="dialogButton" id="yesButton20">はい</button>
+                    <button type="button" class="dialogButton" id="noButton20">いいえ</button>
+                </div>
+            </dialog>
+        
+            <dialog id="confirmationDialog20">
+                <p>削除しました</p>
+                <button type="button" class="dialogButton" id="closeConfirmationButton20">閉じる</button>
+            </dialog>
+
             </div>
           </div>
         </div>
@@ -379,6 +469,28 @@
                   </a>
                 </span>
               </button>
+
+              <button id="openDialogButton200" onclick="test('trash')">
+                <span>
+                  <div class="trash">
+                    <i class="gg-trash"></i>
+                  </div>
+                </span>
+              </button>
+
+              <dialog id="myDialog200">
+                <p>この投稿を削除しますか？</p>
+                <div class="buttonContainer">
+                    <button type="button" class="dialogButton" id="yesButton200">はい</button>
+                    <button type="button" class="dialogButton" id="noButton200">いいえ</button>
+                </div>
+            </dialog>
+        
+            <dialog id="confirmationDialog200">
+                <p>削除しました</p>
+                <button type="button" class="dialogButton" id="closeConfirmationButton200">閉じる</button>
+            </dialog>
+
             </div>
           </div>
         </div>
@@ -426,6 +538,28 @@
                   </a>
                 </span>
               </button>
+
+              <button id="openDialogButton2000" onclick="test('trash')">
+                <span>
+                  <div class="trash">
+                    <i class="gg-trash"></i>
+                  </div>
+                </span>
+              </button>
+
+              <dialog id="myDialog2000">
+                <p>この投稿を削除しますか？</p>
+                <div class="buttonContainer">
+                    <button type="button" class="dialogButton" id="yesButton2000">はい</button>
+                    <button type="button" class="dialogButton" id="noButton2000">いいえ</button>
+                </div>
+            </dialog>
+        
+            <dialog id="confirmationDialog2000">
+                <p>削除しました</p>
+                <button type="button" class="dialogButton" id="closeConfirmationButton2000">閉じる</button>
+            </dialog>
+
             </div>
           </div>
         </div>
@@ -473,6 +607,28 @@
                   </a>
                 </span>
               </button>
+
+              <button id="openDialogButton20000" onclick="test('trash')">
+                <span>
+                  <div class="trash">
+                    <i class="gg-trash"></i>
+                  </div>
+                </span>
+              </button>
+
+              <dialog id="myDialog20000">
+                <p>この投稿を削除しますか？</p>
+                <div class="buttonContainer">
+                    <button type="button" class="dialogButton" id="yesButton20000">はい</button>
+                    <button type="button" class="dialogButton" id="noButton20000">いいえ</button>
+                </div>
+            </dialog>
+        
+            <dialog id="confirmationDialog20000">
+                <p>削除しました</p>
+                <button type="button" class="dialogButton" id="closeConfirmationButton20000">閉じる</button>
+            </dialog>
+
             </div>
           </div>
         </div>
@@ -510,6 +666,28 @@
                 />
                 <span>78</span>
               </button>
+
+              <button id="openDialogButton22" onclick="test('trash')">
+                <span>
+                  <div class="trash">
+                    <i class="gg-trash"></i>
+                  </div>
+                </span>
+              </button>
+
+              <dialog id="myDialog22">
+                <p>この投稿を削除しますか？</p>
+                <div class="buttonContainer">
+                    <button type="button" class="dialogButton" id="yesButton22">はい</button>
+                    <button type="button" class="dialogButton" id="noButton22">いいえ</button>
+                </div>
+            </dialog>
+        
+            <dialog id="confirmationDialog22">
+                <p>削除しました</p>
+                <button type="button" class="dialogButton" id="closeConfirmationButton22">閉じる</button>
+            </dialog>
+
             </div>
           </div>
         </div>
@@ -547,6 +725,28 @@
                 />
                 <span>10</span>
               </button>
+
+              <button id="openDialogButton222" onclick="test('trash')">
+                <span>
+                  <div class="trash">
+                    <i class="gg-trash"></i>
+                  </div>
+                </span>
+              </button>
+
+              <dialog id="myDialog222">
+                <p>この投稿を削除しますか？</p>
+                <div class="buttonContainer">
+                    <button type="button" class="dialogButton" id="yesButton222">はい</button>
+                    <button type="button" class="dialogButton" id="noButton222">いいえ</button>
+                </div>
+            </dialog>
+        
+            <dialog id="confirmationDialog222">
+                <p>削除しました</p>
+                <button type="button" class="dialogButton" id="closeConfirmationButton222">閉じる</button>
+            </dialog>
+
             </div>
           </div>
         </div>
@@ -584,6 +784,28 @@
                 />
                 <span>56</span>
               </button>
+
+              <button id="openDialogButton21" onclick="test('trash')">
+                <span>
+                  <div class="trash">
+                    <i class="gg-trash"></i>
+                  </div>
+                </span>
+              </button>
+
+              <dialog id="myDialog21">
+                <p>この投稿を削除しますか？</p>
+                <div class="buttonContainer">
+                    <button type="button" class="dialogButton" id="yesButton21">はい</button>
+                    <button type="button" class="dialogButton" id="noButton21">いいえ</button>
+                </div>
+            </dialog>
+        
+            <dialog id="confirmationDialog21">
+                <p>削除しました</p>
+                <button type="button" class="dialogButton" id="closeConfirmationButton21">閉じる</button>
+            </dialog>
+
             </div>
           </div>
         </div>
@@ -631,6 +853,28 @@
                   </a>
                 </span>
               </button>
+
+              <button id="openDialogButton211" onclick="test('trash')">
+                <span>
+                  <div class="trash">
+                    <i class="gg-trash"></i>
+                  </div>
+                </span>
+              </button>
+
+              <dialog id="myDialog211">
+                <p>この投稿を削除しますか？</p>
+                <div class="buttonContainer">
+                    <button type="button" class="dialogButton" id="yesButton211">はい</button>
+                    <button type="button" class="dialogButton" id="noButton211">いいえ</button>
+                </div>
+            </dialog>
+        
+            <dialog id="confirmationDialog211">
+                <p>削除しました</p>
+                <button type="button" class="dialogButton" id="closeConfirmationButton211">閉じる</button>
+            </dialog>
+
             </div>
           </div>
         </div>
@@ -677,6 +921,28 @@
                   </a>
                 </span>
               </button>
+
+              <button id="openDialogButton23" onclick="test('trash')">
+                <span>
+                  <div class="trash">
+                    <i class="gg-trash"></i>
+                  </div>
+                </span>
+              </button>
+
+              <dialog id="myDialog23">
+                <p>この投稿を削除しますか？</p>
+                <div class="buttonContainer">
+                    <button type="button" class="dialogButton" id="yesButton23">はい</button>
+                    <button type="button" class="dialogButton" id="noButton23">いいえ</button>
+                </div>
+            </dialog>
+        
+            <dialog id="confirmationDialog23">
+                <p>削除しました</p>
+                <button type="button" class="dialogButton" id="closeConfirmationButton23">閉じる</button>
+            </dialog>
+
             </div>
           </div>
         </div>
@@ -723,6 +989,28 @@
                   </a>
                 </span>
               </button>
+
+              <button id="openDialogButton24" onclick="test('trash')">
+                <span>
+                  <div class="trash">
+                    <i class="gg-trash"></i>
+                  </div>
+                </span>
+              </button>
+
+              <dialog id="myDialog24">
+                <p>この投稿を削除しますか？</p>
+                <div class="buttonContainer">
+                    <button type="button" class="dialogButton" id="yesButton24">はい</button>
+                    <button type="button" class="dialogButton" id="noButton24">いいえ</button>
+                </div>
+            </dialog>
+        
+            <dialog id="confirmationDialog24">
+                <p>削除しました</p>
+                <button type="button" class="dialogButton" id="closeConfirmationButton24">閉じる</button>
+            </dialog>
+
             </div>
           </div>
         </div>
@@ -769,6 +1057,28 @@
                   </a>
                 </span>
               </button>
+
+              <button id="openDialogButton25" onclick="test('trash')">
+                <span>
+                  <div class="trash">
+                    <i class="gg-trash"></i>
+                  </div>
+                </span>
+              </button>
+
+              <dialog id="myDialog25">
+                <p>この投稿を削除しますか？</p>
+                <div class="buttonContainer">
+                    <button type="button" class="dialogButton" id="yesButton25">はい</button>
+                    <button type="button" class="dialogButton" id="noButton25">いいえ</button>
+                </div>
+            </dialog>
+        
+            <dialog id="confirmationDialog25">
+                <p>削除しました</p>
+                <button type="button" class="dialogButton" id="closeConfirmationButton25">閉じる</button>
+            </dialog>
+
             </div>
           </div>
         </div>
@@ -805,6 +1115,28 @@
                 />
                 <span>101</span>
               </button>
+
+              <button id="openDialogButton26" onclick="test('trash')">
+                <span>
+                  <div class="trash">
+                    <i class="gg-trash"></i>
+                  </div>
+                </span>
+              </button>
+
+              <dialog id="myDialog26">
+                <p>この投稿を削除しますか？</p>
+                <div class="buttonContainer">
+                    <button type="button" class="dialogButton" id="yesButton26">はい</button>
+                    <button type="button" class="dialogButton" id="noButton26">いいえ</button>
+                </div>
+            </dialog>
+        
+            <dialog id="confirmationDialog26">
+                <p>削除しました</p>
+                <button type="button" class="dialogButton" id="closeConfirmationButton26">閉じる</button>
+            </dialog>
+
             </div>
           </div>
         </div>
@@ -851,6 +1183,28 @@
                   </a>
                 </span>
               </button>
+
+              <button id="openDialogButton27" onclick="test('trash')">
+                <span>
+                  <div class="trash">
+                    <i class="gg-trash"></i>
+                  </div>
+                </span>
+              </button>
+
+              <dialog id="myDialog27">
+                <p>この投稿を削除しますか？</p>
+                <div class="buttonContainer">
+                    <button type="button" class="dialogButton" id="yesButton27">はい</button>
+                    <button type="button" class="dialogButton" id="noButton27">いいえ</button>
+                </div>
+            </dialog>
+        
+            <dialog id="confirmationDialog27">
+                <p>削除しました</p>
+                <button type="button" class="dialogButton" id="closeConfirmationButton27">閉じる</button>
+            </dialog>
+
             </div>
           </div>
         </div>
@@ -887,6 +1241,28 @@
                 />
                 <span>1089</span>
               </button>
+
+              <button id="openDialogButton28" onclick="test('trash')">
+                <span>
+                  <div class="trash">
+                    <i class="gg-trash"></i>
+                  </div>
+                </span>
+              </button>
+
+              <dialog id="myDialog28">
+                <p>この投稿を削除しますか？</p>
+                <div class="buttonContainer">
+                    <button type="button" class="dialogButton" id="yesButton28">はい</button>
+                    <button type="button" class="dialogButton" id="noButton28">いいえ</button>
+                </div>
+            </dialog>
+        
+            <dialog id="confirmationDialog28">
+                <p>削除しました</p>
+                <button type="button" class="dialogButton" id="closeConfirmationButton28">閉じる</button>
+            </dialog>
+
             </div>
           </div>
         </div>
@@ -933,6 +1309,28 @@
                   </a>
                 </span>
               </button>
+
+              <button id="openDialogButton29" onclick="test('trash')">
+                <span>
+                  <div class="trash">
+                    <i class="gg-trash"></i>
+                  </div>
+                </span>
+              </button>
+
+              <dialog id="myDialog29">
+                <p>この投稿を削除しますか？</p>
+                <div class="buttonContainer">
+                    <button type="button" class="dialogButton" id="yesButton29">はい</button>
+                    <button type="button" class="dialogButton" id="noButton29">いいえ</button>
+                </div>
+            </dialog>
+        
+            <dialog id="confirmationDialog29">
+                <p>削除しました</p>
+                <button type="button" class="dialogButton" id="closeConfirmationButton29">閉じる</button>
+            </dialog>
+
             </div>
           </div>
         </div>
@@ -979,6 +1377,28 @@
                   </a>
                 </span>
               </button>
+
+              <button id="openDialogButton233" onclick="test('trash')">
+                <span>
+                  <div class="trash">
+                    <i class="gg-trash"></i>
+                  </div>
+                </span>
+              </button>
+
+              <dialog id="myDialog233">
+                <p>この投稿を削除しますか？</p>
+                <div class="buttonContainer">
+                    <button type="button" class="dialogButton" id="yesButton233">はい</button>
+                    <button type="button" class="dialogButton" id="noButton233">いいえ</button>
+                </div>
+            </dialog>
+        
+            <dialog id="confirmationDialog233">
+                <p>削除しました</p>
+                <button type="button" class="dialogButton" id="closeConfirmationButton233">閉じる</button>
+            </dialog>
+
             </div>
           </div>
         </div>
