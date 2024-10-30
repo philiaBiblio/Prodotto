@@ -11,7 +11,7 @@
 		<table>
 			<tr>
 				<td class="gnavi_td">ニュース</td>
-				<td class="gnavi_td">〇〇〇〇</td>
+				<td class="gnavi_td">〇〇〇</td>
 				<td class="gnavi_td">〇〇〇〇</td>
 				<td class="gnavi_td">〇〇〇〇</td>
 			</tr>
