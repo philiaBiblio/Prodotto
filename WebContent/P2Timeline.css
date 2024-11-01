@@ -220,7 +220,8 @@ i {
   background-color: #232323;
   box-shadow: 0 1px 0 rgba(22, 8, 43, 0.1);
   display: flex;
-  justify-content: center; 
+  justify-content: center;
+  z-index: 50; /* ヘッダーを前面に表示 */
 }
 
 header .header_container {

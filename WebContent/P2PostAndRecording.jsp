@@ -30,6 +30,8 @@
             </div>
         </section>
     </div>
+    
+     <jsp:include page="P2kensaku.jsp"></jsp:include>
 
     <script>
         document.getElementById("file-select-link").addEventListener("click", function(event) {

@@ -27,5 +27,8 @@
         </ul>
       </div>
     </div>
+    
+     <jsp:include page="P2kensaku.jsp"></jsp:include>
+     
   </body>
 </html>

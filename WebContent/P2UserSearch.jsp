@@ -90,7 +90,8 @@
     <hr>
    
   </div>
-
+  
+   <jsp:include page="P2kensaku.jsp"></jsp:include>
   
 
  

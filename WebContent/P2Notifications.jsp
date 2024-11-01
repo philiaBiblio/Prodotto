@@ -33,6 +33,9 @@
             </p>
           </div>
         </div>
+        
+         <jsp:include page="P2kensaku.jsp"></jsp:include>
+        
     <script>
       // 全てのフォローボタンを取得
       const followButtons = document.querySelectorAll(".follow-button");

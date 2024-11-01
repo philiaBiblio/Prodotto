@@ -62,6 +62,8 @@
         </div>
       </div>
     </form>
+    
+     <jsp:include page="P2kensaku.jsp"></jsp:include>
 
     <script>
       document.addEventListener("DOMContentLoaded", function () {

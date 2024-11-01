@@ -1011,7 +1011,8 @@
         </div>
       </div>
     </div>
-
+    
+    <jsp:include page="P2kensaku.jsp"></jsp:include>
     <script src="audioPlayer.js"></script>
     <script src="https://unpkg.com/wavesurfer.js"></script>
   </body>

@@ -1540,9 +1540,9 @@
         </div>
       </div>
     </main>
-
-
-
+    
+ <%--  <jsp:include page="P2kensaku.jsp"></jsp:include>  --%>
+     
     <script src="audioPlayer.js"></script>
     <script>
         const scrollLeftButton1 = document.getElementById("scroll-left-1");
@@ -1604,5 +1604,6 @@ scrollRightButton3.addEventListener("click", () => {
 
     </script>
     <script src="https://unpkg.com/wavesurfer.js"></script>
+    
   </body>
 </html>

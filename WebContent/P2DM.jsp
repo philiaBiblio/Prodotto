@@ -128,6 +128,9 @@
         </form>
       </div>
     </div>
+    
+     <jsp:include page="P2kensaku.jsp"></jsp:include>
+    
     <script>
       // 全てのmessage-itemを取得
       const messageItems = document.querySelectorAll('.message-item');

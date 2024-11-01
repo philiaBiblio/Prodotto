@@ -60,6 +60,8 @@
             </div>
           </dialog>
         </div>
+        
+       <jsp:include page="P2kensaku.jsp"></jsp:include>
 
         <script>
           const openButton = document.querySelector(".submit-button");

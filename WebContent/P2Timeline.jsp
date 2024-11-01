@@ -17,25 +17,26 @@
       href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=settings"
     />
     <link rel="stylesheet" href="P2Timeline.css" />
+   
     <title>ProDotto</title>
   </head>
 
   <body>
-    <header class="header">
+   <!--  <header class="header">
       <div class="header_container">
         <div class="none"></div>
         <div class="search">
-          <!-- フィルターボタン -->
+          フィルターボタン
           <select id="filter" class="filter-button" onChange="location.href=value;">
             <option value="title">動画タイトル</option>
             <option value="P2UserSearch.jsp">アカウント名</option>
           </select>
 
-          <!-- 検索バー -->
+          検索バー
           <input type="text" id="search" placeholder="Search" />
           <i class="fa-solid fa-magnifying-glass"></i>
         </div>
-        <!-- <div class="user">
+        <div class="user">
           <div class="icon">
             <i class="fa-solid fa-video"></i>
             <i class="fa-solid fa-grip"></i>
@@ -44,7 +45,7 @@
           <div class="img">
             <img src="images/logo.png" alt="" />
           </div>
-        </div> -->
+        </div>
       </div>
     </header>
 
@@ -54,7 +55,7 @@
           <a href="#" class="nav_link nav_logo">
             <i class="fa-solid fa-bars nav_icon"></i>
             <span class="logo_name">
-              <!-- ここにProDottoアイコンを入れる -->
+              ここにProDottoアイコンを入れる
               <i class="fab fa-"></i>
               ProDotto
             </span>
@@ -68,7 +69,7 @@
               </a>
 
               <a href="P2DM.jsp" class="nav_link navtop nav_soroe">
-                <!-- <i class="fa fa-compass nav_icon"></i> -->
+                <i class="fa fa-compass nav_icon"></i>
                 <div class="nav_icon nav_soroe">
                   <i class="gg-mail"></i>
                 </div>
@@ -76,7 +77,7 @@
               </a>
 
               <a href="P2Ranking.jsp" class="nav_link navtop nav_soroe">
-                <!-- <i class="fa-brands fa-tiktok nav_icon"></i> -->
+                <i class="fa-brands fa-tiktok nav_icon"></i>
                 <div class="nav_icon nav_soroe">
                   <i class="gg-crown"></i>
                 </div>
@@ -84,7 +85,7 @@
               </a>
 
               <a href="P2PostAndRecording.jsp" class="nav_link navtop nav_soroe">
-                <!-- <i class="fa-solid fa-users nav_icon"></i> -->
+                <i class="fa-solid fa-users nav_icon"></i>
                 <div class="nav_icon">
                   <i class="gg-add-r"></i>
                 </div>
@@ -92,7 +93,7 @@
               </a>
 
               <a href="P2ProfileMine.jsp" class="nav_link navtop nav_soroe">
-                <!-- <i class="fa-solid fa-users nav_icon"></i> -->
+                <i class="fa-solid fa-users nav_icon"></i>
                 <div class="nav_icon nav_soroe">
                   <i class="gg-boy"></i>
                 </div>
@@ -100,26 +101,26 @@
               </a>
 
               <a href="P2Settings.jsp" class="nav_link navtop">
-                <!-- <i class="fa-solid fa-video nav_icon"></i> -->
+                <i class="fa-solid fa-video nav_icon"></i>
                 <div class="nav_icon nav_soroe">
                   <span class="material-symbols-outlined"> settings </span>
                 </div>
                 <span class="nav_name">設定</span>
               </a>
 
-              <!-- <a href="#" class="nav_link navtop">
+              <a href="#" class="nav_link navtop">
                 <i class="fa-solid fa-clock-rotate-left nav_icon"></i>
                 <span class="nav_name">履歴</span>
               </a>
               <a href="#" class="nav_link navtop">
                 <i class="fa-solid fa-thumbs-up nav_icon"></i>
                 <span class="nav_name">いいねした動画</span>
-              </a> -->
+              </a>
             </div>
           </div>
         </div>
       </nav>
-    </section>
+    </section> -->
 
     <!-- 追加するコード -->
     <main>
@@ -1036,6 +1037,7 @@
         </div>
       </div>
     </main>
+     <jsp:include page="P2kensaku.jsp"></jsp:include>
 
     <script src="audioPlayer.js"></script>
     <script src="https://unpkg.com/wavesurfer.js"></script>
