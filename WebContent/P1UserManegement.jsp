@@ -40,6 +40,8 @@
       </tr>
 
     </table>
+    
+     <jsp:include page="P1kensaku.jsp"></jsp:include>
 
     <script>
       const searchBox = document.querySelector('.search-box');

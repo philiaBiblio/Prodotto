@@ -96,6 +96,8 @@
                   <button type="button" class="dialog">閉じる</button>
                 </dialog>
               </div>
+              
+             <jsp:include page="P1kensaku.jsp"></jsp:include>
 
               <script>
                 const openButton = document.querySelector(".submit-button");

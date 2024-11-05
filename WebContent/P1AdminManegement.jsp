@@ -178,7 +178,9 @@
           <td><button id="delete-button-yusei">アカウント削除</button></td>
         </tr>
       </table>
-
+      
+      <jsp:include page="P1kensaku.jsp"></jsp:include>
+       
       <script>
         document
           .getElementById("delete-button-sanma")
