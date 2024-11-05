@@ -16,6 +16,7 @@
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=settings"
     />
+      <jsp:include page="P2kensaku.jsp"></jsp:include>
     <link rel="stylesheet" href="P2Ranking.css" />
     <title>ProDotto</title>
   </head>
@@ -1541,7 +1542,7 @@
       </div>
     </main>
     
- <jsp:include page="P2kensaku.jsp"></jsp:include>
+
      
     <script src="audioPlayer.js"></script>
     <script>
@@ -1604,6 +1605,8 @@
 
     </script>
     <script src="https://unpkg.com/wavesurfer.js"></script>
+    
+   
     
   </body>
 </html>
