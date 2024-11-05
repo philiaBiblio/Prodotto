@@ -1541,7 +1541,7 @@
       </div>
     </main>
     
- <%--  <jsp:include page="P2kensaku.jsp"></jsp:include>  --%>
+ <jsp:include page="P2kensaku.jsp"></jsp:include>
      
     <script src="audioPlayer.js"></script>
     <script>
@@ -1584,23 +1584,23 @@
 
 
       // 3行目のボタンのイベントハンドラー
-const scrollLeftButton3 = document.getElementById("scroll-left-3");
-const scrollRightButton3 = document.getElementById("scroll-right-3");
-const videoGrid3 = document.getElementById("video-grid-3");
+	  const scrollLeftButton3 = document.getElementById("scroll-left-3");
+	  const scrollRightButton3 = document.getElementById("scroll-right-3");
+	  const videoGrid3 = document.getElementById("video-grid-3");
 
-scrollLeftButton3.addEventListener("click", () => {
-  videoGrid3.scrollBy({
-    left: -150, // スクロールする距離（左）
-    behavior: "smooth", // スムーズスクロール
-  });
-});
+	  scrollLeftButton3.addEventListener("click", () => {
+		  videoGrid3.scrollBy({
+			  left: -150, // スクロールする距離（左）
+			  behavior: "smooth", // スムーズスクロール
+			  });
+		  });
 
-scrollRightButton3.addEventListener("click", () => {
-  videoGrid3.scrollBy({
-    left: 150, // スクロールする距離（右）
-    behavior: "smooth", // スムーズスクロール
-  });
-});
+	  scrollRightButton3.addEventListener("click", () => {
+		  videoGrid3.scrollBy({
+			  left: 150, // スクロールする距離（右）
+			  behavior: "smooth", // スムーズスクロール
+			  });
+		  });
 
     </script>
     <script src="https://unpkg.com/wavesurfer.js"></script>
