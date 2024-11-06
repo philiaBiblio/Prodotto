@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="P2ProfileEdit.css" />
   </head>
   <body>
-    <form action="" method="post">
+    <form action="P2ProfileEditServlet" method="post">
       <div class="icon">
         <img id="iconImage" src="image/ききゅう.jpg" alt="icon" />
         <label for="fileInput">写真を選択</label>
