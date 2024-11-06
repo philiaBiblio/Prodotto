@@ -8,7 +8,8 @@
     <title>DM画面</title>
     <link rel="stylesheet" href="P2DM.css" />
   </head>
-  <body>
+
+  <body style="margin: 70px 0 0 -5px;">
     <!-- メインコンテンツ -->
     <div class="main-content">
       <!-- メッセージリスト -->
