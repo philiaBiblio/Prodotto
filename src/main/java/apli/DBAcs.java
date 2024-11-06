@@ -13,14 +13,14 @@ public class DBAcs {
 	private Statement stmt = null;
 	private ResultSet rs = null;
 	//★オラクルで利用するidとパスワードを設定してください
-	private String  id = "x23j058";
-	private String  pw = "fjbj058";
+	private String  id = "x23j1E";
+	private String  pw = "fjbj1E";
 
 	//コンストラクタ
 	public DBAcs(){
 		System.out.println("ログイン処理実行");
 		try {
-			String url = "jdbc:oracle:thin:@ux1.chiba-fjb.ac.jp:1521:orcl";
+			String url = "jdbc:oracle:thin:@ux2.chiba-fjb.ac.jp:1521:orcl";
 			OracleDriver driver = new OracleDriver();
 			// DBに接続
 			con = DriverManager.getConnection(url,id,pw);

@@ -36,6 +36,11 @@ public class P2LoginServlet extends HttpServlet {
 		DBAcs dba = new DBAcs();
 		
 		try {
+			//新規登録からの遷移かの判断
+			//入力されたものがもうすでにあるかどうか
+			//まだ登録されてなければinsert文の実行
+			//タイムラインへ遷移
+			
 			// 入力した会員IDを取得
 			String inMailadd = request.getParameter("mailadd");
 			// sql用にシングルコーテーションで囲む

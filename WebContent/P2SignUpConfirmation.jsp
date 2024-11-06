@@ -13,6 +13,9 @@
     />
     <link rel="stylesheet" href="P2SignUpConfirmation.css" />
   </head>
+  <%
+  request.setCharacterEncoding("UTF-8");
+  %>
   <body>
     <div class="all">
       <header>
@@ -50,17 +53,17 @@
       <div class="waku">
         <div>
           <p class="midasi">ユーザー名</p>
-          <p class="uketori">さんまのはらわた</p>
+          <p class="uketori" name="name"><%=request.getParameter("name") %></p>
         </div>
 
         <div>
           <p class="midasi">ユーザーID</p>
-          <p class="uketori">sanma26</p>
+          <p class="uketori" name="userid"><%=request.getParameter("userid") %></p>
         </div>
 
         <div>
           <p class="midasi">メールアドレス</p>
-          <p class="uketori">chikurin@gmail.com</p>
+          <p class="uketori" name="mailadd"><%=request.getParameter("mailadd") %></p>
         </div>
 
         <div>
@@ -74,32 +77,60 @@
             class="hideText"
             name="uketori"
             id="uketori"
-            value="qwert"
+            value="<%=request.getParameter("pw") %>"
             disabled
           />
-          <input type="text" class="showText" value="qwert" />
+          <input type="text" class="showText" value="<%=request.getParameter("pw") %>" />
           <label for="checkPassword" class="fa fa-eye"></label>
           <label for="checkPassword" class="fa fa-eye-slash"></label>
         </div>
 
         <div>
           <p class="midasi">性別</p>
-          <p class="uketori">男</p>
+          <p class="uketori"><%=request.getParameter("sexy") %></p>
         </div>
 
         <div>
           <p class="midasi">生年月日</p>
-          <p class="uketori">1999年2月11日</p>
+          <p class="uketori"><%=request.getParameter("birth") %></p>
         </div>
 
         <div>
           <p class="midasi">演奏頻度</p>
-          <p class="uketori">毎日</p>
+          <%
+          	String fq = request.getParameter("fq");
+        		  if(fq.equals("none")){
+          %>
+          	<p class="uketori">演奏しない</p>
+          <%}else if(fq.equals("everyday")){ %>
+          	<p class="uketori">毎日</p>
+          <%}else if(fq.equals("usually")){%>
+          	<p class="uketori">週3、4回</p>
+          <%}else if(fq.equals("sometimes")){ %>
+          	<p class="uketori">月1</p>
+          <%}else{ %>
+          	<p class="uketori">その他</p>
+          <%} %>
         </div>
 
         <div>
           <p class="midasi">楽器歴</p>
-          <p class="uketori">～三ヵ月</p>
+          <%
+          	String his = request.getParameter("history");
+        		  if(his.equals("first")){
+          %>
+          	<p class="uketori">はじめて</p>
+          <%}else if(his.equals("3months")){ %>
+          	<p class="uketori">～3カ月</p>
+          <%}else if(his.equals("half")){ %>
+          	<p class="uketori">～半年</p>
+          <%}else if(his.equals("year")){ %>
+          	<p class="uketori">～1年</p>
+          <%}else if(his.equals("5years")){ %>
+          	<p class="uketori">～5年</p>
+          <%}else{ %>
+          	<p class="uketori">5年～</p>
+          <%} %>
         </div>
       </div>
 
@@ -110,7 +141,7 @@
           <input type="submit" name="modoru" id="modoru" value="戻る" />
         </form>
 
-        <form action="P2Timeline.jsp" method="post">
+        <form action="/P2LoginServlet" method="post">
           <input type="submit" name="touroku" id="touroku" value="登録" />
         </form>
       </footer>
