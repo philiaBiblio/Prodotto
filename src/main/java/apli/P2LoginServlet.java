@@ -71,12 +71,13 @@ public class P2LoginServlet extends HttpServlet {
 				u.setSex(sex);
 				u.setHistory(history);
 				u.setFq(fq);
-				u.setBirth(birth);
+				u.setBirth(birth.substring(0,10));
 				u.setIconImage(iconImage);
 				u.setMailadd(inMailadd);
 				
 				// ログインした会員情報を保存
 				ses.setAttribute("LOGIN", u);
+				System.out.println(sex);
 				
 				// マイページへ
 				url = "P2Timeline.jsp";
@@ -98,7 +99,6 @@ public class P2LoginServlet extends HttpServlet {
 			
 		} catch (Exception e) {
 			// TODO: handle exception
-			
 			e.printStackTrace();
 			// ログアウト処理
 			dba.closeDB();
