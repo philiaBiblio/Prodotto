@@ -91,11 +91,12 @@ label {
   width: 80%;
   min-width: 80%;
 }
+/*こいつが検索バーに影響を出しているので一旦コメアウトさせてもらうにょ*/
+/*input,*/
+/*select{*/
+/*  margin: 0 20px 15px 0;*/
+/*}*/
 
-input,
-select {
-  margin: 0 20px 15px 0;
-}
 .nomargin {
   margin: 0;
 }

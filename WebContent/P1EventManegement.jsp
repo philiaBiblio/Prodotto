@@ -50,7 +50,7 @@
       <!-- 過去イベント -->
       <h2>過去のイベントお題</h2>
       <div id="kako">
-          <select name="" id="nen1">
+          <select name="" id="kako-nen">
             <option value="none" selected>選択してください</option>
             <option value="2024">2024</option>
             <option value="2025">2025</option>

@@ -22,17 +22,22 @@ form {
 }
 
 input[type="text"],
-select {
-  width: 300px;
+select{
+
   height: 40px;
   font-size: 16px;
-  margin-top: 20px;
+/*  margin-top: 20px;*/
   padding: 5px;
   background-color: #000;
   border: rgb(255, 255, 255) ffffff;
   color: rgb(255, 255, 255);
   border-radius: 10px;
 }
+input[type="text"],
+select#nen,#tuki,#kako-nen,#kako-tuki{
+	width: 300px;
+}
+
 select:focus {
   border-color: #ee2522;
   background-color: black;

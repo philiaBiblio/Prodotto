@@ -187,10 +187,11 @@ label {
   padding: 30px 0 0 0;
 }
 
-input,
-select {
-  margin: 0 0px 15px 0;
-}
+/*検索バーに影響与えてるやっかい子猫ちゃん*/
+/*input,*/
+/*select {*/
+/*  margin: 0 0px 15px 0;*/
+/*}*/
 
 .nomargin {
   margin: 1;
@@ -339,6 +340,7 @@ input[type="date"]:hover::-webkit-calendar-picker-indicator {
   border: 1px solid #000;
   border-radius: 10px;
   margin-right: 10px;
+  box-sizing: content-box;
 }
 
 /* .search-box::placeholder {
@@ -380,7 +382,7 @@ button {
     border: 1px solid #ee2522;
   }
   
-  input[type="text"]:not(#idtext,#passtext) {
+  input[type="text"]:not(#idtext,#passtext,#search) {
     border: 1px solid white;
     background-color: black;
     color: white;

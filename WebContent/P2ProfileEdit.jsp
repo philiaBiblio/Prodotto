@@ -6,6 +6,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>プロフィール編集画面</title>
+    
     <link rel="stylesheet" href="P2ProfileEdit.css" />
   </head>
   <body>
