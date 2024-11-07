@@ -55,44 +55,49 @@ select {
   margin: 0;
 }
 
-.sexM,
-.sexW {
-  width: 40%;
-  display: inline-block;
-  background-color: #000000;
-  border: 1px solid #ffffff;
-  color: #ffffff;
-  border-radius: 10px;
-  padding: 0.8em 0;
-  text-align: center;
-  box-sizing: border-box;
-}
-.sexM {
-  margin-right: 10px;
-}
-.sexW {
-  margin-left: 3px;
-}
+/*.sexM,*/
+/*.sexW {*/
+/*  width: 40%;*/
+/*  display: inline-block;*/
+/*  background-color: #000000;*/
+/*  border: 1px solid #ffffff;*/
+/*  color: #ffffff;*/
+/*  border-radius: 10px;*/
+/*  padding: 0.8em 0;*/
+/*  text-align: center;*/
+/*  box-sizing: border-box;*/
+/*}*/
+/*.sexM {*/
+/*  margin-right: 10px;*/
+/*}*/
+/*.sexW {*/
+/*  margin-left: 3px;*/
+/*}*/
 
-.button {
-  text-align: center;
-}
+/*.button {*/
+/*  text-align: center;*/
+/*}*/
 
-.right,
-.left {
-  width: 50%;
-}
+/*.right,*/
+/*.left {*/
+/*  width: 50%;*/
+/*}*/
 
-.hovered {
-  background-color: rgb(21, 22, 22);
-  color: #11dadd;
-  border-color: #11dadd;
-}
+/*.hovered {*/
+/*  background-color: rgb(21, 22, 22);*/
+/*  color: #11dadd;*/
+/*  border-color: #11dadd;*/
+/*}*/
 
-.clicked {
-  background-color: #4bc8ca;
-  color: white;
-  border-color: #11dadd;
+/*.clicked {*/
+/*  background-color: #4bc8ca;*/
+/*  color: white;*/
+/*  border-color: #11dadd;*/
+/*}*/
+
+
+.radio {
+	
 }
 
 .textbox {
