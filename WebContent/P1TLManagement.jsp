@@ -1,3 +1,4 @@
+<%@page import="apli.AdminUser"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -19,6 +20,13 @@
     <link rel="stylesheet" href="P1TLManagement.css" />
     <title>ProDotto</title>
   </head>
+  
+ <%
+	// セッションの取得
+	HttpSession ses = request.getSession();
+	// ログイン情報の取得
+	 AdminUser au = (AdminUser)ses.getAttribute("ADMINLOGIN");
+%>
 
   <body>
     <!-- 追加するコード -->

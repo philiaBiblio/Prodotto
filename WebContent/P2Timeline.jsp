@@ -1,3 +1,4 @@
+<%@page import="apli.User"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -20,6 +21,13 @@
    
     <title>ProDotto</title>
   </head>
+  
+ <%
+	// セッションの取得
+	HttpSession ses = request.getSession();
+	// ログイン情報の取得
+	User u = (User)ses.getAttribute("LOGIN");
+%>
 
   <body>
     <!-- 追加するコード -->

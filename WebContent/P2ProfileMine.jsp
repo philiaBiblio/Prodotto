@@ -1,3 +1,4 @@
+<%@page import="apli.User"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -19,6 +20,13 @@
     <link rel="stylesheet" href="P2ProfileMine.css" />
     <title>ProDotto</title>
   </head>
+  
+ <%
+	// セッションの取得
+	HttpSession ses = request.getSession();
+	// ログイン情報の取得
+	User u = (User)ses.getAttribute("LOGIN");
+%>
 
   <body>
     <header class="profile-header">
@@ -31,8 +39,8 @@
         />
 
         <div class="user-details">
-            <h2 class="username">ユーザーネーム</h2>
-            <p class="user-id">@ユーザーID</p>
+            <h2 class="username"><%=u.getName() %></h2>
+            <p class="user-id"><%=u.getUserid() %></p>
             <div class="follower-info">
               <span class="follower-count">フォロワー: 100</span>
               <span class="following-count">フォロー中: 50</span>

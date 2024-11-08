@@ -34,9 +34,10 @@ public class P2LoginServlet extends HttpServlet {
 		String url = "";
 		// DBアクセス用部品の生成
 		DBAcs dba = new DBAcs();
+		DBAcs dba2 = new DBAcs();
 		
 		try {
-			// 入力した会員IDを取得
+			// 入力したメールアドレスを取得
 			String inMailadd = request.getParameter("mailadd");
 			// sql用にシングルコーテーションで囲む
 			inMailadd = "'" + inMailadd + "'";
@@ -52,6 +53,7 @@ public class P2LoginServlet extends HttpServlet {
 			ResultSet rs = dba.selectExe(sql);
 			
 			if(rs.next()) {
+				System.out.println("ユーザーログイン実行");
 				// ユーザー情報をDBから取得
 				String userid = rs.getString("ユーザーID");
 				String name = rs.getString("名前");
@@ -75,19 +77,49 @@ public class P2LoginServlet extends HttpServlet {
 				u.setIconImage(iconImage);
 				u.setMailadd(inMailadd);
 				
-				// ログインした会員情報を保存
+				// ログインしたユーザー情報を保存
 				ses.setAttribute("LOGIN", u);
-				System.out.println(sex);
+			//	System.out.println(sex);
+				System.out.println("ユーザーログイン成功");
 				
-				// マイページへ
+				// タイムラインへ
 				url = "P2Timeline.jsp";
 				System.out.println(url);
 			}else {
-				// ログイン失敗時
-				System.out.println(url);
-//				String mess = "ログインに失敗しました<br>会員IDまたはパスワードが間違っています";
-//				ses.setAttribute("LOGINERROR", mess);
-				url = "P2Login.jsp";
+				System.out.println("管理者ログイン実行");
+				// ユーザーログイン失敗後管理者用データベースへ接続
+				String sql2 = "select * from 管理者 where メールアドレス = " + inMailadd + " and パスワード = " + inPassword;
+				// sql文実行
+				ResultSet rs2 = dba2.selectExe(sql2);
+	
+				if(rs2.next()) {
+					// ユーザー情報をDBから取得
+					String AdminUserid = rs2.getString("管理者ID");
+					String AdminName = rs2.getString("名前");
+					String AdminSex = rs2.getString("性別");
+					String AdminBirth = rs2.getString("生年月日");
+					String AdminMailadd = rs2.getString("メールアドレス");
+					String AdminLevel = rs2.getString("管理者レベル");
+					
+					// 管理者インスタンス生成
+					AdminUser au = new AdminUser();
+					
+					// 取得した情報を保存
+					au.setAdminUserid(AdminUserid);
+					au.setAdminName(AdminName);
+					au.setAdminSex(AdminSex);
+					au.setAdminBirth(AdminBirth);
+					au.setAdminMailadd(AdminMailadd);
+					au.setAdminLevel(AdminLevel);
+					
+					// ログインした管理者情報を保存
+					ses.setAttribute("ADMINLOGIN", au);
+					System.out.println("管理者ログイン成功");
+					
+					// タイムラインへ
+					url = "P1TLManagement.jsp";
+					System.out.println(url);
+				}
 			}
 			
 			// マイページへ画面遷移
@@ -101,9 +133,7 @@ public class P2LoginServlet extends HttpServlet {
 			// TODO: handle exception
 			e.printStackTrace();
 			// ログアウト処理
-			dba.closeDB();
-			
+			dba.closeDB();	
 		}
 	}
-
 }
