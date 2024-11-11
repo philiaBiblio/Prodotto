@@ -16,7 +16,7 @@
 
   <body>
     <div class="all">
-      <form action="P2SignUpConfirmation.jsp" >
+      <form action="P2SignUpServlet" >
         <h1>新規会員登録</h1>
   
         <div class="nakami">
