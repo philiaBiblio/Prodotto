@@ -26,7 +26,6 @@
               ><input
                 type="text"
                 class="textbox"
-                value="むう"
                 name="name"
                 id="name"
                 required /></label
@@ -58,7 +57,6 @@
                 placeholder="メールアドレスを入力" /></label
             ><br />
             <!-- 上のメールアドレスとおんなじだったらオッケーが出る -->
-            <!-- <label class="soroe">確認のためもう一度入力してください</label><br> -->
             <label
               ><input
                 type="email"
