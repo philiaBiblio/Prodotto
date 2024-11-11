@@ -3,6 +3,7 @@ package apli;
 import java.io.IOException;
 import java.sql.ResultSet;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -45,17 +46,30 @@ public class P2SignUpServlet extends HttpServlet {
 			// sql文実行
 			ResultSet rs = dba.selectExe(sql);
 			
-			while(rs.next()) {
+			if(rs.next()) {
+				System.out.println("ユーザー存在している場合なので弾きたい");
 				
+				// 元の画面へ
+				url = "P2SignUp.jsp";
+				System.out.println(url);
+			}else {
+				System.out.println("存在しなかったので進む");
+				// 登録確認画面へ
+				url = "P2SignUpConfirmation.jsp";
+				System.out.println(url);
 			}
 			
-			
+			// 新規登録画面へ画面遷移
+			RequestDispatcher rd = request.getRequestDispatcher(url);
+			rd.forward(request, response);
+						
+			// ログアウト処理
+			dba.closeDB();
 		} catch (Exception e) {
 			// TODO: handle exception
+			e.printStackTrace();
+			// ログアウト処理
+			dba.closeDB();	
 		}
-		
-		
-		
 	}
-
 }
