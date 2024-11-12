@@ -13,6 +13,17 @@
     />
     <link rel="stylesheet" href="P2SignUp.css" />
   </head>
+  
+ <%
+	//セッションの生成
+	HttpSession ses = request.getSession();
+	// エラー情報の取得
+	String errorID = (String)ses.getAttribute("ERRORID");
+	String errorKeta = (String)ses.getAttribute("ERRORKETA");
+	String errorMail = (String)ses.getAttribute("ERRORMAIL");
+	String errorPass = (String)ses.getAttribute("ERRORPASS");
+	String errorPass2 = (String)ses.getAttribute("ERRORPASS2"); 
+ %>
 
   <body>
     <div class="all">
@@ -43,7 +54,16 @@
                 placeholder="英数字4桁～14桁"
                 required /></label
             ><br />
-            <!-- まだ存在しないユーザIDならOK出しちゃう,存在してたらこのユーザIDは使えませんって出ちゃう -->
+            <!-- まだ存在しないユーザIDならOK出しちゃう,存在してたらこのユーザIDは使えませんって出ちゃう -->          
+            <%if(errorID != null){ %>
+				<p style="color:#ff0000"><%=errorID %></p>
+			<%} %>
+			<%ses.removeAttribute("ERRORID"); 
+			if(errorKeta != null){ %>
+				<p style="color:#ff0000"><%=errorKeta %></p>
+			<%} %>
+			<%ses.removeAttribute("ERRORKETA"); %>
+			
           </div>
           <div>
             <label class="soroe">メールアドレス</label><br />
@@ -67,6 +87,10 @@
                 placeholder="メールアドレスを再入力" /></label
             ><br />
           </div>
+          <%if(errorMail != null){ %>
+				<p style="color:#ff0000"><%=errorMail %></p>
+			<%} %>
+			<%ses.removeAttribute("ERRORMAIL"); %>
   
           <div>
             <label class="soroe">パスワード</label><br />
@@ -77,7 +101,6 @@
                 class="hideText"
                 name="pw"
                 id="pw"
-                value=""
                 required
                 placeholder="英数字６文字以上"
                 Onchange="disp1()"
@@ -107,7 +130,6 @@
               <label for="checkPassword" class="fa fa-eye-slash"></label>
             </div>
             <!-- 上のパスワードとおんなじだったらオッケーが出る -->
-            <!-- <label class="soroe">確認のためもう一度入力してください</label><br> -->
             <input type="checkbox" id="checkPassword2" />
             <div class="togglePassword2">
               <input
@@ -146,7 +168,15 @@
             </div>
             <br />
           </div>
-  
+          <%if(errorPass != null){ %>
+				<p style="color:#ff0000"><%=errorPass %></p>
+			<%} %>
+			<%ses.removeAttribute("ERRORPASS");
+			if(errorPass2 != null){ %>
+				<p style="color:#ff0000"><%=errorPass2 %></p>
+			<%} %>
+			<%ses.removeAttribute("ERRORPASS2");%>
+
           <label class="soroe">性別</label><br />
   
           <div class="button">

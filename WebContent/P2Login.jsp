@@ -37,12 +37,33 @@
                   id="pw"
                   required
                   placeholder="パスワードを入力"
+                  Onchange="disp1()"
                 />
-                <input type="text" class="showText"/>
+                <input type="text" class="showText" id="pass1" name="pw" Onchange="disp2()"/>
                 <label for="checkPassword" class="fa fa-eye"></label>
                 <label for="checkPassword" class="fa fa-eye-slash"></label>
               </div>
             </div>
+            
+            <script>
+              	function disp1(){
+              	//document.getElementById …()内で指定した名前を持つ入力部品を取得する
+              	//↓の例では、変数e1の中にpwテキストボックスが入る
+              		var e1 = document.getElementById("pw");
+              	//〇〇.value…指定した入力部品の属性に値を設定する
+              	//入力部品を入れた変数名.value= '設定したい値'
+              		document.getElementById("pass1").value = e1.value;
+                }
+
+              	function disp2(){
+              	//document.getElementById …()内で指定した名前を持つ入力部品を取得する
+              	//↓の例では、変数e1の中にpwテキストボックスが入る
+              		var e1 = document.getElementById("pass1");
+              	//〇〇.value…指定した入力部品の属性に値を設定する
+              	//入力部品を入れた変数名.value= '設定したい値'
+              		document.getElementById("pw").value = e1.value;
+                }
+              </script>
 
             <div class="button-container">
               <input
