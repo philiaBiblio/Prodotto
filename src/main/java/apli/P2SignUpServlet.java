@@ -90,7 +90,7 @@ public class P2SignUpServlet extends HttpServlet {
 			if(inPass.equals(inPass2)) {
 				System.out.println("パスワードの入力値が一緒なのでOK");
 				// パスワードのセキュリティチェック
-				if(inPass.matches(".*[0 - 9].*") == true && inPass.matches("^[a-zA-Z]*$") == true) {
+				if(inPass.matches("^[0-9a-zA-Z]*$") == true) {
 					System.out.println("セキュリティチェック◎");
 					level = level + 1;
 				}
@@ -111,13 +111,36 @@ public class P2SignUpServlet extends HttpServlet {
 				ses.setAttribute("ERRORPASS", messPass);
 				pageFlg = 0;
 			}
-			
+			System.out.println(inPass);
 			// 次の画面の準備
 			if(pageFlg == 0) {
 				url = "P2SignUp.jsp";
 			}else if(pageFlg == 1) {
 				url = "P2SignUpConfirmation.jsp";
 			}
+			
+			// 入力情報の保存
+			String inName = request.getParameter("name");
+			String inSexy = request.getParameter("sexy");
+			String inBirth = request.getParameter("birth");
+			String inFq = request.getParameter("fq");
+			String inHistory = request.getParameter("history");
+			
+			// ユーザーインスタンス生成
+			User u = new User();
+			
+			// 取得した情報を保存
+			u.setName(inName);
+			u.setUserid(inUserid);
+			u.setMailadd(inMail);
+			u.setPassword(inPass);
+			u.setSex(inSexy);
+			u.setBirth(inBirth);
+			u.setFq(inFq);
+			u.setHistory(inHistory);
+			
+			// 入力された情報を保存
+			ses.setAttribute("NYURYOKU", u);
 			
 			// 画面遷移
 			RequestDispatcher rd = request.getRequestDispatcher(url);

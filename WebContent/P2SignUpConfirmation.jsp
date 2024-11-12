@@ -1,3 +1,4 @@
+<%@page import="apli.User"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -15,6 +16,9 @@
   </head>
   <%
   request.setCharacterEncoding("UTF-8");
+  //セッションの生成
+  HttpSession ses = request.getSession();
+  User u = (User)ses.getAttribute("NYURYOKU");
   %>
   <body>
     <div class="all">
@@ -141,7 +145,7 @@
           <input type="submit" name="modoru" id="modoru" value="戻る" />
         </form>
 
-        <form action="/P2LoginServlet" method="post">
+        <form action="P2SignUpConfirmationServlet" method="post">
           <input type="submit" name="touroku" id="touroku" value="登録" />
         </form>
       </footer>

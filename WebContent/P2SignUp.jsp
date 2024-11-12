@@ -1,3 +1,4 @@
+<%@page import="apli.User"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -23,6 +24,9 @@
 	String errorMail = (String)ses.getAttribute("ERRORMAIL");
 	String errorPass = (String)ses.getAttribute("ERRORPASS");
 	String errorPass2 = (String)ses.getAttribute("ERRORPASS2"); 
+	
+	// 入力された情報の取得
+	User u = (User)ses.getAttribute("NYURYOKU");
  %>
 
   <body>
@@ -39,6 +43,7 @@
                 class="textbox"
                 name="name"
                 id="name"
+                value="<%if(u != null) %><%=u.getName() %>"
                 required /></label
             ><br />
           </div>
@@ -51,6 +56,7 @@
                 class="textbox"
                 name="userid"
                 id="userid"
+                value="<%if(u != null) %><%=u.getUserid() %>"
                 placeholder="英数字4桁～14桁"
                 required /></label
             ><br />
@@ -73,6 +79,7 @@
                 class="textbox"
                 name="mailadd"
                 id="mailadd"
+                value="<%if(u != null) %><%=u.getMailadd() %>"
                 required
                 placeholder="メールアドレスを入力" /></label
             ><br />
@@ -83,6 +90,7 @@
                 class="textbox"
                 name="mailadd2"
                 id="mailadd2"
+                value="<%if(u != null && errorMail == null) %><%=u.getMailadd() %>"
                 required
                 placeholder="メールアドレスを再入力" /></label
             ><br />
@@ -101,6 +109,7 @@
                 class="hideText"
                 name="pw"
                 id="pw"
+                value="<%if(u != null) %><%=u.getPassword() %>"
                 required
                 placeholder="英数字６文字以上"
                 Onchange="disp1()"
@@ -115,7 +124,9 @@
               		document.getElementById("pass1").value = e1.value;
                 }
               </script>
-              <input type="text" class="showText" id="pass1" name="pw" Onchange="disp2()"/>
+              <input type="text" class="showText" id="pass1" name="pw" 
+              value="<%if(u != null) %><%=u.getPassword() %>"
+              Onchange="disp2()"/>
               <script>
               	function disp2(){
               	//document.getElementById …()内で指定した名前を持つ入力部品を取得する
@@ -137,7 +148,7 @@
                 class="hideText2"
                 name="pw2"
                 id="pw2"
-                value=""
+                value="<%if(u != null && errorPass == null) %><%=u.getPassword() %>"
                 required
                 placeholder="パスワードを再入力"
                 Onchange="disp3()"
@@ -152,7 +163,9 @@
               		document.getElementById("pass2").value = e2.value;
                 }
               </script>
-              <input type="text" class="showText2" id="pass2" name="pw2" Onchange="disp4()"/>
+              <input type="text" class="showText2" id="pass2" name="pw2" 
+              value="<%if(u != null && errorPass == null) %><%=u.getPassword() %>"
+              Onchange="disp4()"/>
               <script>
               function disp4(){
               	//document.getElementById …()内で指定した名前を持つ入力部品を取得する
@@ -242,6 +255,7 @@
               class="textbox birth"
               name="birth"
               id="birth"
+              value="<%if(u != null) %><%=u.getBirth()%>"
             /><br />
           </div>
   
@@ -280,7 +294,7 @@
 <!--         </a> -->
               </footer>
       </form>
-      
+      <%ses.removeAttribute("NYURYOKU"); %>
 
     </div>
   </body>
