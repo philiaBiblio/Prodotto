@@ -199,7 +199,7 @@
                 class="sexM nomargin"
                 name="sexy"
                 id="otoko"
-                value="男"
+                value="0"
             /></label>
             <label class="right"
               ><input
@@ -207,7 +207,7 @@
                 class="sexW nomargin"
                 name="sexy"
                 id="onna"
-                value="女" /></label
+                value="1" /></label
             ><br />
           </div>
   
@@ -244,8 +244,6 @@
                 sexM.classList.remove("clicked");
               });
             });
-
-            
           </script>
   
           <div>

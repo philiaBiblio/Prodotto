@@ -2,6 +2,7 @@ package apli;
 
 import java.io.IOException;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -38,10 +39,36 @@ public class P2SignUpConfirmationServlet extends HttpServlet {
 		try {
 			// 入力された情報の取得			
 			System.out.println(u.getName());
+			System.out.println(u.getUserid());
+			System.out.println(u.getSex());
+			System.out.println(u.getHistory());
+			System.out.println(u.getFq());
+			System.out.println(u.getBirth().replace("-", ""));
+			System.out.println(u.getMailadd());
+			System.out.println(u.getPassword());
+			
 			// このデータをDBにインサートする
+	        String insertSQL = 
+	        		"INSERT INTO ユーザー values ('" + u.getUserid() + "','"
+	        				+ u.getName() + "','" + u.getSex() + "','" + u.getHistory()
+	        				+ "','" + u.getFq() + "',to_date('" + u.getBirth().replace("-", "")
+	        				+ "','YYYY/MM/DD'),'aaaaaa','" + u.getPassword() + "','" + u.getMailadd() + "')";
+	        // インサート文実行
+	        dba.UpdateExe(insertSQL);
+	        
+	        // その会員情報を保存
+	        ses.setAttribute("LOGIN", u);
+	        
+	        // プロフィール編集画面へ
+	        url = "P2Timeline.jsp";
+	        System.out.println(url);
+	        // 画面遷移
+	        RequestDispatcher rd = request.getRequestDispatcher(url);
+	        rd.forward(request, response);
 			
-			
-			
+	     // ログアウト処理
+	     dba.closeDB();		
+	     
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();

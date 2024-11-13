@@ -34,8 +34,8 @@ public class User {
 	public String getHistory() {
 		return history;
 	}
-	public void setHistory(String history) {
-		this.history = history;
+	public void setHistory(String inHistory) {
+		this.history = inHistory;
 	}
 	public String getFq() {
 		return fq;

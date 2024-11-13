@@ -44,19 +44,19 @@
         <div class="profile-item">
           <span id="sex-display""><b>性別:</b>
            <% 
-        	if(u.getSex().equals("1")){%>
+        	if(u.getSex().equals("0")){%>
         		男
-        	<%}else if(u.getSex().equals("2")){%>
+        	<%}else if(u.getSex().equals("1")){%>
         		女
         	<% }%></span>
           <div class="button" id="sex-input">
             <div>
               <label class="left">
-              <input type="radio" class="sexM nomargin" name="sex" id="otoko" value="男"/></label>
+              <input type="radio" class="sexM nomargin" name="sex" id="otoko" value="0"/></label>
              </div>
              <div>
               <label class="right">
-              <input type="radio" class="sexW nomargin" name="sex" id="onna" value="女" /></label><br />
+              <input type="radio" class="sexW nomargin" name="sex" id="onna" value="1" /></label><br />
              </div>
               
                <!--  <input type="button" class="sexM nomargin" name="sex" id="otoko" value="男" />

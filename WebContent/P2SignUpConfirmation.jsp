@@ -91,7 +91,9 @@
 
         <div>
           <p class="midasi">性別</p>
-          <p class="uketori"><%=request.getParameter("sexy") %></p>
+          <p class="uketori"><%if(u.getSex().equals("0"))%>男
+          <%if(u.getSex().equals("1"))%>女</p>
+          <%-- <%=request.getParameter("sexy") %> --%>
         </div>
 
         <div>
