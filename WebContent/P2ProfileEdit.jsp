@@ -39,10 +39,10 @@
           <span class="dli-create" id="userid-icon" onclick="enableEdit('userid')"></span>
         </div>
 
-        <!-- 性別 -->
+       <!-- 性別 -->
         <!-- DBから持ってきて性別選択されてる状態にしておく -->
         <div class="profile-item">
-          <span id="sex-display"><b>性別:</b>
+          <span id="sex-display""><b>性別:</b>
            <% 
         	if(u.getSex().equals("0")){%>
         		男
@@ -50,29 +50,26 @@
         		女
         	<% }%></span>
           <div class="button" id="sex-input">
-          
             <div>
               <label class="left">
-<<<<<<< HEAD
-              <input type="radio" class="sexM nomargin" name="sex" id="otoko" value="男"/><span>男</span></label>
-=======
-              <input type="radio" class="sexM nomargin" name="sex" id="otoko" value="0"/></label>
+              <input type="radio" class="sexM nomargin" name="sex" id="otoko" value="0" <%= u.getSex().equals("0") ? "checked" : ""%>/></label>
              </div>
              <div>
               <label class="right">
-              <input type="radio" class="sexW nomargin" name="sex" id="onna" value="1" /></label><br />
+              <input type="radio" class="sexW nomargin" name="sex" id="onna" value="1" <%= u.getSex().equals("1") ? "checked" : ""%>/></label><br />
              </div>
               
                <!--  <input type="button" class="sexM nomargin" name="sex" id="otoko" value="男" />
                 <input type="hidden" name="sex" value="1">
               </label>
->>>>>>> refs/remotes/origin/main
             </div>
             <div>
               <label class="right">
-              <input type="radio" class="sexW nomargin" name="sex" id="onna" value="女" /><span>女</span></label>
-            </div>
-                        
+                <input type="button" class="sexW nomargin" name="sex" id="onna" value="女" />
+                <input type="hidden" name="sex" value="2">
+              </label>
+            </div> -->
+            
           </div>
           <span class="dli-create" id="sex-icon" onclick="enableEdit('sex')"></span>
         </div>
