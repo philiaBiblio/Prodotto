@@ -108,21 +108,13 @@ label {
     width: 100%;
 }
 
-.button div {
-    margin: 0 10px;
-}
+/*.button div {*/
+/*    margin: 0 10px;*/
+/*}*/
 
 .sexM,
 .sexW {
   width: 100px;
-  display: inline-block;
-  border: 1px solid #ffffff;
-  color: #ffffff;
-  background-color: #000000;
-  border-radius: 10px;
-  padding: 0.8em 0;
-  text-align: center;
-  box-sizing: border-box;
 }
 .sexM {
   left: 0;
@@ -306,12 +298,24 @@ input[type="date"]:hover::-webkit-calendar-picker-indicator {
   color: #0056b3;
 }
 
-#sex-input {
-  display: none;
-}
 
 .button-container {
   display: none; /* 最初に非表示 */
 }
+
+
+
+
+
+.sexM + span {
+  color: rgb(255, 255, 255);
+}
+
+.sexW + span {
+  color: rgb(255, 255, 255);
+}
+
+
+
 
 

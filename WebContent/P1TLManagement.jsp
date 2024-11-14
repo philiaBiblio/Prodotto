@@ -186,7 +186,7 @@
                   alt="comment icon"
                   style="width: 20px; height: 20px"
                 />
-                <span>55</span>
+                <span>5</span>
               </button>
 
               <button class="heart" onclick="changeImage('heartImage1')">
@@ -196,15 +196,15 @@
                   alt="like icon"
                   style="width: 20px; height: 20px"
                 />
-                <span>100</span>
+                <span>9</span>
               </button>
 
               <button>
                 <span>
                   <a href="P2Recording.jsp">
-                    <div class="nav_icon">
+                   
                       <i class="gg-duplicate"></i>
-                    </div>
+                   
                   </a>
                 </span>
               </button>
@@ -382,15 +382,15 @@
                   alt="like icon"
                   style="width: 20px; height: 20px"
                 />
-                <span>957</span>
+                <span>95</span>
               </button>
 
               <button>
                 <span>
                   <a href="P2Recording.jsp">
-                    <div class="nav_icon">
+                   
                       <i class="gg-duplicate"></i>
-                    </div>
+                    
                   </a>
                 </span>
               </button>
@@ -457,9 +457,9 @@
               <button>
                 <span>
                   <a href="P2Recording.jsp">
-                    <div class="nav_icon">
+                   
                       <i class="gg-duplicate"></i>
-                    </div>
+                
                   </a>
                 </span>
               </button>
@@ -526,9 +526,9 @@
               <button>
                 <span>
                   <a href="P2Recording.jsp">
-                    <div class="nav_icon">
+                  
                       <i class="gg-duplicate"></i>
-                    </div>
+                
                   </a>
                 </span>
               </button>
@@ -697,7 +697,7 @@
                   alt="comment icon"
                   style="width: 20px; height: 20px"
                 />
-                <span>300</span>
+                <span>30</span>
               </button>
 
               <button class="heart" onclick="changeImage('heartImage10')">
@@ -772,9 +772,9 @@
               <button>
                 <span>
                   <a href="P2Recording.jsp">
-                    <div class="nav_icon">
+                    
                       <i class="gg-duplicate"></i>
-                    </div>
+                 
                   </a>
                 </span>
               </button>
@@ -834,15 +834,15 @@
                   alt="like icon"
                   style="width: 20px; height: 20px"
                 />
-                <span>233</span>
+                <span>23</span>
               </button>
 
               <button>
                 <span>
                   <a href="P2Recording.jsp">
-                    <div class="nav_icon">
+                  
                       <i class="gg-duplicate"></i>
-                    </div>
+                   
                   </a>
                 </span>
               </button>
@@ -908,9 +908,9 @@
               <button>
                 <span>
                   <a href="P2Recording.jsp">
-                    <div class="nav_icon">
+                   
                       <i class="gg-duplicate"></i>
-                    </div>
+                
                   </a>
                 </span>
               </button>
@@ -976,9 +976,9 @@
               <button>
                 <span>
                   <a href="P2Recording.jsp">
-                    <div class="nav_icon">
+                    
                       <i class="gg-duplicate"></i>
-                    </div>
+                    
                   </a>
                 </span>
               </button>
@@ -1086,7 +1086,7 @@
                   alt="comment icon"
                   style="width: 20px; height: 20px"
                 />
-                <span>1056</span>
+                <span>34</span>
               </button>
 
               <button class="heart" onclick="changeImage('heartImage16')">
@@ -1096,15 +1096,15 @@
                   alt="like icon"
                   style="width: 20px; height: 20px"
                 />
-                <span>956</span>
+                <span>95</span>
               </button>
 
               <button>
                 <span>
                   <a href="P2Recording.jsp">
-                    <div class="nav_icon">
+                 
                       <i class="gg-duplicate"></i>
-                    </div>
+                   
                   </a>
                 </span>
               </button>
@@ -1228,9 +1228,9 @@
               <button>
                 <span>
                   <a href="P2Recording.jsp">
-                    <div class="nav_icon">
+                   
                       <i class="gg-duplicate"></i>
-                    </div>
+                  
                   </a>
                 </span>
               </button>
@@ -1296,9 +1296,9 @@
               <button>
                 <span>
                   <a href="P2Recording.jsp">
-                    <div class="nav_icon">
+                    
                       <i class="gg-duplicate"></i>
-                    </div>
+                  
                   </a>
                 </span>
               </button>
