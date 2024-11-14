@@ -5,10 +5,11 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>アカウント退会画面</title>
     <link rel="stylesheet" href="P2AccountDeletion.css" />
   </head>
   <body>
+  <form action="P2AccountDeletionServlet">
     <div class="header" onclick="history.back()">
       <div class="back-button">
         <div class="arrow01"></div>
@@ -21,12 +22,15 @@
 
       <div class="menu">
         <ul>
-          <a onclick="history.back()"><li>いいえ</li></a>
-          <!-- アカウント削除 -->
-          <a href="P2Login.jsp"><li>はい</li></a>
+         <!--   <a onclick="history.back()"><li>いいえ</li></a> -->
+         <input type="button" onclick="history.back()" value="いいえ">
+         <!-- アカウント削除 -->
+         <!--  <a href="P2Login.jsp"><li>はい</li></a> -->
+         <input type="submit" value="はい">
         </ul>
       </div>
     </div>
+   </form>
     
      <jsp:include page="P2kensaku.jsp"></jsp:include>
      

@@ -17,7 +17,7 @@
 
       <form action="P2LoginServlet">
         <div class="menu">
-          <ul>
+          <ul>.
             <div class="textarea">
               <input
                 type="email"

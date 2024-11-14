@@ -51,14 +51,14 @@ public class DBAcs {
 
 	//insert、update文実行メソッド
 	public int UpdateExe(String sql){
-		System.out.println("INSERT、又はUPDATE文実行");
+		System.out.println("INSERT、又はUPDATE文、DELETE文実行");
 		System.out.println("SQL文"+sql);
 		int cnt =0;
 		try {
 			cnt = stmt.executeUpdate(sql);
-			System.out.println("INSERT、又はUPDATE文成功");
+			System.out.println("INSERT、又はUPDATE文、DELETE文実行成功");
 		} catch (Exception ex) {
-			System.out.println("INSERT、又はUPDATE文失敗");
+			System.out.println("INSERT、又はUPDATE文、DELETE文実行失敗");
 			this.closeDB();
 			ex.printStackTrace();
 		}
