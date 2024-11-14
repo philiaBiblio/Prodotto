@@ -79,7 +79,7 @@ public class P2LoginServlet extends HttpServlet {
 				
 				// ログインしたユーザー情報を保存
 				ses.setAttribute("LOGIN", u);
-			//	System.out.println(sex);
+				System.out.println(sex);
 				System.out.println("ユーザーログイン成功");
 				
 				// タイムラインへ

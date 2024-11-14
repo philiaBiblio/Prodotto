@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="P2AccountDeletion.css">
 </head>
 <body>
-    
+	<form action="P2LogoutServlet">
         <div class="header" onclick="history.back()">
             <div class="back-button"
           ><div class="arrow01"></div>ログアウト</div>
@@ -19,12 +19,14 @@
                 
         <div class="menu">
             <ul>
-                <a onclick="history.back()"><li>いいえ</li></a>
-                <a href="P2Login.jsp"><li>はい</li></a>
+            	<input type="button" onclick="history.back()" value="いいえ">
+            	<input type="submit" value="はい">
+                <!--  <a onclick="history.back()"><li>いいえ</li></a> -->
+                <!-- <a href="P2Login.jsp"><li>はい</li></a> -->
             </ul>
         </div>
     </div>
-    
+    </form>
      <jsp:include page="P2kensaku.jsp"></jsp:include>
      
 </body>

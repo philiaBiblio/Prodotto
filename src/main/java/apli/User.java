@@ -10,6 +10,7 @@ public class User {
 	private String birth;		// 生年月日
 	private String iconImage;	// アイコン
 	private String mailadd;	// メールアドレス
+	private String password;	// パスワード
 	
 	// ゲッターセッター
 	public String getUserid() {
@@ -33,8 +34,8 @@ public class User {
 	public String getHistory() {
 		return history;
 	}
-	public void setHistory(String history) {
-		this.history = history;
+	public void setHistory(String inHistory) {
+		this.history = inHistory;
 	}
 	public String getFq() {
 		return fq;
@@ -59,5 +60,11 @@ public class User {
 	}
 	public void setMailadd(String mailadd) {
 		this.mailadd = mailadd;
+	}
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
 	}
 }

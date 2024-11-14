@@ -1,3 +1,4 @@
+<%@page import="apli.User"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -15,6 +16,9 @@
   </head>
   <%
   request.setCharacterEncoding("UTF-8");
+  //セッションの生成
+  HttpSession ses = request.getSession();
+  User u = (User)ses.getAttribute("NYURYOKU");
   %>
   <body>
     <div class="all">
@@ -87,7 +91,9 @@
 
         <div>
           <p class="midasi">性別</p>
-          <p class="uketori"><%=request.getParameter("sexy") %></p>
+          <p class="uketori"><%if(u.getSex().equals("0"))%>男
+          <%if(u.getSex().equals("1"))%>女</p>
+          <%-- <%=request.getParameter("sexy") %> --%>
         </div>
 
         <div>
@@ -141,7 +147,7 @@
           <input type="submit" name="modoru" id="modoru" value="戻る" />
         </form>
 
-        <form action="/P2LoginServlet" method="post">
+        <form action="P2SignUpConfirmationServlet" method="post">
           <input type="submit" name="touroku" id="touroku" value="登録" />
         </form>
       </footer>

@@ -32,7 +32,7 @@ public class P2ProfileEditServlet extends HttpServlet {
 		// ログイン情報の取得
 		User u = (User)ses.getAttribute("LOGIN");
 		
-//		// URLの生成
+		// URLの生成
 		String url = "";
 		// DBアクセス用部品の生成
 		DBAcs dba = new DBAcs();
