@@ -30,7 +30,7 @@ public class P1EmailChangeServlet extends HttpServlet {
 		// セッションの生成
 		HttpSession ses = request.getSession();
 		// ログイン情報の取得
-		User u = (User)ses.getAttribute("LOGIN");
+		AdminUser au = (AdminUser)ses.getAttribute("ADMINLOGIN");
 		
 		// URLの生成
 		String url = "";
@@ -47,21 +47,21 @@ public class P1EmailChangeServlet extends HttpServlet {
 				System.out.println("メールアドレスの入力値が一緒なのでOK、メールアドレスを変更する");
 				
 				// ユーザーの検索のsql文実行
-				ResultSet rs = dba.selectExe("select * from ユーザー where ユーザーID = '" + u.getUserid() + "'");
+				ResultSet rs = dba.selectExe("select * from 管理者 where 管理者ID = '" + au.getAdminUserid() + "'");
 				
 				if(rs.next()) {
 					// データベースの情報をアップデート
 			        String updateSQL = 
-			        		"UPDATE ユーザー SET メールアドレス = '" + inMail +
-			        		"' WHERE ユーザーID = '" + u.getUserid() + "'";
+			        		"UPDATE 管理者 SET メールアドレス = '" + inMail +
+			        		"' WHERE 管理者ID = '" + au.getAdminUserid() + "'";
 			        
 			        // アップデート文実行
 			        dba.UpdateExe(updateSQL);
 			        
 			        // 取得した情報を保存
-			        u.setMailadd(inMail);
+			        au.setAdminMailadd(inMail);
 			        // 情報を保存
-			        ses.setAttribute("LOGIN", u);
+			        ses.setAttribute("ADMINLOGIN", au);
 			        String trueMess = "変更できました。";
 					ses.setAttribute("TRUEMESS", trueMess);
 				}
@@ -71,7 +71,7 @@ public class P1EmailChangeServlet extends HttpServlet {
 				ses.setAttribute("ERRORMAIL", messMail);
 			}
 			
-			url = "P2EmailChange.jsp";
+			url = "P1EmailChange.jsp";
 			
 			// 画面遷移
 			RequestDispatcher rd = request.getRequestDispatcher(url);

@@ -7,7 +7,7 @@ public class AdminUser {
 	private String AdminSex;			// 管理者性別
 	private String AdminBirth;			// 管理者生年月日
 //	private String AdminIconImage;	// 管理者アイコン
-	private String AdminMailadd;		// 管理者メールアドレス
+	private String AdminMailadd;		// メールアドレス
 	private String AdminLevel;		// 管理者レベル
 	
 	// ゲッターセッター
