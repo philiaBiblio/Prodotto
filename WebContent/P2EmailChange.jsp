@@ -81,10 +81,16 @@
        <jsp:include page="P2kensaku.jsp"></jsp:include>
 
         <script>
+        <%if(trueMail != null ){ %>
+        	window.onload = function(){
+        		const dialog = document.querySelector("dialog");
+            	dialog.showModal();
+            } 	
+        <%} %>
           const openButton = document.querySelector(".submit-button");
           openButton.addEventListener("click", () => {
-            const dialog = document.querySelector("dialog");
-            dialog.showModal();
+          /*   const dialog = document.querySelector("dialog");
+            dialog.showModal(); */
           });
 
           const closeButton = document.querySelector(".dialog");
