@@ -18,8 +18,10 @@
 	HttpSession ses = request.getSession();
 	// ログイン情報の取得
 	User u = (User)ses.getAttribute("LOGIN");
-	String error = (String)ses.getAttribute("ERROR");
-//	String true = (String)ses.getAttribute("TRUEMESS");
+	String messPass = (String)ses.getAttribute("ERRORPASS");
+	String messPass2 = (String)ses.getAttribute("ERRORPASS2");
+	String messPass3 = (String)ses.getAttribute("ERRORPASS3");
+	String truePass = (String)ses.getAttribute("TRUEMESS");
   %>
   <body>
     <div class="header" onclick="history.back()">
@@ -32,7 +34,7 @@
       <h2>パスワードを変更</h2>
       <p>英数字6文字以上だよん</p>
 
-      <form action="P2PasswordChangeServlet" method="dialog">
+      <form action="P2PasswordChangeServlet">
         <div class="menu">
           <ul>
             <!-- 現在のパスワードと一致すればOK -->
@@ -58,11 +60,25 @@
               	//入力部品を入れた変数名.value= '設定したい値'
               		document.getElementById("pass1").value = e1.value;
                 }
+
+              	function disp2(){
+                  	//document.getElementById …()内で指定した名前を持つ入力部品を取得する
+                  	//↓の例では、変数e1の中にpwテキストボックスが入る
+                  		var e1 = document.getElementById("pass1");
+                  	//〇〇.value…指定した入力部品の属性に値を設定する
+                  	//入力部品を入れた変数名.value= '設定したい値'
+                  		document.getElementById("pw").value = e1.value;
+                    }
               </script>
 
                 <label for="checkPassword" class="fa fa-eye"></label>
                 <label for="checkPassword" class="fa fa-eye-slash"></label>
               </div>
+              
+               <%if(messPass2 != null){ %>
+				<p style="color:#ff0000"><%=messPass2 %></p>
+			<%} %>
+			<%ses.removeAttribute("ERRORPASS2"); %>
 
               <input type="checkbox" id="checkPassword2" />
               <div class="togglePassword">
@@ -120,6 +136,16 @@
               </div>
             </div>
             
+            <%if(messPass != null){ %>
+				<p style="color:#ff0000"><%=messPass %></p>
+			<%} %>
+			<%ses.removeAttribute("ERRORPASS"); %>
+			
+			 <%if(messPass3 != null){ %>
+				<p style="color:#ff0000"><%=messPass %></p>
+			<%} %>
+			<%ses.removeAttribute("ERRORPASS3"); %>
+			
             <script>
               	function disp5(){
               	//document.getElementById …()内で指定した名前を持つ入力部品を取得する
@@ -151,25 +177,35 @@
                 id="pwHenkou"
                 value="パスワードを変更"
               />
+              
+              <%if(truePass != null){ %>
               <div class="log">
                 <dialog>
                   <p>パスワードを変更しました</p>
                   <button type="button" class="dialog">閉じる</button>
                 </dialog>
               </div>
+              <%} %>
+			<%ses.removeAttribute("TRUEMESS"); %>
 
               <script>
-                const openButton = document.querySelector(".submit-button");
-                openButton.addEventListener("click", () => {
-                  const dialog = document.querySelector("dialog");
-                  dialog.showModal();
-                });
+              <%if(truePass != null ){ %>
+              window.onload = function(){
+          		const dialog = document.querySelector("dialog");
+              	dialog.showModal();
+              	} 	
+              	<%} %>
+              	const openButton = document.querySelector(".submit-button");
+              	openButton.addEventListener("click", () => {
+         		/* const dialog = document.querySelector("dialog");
+         		dialog.showModal(); */
+         		});
 
-                const closeButton = document.querySelector(".dialog");
-                closeButton.addEventListener("click", () => {
-                  const dialog = document.querySelector("dialog");
-                  dialog.close();
-                });
+              	const closeButton = document.querySelector(".dialog");
+              	closeButton.addEventListener("click", () => {
+                  	const dialog = document.querySelector("dialog");
+                  	dialog.close();
+                  	});
               </script>
             </div>
           </ul>

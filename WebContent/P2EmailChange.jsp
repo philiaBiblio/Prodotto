@@ -95,8 +95,8 @@
 
           const closeButton = document.querySelector(".dialog");
           closeButton.addEventListener("click", () => {
-            const dialog = document.querySelector("dialog");
-            dialog.close();
+              const dialog = document.querySelector("dialog");
+              dialog.close();
           });
         </script>
       </form>
