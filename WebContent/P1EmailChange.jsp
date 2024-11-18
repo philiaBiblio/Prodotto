@@ -1,3 +1,4 @@
+<%@page import="apli.AdminUser"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -7,7 +8,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>メールアドレス変更画面</title>
     <link rel="stylesheet" href="P1EmailChange.css" />
-  </head>
+  </head> 
+  <%
+	//セッションの取得
+	HttpSession ses = request.getSession();
+	// ログイン情報の取得
+	AdminUser au = (AdminUser)ses.getAttribute("ADMINLOGIN");
+	String errorMail = (String)ses.getAttribute("ERRORMAIL");
+	String trueMail = (String)ses.getAttribute("TRUEMESS");
+  %>
+  
   <body>
     <div class="header" onclick="history.back()">
       <div class="back-button" >
@@ -18,7 +28,7 @@
     <div class="container">
       <h2>メールアドレスを変更</h2>
 
-      <form action="" onsubmit="showPopup(event)">
+      <form action="EmailChangeServlet" onsubmit="showPopup(event)">
         <div class="menu">
           <ul>
             <div class="textarea">
@@ -39,6 +49,10 @@
                 placeholder="メールアドレス再入力"
               />
             </div>
+			<%if(errorMail != null){ %>
+				<p style="color:#ff0000"><%=errorMail %></p>
+			<%} %>
+			<%ses.removeAttribute("ERRORMAIL"); %>
 
             <div class="button-container">
               <input
@@ -52,6 +66,7 @@
           </ul>
         </div>
 
+		<%if(trueMail != null ){ %>
         <div class="log">
           <dialog>
             <p class="ok">メールアドレスを変更しました</p>
@@ -60,14 +75,22 @@
             </div>
           </dialog>
         </div>
-        
-        <jsp:include page="P1kensaku.jsp"></jsp:include>
+        <%} %>
+			<%ses.removeAttribute("TRUEMESS"); %>
+			
+       <jsp:include page="P1kensaku.jsp"></jsp:include>
 
         <script>
+        <%if(trueMail != null ){ %>
+    		window.onload = function(){
+    			const dialog = document.querySelector("dialog");
+        		dialog.showModal();
+        	} 	
+    	<%} %>
           const openButton = document.querySelector(".submit-button");
           openButton.addEventListener("click", () => {
-            const dialog = document.querySelector("dialog");
-            dialog.showModal();
+          /*   const dialog = document.querySelector("dialog");
+            dialog.showModal(); */
           });
 
           const closeButton = document.querySelector(".dialog");

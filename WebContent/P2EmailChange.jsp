@@ -28,7 +28,7 @@
     <div class="container">
       <h2>メールアドレスを変更</h2>
 
-      <form action="EmailChangeServlet" onsubmit="showPopup(event)">
+      <form action="P2EmailChangeServlet" onsubmit="showPopup(event)">
         <div class="menu">
           <ul>
             <div class="textarea">
