@@ -32,7 +32,7 @@
     </div>
     <div class="container">
       <h2>パスワードを変更</h2>
-      <p>英数字6文字以上だよん</p>
+      <p>英数字6文字以上で設定してください</p>
 
       <form action="P2PasswordChangeServlet">
         <div class="menu">
@@ -142,7 +142,7 @@
 			<%ses.removeAttribute("ERRORPASS"); %>
 			
 			 <%if(messPass3 != null){ %>
-				<p style="color:#ff0000"><%=messPass %></p>
+				<p style="color:#ff0000"><%=messPass3 %></p>
 			<%} %>
 			<%ses.removeAttribute("ERRORPASS3"); %>
 			

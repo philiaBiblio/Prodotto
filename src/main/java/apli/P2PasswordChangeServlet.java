@@ -54,19 +54,22 @@ public class P2PasswordChangeServlet extends HttpServlet {
 				System.out.println(inPass2);
 				System.out.println(inPass3);
 				if(pass.equals(inPass)) {
-					System.out.println("パスワードが一致していた場合");
+					System.out.println("パスワード一致◎");
 					int flg = 0;
 					// 二回入力のチェック処理
 					if(inPass2.equals(inPass3)) {
 						System.out.println("パスワードの入力値が一緒なのでOK、セキュリティチェックへ");
+						
 						if(inPass2.length() >= 4 && inPass2.length() <= 14) {
 							System.out.println("桁数◎");
 							flg = flg + 1;
 						}
-						if(inPass2.matches("^[0-9a-zA-Z]*$") == true) {
+						if(inPass2.matches(".*[0-9].*") == true &&
+								inPass2.matches(".*[a-z].*") == true) {
 							System.out.println("セキュリティチェック◎");
 							flg = flg + 1;
 						}
+						
 						if(flg == 2) {
 							// データベースの情報をアップデート
 					        String updateSQL = 
@@ -81,8 +84,8 @@ public class P2PasswordChangeServlet extends HttpServlet {
 					        // 情報を保存
 					        ses.setAttribute("LOGIN", u);
 					        String trueMess = "変更できました。";
-							ses.setAttribute("TRUEMESS", trueMess);	
-						}else {
+							ses.setAttribute("TRUEMESS", trueMess);
+						}else{
 							System.out.println("セキュリティチェック×なので弾く");
 							String messPass3 = "※パスワードが英数字6文字以上ではありません。<br>別のパスワードを使用してください。";
 							ses.setAttribute("ERRORPASS3", messPass3);

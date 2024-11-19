@@ -89,8 +89,9 @@ public class P2SignUpServlet extends HttpServlet {
 			int level = 0;
 			if(inPass.equals(inPass2)) {
 				System.out.println("パスワードの入力値が一緒なのでOK");
-				// パスワードのセキュリティチェック
-				if(inPass.matches("^[0-9a-zA-Z]*$") == true) {
+				// パスワードのセキュリティチェック			
+				if(inPass.matches(".*[0-9].*") == true &&
+						inPass.matches(".*[a-z].*") == true){
 					System.out.println("セキュリティチェック◎");
 					level = level + 1;
 				}
