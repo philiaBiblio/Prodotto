@@ -1,3 +1,4 @@
+<%@page import="apli.User"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -8,6 +9,14 @@
     <title>DM画面</title>
     <link rel="stylesheet" href="P2DM.css" />
   </head>
+<%
+	//セッションの取得
+	HttpSession ses = request.getSession();
+	// ログイン情報の取得
+	User u = (User)ses.getAttribute("LOGIN");
+	// DM履歴のセッションの取得
+	
+%>
 
   <body style="margin: 70px 0 0 -5px;">
     <!-- メインコンテンツ -->
@@ -87,7 +96,8 @@
         </div>
 
       <!-- DMチャットエリア -->
-      <div class="chat-container">
+      <%if( != null){ %>
+      		<div class="chat-container">
         <!-- ヘッダーにはユーザネームを表示 -->
         <div class="chat-header">おもち</div>
         <!--もってきたトークを上から表示していく-->
@@ -115,7 +125,7 @@
           </div>
         </div>
 
-        <form action="" method="post">
+        <form action="P2DMServlet" method="post">
           <div class="chat-input">
             <input
               type="text"
@@ -128,6 +138,8 @@
           </div>
         </form>
       </div>
+      <%} %>
+      <%ses.removeAttribute("ERRORPASS2"); %>
     </div>
     
      <jsp:include page="P2kensaku.jsp"></jsp:include>

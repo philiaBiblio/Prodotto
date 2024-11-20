@@ -109,6 +109,7 @@
         </div>
       </nav>
     </section>
+    
 
     <script src="audioPlayer.js"></script>
     <script src="https://unpkg.com/wavesurfer.js"></script>
