@@ -228,12 +228,7 @@ header input::placeholder {
   border-radius: 5px;
 }
 
-/* 検索アイコンのスタイル */
-.fa-magnifying-glass {
-  margin-left: 10px;
-  font-size: 20px;
-  cursor: pointer;
-}
+
 
 
 

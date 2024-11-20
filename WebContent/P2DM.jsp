@@ -1,3 +1,6 @@
+<%@page import="apli.DM"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="apli.User"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -8,19 +11,26 @@
     <title>DM画面</title>
     <link rel="stylesheet" href="P2DM.css" />
   </head>
+<%
+	//セッションの取得
+	HttpSession ses = request.getSession();
+	// ログイン情報の取得
+	User u = (User)ses.getAttribute("LOGIN");
+	// DM画面に必要な情報
+	ArrayList<DM> dmList = (ArrayList)ses.getAttribute("DMLIST");
+%>
 
   <body style="margin: 70px 0 0 -5px;">
     <!-- メインコンテンツ -->
     <div class="main-content">
-      <!-- メッセージリスト -->
-      <!---->
-      <!--class="message-item"選択するとユーザIDをサーバへ飛ばす。
-      ほんでそいつとのトーク履歴持ってくる。それをclass="chat-messages"に持って行っちゃおう-->
+    <%if(dmList != null){ %>
+    <!-- メッセージリスト -->
+    <!--class="message-item"選択するとユーザIDをサーバへ飛ばす。
+    ほんでそいつとのトーク履歴持ってくる。それをclass="chat-messages"に持って行っちゃおう-->
         <div class="message-list">
-          
           <div class="message-item" name="senderid">
             <img src="image/ききゅう.jpg" alt="アイコン" class="icon" />
-            おもち
+            <%=dmList.get(0).getYour() %>
           </div>
           
           <div class="message-item" name="senderid">
@@ -84,10 +94,12 @@
             <img src="image/ききゅう.jpg" alt="アイコン" class="icon" />
             坂本雄三
           </div>
-        </div>
+        </div>		
+			<%} %>
 
       <!-- DMチャットエリア -->
-      <div class="chat-container">
+      <%if(dmList != null){ %>
+      		<div class="chat-container">
         <!-- ヘッダーにはユーザネームを表示 -->
         <div class="chat-header">おもち</div>
         <!--もってきたトークを上から表示していく-->
@@ -115,7 +127,7 @@
           </div>
         </div>
 
-        <form action="" method="post">
+        <form action="P2DMServlet" method="post">
           <div class="chat-input">
             <input
               type="text"
@@ -128,6 +140,8 @@
           </div>
         </form>
       </div>
+      <%} %>
+      <%ses.removeAttribute("ERRORPASS2"); %>
     </div>
     
      <jsp:include page="P2kensaku.jsp"></jsp:include>

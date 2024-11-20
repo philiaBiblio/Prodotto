@@ -1,3 +1,5 @@
+<%@page import="apli.DM"%>
+<%@page import="java.util.ArrayList"%>
 <%@page import="apli.User"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -27,6 +29,8 @@
 	HttpSession ses = request.getSession();
 	// ログイン情報の取得
 	User u = (User)ses.getAttribute("LOGIN");
+	// DM画面に必要な情報
+	ArrayList<DM> dmList = (ArrayList)ses.getAttribute("DMLIST");
 %>
 
   <body>

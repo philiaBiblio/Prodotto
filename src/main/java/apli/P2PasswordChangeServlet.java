@@ -60,7 +60,7 @@ public class P2PasswordChangeServlet extends HttpServlet {
 					if(inPass2.equals(inPass3)) {
 						System.out.println("パスワードの入力値が一緒なのでOK、セキュリティチェックへ");
 						
-						if(inPass2.length() >= 4 && inPass2.length() <= 14) {
+						if(inPass2.length() >= 6) {
 							System.out.println("桁数◎");
 							flg = flg + 1;
 						}

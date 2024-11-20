@@ -1,3 +1,5 @@
+<%@page import="apli.User"%>
+<%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -8,36 +10,45 @@
     <title>ユーザー管理画面</title>
     <link rel="stylesheet" href="P1UserManegement.css">
   </head>
+  
+   <%
+	//セッションの取得
+	HttpSession ses = request.getSession();
+	//会員リストを取得
+	ArrayList<User> u = (ArrayList<User>)ses.getAttribute("USERLIST");  
+   %>
+  
   <body>
+  <form action="UserManagementServlet">
     <h1>ユーザー管理画面</h1>
     <div class="search-container">
-      <input type="text" class="search-box" placeholder="検索..." />
-      <button class="search-button">一括</button>
+      <input type="text" name="usersearch" class="search-box" placeholder="検索..." />
+      <button type="submit" class="search-button">一括</button>
     </div>
-
+	</form>
     <table>
       <tr>
         <th>ユーザー名</th>
         <th>ユーザーID</th>
         <th>削除ボタン</th>
       </tr>
-      <tr>
-        <td>さんまのはらわた</td>
-        <td>sanma226</td>
-        <td class="delete-button"><button>アカウント削除</button></td>
-      </tr>
       
-      <tr>
-        <td>ゆうせい</td>
-        <td>yusei215</td>
-        <td class="delete-button"><button>アカウント削除</button></td>
-      </tr>
-
-      <tr>
-        <td>金森a.k.a MAFF</td>
-        <td>maffaka</td>
-        <td class="delete-button"><button>アカウント削除</button></td>
-      </tr>
+      
+      <%if(u != null){ %>
+		<% for (int i = 0; i < u.size(); i++) { %>
+		<form action="P1UserManeDelServlet">
+		<tr>
+        <td><%= u.get(i).getName() %></td>
+        <td><%= u.get(i).getUserid() %></td>
+        <td class="delete-button">
+        <input type="hidden" name="USERID" value="<%=i%>">
+        <button type="submit" >アカウント削除</button>
+        </td>
+      	</tr>
+      	</form>
+		<% } %>			
+	  <%} %>
+      
 
     </table>
     
@@ -71,6 +82,5 @@
           }
         });
     </script>
-    
   </body>
 </html>
