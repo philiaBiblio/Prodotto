@@ -1,3 +1,5 @@
+<%@page import="apli.DM"%>
+<%@page import="java.util.ArrayList"%>
 <%@page import="apli.User"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -14,22 +16,21 @@
 	HttpSession ses = request.getSession();
 	// ログイン情報の取得
 	User u = (User)ses.getAttribute("LOGIN");
-	// DM履歴のセッションの取得
-	
+	// DM画面に必要な情報
+	ArrayList<DM> dmList = (ArrayList)ses.getAttribute("DMLIST");
 %>
 
   <body style="margin: 70px 0 0 -5px;">
     <!-- メインコンテンツ -->
     <div class="main-content">
-      <!-- メッセージリスト -->
-      <!---->
-      <!--class="message-item"選択するとユーザIDをサーバへ飛ばす。
-      ほんでそいつとのトーク履歴持ってくる。それをclass="chat-messages"に持って行っちゃおう-->
+    <%if(dmList != null){ %>
+    <!-- メッセージリスト -->
+    <!--class="message-item"選択するとユーザIDをサーバへ飛ばす。
+    ほんでそいつとのトーク履歴持ってくる。それをclass="chat-messages"に持って行っちゃおう-->
         <div class="message-list">
-          
           <div class="message-item" name="senderid">
             <img src="image/ききゅう.jpg" alt="アイコン" class="icon" />
-            おもち
+            <%=dmList.get(0).getYour() %>
           </div>
           
           <div class="message-item" name="senderid">
@@ -93,10 +94,11 @@
             <img src="image/ききゅう.jpg" alt="アイコン" class="icon" />
             坂本雄三
           </div>
-        </div>
+        </div>		
+			<%} %>
 
       <!-- DMチャットエリア -->
-      <%if( != null){ %>
+      <%if(dmList != null){ %>
       		<div class="chat-container">
         <!-- ヘッダーにはユーザネームを表示 -->
         <div class="chat-header">おもち</div>

@@ -84,32 +84,47 @@ public class P2LoginServlet extends HttpServlet {
 				System.out.println(sex);
 				System.out.println("ユーザーログイン成功");
 				
-//				select max(タイムスタンプ) as タイムスタンプ,相手,
-//				sum(CASE WHEN 既読未読='0' THEN 1 ELSE 0 END)　as 未読数 from
-//				(select タイムスタンプ,y1.ユーザーID as 相手,既読未読 from DM join ユーザー y1 on y1.ユーザーID　= DM.送信元 join ユーザー y2 on y2.ユーザーID = DM.受信元 where DMID like '%V2jX9z7wL3D%' 
-//				union
-//				select タイムスタンプ,y2.ユーザーID as相手,既読未読　from DM join ユーザー y1 on y1.ユーザーID　= DM.送信元 join ユーザー y2 on y2.ユーザーID = DM.受信元 where DMID like '%V2jX9z7wL3D%')
-//				group by 相手;
-//				
-				
 				// dm情報の取得
-				String sqldm = "select max(タイムスタンプ) as タイムスタンプ,相手,\r\n"
-						+ "sum(CASE WHEN 既読未読='0' THEN 1 ELSE 0 END)　as 未読数 from\r\n"
-						+ "(select タイムスタンプ,y1.ユーザーID as 相手,既読未読 from DM join ユーザー y1 on y1.ユーザーID　= DM.送信元 join ユーザー y2 on y2.ユーザーID = DM.受信元 where DMID like '%V2jX9z7wL3D%' \r\n"
-						+ "union\r\n"
-						+ "select タイムスタンプ,y2.ユーザーID as相手,既読未読　from DM join ユーザー y1 on y1.ユーザーID　= DM.送信元 join ユーザー y2 on y2.ユーザーID = DM.受信元 where DMID like '%V2jX9z7wL3D%')\r\n"
-						+ "group by 相手;";
+				String sqldm = "select max(タイムスタンプ) as タイムスタンプ,相手,sum(CASE WHEN 既読未読='0' THEN 1 ELSE 0 END) as 未読数 from"
+						+ "(select タイムスタンプ,y1.ユーザーID as 相手,既読未読 from DM join ユーザー y1 on y1.ユーザーID　= DM.送信元 join ユーザー y2 on y2.ユーザーID = DM.受信元 where DMID like '%"
+						+ u.getUserid() + "%' union "
+								+ "select タイムスタンプ,y2.ユーザーID as 相手,既読未読 from DM join ユーザー y1 on y1.ユーザーID = DM.送信元 join ユーザー y2 on y2.ユーザーID = DM.受信元 where DMID like '%"
+								+ u.getUserid() + "%') group by 相手 order by タイムスタンプ desc;";
 				// sql文実行
 				ResultSet rs3 = dba3.selectExe(sqldm);
-				
 				// アレイリストの取得
 				ArrayList<DM> dmList = new ArrayList<DM>();
 				
-				
-				
+				// 繰り返しでsqlからすべての情報を得る
+				while(rs3.next()) {
+					String time = rs.getString("タイムスタンプ");
+					System.out.println("DB処理番号：" + time);
+					String your = rs.getString("相手");
+					System.out.println("DB処理番号：" + your);
+					String midoku = rs.getString("未読数");
+					System.out.println("DB処理番号：" + midoku);
+					
+					if(your.equals(u.getUserid())) {
+						System.out.println("相手の名前とログインしてるIDが一緒なのでアレイリストに入れない");
+					}else {
+						// インスタンス生成
+						DM dm = new DM();
+						dm.setTime(time);
+						dm.setYour(your);
+						dm.setKidoku(midoku);
+						// アレイリストに追加
+						dmList.add(dm);
+					}
+				}
+				ses.setAttribute("DMLIST", dmList);
+		
 				// タイムラインへ
 				url = "P2Timeline.jsp";
 				System.out.println(url);
+				
+				// ログアウト処理
+				dba.closeDB();
+				dba3.closeDB();
 			}else {
 				System.out.println("管理者ログイン実行");
 				// ユーザーログイン失敗後管理者用データベースへ接続
@@ -144,6 +159,8 @@ public class P2LoginServlet extends HttpServlet {
 					// タイムラインへ
 					url = "P1TLManagement.jsp";
 					System.out.println(url);
+					// ログアウト処理
+					dba2.closeDB();
 				}
 			}
 			
@@ -151,14 +168,13 @@ public class P2LoginServlet extends HttpServlet {
 			RequestDispatcher rd = request.getRequestDispatcher(url);
 			rd.forward(request, response);
 			
-			// ログアウト処理
-			dba.closeDB();
-			
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
 			// ログアウト処理
-			dba.closeDB();	
+			dba.closeDB();
+			dba2.closeDB();
+			dba3.closeDB();	
 		}
 	}
 }
