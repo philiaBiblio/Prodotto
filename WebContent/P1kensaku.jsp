@@ -67,7 +67,7 @@
 
           <div class="nav_list">
             <div class="nav_items navtop">
-              <a href="P1UserManegement.jsp" class="nav_link navtop">
+              <a href="P1UserManegement.jsp" class="nav_link navtop" id="P1UserManegementid">
                 <!-- <i class="fa fa-house nav_icon"></i> -->
                 <div class="nav_icon">
                   <i class="gg-profile"></i>
@@ -75,7 +75,7 @@
                 <span class="nav_name">ユーザー管理</span>
               </a>
 
-              <a href="P1EventManegement.jsp" class="nav_link navtop">
+              <a href="P1EventManegement.jsp" class="nav_link navtop" id="P1EventManegementid">
                 <!-- <i class="fa fa-house nav_icon"></i> -->
                 <div class="nav_icon nav_soroe">
                   <i class="gg-flag-alt"></i>
@@ -83,7 +83,7 @@
                 <span class="nav_name">イベント管理</span>
               </a>
 
-              <a href="P1AdminSetting.jsp" class="nav_link navtop">
+              <a href="P1AdminSetting.jsp" class="nav_link navtop" id="P1AdminSettingid">
                 <!-- <i class="fa-solid fa-video nav_icon"></i> -->
                 <div class="nav_icon">
                   <span class="material-symbols-outlined"> settings </span>
@@ -91,7 +91,7 @@
                 <span class="nav_name">設定</span>
               </a>
 
-              <a href="P1TLManagement.jsp" class="nav_link navtop active">
+              <a href="P1TLManagement.jsp" class="nav_link navtop" id="P1TLManagementid">
                 <i class="fa fa-house nav_icon"></i>
                 <span class="nav_name">管理者タイムライン</span>
               </a>
@@ -112,5 +112,35 @@
 
     <script src="audioPlayer.js"></script>
     <script src="https://unpkg.com/wavesurfer.js"></script>
+  
+  	<script>
+		const currentFile = window.location.pathname.split("/").pop(); 
+		
+  		const fileToIdMap = {
+			"P1UserManegement.jsp": "P1UserManegementid",
+
+  		    "P1EventManegement.jsp": "P1EventManegementid",
+
+  		    "P1TLManagement.jsp": "P1TLManagementid",
+
+  		  	"P1AdminSetting.jsp": "P1AdminSettingid",
+//反応しない
+  			//"P1PaersonalInformation.jsp": "P1AdminSettingid",
+  			"P1PasswordChange.jsp": "P1AdminSettingid",
+  			"P1EmailChange.jsp": "P1AdminSettingid",
+  			"P1Logout.jsp": "P1AdminSettingid",
+
+  		};
+  		const targetId = fileToIdMap[currentFile];
+  		
+  		if (targetId) {
+  	    	const element = document.getElementById(targetId);
+  	    	if (element) {
+  	        	element.classList.add("active");
+  	    	}
+  	    }
+  			
+	</script>
+  
   </body>
 </html>

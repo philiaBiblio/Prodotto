@@ -66,12 +66,12 @@
 
           <div class="nav_list">
             <div class="nav_items navtop">
-              <a href="P2Timeline.jsp" class="nav_link navtop active">
+              <a href="P2Timeline.jsp" class="nav_link navtop nav_soroe " id="P2Timelineid">
                 <i class="fa fa-house nav_icon"></i>
                 <span class="nav_name">タイムライン</span>
               </a>
 
-              <a href="P2DM.jsp" class="nav_link navtop nav_soroe">
+              <a href="P2DM.jsp" class="nav_link navtop nav_soroe"id="P2DMid">
                 <!-- <i class="fa fa-compass nav_icon"></i> -->
                 <div class="nav_icon nav_soroe">
                   <i class="gg-mail"></i>
@@ -79,7 +79,8 @@
                 <span class="nav_name">DM</span>
               </a>
 
-              <a href="P2Ranking.jsp" class="nav_link navtop nav_soroe">
+			
+              <a href="P2Ranking.jsp" class="nav_link navtop nav_soroe" id="P2Rankingid">
                 <!-- <i class="fa-brands fa-tiktok nav_icon"></i> -->
                 <div class="nav_icon nav_soroe">
                   <i class="gg-crown"></i>
@@ -89,16 +90,16 @@
 
               <a
                 href="P2PostAndRecording.jsp"
-                class="nav_link navtop nav_soroe"
+                class="nav_link navtop nav_soroe" id="P2PostAndRecordingid"
               >
                 <!-- <i class="fa-solid fa-users nav_icon"></i> -->
-                <div class="nav_icon">
+                <div class="nav_icon nav_soroe">
                   <i class="gg-add-r"></i>
                 </div>
                 <span class="nav_name">投稿</span>
               </a>
 
-              <a href="P2ProfileMine.jsp" class="nav_link navtop nav_soroe">
+              <a href="P2ProfileMine.jsp" class="nav_link navtop nav_soroe" id="P2ProfileMineid">
                 <!-- <i class="fa-solid fa-users nav_icon"></i> -->
                 <div class="nav_icon nav_soroe">
                   <i class="gg-boy"></i>
@@ -106,7 +107,7 @@
                 <span class="nav_name">プロフィール</span>
               </a>
 
-              <a href="P2Settings.jsp" class="nav_link navtop">
+              <a href="P2Settings.jsp" class="nav_link navtop" id="P2Settingsid">
                 <!-- <i class="fa-solid fa-video nav_icon"></i> -->
                 <div class="nav_icon nav_soroe">
                   <span class="material-symbols-outlined"> settings </span>
@@ -130,5 +131,40 @@
 
     <script src="audioPlayer.js"></script>
     <script src="https://unpkg.com/wavesurfer.js"></script>
+  	<script>
+		const currentFile = window.location.pathname.split("/").pop(); 
+		
+		const fileToIdMap = {
+			    "P2Timeline.jsp":"P2Timelineid",
+
+			    "P2DM.jsp":"P2DMid",
+
+			    "P2Ranking.jsp":"P2Rankingid",
+			    
+			    "P2PostAndRecording.jsp":"P2PostAndRecordingid",
+			    "P2DerivativesList.jsp":"P2PostAndRecordingid",
+
+			    "P2ProfileMine.jsp":"P2ProfileMineid",
+			    "P2ProfileEdit.jsp":"P2ProfileMineid",
+			    "P2Notifications.jsp":"P2ProfileMineid",
+
+			    "P2Settings.jsp":"P2Settingsid",
+			    "P2PasswordChange.jsp":"P2Settingsid",
+			    "P2EmailChange.jsp": "P2Settingsid",
+			    "P2Logout.jsp": "P2Settingsid",
+			    "P2AccountDeletion.jsp": "P2Settingsid"
+			};
+
+  		const targetId = fileToIdMap[currentFile];
+  		
+  		if (targetId) {
+  	    	const element = document.getElementById(targetId);
+  	    	if (element) {
+  	        	element.classList.add("active");
+  	    	}
+  	    }
+  			
+	</script>
+  
   </body>
 </html>
