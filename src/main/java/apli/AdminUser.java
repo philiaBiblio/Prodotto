@@ -9,7 +9,14 @@ public class AdminUser {
 //	private String AdminIconImage;	// 管理者アイコン
 	private String AdminMailadd;		// メールアドレス
 	private String AdminLevel;		// 管理者レベル
+	private String password;	// パスワード
 	
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
+	}
 	// ゲッターセッター
 	public String getAdminUserid() {
 		return AdminUserid;

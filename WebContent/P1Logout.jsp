@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="P1Logout.css" />
   </head>
   <body>
-  <form action="P2LogoutServlet">
+  <form action="adminLogoutServlet">
     <div class="header" onclick="history.back()">
       <div class="back-button">
         <div class="arrow01"></div>
