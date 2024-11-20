@@ -46,60 +46,56 @@ label {
   width: 250px;
 }
 
-input,
-select {
-  margin: 0 20px 15px 0;
-}
+/*input,*/
+/*select {*/
+/*  margin: 0 20px 15px 0;*/
+/*}*/
 
 .nomargin {
   margin: 0;
 }
 
-/*.sexM,*/
-/*.sexW {*/
-/*  width: 40%;*/
-/*  display: inline-block;*/
-/*  background-color: #000000;*/
-/*  border: 1px solid #ffffff;*/
-/*  color: #ffffff;*/
-/*  border-radius: 10px;*/
-/*  padding: 0.8em 0;*/
-/*  text-align: center;*/
-/*  box-sizing: border-box;*/
-/*}*/
-/*.sexM {*/
-/*  margin-right: 10px;*/
-/*}*/
-/*.sexW {*/
-/*  margin-left: 3px;*/
-/*}*/
-
-/*.button {*/
-/*  text-align: center;*/
-/*}*/
-
-/*.right,*/
-/*.left {*/
-/*  width: 50%;*/
-/*}*/
-
-/*.hovered {*/
-/*  background-color: rgb(21, 22, 22);*/
-/*  color: #11dadd;*/
-/*  border-color: #11dadd;*/
-/*}*/
-
-/*.clicked {*/
-/*  background-color: #4bc8ca;*/
-/*  color: white;*/
-/*  border-color: #11dadd;*/
-/*}*/
-
-
-.radio {
-	
+input[type="radio"] {
+	display: none;
 }
 
+.radio-label {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 100px;
+	border: 1px solid #fff;
+	border-radius: 10px;
+	cursor: pointer;
+	color: #fff;
+	background-color: #000;
+	padding: 10px;
+	margin: 0 5px;
+	font-weight: normal;
+}
+
+.radio-label:hover {
+	border-color: #11dadd;
+	color: #11dadd;
+}
+
+input[type="radio"]:checked + .radio-label {
+	border-color: #11dadd;
+	background-color: #11dadd;
+	color: #000;
+	font-weight: bold;
+}
+
+.button {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+  
+
+
+
+  
 .textbox {
   width: 100%;
   padding: 10px;

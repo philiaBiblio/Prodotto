@@ -42,35 +42,33 @@
        <!-- 性別 -->
         <!-- DBから持ってきて性別選択されてる状態にしておく -->
         <div class="profile-item">
-          <span id="sex-display""><b>性別:</b>
-           <% 
-        	if(u.getSex().equals("0")){%>
+        	<span id="sex-display"><b>性別:</b>
+				<% if(u.getSex().equals("0")){ %>
         		男
-        	<%}else if(u.getSex().equals("1")){%>
+        		<% }else if(u.getSex().equals("1")){ %>
         		女
-        	<% }%></span>
-          <div class="button" id="sex-input">
-            <div>
-              <label class="left">
-              <input type="radio" class="sexM nomargin" name="sex" id="otoko" value="0" <%= u.getSex().equals("0") ? "checked" : ""%>/></label>
-             </div>
-             <div>
-              <label class="right">
-              <input type="radio" class="sexW nomargin" name="sex" id="onna" value="1" <%= u.getSex().equals("1") ? "checked" : ""%>/></label><br />
-             </div>
-              
-               <!--  <input type="button" class="sexM nomargin" name="sex" id="otoko" value="男" />
-                <input type="hidden" name="sex" value="1">
-              </label>
-            </div>
-            <div>
-              <label class="right">
-                <input type="button" class="sexW nomargin" name="sex" id="onna" value="女" />
-                <input type="hidden" name="sex" value="2">
-              </label>
-            </div> -->
-            
-          </div>
+        		<% } %>
+        	</span>
+			<div class="button" id="sex-input">
+		        <input 
+		        type="radio" 
+		        id="otoko" 
+		        name="sexy" 
+		        value="0"
+		        <%= u.getSex().equals("0") ? "checked" : ""%>>
+		        <label 
+		        class="radio-label" 
+		        for="otoko">男</label>
+		        <input 
+		        type="radio" 
+		        id="onna" 
+		        name="sexy" 
+		        value="1"
+		        <%= u.getSex().equals("1") ? "checked" : ""%>>
+		        <label 
+		        class="radio-label" 
+		        for="onna">女</label>
+    		</div>
           <span class="dli-create" id="sex-icon" onclick="enableEdit('sex')"></span>
         </div>
 
@@ -91,38 +89,6 @@
      <jsp:include page="P2kensaku.jsp"></jsp:include>
 
     <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        const sexM = document.querySelector(".sexM");
-        const sexW = document.querySelector(".sexW");
-
-        sexM.addEventListener("mouseover", function () {
-          sexM.classList.add("hovered");
-          sexW.classList.remove("hovered");
-        });
-
-        sexM.addEventListener("mouseout", function () {
-          sexM.classList.remove("hovered");
-        });
-
-        sexW.addEventListener("mouseover", function () {
-          sexW.classList.add("hovered");
-          sexM.classList.remove("hovered");
-        });
-
-        sexW.addEventListener("mouseout", function () {
-          sexW.classList.remove("hovered");
-        });
-
-        sexM.addEventListener("click", function () {
-          sexM.classList.add("clicked");
-          sexW.classList.remove("clicked");
-        });
-
-        sexW.addEventListener("click", function () {
-          sexW.classList.add("clicked");
-          sexM.classList.remove("clicked");
-        });
-      });
 
       function enableEdit(field) {
         const displaySpan = document.getElementById(field + "-display");

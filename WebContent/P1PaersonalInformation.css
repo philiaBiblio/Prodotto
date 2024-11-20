@@ -92,10 +92,12 @@ body {
     min-width: 80%;
   }
   
-  input,
-  select {
-    margin: 0 20px 15px 0;
-  }
+/*  検索バーに影響でるので一旦コメントアウト*/
+/*  input,*/
+/*  select {*/
+/*    margin: 0 20px 15px 0;*/
+/*  }*/
+
   .nomargin {
     margin: 0;
   }
