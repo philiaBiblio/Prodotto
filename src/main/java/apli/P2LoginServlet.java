@@ -104,7 +104,7 @@ public class P2LoginServlet extends HttpServlet {
 				// sql文実行
 				ResultSet rs3 = dba3.selectExe(sqldm);
 				// アレイリストの取得
-				ArrayList<DM> dmList = new ArrayList<DM>();
+				ArrayList<DM> dmssList = new ArrayList<DM>();
 				
 				// 繰り返しでsqlからすべての情報を得る
 				while(rs3.next()) {
@@ -124,10 +124,10 @@ public class P2LoginServlet extends HttpServlet {
 						dm.setYour(your);
 						dm.setKidoku(midoku);
 						// アレイリストに追加
-						dmList.add(dm);
+						dmssList.add(dm);
 					}
 				}
-				ses.setAttribute("DMLIST", dmList);
+				ses.setAttribute("DMLIST", dmssList);
 		
 				// タイムラインへ
 				url = "P2Timeline.jsp";
