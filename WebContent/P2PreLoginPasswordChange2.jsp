@@ -8,26 +8,38 @@
     <title>確認番号入力</title>
     <link rel="stylesheet" href="P2PreLoginPasswordChange2.css">
 </head>
+<%
+	//セッションの取得
+	HttpSession ses = request.getSession();
+	// 送ったナンバーの取得
+	int num = (int)ses.getAttribute("NUM");
+	String mail = (String)ses.getAttribute("INMAIL");
+	String error = (String)ses.getAttribute("ERRORPASS");
+ %>
 <body>
     <div class="form-container">
         <h1>確認番号入力</h1>
         <p></p>
         
-        <form action="#" method="post" id="otp-form">
+        <form action="P2PreLoginPasswordChange2Servlet" >
             <!-- 番号入力（5桁分の入力フィールド） -->
             <div class="otp-inputs">
-                <input type="text" class="otp-input" maxlength="1" pattern="[0-9]" required>
-                <input type="text" class="otp-input" maxlength="1" pattern="[0-9]" required>
-                <input type="text" class="otp-input" maxlength="1" pattern="[0-9]" required>
-                <input type="text" class="otp-input" maxlength="1" pattern="[0-9]" required>
-                <input type="text" class="otp-input" maxlength="1" pattern="[0-9]" required>
+                <input type="text" class="otp-input" maxlength="1" pattern="[0-9]" required name="text1">
+                <input type="text" class="otp-input" maxlength="1" pattern="[0-9]" required name="text2">
+                <input type="text" class="otp-input" maxlength="1" pattern="[0-9]" required name="text3">
+                <input type="text" class="otp-input" maxlength="1" pattern="[0-9]" required name="text4">
+                <input type="text" class="otp-input" maxlength="1" pattern="[0-9]" required name="text5">
             </div>
 
             <!-- ボタン -->
             <div class="button-group">
-                <button type="submit"><a href="P2PreLoginPasswordChange3.jsp">送信（確定）</a></button>
+                <button type="submit">送信</button>
             </div>
         </form>
+         <%if(error != null){ %>
+				<p style="color:#ff0000"><%=error %></p>
+			<%} %>
+			<%ses.removeAttribute("ERRORPASS"); %>
     </div>
 
     <script>
