@@ -2,6 +2,7 @@ package apli;
 
 import java.io.IOException;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -35,6 +36,7 @@ public class P2LoginServlet extends HttpServlet {
 		// DBアクセス用部品の生成
 		DBAcs dba = new DBAcs();
 		DBAcs dba2 = new DBAcs();
+		DBAcs dba3 = new DBAcs();
 		
 		try {
 			// 入力したメールアドレスを取得
@@ -44,11 +46,22 @@ public class P2LoginServlet extends HttpServlet {
 			
 			// 入力したパスワードを取得
 			String inPassword = request.getParameter("pw");
+			
+			//inpass暗号化
+			//暗号化部品の生成
+			Angou a = new Angou();
+			
+			//暗号化前のinPasswordをmojiに入れる
+			String moji = inPassword;
+			//暗号化実行(半角64文字に変換)
+			String AinPassword = a.getAngo(moji);
+			System.out.println("暗号化後："+AinPassword);
+			
 			// sql用にシングルコーテーションで囲む
-			inPassword = "'" + inPassword + "'";
+			AinPassword = "'" + AinPassword + "'";
 			
 			// ログイン用のsql文
-			String sql = "select * from ユーザー where メールアドレス = " + inMailadd + " and パスワード = " + inPassword;
+			String sql = "select * from ユーザー where メールアドレス = " + inMailadd + " and パスワード = " + AinPassword;
 			// sql文実行
 			ResultSet rs = dba.selectExe(sql);
 			
@@ -82,13 +95,36 @@ public class P2LoginServlet extends HttpServlet {
 				System.out.println(sex);
 				System.out.println("ユーザーログイン成功");
 				
+//				select max(タイムスタンプ) as タイムスタンプ,相手,
+//				sum(CASE WHEN 既読未読='0' THEN 1 ELSE 0 END)　as 未読数 from
+//				(select タイムスタンプ,y1.ユーザーID as 相手,既読未読 from DM join ユーザー y1 on y1.ユーザーID　= DM.送信元 join ユーザー y2 on y2.ユーザーID = DM.受信元 where DMID like '%V2jX9z7wL3D%' 
+//				union
+//				select タイムスタンプ,y2.ユーザーID as相手,既読未読　from DM join ユーザー y1 on y1.ユーザーID　= DM.送信元 join ユーザー y2 on y2.ユーザーID = DM.受信元 where DMID like '%V2jX9z7wL3D%')
+//				group by 相手;
+//				
+				
+				// dm情報の取得
+				String sqldm = "select max(タイムスタンプ) as タイムスタンプ,相手,\r\n"
+						+ "sum(CASE WHEN 既読未読='0' THEN 1 ELSE 0 END)　as 未読数 from\r\n"
+						+ "(select タイムスタンプ,y1.ユーザーID as 相手,既読未読 from DM join ユーザー y1 on y1.ユーザーID　= DM.送信元 join ユーザー y2 on y2.ユーザーID = DM.受信元 where DMID like '%V2jX9z7wL3D%' \r\n"
+						+ "union\r\n"
+						+ "select タイムスタンプ,y2.ユーザーID as相手,既読未読　from DM join ユーザー y1 on y1.ユーザーID　= DM.送信元 join ユーザー y2 on y2.ユーザーID = DM.受信元 where DMID like '%V2jX9z7wL3D%')\r\n"
+						+ "group by 相手;";
+				// sql文実行
+				ResultSet rs3 = dba3.selectExe(sqldm);
+				
+				// アレイリストの取得
+				ArrayList<DM> dmList = new ArrayList<DM>();
+				
+				
+				
 				// タイムラインへ
 				url = "P2Timeline.jsp";
 				System.out.println(url);
 			}else {
 				System.out.println("管理者ログイン実行");
 				// ユーザーログイン失敗後管理者用データベースへ接続
-				String sql2 = "select * from 管理者 where メールアドレス = " + inMailadd + " and パスワード = " + inPassword;
+				String sql2 = "select * from 管理者 where メールアドレス = " + inMailadd + " and パスワード = " + AinPassword;
 				// sql文実行
 				ResultSet rs2 = dba2.selectExe(sql2);
 	

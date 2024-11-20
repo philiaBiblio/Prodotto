@@ -42,7 +42,7 @@ public class P2ProfileEditServlet extends HttpServlet {
 			String inIconImage = request.getParameter("iconImage");
 			String inName = request.getParameter("name");
 			String inUserid = request.getParameter("userid");
-			String inSex = request.getParameter("sex");
+			String inSex = request.getParameter("sexy");
 			String inBirth = request.getParameter("birth");
 			System.out.println(inSex);
 			

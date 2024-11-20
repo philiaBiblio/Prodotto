@@ -190,64 +190,30 @@
 			<%} %>
 			<%ses.removeAttribute("ERRORPASS2");%>
 
-          <label class="soroe">性別</label><br />
-  
-          <div class="button">
-            <label class="left"
-              ><input
-                type="radio"
-                class="sexM nomargin"
-                name="sexy"
-                id="otoko"
-                value="0"
-            /></label>
-            <label class="right"
-              ><input
-                type="radio"
-                class="sexW nomargin"
-                name="sexy"
-                id="onna"
-                value="1" /></label
-            ><br />
-          </div>
-  
-          <script>
-            document.addEventListener("DOMContentLoaded", function () {
-              const sexM = document.querySelector(".sexM");
-              const sexW = document.querySelector(".sexW");
-  
-              sexM.addEventListener("mouseover", function () {
-                sexM.classList.add("hovered");
-                sexW.classList.remove("hovered");
-              });
-  
-              sexM.addEventListener("mouseout", function () {
-                sexM.classList.remove("hovered");
-              });
-  
-              sexW.addEventListener("mouseover", function () {
-                sexW.classList.add("hovered");
-                sexM.classList.remove("hovered");
-              });
-  
-              sexW.addEventListener("mouseout", function () {
-                sexW.classList.remove("hovered");
-              });
-  
-              sexM.addEventListener("click", function () {
-                sexM.classList.add("clicked");
-                sexW.classList.remove("clicked");
-              });
-  
-              sexW.addEventListener("click", function () {
-                sexW.classList.add("clicked");
-                sexM.classList.remove("clicked");
-              });
-            });
-          </script>
-  
-          <div>
-            <label class="soroe">生年月日</label><br />
+
+		<label class="soroe">性別</label><br>
+    	<div class="button">
+        
+	        <input 
+	        type="radio" 
+	        id="otoko" 
+	        name="sexy" 
+	        value="0">
+	        <label 
+	        class="radio-label" 
+	        for="otoko">男</label>
+	
+	        <input 
+	        type="radio" 
+	        id="onna" 
+	        name="sexy" 
+	        value="1">
+	        <label 
+	        class="radio-label" 
+	        for="onna">女</label>
+    </div>
+    <div>
+    	<label class="soroe">生年月日</label><br />
             <input
               type="date"
               class="textbox birth"
@@ -255,7 +221,7 @@
               id="birth"
               value="<%if(u != null) %><%=u.getBirth()%>"
             /><br />
-          </div>
+	</div>
   
           <div>
             <label class="soroe">演奏頻度</label><br />
