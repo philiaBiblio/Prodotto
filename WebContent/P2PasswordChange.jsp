@@ -75,7 +75,7 @@
                 <label for="checkPassword" class="fa fa-eye-slash"></label>
               </div>
               
-               <%if(messPass2 != null){ %>
+                <%if(messPass2 != null){ %>
 				<p style="color:#ff0000"><%=messPass2 %></p>
 			<%} %>
 			<%ses.removeAttribute("ERRORPASS2"); %>

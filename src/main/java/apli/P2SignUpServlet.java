@@ -120,6 +120,16 @@ public class P2SignUpServlet extends HttpServlet {
 				url = "P2SignUpConfirmation.jsp";
 			}
 			
+			//inpass暗号化
+			//暗号化部品の生成
+			Angou a = new Angou();
+			
+			String moji = inPass;
+			//暗号化実行(半角64文字に変換)
+			String AinPass = a.getAngo(moji);
+			System.out.println("暗号化後："+AinPass);
+			
+			
 			// 入力情報の保存
 			String inName = request.getParameter("name");
 			String inSexy = request.getParameter("sexy");
@@ -134,7 +144,7 @@ public class P2SignUpServlet extends HttpServlet {
 			u.setName(inName);
 			u.setUserid(inUserid);
 			u.setMailadd(inMail);
-			u.setPassword(inPass);
+			u.setPassword(AinPass);
 			u.setSex(inSexy);
 			u.setBirth(inBirth);
 			u.setFq(inFq);

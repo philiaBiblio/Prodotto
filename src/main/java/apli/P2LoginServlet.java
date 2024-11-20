@@ -46,11 +46,22 @@ public class P2LoginServlet extends HttpServlet {
 			
 			// 入力したパスワードを取得
 			String inPassword = request.getParameter("pw");
+			
+			//inpass暗号化
+			//暗号化部品の生成
+			Angou a = new Angou();
+			
+			//暗号化前のinPasswordをmojiに入れる
+			String moji = inPassword;
+			//暗号化実行(半角64文字に変換)
+			String AinPassword = a.getAngo(moji);
+			System.out.println("暗号化後："+AinPassword);
+			
 			// sql用にシングルコーテーションで囲む
-			inPassword = "'" + inPassword + "'";
+			AinPassword = "'" + AinPassword + "'";
 			
 			// ログイン用のsql文
-			String sql = "select * from ユーザー where メールアドレス = " + inMailadd + " and パスワード = " + inPassword;
+			String sql = "select * from ユーザー where メールアドレス = " + inMailadd + " and パスワード = " + AinPassword;
 			// sql文実行
 			ResultSet rs = dba.selectExe(sql);
 			
@@ -128,7 +139,7 @@ public class P2LoginServlet extends HttpServlet {
 			}else {
 				System.out.println("管理者ログイン実行");
 				// ユーザーログイン失敗後管理者用データベースへ接続
-				String sql2 = "select * from 管理者 where メールアドレス = " + inMailadd + " and パスワード = " + inPassword;
+				String sql2 = "select * from 管理者 where メールアドレス = " + inMailadd + " and パスワード = " + AinPassword;
 				// sql文実行
 				ResultSet rs2 = dba2.selectExe(sql2);
 	

@@ -15,38 +15,38 @@ import javax.servlet.http.HttpSession;
 /**
  * Servlet implementation class UserSearchServlet
  */
-@WebServlet("/UserSearchServlet")
-public class P2UserSearchServlet extends HttpServlet {
+@WebServlet("/P1UserSearchServlet")
+public class P1UserSearchServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		System.out.println("P2PasswordChangeServlet実行");
-
+		System.out.println("P1UserSearchServlet実行");
+				
 		// 文字化け防止
 		request.setCharacterEncoding("UTF-8");
 		// セッションの生成
 		HttpSession ses = request.getSession();
 		// ログイン情報の取得
-		User u = (User) ses.getAttribute("LOGIN");
+		User u = (User)ses.getAttribute("LOGIN");
 		// URLの生成
 		String url = "";
 		// DBアクセス用部品の生成
 		DBAcs dba = new DBAcs();
-
+		
 		//ユーザーリストの生成
 		// セッションからUSERLISTを取得
 		ArrayList<User> UList = (ArrayList<User>) ses.getAttribute("USERLIST");
 		if (UList == null) {
-			UList = new ArrayList<>(); // 初回のみ新規作成
+		    UList = new ArrayList<>(); // 初回のみ新規作成
 		} else {
-			UList.clear(); // 既存データをクリア
+		    UList.clear(); // 既存データをクリア
 		}
 
+		
 		try {
 			// 検索キーワードの取得
 			String username = request.getParameter("usersearch");
@@ -102,11 +102,13 @@ public class P2UserSearchServlet extends HttpServlet {
 
 			// ログアウト処理
 			dba.closeDB();
-		} catch (Exception e) {
-			e.printStackTrace();
-			// ログアウト処理
-			dba.closeDB();
-		}
+		} 
+			catch (Exception e) {
+				// TODO: handle exception
+				e.printStackTrace();
+				// ログアウト処理
+				dba.closeDB();
+			}
 	}
 
 }
