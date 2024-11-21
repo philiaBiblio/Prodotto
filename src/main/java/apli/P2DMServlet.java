@@ -38,6 +38,8 @@ public class P2DMServlet extends HttpServlet {
 		DBAcs dba = new DBAcs();
 		
 		try {
+			// やり取りしてる相手の名前の取得
+			String yourId = request.getParameter("yourId");
 			// ゲットパラメータでdmssList.get(i).getYour()
 			// DMの新しいインスタンスを生成して内容を引っ張ってくる
 			

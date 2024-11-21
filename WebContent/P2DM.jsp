@@ -42,9 +42,11 @@
         		</form>
          	<% } %>			
 	 	<%} %>
+	 	</div>
+
 
       <!-- DMチャットエリア -->
-      <%if( != null){ %>
+     <%--  <%if( != null){ %> --%>
       		<div class="chat-container">
         <!-- ヘッダーにはユーザネームを表示 -->
         <div class="chat-header">おもち</div>
@@ -86,9 +88,8 @@
           </div>
         </form>
       </div>
-      <%} %>
-      <%ses.removeAttribute("ERRORPASS2"); %>
-    </div>
+    <%--   <%} %>
+      <%ses.removeAttribute("ERRORPASS2"); %> --%>
     
      <jsp:include page="P2kensaku.jsp"></jsp:include>
     

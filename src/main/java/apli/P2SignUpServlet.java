@@ -36,6 +36,7 @@ public class P2SignUpServlet extends HttpServlet {
 		String url = "";
 		// DBアクセス用部品の生成
 		DBAcs dba = new DBAcs();
+		DBAcs dba2 = new DBAcs();
 		
 		try {
 			// 入力されたユーザーIDを取得
@@ -75,7 +76,20 @@ public class P2SignUpServlet extends HttpServlet {
 			
 			if(inMail.equals(inMail2)) {
 				System.out.println("メールアドレスの入力値が一緒なのでOK");
-			}else {
+				// DBに既にそのメールアドレスが存在しているかのチェック
+				String sql2 = "select * from ユーザー where メールアドレス = '" + inMail + "'";
+				// sql文実行
+				ResultSet rs2 = dba.selectExe(sql2);
+				if(rs2.next()) {
+					System.out.println("既にメールアドレスが存在している場合なので弾きたい");
+					
+					String messMail2 = "※既に登録されているメールアドレスです。<br>別のメールアドレスを使用してください。";
+					ses.setAttribute("ERRORMAIL2", messMail2);
+					
+					// 元の画面へ
+					pageFlg = 0;
+					}
+				}else {
 				System.out.println("メールアドレスの入力値が違うので弾く");
 				String messMail = "※メールアドレスが一致しません。<br>もう一度入力してください。";
 				ses.setAttribute("ERRORMAIL", messMail);

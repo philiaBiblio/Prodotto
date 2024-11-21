@@ -22,6 +22,7 @@
 	String errorID = (String)ses.getAttribute("ERRORID");
 	String errorKeta = (String)ses.getAttribute("ERRORKETA");
 	String errorMail = (String)ses.getAttribute("ERRORMAIL");
+	String errorMail2 = (String)ses.getAttribute("ERRORMAIL2");
 	String errorPass = (String)ses.getAttribute("ERRORPASS");
 	String errorPass2 = (String)ses.getAttribute("ERRORPASS2"); 
 	
@@ -95,6 +96,11 @@
                 placeholder="メールアドレスを再入力" /></label
             ><br />
           </div>
+          <%if(errorMail2 != null){ %>
+				<p style="color:#ff0000"><%=errorMail2 %></p>
+			<%} %>
+			<%ses.removeAttribute("ERRORMAIL2"); %>
+			
           <%if(errorMail != null){ %>
 				<p style="color:#ff0000"><%=errorMail %></p>
 			<%} %>
