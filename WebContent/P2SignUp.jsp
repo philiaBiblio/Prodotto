@@ -109,7 +109,7 @@
                 class="hideText"
                 name="pw"
                 id="pw"
-                value="<%if(u != null) %><%=u.getPassword() %>"
+                <%-- value="<%if(u != null) %><%=u.getPassword() %>" --%>
                 required
                 placeholder="英数字６文字以上"
                 Onchange="disp1()"
@@ -125,7 +125,7 @@
                 }
               </script>
               <input type="text" class="showText" id="pass1" name="pw" 
-              value="<%if(u != null) %><%=u.getPassword() %>"
+              <%-- value="<%if(u != null) %><%=u.getPassword() %>" --%>
               Onchange="disp2()"/>
               <script>
               	function disp2(){
@@ -148,7 +148,7 @@
                 class="hideText2"
                 name="pw2"
                 id="pw2"
-                value="<%if(u != null && errorPass == null) %><%=u.getPassword() %>"
+               <%--  value="<%if(u != null && errorPass == null) %><%=u.getPassword() %>" --%>
                 required
                 placeholder="パスワードを再入力"
                 Onchange="disp3()"
