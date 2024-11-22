@@ -17,7 +17,11 @@
 	// ログイン情報の取得
 	User u = (User)ses.getAttribute("LOGIN");
 	// DM画面に必要な情報
-	ArrayList<DM> dmssList = (ArrayList)ses.getAttribute("DMLIST");
+	ArrayList<DM> dmssList = (ArrayList)ses.getAttribute("DMSSLIST");
+	ArrayList<DM> dmList = (ArrayList)ses.getAttribute("DMLIST");
+ 	Integer kazu = (Integer)ses.getAttribute("I");
+ 	String name = (String)ses.getAttribute("YOU");
+ 	String mess = (String)ses.getAttribute("MESS");
 %>
 
   <body style="margin: 70px 0 0 -5px;">
@@ -30,9 +34,9 @@
         <%if(dmssList != null){ %>
         	<% for (int i = 0; i < dmssList.size(); i++) { %>
         		<form action="P2DMServlet" method="post">
-        		<a href="P2DMServlet?yourId=<%= dmssList.get(i).getYour() %>"><div class="message-item" name="senderid">
+        		<a href="P2DMServlet?yourId=<%= dmssList.get(i).getYour() %>&hensuu=<%=i%>"><div class="message-item">
             		<img src="image/ききゅう.jpg" alt="アイコン" class="icon" />
-            		<%= dmssList.get(i).getYour() %>
+            		<%= dmssList.get(i).getYourName() %>
             		<!--未読アイコン-->
             		<!--画面読み込み時、未読ある人はここに未読数表示-->
             		<%if(!dmssList.get(i).getKidoku().equals("0")){ %>
@@ -44,38 +48,21 @@
 	 	<%} %>
 	 	</div>
 
-
       <!-- DMチャットエリア -->
-     <%--  <%if( != null){ %> --%>
-      		<div class="chat-container">
+     <%if(dmList != null){ %>
+      	<div class="chat-container">
         <!-- ヘッダーにはユーザネームを表示 -->
-        <div class="chat-header">おもち</div>
+        <div class="chat-header"><%=dmssList.get(kazu).getYourName() %></div>
         <!--もってきたトークを上から表示していく-->
         <div class="chat-messages">
-          <div class="message received">
-            <div class="bubble" name="letter">あなたのこの曲、いいよね！今まで聴いたカバーの中で一番好きだわ</div>
-          </div>
-          <div class="message sent">
-            <div class="bubble">だよね！俺もこの曲好き</div>
-          </div>
-          <div class="message received">
-            <div class="bubble" name="letter">でもよくこんなマイナーな曲知ってるね。私以外聴いてる人いないと思った。</div>
-          </div>
-          <div class="message sent">
-            <div class="bubble">まぁね。当たり前じゃん</div>
-          </div>
-          <div class="message sent">
-            <div class="bubble">君がいつもカラオケで歌う曲の歌手は調べるよ。</div>
-          </div> 
-          <div class="message received">
-            <div class="bubble" name="letter">うぇいよぉ</div>
-          </div>
-          <div class="message sent">
-            <div class="bubble">うぇいよぉ</div>
-          </div>
+        <% for (int j = 0; j < dmList.size(); j++) { %>
+        <div class="<%=u.getUserid().equals(dmList.get(j).getSousin()) ? "message sent" : "message received" %>">
+        	<div class="bubble"><%=dmList.get(j).getNaiyou() %></div>
+        </div>
+        <%} %>
         </div>
 
-        <form action="P2DMServlet" method="post">
+        <form action="P2DMSousinServlet" method="post">
           <div class="chat-input">
             <input
               type="text"
@@ -84,13 +71,12 @@
               required
               placeholder="メッセージを入力"
             />
-            <input type="submit" name="sousin" id="sousin" value="送信" />
+            <input type="submit" name="sousin1" id="sousin1" value="送信" />
           </div>
         </form>
       </div>
-    <%--   <%} %>
-      <%ses.removeAttribute("ERRORPASS2"); %> --%>
-    
+      <%} %>
+
      <jsp:include page="P2kensaku.jsp"></jsp:include>
     
     <script>

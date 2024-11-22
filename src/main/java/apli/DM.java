@@ -8,7 +8,8 @@ public class DM {
 	private String naiyou;		// 内容
 	private String kidoku;		// 既読、未読
 	private String time;		// タイムスタンプ
-	private String your;		// 相手
+	private String your;		// 相手のID
+	private String yourName;	// 相手の名前
 	
 	// ゲッターセッター
 	public String getDmId() {
@@ -52,5 +53,11 @@ public class DM {
 	}
 	public void setYour(String your) {
 		this.your = your;
+	}
+	public String getYourName() {
+		return yourName;
+	}
+	public void setYourName(String yourName) {
+		this.yourName = yourName;
 	}
 }

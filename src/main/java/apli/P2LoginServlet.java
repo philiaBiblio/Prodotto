@@ -99,24 +99,26 @@ public class P2LoginServlet extends HttpServlet {
 				System.out.println("ユーザーログイン成功");
 				
 				// dm情報の取得
-				String sqldm = "select max(タイムスタンプ) as タイムスタンプ,相手,sum(CASE WHEN 既読未読 = '0' THEN 1 ELSE 0 END) as 未読数 from (select タイムスタンプ,y1.ユーザーID as 相手,既読未読 from DM join ユーザー y1 on y1.ユーザーID = DM.送信元 join ユーザー y2 on y2.ユーザーID = DM.受信元 where DMID like '%"
-						+ u.getUserid() + "%' union select タイムスタンプ,y2.ユーザーID as 相手,既読未読 from DM join ユーザー y1 on y1.ユーザーID = DM.送信元 join ユーザー y2 on y2.ユーザーID = DM.受信元 where DMID like '%"
-								+ u.getUserid() + "%') group by 相手 order by タイムスタンプ desc";	
+				String sqldm = "select max(タイムスタンプ) as タイムスタンプ,相手,sum(CASE WHEN 既読未読 = '0' THEN 1 ELSE 0 END) as 未読数,"
+						+ "名前 from (select タイムスタンプ,y1.ユーザーID as 相手,既読未読,y1.名前 from DM "
+						+ "join ユーザー y1 on y1.ユーザーID = DM.送信元 join ユーザー y2 on y2.ユーザーID = DM.受信元 where DMID like '%"
+						+ u.getUserid() + "-%' union select タイムスタンプ,y2.ユーザーID as 相手,既読未読,y2.名前 from DM"
+						+ " join ユーザー y1 on y1.ユーザーID = DM.送信元 join ユーザー y2 on y2.ユーザーID = DM.受信元 where DMID like '%"
+						+ u.getUserid() + "-%') group by 相手,名前 order by タイムスタンプ desc";
 				
 				// sql文実行
 				ResultSet rs3 = dba3.selectExe(sqldm);
 				// アレイリストの取得
 				ArrayList<DM> dmssList = new ArrayList<DM>();
-				System.out.println(rs3);
 				// 繰り返しでsqlからすべての情報を得る
 				while(rs3.next()) {
 					String time = rs3.getString("タイムスタンプ");
-					System.out.println("DB処理番号：" + time);
+					System.out.println("タイムスタンプ：" + time);
 					String your = rs3.getString("相手");
-					System.out.println("DB処理番号：" + your);
-					System.out.println("116:" + u.getUserid());
+					System.out.println("相手：" + your);
 					String midoku = rs3.getString("未読数");
-					System.out.println("DB処理番号：" + midoku);
+					System.out.println("未読数：" + midoku);
+					String yourName = rs3.getString("名前");
 					
 					if(your.equals(u.getUserid())) {
 						System.out.println("相手の名前とログインしてるIDが一緒なのでアレイリストに入れない");
@@ -126,11 +128,12 @@ public class P2LoginServlet extends HttpServlet {
 						dm.setTime(time);
 						dm.setYour(your);
 						dm.setKidoku(midoku);
+						dm.setYourName(yourName);
 						// アレイリストに追加
 						dmssList.add(dm);
 					}
 				}
-				ses.setAttribute("DMLIST", dmssList);
+				ses.setAttribute("DMSSLIST", dmssList);
 		
 				// タイムラインへ
 				url = "P2Timeline.jsp";
