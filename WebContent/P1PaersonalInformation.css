@@ -64,10 +64,10 @@ body {
     border-color: #ee2522;
   }
   
-  
-  span {
-    color: #fff;
-  }
+  	div.nakami {
+  		color: #fff;
+	}
+
   
   h1 {
     text-align: center;

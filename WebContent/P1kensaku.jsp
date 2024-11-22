@@ -115,32 +115,40 @@
     <script src="https://unpkg.com/wavesurfer.js"></script>
   
   	<script>
-		const currentFile = window.location.pathname.split("/").pop(); 
+  	const currentFile = window.location.pathname.split("/").pop() + window.location.search;
+
+	const fileToIdMap = {
+		"P1UserManegement.jsp": "P1UserManegementid",
+	
+		"P1EventManegement.jsp": "P1EventManegementid",
+	
+		"P1TLManagement.jsp": "P1TLManagementid",
 		
-  		const fileToIdMap = {
-			"P1UserManegement.jsp": "P1UserManegementid",
+		"P1PaersonalInformation.jsp":"P1AdminSettingid",
+		"P1AdminSetting.jsp": "P1AdminSettingid",
+		"P1PaersonalInformation.jsp": "P1AdminSettingid",
+		"P1PasswordChange.jsp": "P1AdminSettingid",
+		"P1EmailChange.jsp": "P1AdminSettingid",
+		"P1Logout.jsp": "P1AdminSettingid",
+	};
 
-  		    "P1EventManegement.jsp": "P1EventManegementid",
+  	function getId(filename) {
+  	  if (filename.includes("UserManagementServlet")) {
+  	    return "P1UserManegementid";
+  	  }
+  	  return fileToIdMap[filename] || null;
+  	}
 
-  		    "P1TLManagement.jsp": "P1TLManagementid",
+  	const targetId = getId(currentFile);
 
-  		  	"P1AdminSetting.jsp": "P1AdminSettingid",
-//反応しない
-  			//"P1PaersonalInformation.jsp": "P1AdminSettingid",
-  			"P1PasswordChange.jsp": "P1AdminSettingid",
-  			"P1EmailChange.jsp": "P1AdminSettingid",
-  			"P1Logout.jsp": "P1AdminSettingid",
+  	if (targetId) {
+  	  const element = document.getElementById(targetId);
+  	  if (element) {
+  	    element.classList.add("active");
+  	  }
+  	}
 
-  		};
-  		const targetId = fileToIdMap[currentFile];
-  		
-  		if (targetId) {
-  	    	const element = document.getElementById(targetId);
-  	    	if (element) {
-  	        	element.classList.add("active");
-  	    	}
-  	    }
-  			
+		
 	</script>
   
   </body>

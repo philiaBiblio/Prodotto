@@ -71,7 +71,8 @@
         </div>
     </form>
     
-    <jsp:include page="P1kensaku.jsp"></jsp:include>
+  		<jsp:include page="P1kensaku.jsp"></jsp:include>
+	
 
     <script>
         document.addEventListener("DOMContentLoaded", function () {
