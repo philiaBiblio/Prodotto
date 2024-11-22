@@ -54,7 +54,8 @@ public class P1UserManagementServlet extends HttpServlet {
 
 			// SELECT文ユーザー情報を取得
 			ResultSet rs = dba.selectExe
-			("SELECT * FROM ユーザー WHERE 名前 LIKE '%"+username+"%'");
+			("SELECT * FROM ユーザー WHERE 名前 LIKE '%"+username+"%' "
+					+ "OR ユーザーID LIKE '%"+username+"%'");
 			
 			//カーソルを１行ずらす。flgに結果を保存。
 			// rs.nextした結果、行が存在する場合 true

@@ -27,6 +27,8 @@
         <div class="none"></div>
         <div class="search">
           <!-- フィルターボタン -->
+          <!--  これによりフィルターボタン選択で飛ぶようになる-->
+          
           <select
             id="filter"
             class="filter-button"

@@ -18,6 +18,9 @@
     <link rel="stylesheet" href="P2Search.css" />
     <title>検索画面</title>
   </head>
+
+ 
+  
   <body>
   
     <!-- グリッドコンテナ -->
@@ -934,6 +937,7 @@
     </div>
     
     <jsp:include page="P2kensaku.jsp"></jsp:include>
+    
     <script src="audioPlayer.js"></script>
     <script src="https://unpkg.com/wavesurfer.js"></script>
   </body>

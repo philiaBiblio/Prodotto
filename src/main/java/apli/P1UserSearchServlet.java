@@ -96,7 +96,7 @@ public class P1UserSearchServlet extends HttpServlet {
 			ses.setAttribute("USERLIST", UList);
 
 			// 画面遷移
-			url = "P2UserSearch.jsp";
+			url = "P1UserSearch.jsp";
 			RequestDispatcher rd = request.getRequestDispatcher(url);
 			rd.forward(request, response);
 
