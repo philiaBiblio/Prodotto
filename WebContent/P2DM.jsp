@@ -17,88 +17,36 @@
 	// ログイン情報の取得
 	User u = (User)ses.getAttribute("LOGIN");
 	// DM画面に必要な情報
-	ArrayList<DM> dmList = (ArrayList)ses.getAttribute("DMLIST");
+	ArrayList<DM> dmssList = (ArrayList)ses.getAttribute("DMLIST");
 %>
 
   <body style="margin: 70px 0 0 -5px;">
     <!-- メインコンテンツ -->
     <div class="main-content">
-    <%if(dmList != null){ %>
     <!-- メッセージリスト -->
     <!--class="message-item"選択するとユーザIDをサーバへ飛ばす。
     ほんでそいつとのトーク履歴持ってくる。それをclass="chat-messages"に持って行っちゃおう-->
         <div class="message-list">
-          <div class="message-item" name="senderid">
-            <img src="image/ききゅう.jpg" alt="アイコン" class="icon" />
-            <%=dmList.get(0).getYour() %>
-          </div>
-          
-          <div class="message-item" name="senderid">
-            <img src="image/ききゅう.jpg" alt="アイコン" class="icon" />
-            創造的薬局
-            <!--未読アイコン-->
-            <!--画面読み込み時、未読ある人はここに未読数表示-->
-            <div class="notification-badge">1</div>
-          </div>
-          
-          <div class="message-item" name="senderid">
-            <img src="image/ききゅう.jpg" alt="アイコン" class="icon" />
-            JUBEE
-            <div class="notification-badge">4</div>
-            <input type="hidden" name="user_id" value="坂本雄三" >
-          </div>
-          
-          <div class="message-item" name="senderid">
-            <img src="image/ききゅう.jpg" alt="アイコン" class="icon" />
-            BIM
-            <div class="notification-badge">2</div>
-          </div>
-          
-          <div class="message-item" name="senderid">
-            <img src="image/ききゅう.jpg" alt="アイコン" class="icon" />
-            VaVa
-          </div>
-          
-          <div class="message-item" name="senderid">
-            <img src="image/ききゅう.jpg" alt="アイコン" class="icon" />
-            in-d
-            <div class="notification-badge">2</div>
-          </div>
-          
-          <div class="message-item" name="senderid">
-            <img src="image/ききゅう.jpg" alt="アイコン" class="icon" />
-            doooo
-          </div>
-          
-          <div class="message-item" name="senderid">
-            <img src="image/ききゅう.jpg" alt="アイコン" class="icon" />
-            heiyuu
-          </div>
-          
-          <div class="message-item" name="senderid">
-            <img src="image/ききゅう.jpg" alt="アイコン" class="icon" />
-            坂本雄三
-          </div>
-          
-          <div class="message-item" name="senderid">
-            <img src="image/ききゅう.jpg" alt="アイコン" class="icon" />
-            坂本雄三
-          </div>
-          
-          <div class="message-item" name="senderid">
-            <img src="image/ききゅう.jpg" alt="アイコン" class="icon" />
-            坂本雄三
-          </div>
-          
-          <div class="message-item" name="senderid">
-            <img src="image/ききゅう.jpg" alt="アイコン" class="icon" />
-            坂本雄三
-          </div>
-        </div>		
-			<%} %>
+        <%if(dmssList != null){ %>
+        	<% for (int i = 0; i < dmssList.size(); i++) { %>
+        		<form action="P2DMServlet" method="post">
+        		<a href="P2DMServlet?yourId=<%= dmssList.get(i).getYour() %>"><div class="message-item" name="senderid">
+            		<img src="image/ききゅう.jpg" alt="アイコン" class="icon" />
+            		<%= dmssList.get(i).getYour() %>
+            		<!--未読アイコン-->
+            		<!--画面読み込み時、未読ある人はここに未読数表示-->
+            		<%if(!dmssList.get(i).getKidoku().equals("0")){ %>
+            			<div class="notification-badge"><%=dmssList.get(i).getKidoku() %></div>
+        			<% } %>
+        		</div></a>
+        		</form>
+         	<% } %>			
+	 	<%} %>
+	 	</div>
+
 
       <!-- DMチャットエリア -->
-      <%if(dmList != null){ %>
+     <%--  <%if( != null){ %> --%>
       		<div class="chat-container">
         <!-- ヘッダーにはユーザネームを表示 -->
         <div class="chat-header">おもち</div>
@@ -140,9 +88,8 @@
           </div>
         </form>
       </div>
-      <%} %>
-      <%ses.removeAttribute("ERRORPASS2"); %>
-    </div>
+    <%--   <%} %>
+      <%ses.removeAttribute("ERRORPASS2"); %> --%>
     
      <jsp:include page="P2kensaku.jsp"></jsp:include>
     

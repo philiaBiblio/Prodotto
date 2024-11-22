@@ -47,21 +47,23 @@ public class P2LoginServlet extends HttpServlet {
 			// 入力したパスワードを取得
 			String inPassword = request.getParameter("pw");
 			
-			//inpass暗号化
-			//暗号化部品の生成
-			Angou a = new Angou();
-			
-			//暗号化前のinPasswordをmojiに入れる
-			String moji = inPassword;
-			//暗号化実行(半角64文字に変換)
-			String AinPassword = a.getAngo(moji);
-			System.out.println("暗号化後："+AinPassword);
-			
-			// sql用にシングルコーテーションで囲む
-			AinPassword = "'" + AinPassword + "'";
-			
-			// ログイン用のsql文
-			String sql = "select * from ユーザー where メールアドレス = " + inMailadd + " and パスワード = " + AinPassword;
+//			//inpass暗号化
+//			//暗号化部品の生成
+//			Angou a = new Angou();
+//			
+//			//暗号化前のinPasswordをmojiに入れる
+//			String moji = inPassword;
+//			//暗号化実行(半角64文字に変換)
+//			String AinPassword = a.getAngo(moji);
+//			System.out.println("暗号化後："+AinPassword);
+//			
+//			// sql用にシングルコーテーションで囲む
+//			AinPassword = "'" + AinPassword + "'";
+			inPassword = "'" + inPassword + "'";
+//			
+//			// ログイン用のsql文
+//			String sql = "select * from ユーザー where メールアドレス = " + inMailadd + " and パスワード = " + AinPassword;
+			String sql = "select * from ユーザー where メールアドレス = " + inMailadd + " and パスワード = " + inPassword;
 			// sql文実行
 			ResultSet rs = dba.selectExe(sql);
 			
@@ -93,26 +95,27 @@ public class P2LoginServlet extends HttpServlet {
 				// ログインしたユーザー情報を保存
 				ses.setAttribute("LOGIN", u);
 				System.out.println(sex);
+				System.out.println(userid);
 				System.out.println("ユーザーログイン成功");
 				
 				// dm情報の取得
-				String sqldm = "select max(タイムスタンプ) as タイムスタンプ,相手,sum(CASE WHEN 既読未読='0' THEN 1 ELSE 0 END) as 未読数 from"
-						+ "(select タイムスタンプ,y1.ユーザーID as 相手,既読未読 from DM join ユーザー y1 on y1.ユーザーID　= DM.送信元 join ユーザー y2 on y2.ユーザーID = DM.受信元 where DMID like '%"
-						+ u.getUserid() + "%' union "
-								+ "select タイムスタンプ,y2.ユーザーID as 相手,既読未読 from DM join ユーザー y1 on y1.ユーザーID = DM.送信元 join ユーザー y2 on y2.ユーザーID = DM.受信元 where DMID like '%"
-								+ u.getUserid() + "%') group by 相手 order by タイムスタンプ desc;";
+				String sqldm = "select max(タイムスタンプ) as タイムスタンプ,相手,sum(CASE WHEN 既読未読 = '0' THEN 1 ELSE 0 END) as 未読数 from (select タイムスタンプ,y1.ユーザーID as 相手,既読未読 from DM join ユーザー y1 on y1.ユーザーID = DM.送信元 join ユーザー y2 on y2.ユーザーID = DM.受信元 where DMID like '%"
+						+ u.getUserid() + "%' union select タイムスタンプ,y2.ユーザーID as 相手,既読未読 from DM join ユーザー y1 on y1.ユーザーID = DM.送信元 join ユーザー y2 on y2.ユーザーID = DM.受信元 where DMID like '%"
+								+ u.getUserid() + "%') group by 相手 order by タイムスタンプ desc";	
+				
 				// sql文実行
 				ResultSet rs3 = dba3.selectExe(sqldm);
 				// アレイリストの取得
-				ArrayList<DM> dmList = new ArrayList<DM>();
-				
+				ArrayList<DM> dmssList = new ArrayList<DM>();
+				System.out.println(rs3);
 				// 繰り返しでsqlからすべての情報を得る
 				while(rs3.next()) {
-					String time = rs.getString("タイムスタンプ");
+					String time = rs3.getString("タイムスタンプ");
 					System.out.println("DB処理番号：" + time);
-					String your = rs.getString("相手");
+					String your = rs3.getString("相手");
 					System.out.println("DB処理番号：" + your);
-					String midoku = rs.getString("未読数");
+					System.out.println("116:" + u.getUserid());
+					String midoku = rs3.getString("未読数");
 					System.out.println("DB処理番号：" + midoku);
 					
 					if(your.equals(u.getUserid())) {
@@ -124,10 +127,10 @@ public class P2LoginServlet extends HttpServlet {
 						dm.setYour(your);
 						dm.setKidoku(midoku);
 						// アレイリストに追加
-						dmList.add(dm);
+						dmssList.add(dm);
 					}
 				}
-				ses.setAttribute("DMLIST", dmList);
+				ses.setAttribute("DMLIST", dmssList);
 		
 				// タイムラインへ
 				url = "P2Timeline.jsp";
@@ -139,7 +142,8 @@ public class P2LoginServlet extends HttpServlet {
 			}else {
 				System.out.println("管理者ログイン実行");
 				// ユーザーログイン失敗後管理者用データベースへ接続
-				String sql2 = "select * from 管理者 where メールアドレス = " + inMailadd + " and パスワード = " + AinPassword;
+//				String sql2 = "select * from 管理者 where メールアドレス = " + inMailadd + " and パスワード = " + AinPassword;
+				String sql2 = "select * from 管理者 where メールアドレス = " + inMailadd + " and パスワード = " + inPassword;
 				// sql文実行
 				ResultSet rs2 = dba2.selectExe(sql2);
 	
