@@ -20,22 +20,34 @@
     <title>ProDotto</title>
   </head>
 
+
+<% 
+User up = (User) request.getAttribute("PROF");
+
+
+
+request.setAttribute("isFollowing", isFollowing);
+request.setAttribute("followCount", followCount);
+request.setAttribute("followerCount", followerCount);
+
+%>
+  
   <body>
     <header class="profile-header">
         
       <div class="leftheader">
         <img
-          src="image/ききゅう.jpg"
+          src="<%= up.getIconImage()%>"
           alt="Profile Icon"
           class="profile-header-icon"
         />
 
         <div class="user-details">
-            <h2 class="username">ユーザーネーム</h2>
-            <p class="user-id">@ユーザーID</p>
+            <h2 class="username"><%= up.getName() %></h2>
+            <p class="user-id">@<%= up.getUserid() %></p>
             <div class="follower-info">
-              <span class="follower-count">フォロワー: 100</span>
-              <span class="following-count">フォロー中: 50</span>
+              <span class="follower-count">フォロワー: <%= request.getAttribute("followCount")%></span>
+              <span class="following-count">フォロー中: <%= request.getAttribute("followerCount")%></span>
             </div>
         </div>
 

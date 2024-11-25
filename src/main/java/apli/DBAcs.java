@@ -34,6 +34,11 @@ public class DBAcs {
 		}
 	}
 
+	// DB接続を外部から取得するメソッド
+    public Connection getConnection() { 
+        return this.con; // 現在のDB接続をそのまま返す
+    }
+	
 	//select文実行メソッド
 	public ResultSet selectExe(String sql){
 		System.out.println("SELECT文実行");

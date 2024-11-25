@@ -25,35 +25,37 @@
 //セッションの取得
 HttpSession ses = request.getSession();
 //会員リストを取得
-ArrayList<User> u = (ArrayList<User>) ses.getAttribute("USERLIST");
+ArrayList<User> searchU = (ArrayList<User>) ses.getAttribute("USERLIST");
 %>
 
 <body>
 
-	<form action="UserSearchServlet">
+<form action="UserProfileServlet" method="GET">
+    <input type="hidden" name="userID" value="<%= searchU.get(i).getID() %>">
+    <button type="submit" class="icon-button">
+        <img src="image/ききゅう.jpg" alt="アイコン" class="icon">
+    </button>
+</form>
+
+	<form action="UserSearchServlet" method="GET">
 
 		<div class="user-section">
-			<%
-			if (u == null) {
-			%>
+			<% if (searchU == null) { %>
 			<p>検索キーワードを入力してください</p>
-			<%
-			} else if (u.isEmpty()) {
-			%>
+			<% } else if (searchU.isEmpty()) { %>
 			<p>検索結果が見つかりません</p>
-			<%
-			} else {
-			for (int i = 0; i < u.size(); i++) {
-			%>
+			<% } else { 
+				for (int i = 0; i < searchU.size(); i++) { %>
 			<div class="user-item">
 				<div class="soroe">
-					<a href="P2ProfileStranger.jsp"> <img src="image/ききゅう.jpg"
-						alt="アイコン" class="icon">
-					</a>
+					<input type="hidden" name="userID" value="<%= searchU.get(i).getID() %>">
+					<button type="submit" class="icon-button">
+						<img src="<%= searchU.get(i).getIcon()%>" alt="アイコン" class="icon">
+					</button>
 				</div>
 				<div class="user-content">
 					<p class="username">
-						<%=u.get(i).getName()%>
+						<%=searchU.get(i).getName()%>
 					</p>
 				</div>
 			</div>
