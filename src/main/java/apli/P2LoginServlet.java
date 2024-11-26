@@ -180,7 +180,7 @@ public class P2LoginServlet extends HttpServlet {
 				}
 			}
 			
-			// マイページへ画面遷移
+			// 画面遷移
 			RequestDispatcher rd = request.getRequestDispatcher(url);
 			rd.forward(request, response);
 			

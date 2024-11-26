@@ -54,7 +54,6 @@ public class P2DMSousinServlet extends HttpServlet {
 	        // インサート文実行
 	        dba.UpdateExe(insertSQL);
 	        
-	      //  mess = "'" + mess + "'";
 			// DM画面へ戻る
 			url = "P2DMServlet?yourId=" + name + "&hensuu=" + kazu + "&mess=" + URLEncoder.encode(mess,"UTF-8");
 			
