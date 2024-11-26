@@ -69,7 +69,8 @@ public class P2SearchServlet extends HttpServlet {
 				}
 	
 				// SELECT文ユーザー情報を取得
-				ResultSet rs = dba.selectExe("SELECT * FROM ユーザー WHERE 名前 LIKE '%" + username + "%'");
+				ResultSet rs = dba.selectExe("SELECT * FROM ユーザー WHERE 名前 LIKE '%"+username+"%' "
+						+ "OR ユーザーID LIKE '%"+username+"%'");
 	
 				// カーソルを１行ずらす。flgに結果を保存。
 				boolean flg = rs.next();
