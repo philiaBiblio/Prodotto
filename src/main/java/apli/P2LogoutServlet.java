@@ -30,7 +30,13 @@ public class P2LogoutServlet extends HttpServlet {
 		HttpSession ses = request.getSession();
 		
 		// セッションの削除
-		ses.removeAttribute("ADMINLOGIN");
+		ses.removeAttribute("LOGIN");
+		ses.removeAttribute("DMSSLIST");
+		ses.removeAttribute("DMLIST");
+		ses.removeAttribute("I");
+		ses.removeAttribute("YOU");
+		ses.removeAttribute("MESS");
+		
 		System.out.println("セッション削除");
 		
 		// ログイン画面へ遷移

@@ -20,6 +20,7 @@
 	ArrayList<DM> dmssList = (ArrayList)ses.getAttribute("DMSSLIST");
 	ArrayList<DM> dmList = (ArrayList)ses.getAttribute("DMLIST");
  	Integer kazu = (Integer)ses.getAttribute("I");
+ 	System.out.println(kazu);
  	String name = (String)ses.getAttribute("YOU");
  	String mess = (String)ses.getAttribute("MESS");
 %>
@@ -52,7 +53,8 @@
      <%if(dmList != null){ %>
       	<div class="chat-container">
         <!-- ヘッダーにはユーザネームを表示 -->
-        <div class="chat-header"><%=dmssList.get(kazu).getYourName() %></div>
+        <div class="chat-header"><%=kazu.equals(0) ? "" : dmssList.get(kazu).getYourName() %>
+        </div>
         <!--もってきたトークを上から表示していく-->
         <div class="chat-messages">
         <% for (int j = 0; j < dmList.size(); j++) { %>

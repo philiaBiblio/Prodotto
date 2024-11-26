@@ -38,6 +38,7 @@ public class P2DMServlet extends HttpServlet {
 		String url = "";
 		// DBアクセス用部品の生成
 		DBAcs dba = new DBAcs();
+		DBAcs dba2 = new DBAcs();
 		
 		try {
 			// やり取りしてる相手の名前の取得
@@ -48,7 +49,18 @@ public class P2DMServlet extends HttpServlet {
 			Integer i = Integer.parseInt(test);
 			ses.setAttribute("I", i);
 			System.out.println(i);
-		
+			
+			// データベースの既読未読の情報をアップデート
+	        String updateSQL = 
+	        		"UPDATE DM SET 既読未読 = '0' WHERE 受信元 = '" + u.getUserid() + "'"
+	        		+ "and 送信元 = '" + yourId + "'";
+	        
+	        // アップデート文実行
+	        dba2.UpdateExe(updateSQL);
+	        
+	        // dmssListの未読既読を更新
+	        dmssList.get(i).setKidoku("0");
+	        
 			// その相手とのDM履歴を検索するsql文
 			String sql = "select DMID,送信元,受信元,内容,既読未読,タイムスタンプ from DM "
 					+ "join ユーザー y1 on y1.ユーザーID = DM.送信元 "
@@ -59,6 +71,7 @@ public class P2DMServlet extends HttpServlet {
 			
 			// sql文実行
 			ResultSet rs = dba.selectExe(sql);
+			ses.setAttribute("DMSSLIST", dmssList);
 			
 			// アレイリストの取得
 			ArrayList<DM> dmList = new ArrayList<DM>();

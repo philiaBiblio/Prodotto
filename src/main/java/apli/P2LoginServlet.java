@@ -47,23 +47,23 @@ public class P2LoginServlet extends HttpServlet {
 			// 入力したパスワードを取得
 			String inPassword = request.getParameter("pw");
 			
-//			//inpass暗号化
-//			//暗号化部品の生成
-//			Angou a = new Angou();
-//			
-//			//暗号化前のinPasswordをmojiに入れる
-//			String moji = inPassword;
-//			//暗号化実行(半角64文字に変換)
-//			String AinPassword = a.getAngo(moji);
-//			System.out.println("暗号化後："+AinPassword);
-//			
-//			// sql用にシングルコーテーションで囲む
-//			AinPassword = "'" + AinPassword + "'";
-			inPassword = "'" + inPassword + "'";
-//			
-//			// ログイン用のsql文
-//			String sql = "select * from ユーザー where メールアドレス = " + inMailadd + " and パスワード = " + AinPassword;
-			String sql = "select * from ユーザー where メールアドレス = " + inMailadd + " and パスワード = " + inPassword;
+			// inpass暗号化
+			// 暗号化部品の生成
+			Angou a = new Angou();
+		
+			// 暗号化前のinPasswordをmojiに入れる
+			String moji = inPassword;
+			// 暗号化実行(半角64文字に変換)
+			String AinPassword = a.getAngo(moji);
+			System.out.println("暗号化後："+AinPassword);
+			
+			// sql用にシングルコーテーションで囲む
+			AinPassword = "'" + AinPassword + "'";
+//			inPassword = "'" + inPassword + "'";
+			
+			// ログイン用のsql文
+			String sql = "select * from ユーザー where メールアドレス = " + inMailadd + " and パスワード = " + AinPassword;
+//			String sql = "select * from ユーザー where メールアドレス = " + inMailadd + " and パスワード = " + inPassword;
 			// sql文実行
 			ResultSet rs = dba.selectExe(sql);
 			

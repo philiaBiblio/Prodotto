@@ -210,7 +210,7 @@ a{
   border-color: #11dadd;
 }
 
-#sousin {
+#sousin1 {
   background-color: #050505;
   border: 1px solid #ffffff;
   color: white;
@@ -220,7 +220,7 @@ a{
   cursor: pointer;
 }
 
-#sousin:hover {
+#sousin1:hover {
   border-color: #11dadd;
   color: #11dadd;
 }

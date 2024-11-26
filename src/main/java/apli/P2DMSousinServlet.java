@@ -1,6 +1,7 @@
 package apli;
 
 import java.io.IOException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 
 import javax.servlet.ServletException;
@@ -42,19 +43,21 @@ public class P2DMSousinServlet extends HttpServlet {
 		
 		try {
 			// 送信したメッセージの取得
-			String mess = request.getParameter("sousin1");
+			String mess = request.getParameter("letter");
 			
 			// データベースにインサート
 	        String insertSQL = 
-	        		"INSERT INTO DM values ('" + u.getUserid() + "-" + name + "-' || to_char(systimestamp,'yyyy-mm-dd') || '-' || LPAD(連番.nextval,3,'0'),'"
+	        		"INSERT INTO DM values ('" + u.getUserid() + "-" + name + "-' || to_char(systimestamp,'yyyymmdd') || '-' || LPAD(連番.nextval,3,'0'),'"
 	        				+ u.getUserid() + "','" + name + "','" + mess + "','0', to_char(systimestamp,'yyyy-mm-dd HH24:MI:SS'))";
 	        ses.setAttribute("MESS", mess);
 	        				
 	        // インサート文実行
 	        dba.UpdateExe(insertSQL);
 	        
+	      //  mess = "'" + mess + "'";
 			// DM画面へ戻る
-			url = "P2DMServlet?yourId=" + name + "&hensuu=" + kazu + "&mess=" + mess;
+			url = "P2DMServlet?yourId=" + name + "&hensuu=" + kazu + "&mess=" + URLEncoder.encode(mess,"UTF-8");
+			
 			System.out.println(url);
 						
 			// 画面遷移

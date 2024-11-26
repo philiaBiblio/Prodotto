@@ -43,21 +43,38 @@ public class P2PasswordChangeServlet extends HttpServlet {
 			String inPass2 = request.getParameter("newPw");
 			String inPass3 = request.getParameter("newPw2");
 			System.out.println(inPass);
-
+			System.out.println(inPass2);
+			System.out.println(inPass3);
+			
+			// inpass暗号化
+			// 暗号化部品の生成
+			Angou a = new Angou();
+			
+			// 暗号化前のinPasswordをmojiに入れる
+			String moji = inPass;
+			String moji2 = inPass2;
+			String moji3 = inPass3;
+			
+			// 暗号化実行(半角64文字に変換)
+			String AinPassword = a.getAngo(moji);
+			System.out.println("暗号化後："+AinPassword);
+			String AinPassword2 = a.getAngo(moji2);
+			System.out.println("暗号化後："+AinPassword2);
+			String AinPassword3 = a.getAngo(moji3);
+			System.out.println("暗号化後："+AinPassword3);
+			
 			// 現在のパスワードが正しいかの処理
 			ResultSet rs = dba.selectExe("select * from ユーザー where ユーザーID = '" + u.getUserid() + "'");
 			if(rs.next()) {
 				String pass = rs.getString("パスワード");
-				pass = pass.trim();
+//				pass = pass.trim();	// DBに保存されているのが暗号化されているのだったらいらない
 				System.out.println(pass);
-				System.out.println(inPass);
-				System.out.println(inPass2);
-				System.out.println(inPass3);
-				if(pass.equals(inPass)) {
+				
+				if(pass.equals(AinPassword)) {
 					System.out.println("パスワード一致◎");
 					int flg = 0;
 					// 二回入力のチェック処理
-					if(inPass2.equals(inPass3)) {
+					if(AinPassword2.equals(AinPassword3)) {
 						System.out.println("パスワードの入力値が一緒なのでOK、セキュリティチェックへ");
 						
 						if(inPass2.length() >= 6) {
@@ -73,14 +90,14 @@ public class P2PasswordChangeServlet extends HttpServlet {
 						if(flg == 2) {
 							// データベースの情報をアップデート
 					        String updateSQL = 
-					        		"UPDATE ユーザー SET パスワード = '" + inPass2 +
+					        		"UPDATE ユーザー SET パスワード = '" + AinPassword2 +
 					        		"' WHERE ユーザーID = '" + u.getUserid() + "'";
 					        
 					        // アップデート文実行
 					        dba.UpdateExe(updateSQL);
 					        
 					        // 取得した情報を保存
-					        u.setPassword(inPass2);
+					        u.setPassword(AinPassword);
 					        // 情報を保存
 					        ses.setAttribute("LOGIN", u);
 					        String trueMess = "変更できました。";
