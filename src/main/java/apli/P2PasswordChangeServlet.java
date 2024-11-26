@@ -97,7 +97,7 @@ public class P2PasswordChangeServlet extends HttpServlet {
 					        dba.UpdateExe(updateSQL);
 					        
 					        // 取得した情報を保存
-					        u.setPassword(AinPassword);
+					        u.setPassword(AinPassword2);
 					        // 情報を保存
 					        ses.setAttribute("LOGIN", u);
 					        String trueMess = "変更できました。";

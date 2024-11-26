@@ -59,11 +59,10 @@ public class P2LoginServlet extends HttpServlet {
 			
 			// sql用にシングルコーテーションで囲む
 			AinPassword = "'" + AinPassword + "'";
-//			inPassword = "'" + inPassword + "'";
 			
 			// ログイン用のsql文
 			String sql = "select * from ユーザー where メールアドレス = " + inMailadd + " and パスワード = " + AinPassword;
-//			String sql = "select * from ユーザー where メールアドレス = " + inMailadd + " and パスワード = " + inPassword;
+			
 			// sql文実行
 			ResultSet rs = dba.selectExe(sql);
 			
@@ -145,8 +144,7 @@ public class P2LoginServlet extends HttpServlet {
 			}else {
 				System.out.println("管理者ログイン実行");
 				// ユーザーログイン失敗後管理者用データベースへ接続
-//				String sql2 = "select * from 管理者 where メールアドレス = " + inMailadd + " and パスワード = " + AinPassword;
-				String sql2 = "select * from 管理者 where メールアドレス = " + inMailadd + " and パスワード = " + inPassword;
+				String sql2 = "select * from 管理者 where メールアドレス = " + inMailadd + " and パスワード = " + AinPassword;
 				// sql文実行
 				ResultSet rs2 = dba2.selectExe(sql2);
 	
