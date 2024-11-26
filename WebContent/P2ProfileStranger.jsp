@@ -24,8 +24,6 @@
 <% 
 User up = (User) request.getAttribute("PROF");
 
-
-
 request.setAttribute("isFollowing", isFollowing);
 request.setAttribute("followCount", followCount);
 request.setAttribute("followerCount", followerCount);
@@ -53,17 +51,29 @@ request.setAttribute("followerCount", followerCount);
 
       </div>
       
+      <!-- フォロー中/フォローボタン切り替えに変更 -->
+      <!-- isFollowingがtrueならフォローしているのでフォロー済みボタン -->
+      <!-- isFollowingがfolseならフォローしていないのでフォローボタン表示 -->
       <div class="rightheader">
-        <div class="button-group2">
-          <a href="P2Notifications.jsp">
-            <button class="notification-button toggle-notification" id="notificationButton">
-              <i class="fas fa-bell  changeb"></i>
-            </button>
-          </a>
-          <a href="P2DM.jsp" class="edit-profile-button">
+      	<div class="button-group2">
+      		<button class="notification-button toggle-notification" id="notificationButton">
+				<i class="fas changeb">
+					<span class="dli-user-plus">
+						<span class="user"></span>
+					</span>                
+				</i>
+			</button>
+			<p class="follow">
+            	<%if(isFollowing==true){ %>
+            		フォロー中
+            	<%}else{ %>
+            		フォローする
+            	<%} %>
+            </p>
+          <a href="P2DM.html" class="edit-profile-button">
             <i class="fas fa-envelope changeb"></i>
-          </a>
-        </div>
+            </a>
+		</div>
       </div>
       
       
