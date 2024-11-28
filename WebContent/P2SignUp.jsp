@@ -22,6 +22,7 @@
 	String errorID = (String)ses.getAttribute("ERRORID");
 	String errorKeta = (String)ses.getAttribute("ERRORKETA");
 	String errorMail = (String)ses.getAttribute("ERRORMAIL");
+	String errorMail2 = (String)ses.getAttribute("ERRORMAIL2");
 	String errorPass = (String)ses.getAttribute("ERRORPASS");
 	String errorPass2 = (String)ses.getAttribute("ERRORPASS2"); 
 	
@@ -95,6 +96,11 @@
                 placeholder="メールアドレスを再入力" /></label
             ><br />
           </div>
+          <%if(errorMail2 != null){ %>
+				<p style="color:#ff0000"><%=errorMail2 %></p>
+			<%} %>
+			<%ses.removeAttribute("ERRORMAIL2"); %>
+			
           <%if(errorMail != null){ %>
 				<p style="color:#ff0000"><%=errorMail %></p>
 			<%} %>
@@ -109,7 +115,7 @@
                 class="hideText"
                 name="pw"
                 id="pw"
-                value="<%if(u != null) %><%=u.getPassword() %>"
+                <%-- value="<%if(u != null) %><%=u.getPassword() %>" --%>
                 required
                 placeholder="英数字６文字以上"
                 Onchange="disp1()"
@@ -125,7 +131,7 @@
                 }
               </script>
               <input type="text" class="showText" id="pass1" name="pw" 
-              value="<%if(u != null) %><%=u.getPassword() %>"
+              <%-- value="<%if(u != null) %><%=u.getPassword() %>" --%>
               Onchange="disp2()"/>
               <script>
               	function disp2(){
@@ -148,7 +154,7 @@
                 class="hideText2"
                 name="pw2"
                 id="pw2"
-                value="<%if(u != null && errorPass == null) %><%=u.getPassword() %>"
+               <%--  value="<%if(u != null && errorPass == null) %><%=u.getPassword() %>" --%>
                 required
                 placeholder="パスワードを再入力"
                 Onchange="disp3()"

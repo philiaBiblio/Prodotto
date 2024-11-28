@@ -20,38 +20,60 @@
     <title>ProDotto</title>
   </head>
 
+
+<% 
+User up = (User) request.getAttribute("PROF");
+
+request.setAttribute("isFollowing", isFollowing);
+request.setAttribute("followCount", followCount);
+request.setAttribute("followerCount", followerCount);
+
+%>
+  
   <body>
     <header class="profile-header">
         
       <div class="leftheader">
         <img
-          src="image/ききゅう.jpg"
+          src="<%= up.getIconImage()%>"
           alt="Profile Icon"
           class="profile-header-icon"
         />
 
         <div class="user-details">
-            <h2 class="username">ユーザーネーム</h2>
-            <p class="user-id">@ユーザーID</p>
+            <h2 class="username"><%= up.getName() %></h2>
+            <p class="user-id">@<%= up.getUserid() %></p>
             <div class="follower-info">
-              <span class="follower-count">フォロワー: 100</span>
-              <span class="following-count">フォロー中: 50</span>
+              <span class="follower-count">フォロワー: <%= request.getAttribute("followCount")%></span>
+              <span class="following-count">フォロー中: <%= request.getAttribute("followerCount")%></span>
             </div>
         </div>
 
       </div>
       
+      <!-- フォロー中/フォローボタン切り替えに変更 -->
+      <!-- isFollowingがtrueならフォローしているのでフォロー済みボタン -->
+      <!-- isFollowingがfolseならフォローしていないのでフォローボタン表示 -->
       <div class="rightheader">
-        <div class="button-group2">
-          <a href="P2Notifications.jsp">
-            <button class="notification-button toggle-notification" id="notificationButton">
-              <i class="fas fa-bell  changeb"></i>
-            </button>
-          </a>
-          <a href="P2DM.jsp" class="edit-profile-button">
+      	<div class="button-group2">
+      		<button class="notification-button toggle-notification" id="notificationButton">
+				<i class="fas changeb">
+					<span class="dli-user-plus">
+						<span class="user"></span>
+					</span>                
+				</i>
+			</button>
+			<p class="follow">
+            	<%if(isFollowing==true){ %>
+            		フォロー中
+            	<%}else{ %>
+            		フォローする
+            	<%} %>
+            </p>
+          <a href="P2DM.html" class="edit-profile-button">
             <i class="fas fa-envelope changeb"></i>
-          </a>
-        </div>
+            </a>
+		</div>
       </div>
       
       

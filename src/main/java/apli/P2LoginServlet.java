@@ -47,13 +47,13 @@ public class P2LoginServlet extends HttpServlet {
 			// 入力したパスワードを取得
 			String inPassword = request.getParameter("pw");
 			
-			//inpass暗号化
-			//暗号化部品の生成
+			// inpass暗号化
+			// 暗号化部品の生成
 			Angou a = new Angou();
-			
-			//暗号化前のinPasswordをmojiに入れる
+		
+			// 暗号化前のinPasswordをmojiに入れる
 			String moji = inPassword;
-			//暗号化実行(半角64文字に変換)
+			// 暗号化実行(半角64文字に変換)
 			String AinPassword = a.getAngo(moji);
 			System.out.println("暗号化後："+AinPassword);
 			
@@ -62,6 +62,7 @@ public class P2LoginServlet extends HttpServlet {
 			
 			// ログイン用のsql文
 			String sql = "select * from ユーザー where メールアドレス = " + inMailadd + " and パスワード = " + AinPassword;
+			
 			// sql文実行
 			ResultSet rs = dba.selectExe(sql);
 			
@@ -93,34 +94,53 @@ public class P2LoginServlet extends HttpServlet {
 				// ログインしたユーザー情報を保存
 				ses.setAttribute("LOGIN", u);
 				System.out.println(sex);
+				System.out.println(userid);
 				System.out.println("ユーザーログイン成功");
 				
-//				select max(タイムスタンプ) as タイムスタンプ,相手,
-//				sum(CASE WHEN 既読未読='0' THEN 1 ELSE 0 END)　as 未読数 from
-//				(select タイムスタンプ,y1.ユーザーID as 相手,既読未読 from DM join ユーザー y1 on y1.ユーザーID　= DM.送信元 join ユーザー y2 on y2.ユーザーID = DM.受信元 where DMID like '%V2jX9z7wL3D%' 
-//				union
-//				select タイムスタンプ,y2.ユーザーID as相手,既読未読　from DM join ユーザー y1 on y1.ユーザーID　= DM.送信元 join ユーザー y2 on y2.ユーザーID = DM.受信元 where DMID like '%V2jX9z7wL3D%')
-//				group by 相手;
-//				
-				
 				// dm情報の取得
-				String sqldm = "select max(タイムスタンプ) as タイムスタンプ,相手,\r\n"
-						+ "sum(CASE WHEN 既読未読='0' THEN 1 ELSE 0 END)　as 未読数 from\r\n"
-						+ "(select タイムスタンプ,y1.ユーザーID as 相手,既読未読 from DM join ユーザー y1 on y1.ユーザーID　= DM.送信元 join ユーザー y2 on y2.ユーザーID = DM.受信元 where DMID like '%V2jX9z7wL3D%' \r\n"
-						+ "union\r\n"
-						+ "select タイムスタンプ,y2.ユーザーID as相手,既読未読　from DM join ユーザー y1 on y1.ユーザーID　= DM.送信元 join ユーザー y2 on y2.ユーザーID = DM.受信元 where DMID like '%V2jX9z7wL3D%')\r\n"
-						+ "group by 相手;";
+				String sqldm = "select max(タイムスタンプ) as タイムスタンプ,相手,sum(CASE WHEN 既読未読 = '0' THEN 1 ELSE 0 END) as 未読数,"
+						+ "名前 from (select タイムスタンプ,y1.ユーザーID as 相手,既読未読,y1.名前 from DM "
+						+ "join ユーザー y1 on y1.ユーザーID = DM.送信元 join ユーザー y2 on y2.ユーザーID = DM.受信元 where DMID like '%"
+						+ u.getUserid() + "-%' union select タイムスタンプ,y2.ユーザーID as 相手,既読未読,y2.名前 from DM"
+						+ " join ユーザー y1 on y1.ユーザーID = DM.送信元 join ユーザー y2 on y2.ユーザーID = DM.受信元 where DMID like '%"
+						+ u.getUserid() + "-%') group by 相手,名前 order by タイムスタンプ desc";
+				
 				// sql文実行
 				ResultSet rs3 = dba3.selectExe(sqldm);
-				
 				// アレイリストの取得
-				ArrayList<DM> dmList = new ArrayList<DM>();
-				
-				
-				
+				ArrayList<DM> dmssList = new ArrayList<DM>();
+				// 繰り返しでsqlからすべての情報を得る
+				while(rs3.next()) {
+					String time = rs3.getString("タイムスタンプ");
+					System.out.println("タイムスタンプ：" + time);
+					String your = rs3.getString("相手");
+					System.out.println("相手：" + your);
+					String midoku = rs3.getString("未読数");
+					System.out.println("未読数：" + midoku);
+					String yourName = rs3.getString("名前");
+					
+					if(your.equals(u.getUserid())) {
+						System.out.println("相手の名前とログインしてるIDが一緒なのでアレイリストに入れない");
+					}else {
+						// インスタンス生成
+						DM dm = new DM();
+						dm.setTime(time);
+						dm.setYour(your);
+						dm.setKidoku(midoku);
+						dm.setYourName(yourName);
+						// アレイリストに追加
+						dmssList.add(dm);
+					}
+				}
+				ses.setAttribute("DMSSLIST", dmssList);
+		
 				// タイムラインへ
 				url = "P2Timeline.jsp";
 				System.out.println(url);
+				
+				// ログアウト処理
+				dba.closeDB();
+				dba3.closeDB();
 			}else {
 				System.out.println("管理者ログイン実行");
 				// ユーザーログイン失敗後管理者用データベースへ接続
@@ -155,21 +175,22 @@ public class P2LoginServlet extends HttpServlet {
 					// タイムラインへ
 					url = "P1TLManagement.jsp";
 					System.out.println(url);
+					// ログアウト処理
+					dba2.closeDB();
 				}
 			}
 			
-			// マイページへ画面遷移
+			// 画面遷移
 			RequestDispatcher rd = request.getRequestDispatcher(url);
 			rd.forward(request, response);
-			
-			// ログアウト処理
-			dba.closeDB();
 			
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
 			// ログアウト処理
-			dba.closeDB();	
+			dba.closeDB();
+			dba2.closeDB();
+			dba3.closeDB();	
 		}
 	}
 }

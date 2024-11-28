@@ -25,108 +25,47 @@
 //セッションの取得
 HttpSession ses = request.getSession();
 //会員リストを取得
-ArrayList<User> u = (ArrayList<User>) ses.getAttribute("USERLIST");
+ArrayList<User> searchU = (ArrayList<User>) ses.getAttribute("USERLIST");
 %>
 
 <body>
 
-	<form action="UserSearchServlet">
+<form action="UserProfileServlet" method="GET">
+    <input type="hidden" name="userID" value="<%= searchU.get(i).getID() %>">
+    <button type="submit" class="icon-button">
+        <img src="image/ききゅう.jpg" alt="アイコン" class="icon">
+    </button>
+</form>
+
+	<form action="UserSearchServlet" method="GET">
 
 		<div class="user-section">
-			<%
-			if (u == null) {
-			%>
+			<% if (searchU == null) { %>
 			<p>検索キーワードを入力してください</p>
-			<%
-			} else if (u.isEmpty()) {
-			%>
+			<% } else if (searchU.isEmpty()) { %>
 			<p>検索結果が見つかりません</p>
-			<%
-			} else {
-			for (int i = 0; i < u.size(); i++) {
-			%>
+			<% } else { 
+				for (int i = 0; i < searchU.size(); i++) { %>
 			<div class="user-item">
 				<div class="soroe">
-					<a href="P2ProfileStranger.jsp"> <img src="image/ききゅう.jpg"
-						alt="アイコン" class="icon">
-					</a>
+					<input type="hidden" name="userID" value="<%= searchU.get(i).getID() %>">
+					<button type="submit" class="icon-button">
+						<img src="<%= searchU.get(i).getIcon()%>" alt="アイコン" class="icon">
+					</button>
 				</div>
 				<div class="user-content">
 					<p class="username">
-						<%=u.get(i).getName()%>
+						<%=searchU.get(i).getName()%>
 					</p>
 				</div>
 			</div>
 			<hr>
-			<%
-			}
-			}
-			ses.removeAttribute("USERLIST");
-			%>
+			<% } } ses.removeAttribute("USERLIST"); %>
 
 
 		</div>
 
-		<header class="header">
-			<div class="header_container">
-				<div class="none"></div>
-				<div class="search">
-					<!-- フィルターボタン -->
-					<select id="filter" class="filter-button"
-						onChange="location.href=value;">
-						<option value="P2UserSearch.jsp">アカウント名</option>
-						<option value="">動画タイトル</option>
-					</select>
-
-					<!-- 検索バー -->
-					<input type="text" name="usersearch" id="search"
-						placeholder="Search" />
-					<button type="submit" class="fa-solid fa-magnifying-glass"></button>
-				</div>
-			</div>
-		</header>
-
-		<section class="nav" id="navbar">
-			<nav class="nav_container">
-				<div>
-					<a href="#" class="nav_link nav_logo"> <i
-						class="fa-solid fa-bars nav_icon"></i> <span class="logo_name">
-							<!-- ここにProDottoアイコンを入れる --> <i class="fab fa-"></i> ProDotto
-					</span>
-					</a>
-
-					<div class="nav_list">
-						<div class="nav_items navtop">
-							<a href="P2Timeline.jsp" class="nav_link navtop active"> <i
-								class="fa fa-house nav_icon"></i> <span class="nav_name">タイムライン</span>
-							</a> <a href="P2DM.jsp" class="nav_link navtop nav_soroe"> <!-- <i class="fa fa-compass nav_icon"></i> -->
-								<div class="nav_icon nav_soroe">
-									<i class="gg-mail"></i>
-								</div> <span class="nav_name">DM</span>
-							</a> <a href="P2Ranking.jsp" class="nav_link navtop nav_soroe"> <!-- <i class="fa-brands fa-tiktok nav_icon"></i> -->
-								<div class="nav_icon nav_soroe">
-									<i class="gg-crown"></i>
-								</div> <span class="nav_name">ランキング</span>
-							</a> <a href="P2PostAndRecording.jsp"
-								class="nav_link navtop nav_soroe"> <!-- <i class="fa-solid fa-users nav_icon"></i> -->
-								<div class="nav_icon">
-									<i class="gg-add-r"></i>
-								</div> <span class="nav_name">投稿</span>
-							</a> <a href="P2ProfileMine.jsp" class="nav_link navtop nav_soroe">
-								<!-- <i class="fa-solid fa-users nav_icon"></i> -->
-								<div class="nav_icon nav_soroe">
-									<i class="gg-boy"></i>
-								</div> <span class="nav_name">プロフィール</span>
-							</a> <a href="P2Settings.jsp" class="nav_link navtop"> <!-- <i class="fa-solid fa-video nav_icon"></i> -->
-								<div class="nav_icon nav_soroe">
-									<span class="material-symbols-outlined"> settings </span>
-								</div> <span class="nav_name">設定</span>
-							</a>
-						</div>
-					</div>
-				</div>
-			</nav>
-		</section>
+		<jsp:include page="P2kensaku.jsp"></jsp:include>
 
 		<script src="audioPlayer.js"></script>
 		<script src="https://unpkg.com/wavesurfer.js"></script>

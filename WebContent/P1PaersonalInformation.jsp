@@ -78,7 +78,19 @@ User au = (AdminUser) ses.getAttribute("ADMINLOGIN");
 		</div>
 	</form>
 
+<<<<<<< HEAD
 	<jsp:include page="P2kensaku.jsp"></jsp:include>
+=======
+            <!-- 保存ボタン（最初は非表示） -->
+            <div class="button-container" id="button-container">
+                <input type="submit" class="submit-button" name="hozon" id="hozon" value="保存" />
+            </div>
+        </div>
+    </form>
+    
+  		<jsp:include page="P1kensaku.jsp"></jsp:include>
+	
+>>>>>>> refs/remotes/origin/main
 
 	<script>
 		function enableEdit(field) {

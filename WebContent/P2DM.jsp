@@ -1,3 +1,5 @@
+<%@page import="apli.DM"%>
+<%@page import="java.util.ArrayList"%>
 <%@page import="apli.User"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -14,118 +16,55 @@
 	HttpSession ses = request.getSession();
 	// ログイン情報の取得
 	User u = (User)ses.getAttribute("LOGIN");
-	// DM履歴のセッションの取得
-	
+	// DM画面に必要な情報
+	ArrayList<DM> dmssList = (ArrayList)ses.getAttribute("DMSSLIST");
+	ArrayList<DM> dmList = (ArrayList)ses.getAttribute("DMLIST");
+ 	Integer kazu = (Integer)ses.getAttribute("I");
+ 	System.out.println(kazu);
+ 	String name = (String)ses.getAttribute("YOU");
+ 	String mess = (String)ses.getAttribute("MESS");
 %>
 
   <body style="margin: 70px 0 0 -5px;">
     <!-- メインコンテンツ -->
     <div class="main-content">
-      <!-- メッセージリスト -->
-      <!---->
-      <!--class="message-item"選択するとユーザIDをサーバへ飛ばす。
-      ほんでそいつとのトーク履歴持ってくる。それをclass="chat-messages"に持って行っちゃおう-->
+    <!-- メッセージリスト -->
+    <!--class="message-item"選択するとユーザIDをサーバへ飛ばす。
+    ほんでそいつとのトーク履歴持ってくる。それをclass="chat-messages"に持って行っちゃおう-->
         <div class="message-list">
-          
-          <div class="message-item" name="senderid">
-            <img src="image/ききゅう.jpg" alt="アイコン" class="icon" />
-            おもち
-          </div>
-          
-          <div class="message-item" name="senderid">
-            <img src="image/ききゅう.jpg" alt="アイコン" class="icon" />
-            創造的薬局
-            <!--未読アイコン-->
-            <!--画面読み込み時、未読ある人はここに未読数表示-->
-            <div class="notification-badge">1</div>
-          </div>
-          
-          <div class="message-item" name="senderid">
-            <img src="image/ききゅう.jpg" alt="アイコン" class="icon" />
-            JUBEE
-            <div class="notification-badge">4</div>
-            <input type="hidden" name="user_id" value="坂本雄三" >
-          </div>
-          
-          <div class="message-item" name="senderid">
-            <img src="image/ききゅう.jpg" alt="アイコン" class="icon" />
-            BIM
-            <div class="notification-badge">2</div>
-          </div>
-          
-          <div class="message-item" name="senderid">
-            <img src="image/ききゅう.jpg" alt="アイコン" class="icon" />
-            VaVa
-          </div>
-          
-          <div class="message-item" name="senderid">
-            <img src="image/ききゅう.jpg" alt="アイコン" class="icon" />
-            in-d
-            <div class="notification-badge">2</div>
-          </div>
-          
-          <div class="message-item" name="senderid">
-            <img src="image/ききゅう.jpg" alt="アイコン" class="icon" />
-            doooo
-          </div>
-          
-          <div class="message-item" name="senderid">
-            <img src="image/ききゅう.jpg" alt="アイコン" class="icon" />
-            heiyuu
-          </div>
-          
-          <div class="message-item" name="senderid">
-            <img src="image/ききゅう.jpg" alt="アイコン" class="icon" />
-            坂本雄三
-          </div>
-          
-          <div class="message-item" name="senderid">
-            <img src="image/ききゅう.jpg" alt="アイコン" class="icon" />
-            坂本雄三
-          </div>
-          
-          <div class="message-item" name="senderid">
-            <img src="image/ききゅう.jpg" alt="アイコン" class="icon" />
-            坂本雄三
-          </div>
-          
-          <div class="message-item" name="senderid">
-            <img src="image/ききゅう.jpg" alt="アイコン" class="icon" />
-            坂本雄三
-          </div>
-        </div>
+        <%if(dmssList != null){ %>
+        	<% for (int i = 0; i < dmssList.size(); i++) { %>
+        		<form action="P2DMServlet" method="post">
+        		<a href="P2DMServlet?yourId=<%= dmssList.get(i).getYour() %>&hensuu=<%=i%>"><div class="message-item">
+            		<img src="image/ききゅう.jpg" alt="アイコン" class="icon" />
+            		<%= dmssList.get(i).getYourName() %>
+            		<!--未読アイコン-->
+            		<!--画面読み込み時、未読ある人はここに未読数表示-->
+            		<%if(!dmssList.get(i).getKidoku().equals("0")){ %>
+            			<div class="notification-badge"><%=dmssList.get(i).getKidoku() %></div>
+        			<% } %>
+        		</div></a>
+        		</form>
+         	<% } %>			
+	 	<%} %>
+	 	</div>
 
       <!-- DMチャットエリア -->
-      <%if( != null){ %>
-      		<div class="chat-container">
+     <%if(dmList != null){ %>
+      	<div class="chat-container">
         <!-- ヘッダーにはユーザネームを表示 -->
-        <div class="chat-header">おもち</div>
+        <div class="chat-header"><%=kazu.equals(0) ? "" : dmssList.get(kazu).getYourName() %>
+        </div>
         <!--もってきたトークを上から表示していく-->
         <div class="chat-messages">
-          <div class="message received">
-            <div class="bubble" name="letter">あなたのこの曲、いいよね！今まで聴いたカバーの中で一番好きだわ</div>
-          </div>
-          <div class="message sent">
-            <div class="bubble">だよね！俺もこの曲好き</div>
-          </div>
-          <div class="message received">
-            <div class="bubble" name="letter">でもよくこんなマイナーな曲知ってるね。私以外聴いてる人いないと思った。</div>
-          </div>
-          <div class="message sent">
-            <div class="bubble">まぁね。当たり前じゃん</div>
-          </div>
-          <div class="message sent">
-            <div class="bubble">君がいつもカラオケで歌う曲の歌手は調べるよ。</div>
-          </div> 
-          <div class="message received">
-            <div class="bubble" name="letter">うぇいよぉ</div>
-          </div>
-          <div class="message sent">
-            <div class="bubble">うぇいよぉ</div>
-          </div>
+        <% for (int j = 0; j < dmList.size(); j++) { %>
+        <div class="<%=u.getUserid().equals(dmList.get(j).getSousin()) ? "message sent" : "message received" %>">
+        	<div class="bubble"><%=dmList.get(j).getNaiyou() %></div>
+        </div>
+        <%} %>
         </div>
 
-        <form action="P2DMServlet" method="post">
+        <form action="P2DMSousinServlet" method="post">
           <div class="chat-input">
             <input
               type="text"
@@ -134,14 +73,12 @@
               required
               placeholder="メッセージを入力"
             />
-            <input type="submit" name="sousin" id="sousin" value="送信" />
+            <input type="submit" name="sousin1" id="sousin1" value="送信" />
           </div>
         </form>
       </div>
       <%} %>
-      <%ses.removeAttribute("ERRORPASS2"); %>
-    </div>
-    
+
      <jsp:include page="P2kensaku.jsp"></jsp:include>
     
     <script>

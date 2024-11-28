@@ -54,10 +54,21 @@ public class P2PreLoginPasswordChange3Servlet extends HttpServlet {
 					System.out.println("セキュリティチェック◎");
 					flg = flg + 1;
 				}
+				
+				// inpass暗号化
+				// 暗号化部品の生成
+				Angou a = new Angou();
+			
+				// 暗号化前のinPasswordをmojiに入れる
+				String moji = pass1;
+				// 暗号化実行(半角64文字に変換)
+				String AinPassword = a.getAngo(moji);
+				System.out.println("暗号化後："+AinPassword);
+				
 				if(flg == 2) {
 					// データベースの情報をアップデート
 			        String updateSQL = 
-			        		"UPDATE ユーザー SET パスワード = '" + pass1 +
+			        		"UPDATE ユーザー SET パスワード = '" + AinPassword +
 			        		"' WHERE メールアドレス = '" + mail + "'";
 			        
 			        // アップデート文実行
