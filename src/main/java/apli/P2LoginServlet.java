@@ -172,9 +172,15 @@ public class P2LoginServlet extends HttpServlet {
 					ses.setAttribute("ADMINLOGIN", au);
 					System.out.println("管理者ログイン成功");
 					
-					// タイムラインへ
-					url = "P1TLManagement.jsp";
-					System.out.println(url);
+					if(au.getAdminLevel().equals("1")) {
+						// 管理者管理画面へ
+						url = "P1AdminManegement.jsp";
+						System.out.println(url);
+					}else {
+						// タイムラインへ
+						url = "P1TLManagement.jsp";
+						System.out.println(url);
+					}
 					// ログアウト処理
 					dba2.closeDB();
 				}
