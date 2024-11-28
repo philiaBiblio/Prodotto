@@ -6,7 +6,7 @@ public class AdminUser {
 	private String AdminName;		// 管理者ユーザー名
 	private String AdminSex;			// 管理者性別
 	private String AdminBirth;			// 管理者生年月日
-//	private String AdminIconImage;	// 管理者アイコン
+	private String AdminIconImage;	// 管理者アイコン
 	private String AdminMailadd;		// メールアドレス
 	private String AdminLevel;		// 管理者レベル
 	private String password;	// パスワード
@@ -42,12 +42,12 @@ public class AdminUser {
 	public void setAdminBirth(String adminBirth) {
 		AdminBirth = adminBirth;
 	}
-//	public String getAdminIconImage() {
-//		return AdminIconImage;
-//	}
-//	public void setAdminIconImage(String adminIconImage) {
-//		AdminIconImage = adminIconImage;
-//	}
+	public String getAdminIconImage() {
+		return AdminIconImage;
+	}
+	public void setAdminIconImage(String adminIconImage) {
+		AdminIconImage = adminIconImage;
+	}
 	public String getAdminMailadd() {
 		return AdminMailadd;
 	}
