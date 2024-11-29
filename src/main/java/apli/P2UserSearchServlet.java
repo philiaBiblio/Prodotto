@@ -14,7 +14,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
- * 
  * Servlet implementation class UserSearchServlet
  */
 @WebServlet("/P2UserSearchServlet")
@@ -42,19 +41,11 @@ public class P2UserSearchServlet extends HttpServlet {
         
         // DBアクセス用部品の生成
         DBAcs dba = new DBAcs();
-        
-        //投稿リストの生成
-      	//以下変更します
-      	ArrayList<User> UList = (ArrayList<User>) ses.getAttribute("USERLIST");
-      	if (UList == null) {
-      		UList = new ArrayList<>(); // 初回のみ新規作成
-      	} else {
-      		UList.clear(); // 既存データをクリア
-      	}
 
         try {
             // ユーザーIDの取得
             String userID = request.getParameter("userID");
+            
             // ユーザー情報の取得
             ResultSet rsu = dba.selectExe("SELECT * FROM ユーザー WHERE ユーザーID = '" + userID + "'");
             if (rsu.next()) {
@@ -91,7 +82,10 @@ public class P2UserSearchServlet extends HttpServlet {
                 request.setAttribute("isFollowing", isFollowing);
                 request.setAttribute("followCount", followCount);
                 request.setAttribute("followerCount", followerCount);
-            
+                
+                // 投稿リストを取得してリクエストスコープに保存
+                ArrayList<Post> postList = getPostList(dba, userID);
+                request.setAttribute("postList", postList);
             
             } else {
                 // ユーザーが見つからない場合の処理
@@ -112,9 +106,6 @@ public class P2UserSearchServlet extends HttpServlet {
         rd.forward(request, response);
     }
 
-    /**
-     * フォロー状態を確認するメソッド
-     */
     private boolean checkIfFollowing(DBAcs dba, String followUserID, String followerUserID) {
         boolean result = false;
         
@@ -124,11 +115,50 @@ public class P2UserSearchServlet extends HttpServlet {
             pstmt.setString(1, followUserID);
             pstmt.setString(2, followerUserID);
             try (ResultSet rs = pstmt.executeQuery()) {
-                result = rs.next(); // データが存在すればフォローしている
+                result = rs.next(); 
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
         return result;
+    }
+
+    private ArrayList<Post> getPostList(DBAcs dba, String userID) throws Exception {
+        	ArrayList<Post> postList = new ArrayList<>();
+
+        String query = "SELECT 投稿.投稿ID, 投稿.サムネ, 投稿.作品," +
+        		"(SELECT COUNT(*) FROM コメント WHERE コメント.投稿ID = 投稿.投稿ID) AS コメント数, " +
+        		"(SELECT COUNT(*) FROM いいね WHERE いいね.投稿ID = 投稿.投稿ID) AS いいね数 " +
+        		"FROM 投稿 " +
+        		"WHERE 投稿.ユーザーID = ? " +
+        		"ORDER BY 投稿.アップロード日 DESC";
+
+        try (PreparedStatement pstmt = dba.getConnection().prepareStatement(query)) {
+            pstmt.setString(1, userID); 
+
+            try (ResultSet rsPosts = pstmt.executeQuery()) {
+                while (rsPosts.next()) {
+                    // データを取得
+                    String postId = rsPosts.getString("投稿ID");
+                    String thumbnailPath = rsPosts.getString("サムネイルパス");
+                    String audioPath = rsPosts.getString("音声ファイルパス");
+                    int commentCount = rsPosts.getInt("コメント数");
+                    int likeCount = rsPosts.getInt("いいね数"); 
+                    
+
+                    // Postオブジェクトを作成
+                    Post post = new Post();
+                    post.setPostId(postId);
+                    post.setThumbnailPath(thumbnailPath);
+                    post.setAudioPath(audioPath);
+                    post.setCommentCount(commentCount);
+                    post.setLikeCount(likeCount); 
+
+                    // リストに追加
+                    postList.add(post);
+                }
+            }
+        }
+        return postList;
     }
 }
