@@ -35,11 +35,10 @@
                   class="hideText"
                   name="pw"
                   id="pw"
-                  value="qwert"
                   required
                   placeholder="パスワードを入力"
                 />
-                <input type="text" class="showText" value="qwert" />
+                <input type="text" class="showText"/>
                 <label for="checkPassword" class="fa fa-eye"></label>
                 <label for="checkPassword" class="fa fa-eye-slash"></label>
               </div>

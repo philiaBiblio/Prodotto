@@ -11,10 +11,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
- * Servlet implementation class P2SignUpConfirmationServlet
+ * Servlet implementation class P2TLuploadServlet
  */
-@WebServlet("/P2SignUpConfirmationServlet")
-public class P2SignUpConfirmationServlet extends HttpServlet {
+@WebServlet("/P2TLuploadServlet")
+public class P2TLuploadServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -28,8 +28,8 @@ public class P2SignUpConfirmationServlet extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		// セッションの生成
 		HttpSession ses = request.getSession();
-		
-		User u = (User)ses.getAttribute("NYURYOKU");
+	    String filename = (String) ses.getAttribute("audioPath");
+		User u = (User)ses.getAttribute("LOGIN");
 		
 		// URLの生成
 		String url = "";
@@ -38,21 +38,13 @@ public class P2SignUpConfirmationServlet extends HttpServlet {
 		
 		try {
 			// 入力された情報の取得			
-			System.out.println(u.getName());
+			System.out.println(filename);
 			System.out.println(u.getUserid());
-			System.out.println(u.getSex());
-			System.out.println(u.getHistory());
-			System.out.println(u.getFq());
-			System.out.println(u.getBirth().replace("-", ""));
-			System.out.println(u.getMailadd());
-			System.out.println(u.getPassword());
 			
 			// このデータをDBにインサートする
 	        String insertSQL = 
-	        		"INSERT INTO ユーザー values ('" + u.getUserid() + "','"
-	        				+ u.getName() + "','" + u.getSex() + "','" + u.getHistory()
-	        				+ "','" + u.getFq() + "',to_date('" + u.getBirth().replace("-", "")
-	        				+ "','YYYY/MM/DD'),'aaaaaa','" + u.getPassword() + "','" + u.getMailadd() + "')";
+	        		"INSERT INTO ユーザー values (to_char(systimestamp,'yyyymm') ||'- a'|| LPAD(連番.nextval,4,'0')|| '- '|| LPAD(連番.nextval,8,'0'),'"
+	        		+ u.getUserid() + "'",")";
 	        // インサート文実行
 	        dba.UpdateExe(insertSQL);
 	        

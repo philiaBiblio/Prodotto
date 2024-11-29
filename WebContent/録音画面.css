@@ -1,0 +1,67 @@
+body {
+  background: #000000;
+  color: #ffffff; /* 文字 */
+  font-family: Arial, sans-serif;
+  padding: 20px;
+}
+
+.btn{
+  margin: 0.9px;  /* ボタン間のスペース */
+}
+
+/* 一時停止ボタン */
+.btn-pause {
+  width: 50px;  /* 幅 */
+  height: 50px; /* 高さ */
+}
+
+/* 再生ボタン */
+.btn-play {
+  width: 50px;  /* 幅 */
+  height: 50px; /* 高さ */
+}
+
+/* 停止ボタン */
+.btn-stop {
+  width: 50px;  /* 幅 */
+  height: 50px; /* 高さ */
+}
+
+/* 巻き戻しボタン */
+.btn-rewind {
+  width: 50px;  /* 幅 */
+  height: 50px; /* 高さ */
+}
+
+/* 早送りボタン */
+.btn-fast-forward {
+  width: 50px;  /* 幅 */
+  height: 50px; /* 高さ */
+}
+
+/* 録音ボタン */
+.btn-record{
+  width: 50px;  /* 幅 */
+  height: 50px; /* 高さ */
+}
+
+.controls{
+  position: sticky; /* スクロール時に固定 */
+  top: 0; /* 上端に固定 */
+  left: 0; /* 左端に固定 */
+}
+
+.playlist-tracks{
+  max-height: 480px;
+  position: relative; /* 子要素の位置決めに影響を与える */
+  overflow: auto; /* スクロール領域を確保 */
+
+}
+
+.channel-wrapper {
+  display: flex;
+}
+
+.playlist-overrlay {
+  position: relative;
+}
