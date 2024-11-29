@@ -52,7 +52,7 @@ public class P2SignUpConfirmationServlet extends HttpServlet {
 	        		"INSERT INTO ユーザー values ('" + u.getUserid() + "','"
 	        				+ u.getName() + "','" + u.getSex() + "','" + u.getHistory()
 	        				+ "','" + u.getFq() + "',to_date('" + u.getBirth().replace("-", "")
-	        				+ "','YYYY/MM/DD'),'aaaaaa','" + u.getPassword() + "','" + u.getMailadd() + "')";
+	        				+ "','YYYY/MM/DD'),'" + "aaa" + "','" + u.getPassword() + "','" + u.getMailadd() + "')";
 	        // インサート文実行
 	        dba.UpdateExe(insertSQL);
 	        

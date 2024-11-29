@@ -127,6 +127,9 @@ public class P1UserManeDelServlet extends HttpServlet {
 		        
 		        //リストから削除する
 		        u.remove(uIndex);
+		        
+		        String trueMess = "変更できました。";
+				ses.setAttribute("TRUEMESS", trueMess);
 		        	        
 				// 画面へ遷移
 				url = "P1UserManegement.jsp";

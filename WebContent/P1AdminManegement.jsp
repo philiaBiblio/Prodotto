@@ -18,13 +18,13 @@
  	//セッションの取得
 	HttpSession ses = request.getSession();
 	// ログイン情報の取得
-	AdminUser au = (AdminUser)ses.getAttribute("ADMINLOGIN");
+	/* AdminUser au = (AdminUser)ses.getAttribute("ADMINLOGIN"); */
 	ArrayList<AdminUser> auList = (ArrayList<AdminUser>) ses.getAttribute("ADMINLIST");
 	// エラー情報の取得
 	String errorID = (String)ses.getAttribute("ERRORID");
 	String errorPass = (String)ses.getAttribute("ERRORPASS");
+	String trueMess = (String)ses.getAttribute("TRUEMESS");
 %>
-
   <body>
     <h1>管理者管理画面</h1>
  
@@ -82,6 +82,16 @@
 			<%ses.removeAttribute("ERRORPASS"); %>
     </header>
     
+      <script>
+    <%if(trueMess != null ){ %>
+    window.onload = function(){
+		const dialog = document.querySelector("#confirmationDialog");
+    	dialog.showModal();
+    	} 	
+    	<%} %>
+    	<%ses.removeAttribute("TRUEMESS"); %>
+    </script>
+    
     <script>
     function disp1(){
       	//document.getElementById …()内で指定した名前を持つ入力部品を取得する
@@ -116,6 +126,31 @@
       	//入力部品を入れた変数名.value= '設定したい値'
       		document.getElementById("id2").value = e2.value;
         }
+
+    // ダイアログのスクリプト
+    function dialog(id){
+        console.log("274")
+    const openDialogButton = document.getElementById('openDialogButton');
+    const yesButton = document.getElementById('yesButton');
+    const noButton = document.getElementById('noButton');
+    const myDialog = document.getElementById('myDialog');
+    const confirmationDialog = document.getElementById('confirmationDialog');
+    const closeConfirmationButton = document.getElementById('closeConfirmationButton');
+    myDialog.showModal();
+
+    openDialogButton.addEventListener('click', () => {
+        myDialog.showModal();
+    });
+
+    yesButton.addEventListener('click', () => {
+      myDialog.close();
+      confirmationDialog.showModal();
+    });
+
+    noButton.addEventListener('click', () => {
+      myDialog.close();
+    });
+    } 	
     </script>
     
     <div class="formcss">
@@ -188,6 +223,7 @@
         <input type="text" class="search-box" name="kensaku" placeholder="ユーザー名" />
         <button type="submit" class="search-button">検索</button>
       </div>
+</form>
 
       <table class="kensaku">
         <tr>
@@ -198,41 +234,32 @@
         
         <%if(auList != null){ %>
 		<% for (int i = 0; i < auList.size(); i++) { %>
-		<form action="P1AdminManagementDeliteServlet">
+		<form action="P1AdminManagementDeliteServlet" method="post">
 		<tr>
         <td><%= auList.get(i).getAdminName() %></td>
         <td><%= auList.get(i).getAdminUserid() %></td>
         <td class="delete-button">
         <input type="hidden" name="adminID" value="<%=i%>">
-        <button type="submit" >アカウント削除</button>
+        <button type="button" id="openDialogButton" onclick="dialog('sakuzyo')">アカウント<br>削除</button>
+        
+                <dialog id="myDialog">
+                  <p>このアカウントを削除しますか？</p>
+                  <div class="buttonContainer">
+                    <button type="submit" class="dialogButton" id="yesButton">はい</button>
+                    <button type="button" class="dialogButton" id="noButton">いいえ</button>
+                  </div>
+                </dialog>        
         </td>
       	</tr>
       	</form>
 		<% } %>			
 	  <%} %>
-
-      </table>
-      </form>
+      </table> 
+              <dialog id="confirmationDialog">
+                  <p>削除しました</p>
+                  <button type="button" class="dialogButton" id="closeConfirmationButton" onclick="confirmationDialog.close();">閉じる</button>
+                </dialog>
       
-      <script>
-        document
-          .getElementById("delete-button-sanma")
-          .addEventListener("click", function () {
-            if (confirm("本当に変更しますか？")) {
-              // アカウント削除の処理をここに追加
-              alert("アカウントが削除されました");
-            }
-          });
-
-        document
-          .getElementById("delete-button-yusei")
-          .addEventListener("click", function () {
-            if (confirm("本当に変更しますか？")) {
-              // アカウント削除の処理をここに追加
-              alert("アカウントが削除されました");
-            }
-          });
-      </script>
-    </footer>
+    </footer> 
   </body>
 </html>

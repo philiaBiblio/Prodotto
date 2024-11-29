@@ -50,6 +50,9 @@ public class P1AdminManagementDeliteServlet extends HttpServlet {
 			
 	        //リストから削除する
 	        auList.remove(aIndex);
+	        
+	        String trueMess = "変更できました。";
+			ses.setAttribute("TRUEMESS", trueMess);
 	        	        
 			// 画面へ遷移
 			url = "P1AdminManegement.jsp";

@@ -168,8 +168,6 @@ public class P2LoginServlet extends HttpServlet {
 					au.setAdminMailadd(AdminMailadd);
 					au.setAdminLevel(AdminLevel);
 					
-					// ログインした管理者情報を保存
-					ses.setAttribute("ADMINLOGIN", au);
 					System.out.println("管理者ログイン成功");
 					
 					if(au.getAdminLevel().equals("1")) {
@@ -180,6 +178,8 @@ public class P2LoginServlet extends HttpServlet {
 						// タイムラインへ
 						url = "P1TLManagement.jsp";
 						System.out.println(url);
+						// ログインした管理者情報を保存
+						ses.setAttribute("ADMINLOGIN", au);
 					}
 					// ログアウト処理
 					dba2.closeDB();
