@@ -1,3 +1,5 @@
+<%@page import="java.util.ArrayList"%>
+<%@page import="apli.AdminUser"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -12,10 +14,22 @@
       rel="stylesheet"
     />
   </head>
+ <%
+ 	//セッションの取得
+	HttpSession ses = request.getSession();
+	// ログイン情報の取得
+	AdminUser au = (AdminUser)ses.getAttribute("ADMINLOGIN");
+	ArrayList<AdminUser> auList = (ArrayList<AdminUser>) ses.getAttribute("ADMINLIST");
+	// エラー情報の取得
+	String errorID = (String)ses.getAttribute("ERRORID");
+	String errorPass = (String)ses.getAttribute("ERRORPASS");
+%>
+
   <body>
     <h1>管理者管理画面</h1>
-
+ 
     <header>
+    <form action="AdminManagementServlet" method="post">
       <table class="kanri">
         <tr>
           <th id="idleft">ID =</th>
@@ -27,10 +41,11 @@
                 class="hideText"
                 name="id"
                 id="id"
-                value="qwert"
                 disabled
+                placeholder="目のボタンをクリック後ID入力"
+                Onchange="disp1()"
               />
-              <input type="text" class="showText" value="qwert" id="idtext"/>
+              <input type="text" class="showText" name="idtext" id="idtext" Onchange="disp2()"/>
               <label for="checkPassword" class="fa fa-eye"></label>
               <label for="checkPassword" class="fa fa-eye-slash"></label>
             </div>
@@ -46,19 +61,64 @@
                 class="hideText2"
                 name="id2"
                 id="id2"
-                value="qwert"
                 disabled
+                placeholder="目のボタンをクリック後PW入力"
+                Onchange="disp3()"
               />
-              <input type="text" class="showText2" value="qwert" id="passtext">
+              <input type="text" class="showText2" name="passtext" id="passtext" Onchange="disp4()">
               <label for="checkPassword2" class="fa fa-eye"></label>
               <label for="checkPassword2" class="fa fa-eye-slash"></label>
             </div>
           </th>
         </tr>
       </table>
+      <%if(errorID != null){ %>
+				<p style="color:#ff0000"><%=errorID %></p>
+	  <%} %>
+	  <%ses.removeAttribute("ERRORID"); %>
+	  <%if(errorPass != null){ %>
+				<p style="color:#ff0000"><%=errorPass %></p>
+			<%} %>
+			<%ses.removeAttribute("ERRORPASS"); %>
     </header>
+    
+    <script>
+    function disp1(){
+      	//document.getElementById …()内で指定した名前を持つ入力部品を取得する
+      	//↓の例では、変数e1の中にpwテキストボックスが入る
+      		var e1 = document.getElementById("id");
+      	//〇〇.value…指定した入力部品の属性に値を設定する
+      	//入力部品を入れた変数名.value= '設定したい値'
+      		document.getElementById("idtext").value = e1.value;
+        }
+    function disp2(){
+      	//document.getElementById …()内で指定した名前を持つ入力部品を取得する
+      	//↓の例では、変数e1の中にpwテキストボックスが入る
+      		var e1 = document.getElementById("idtext");
+      	//〇〇.value…指定した入力部品の属性に値を設定する
+      	//入力部品を入れた変数名.value= '設定したい値'
+      		document.getElementById("id").value = e1.value;
+        }
 
-    <form action="" method="post">
+    function disp3(){
+      	//document.getElementById …()内で指定した名前を持つ入力部品を取得する
+      	//↓の例では、変数e1の中にpwテキストボックスが入る
+      		var e2 = document.getElementById("id2");
+      	//〇〇.value…指定した入力部品の属性に値を設定する
+      	//入力部品を入れた変数名.value= '設定したい値'
+      		document.getElementById("passtext").value = e2.value;
+        }
+    function disp4(){
+      	//document.getElementById …()内で指定した名前を持つ入力部品を取得する
+      	//↓の例では、変数e1の中にpwテキストボックスが入る
+      		var e2 = document.getElementById("passtext");
+      	//〇〇.value…指定した入力部品の属性に値を設定する
+      	//入力部品を入れた変数名.value= '設定したい値'
+      		document.getElementById("id2").value = e2.value;
+        }
+    </script>
+    
+    <div class="formcss">
       <div class="nakami">
         <div>
           <label class="soroe">氏名</label><br />
@@ -74,58 +134,24 @@
 
         <label class="soroe">性別</label><br />
         <div class="button">
-          <label class="left"
-            ><input
-              type="button"
-              class="sexM nomargin"
-              name="sex"
-              id="otoko"
-              value="男"
-          /></label>
-          <label class="right"
-            ><input
-              type="button"
-              class="sexW nomargin"
-              name="sex"
-              id="onna"
-              value="女" /></label
-          ><br />
+        <input 
+	        type="radio" 
+	        id="otoko" 
+	        name="sexy"
+	        value="0">
+	        <label 
+	        class="radio-label" 
+	        for="otoko">男</label>
+	
+	        <input 
+	        type="radio" 
+	        id="onna" 
+	        name="sexy" 
+	        value="1">
+	        <label 
+	        class="radio-label" 
+	        for="onna">女</label><br/>
         </div>
-
-        <script>
-          document.addEventListener("DOMContentLoaded", function () {
-            const sexM = document.querySelector(".sexM");
-            const sexW = document.querySelector(".sexW");
-
-            sexM.addEventListener("mouseover", function () {
-              sexM.classList.add("hovered");
-              sexW.classList.remove("hovered");
-            });
-
-            sexM.addEventListener("mouseout", function () {
-              sexM.classList.remove("hovered");
-            });
-
-            sexW.addEventListener("mouseover", function () {
-              sexW.classList.add("hovered");
-              sexM.classList.remove("hovered");
-            });
-
-            sexW.addEventListener("mouseout", function () {
-              sexW.classList.remove("hovered");
-            });
-
-            sexM.addEventListener("click", function () {
-              sexM.classList.add("clicked");
-              sexW.classList.remove("clicked");
-            });
-
-            sexW.addEventListener("click", function () {
-              sexW.classList.add("clicked");
-              sexM.classList.remove("clicked");
-            });
-          });
-        </script>
 
         <div>
           <label class="soroe">生年月日</label><br />
@@ -153,12 +179,14 @@
           <input type="submit" name="kakutei" id="kakutei" value="確定" />
         </div>
       </div>
+    </div>
     </form>
 
+<form action="P1AdminManagementKensakuServlet" method="post">
     <footer>
       <div class="search-container">
-        <input type="text" class="search-box" placeholder="ユーザー名" />
-        <button class="search-button">検索</button>
+        <input type="text" class="search-box" name="kensaku" placeholder="ユーザー名" />
+        <button type="submit" class="search-button">検索</button>
       </div>
 
       <table class="kensaku">
@@ -167,20 +195,25 @@
           <th>ユーザーID</th>
           <th>削除ボタン</th>
         </tr>
-        <tr>
-          <td>さんまのはらわた</td>
-          <td>sanma226</td>
-          <td><button id="delete-button-sanma">アカウント削除</button></td>
-        </tr>
-        <tr>
-          <td>ゆうせい</td>
-          <td>yusei215</td>
-          <td><button id="delete-button-yusei">アカウント削除</button></td>
-        </tr>
+        
+        <%if(auList != null){ %>
+		<% for (int i = 0; i < auList.size(); i++) { %>
+		<form action="P1AdminManagementDeliteServlet">
+		<tr>
+        <td><%= auList.get(i).getAdminName() %></td>
+        <td><%= auList.get(i).getAdminUserid() %></td>
+        <td class="delete-button">
+        <input type="hidden" name="adminID" value="<%=i%>">
+        <button type="submit" >アカウント削除</button>
+        </td>
+      	</tr>
+      	</form>
+		<% } %>			
+	  <%} %>
+
       </table>
+      </form>
       
-      <jsp:include page="P1kensaku.jsp"></jsp:include>
-       
       <script>
         document
           .getElementById("delete-button-sanma")

@@ -8,7 +8,7 @@
     <title>投稿・録音画面</title>
     <link rel="stylesheet" href="P2PostAndRecording.css">
 </head>
-<body>
+<body style="margin: 50px 0 0 -5px;">
     <div class="container">
         <!-- セッションセクション -->
         <section class="section session">

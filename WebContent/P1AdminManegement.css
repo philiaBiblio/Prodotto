@@ -11,7 +11,7 @@ table {
     border-radius: 10px; /* テーブルの四隅を丸くする */
     border-collapse: separate; /* セルのボーダーと外枠を分離 */
     border-spacing: 0; /* セル間の余白をゼロに設定 */
-    width: 50%;
+    width: 30%;
     margin: 50px auto;
     background-color: #000000;
   }
@@ -78,6 +78,7 @@ table {
   background-color: #000000;
   text-align: center;
   color: #fff;
+  width: 200px;
 }
 
 .togglePassword {
@@ -88,7 +89,7 @@ table {
 .fa-eye,
 .fa-eye-slash {
   position: absolute;
-  right: -20px;
+  right: -55px;
   top: 50%;
   transform: translateY(-40%);
   cursor: pointer;
@@ -145,7 +146,7 @@ table {
 
 
 
-form {
+.formcss {
   width: 100%;
   max-width: 400px;
   padding: 20px;
@@ -155,7 +156,7 @@ form {
   text-align: left;
   border: 1px solid #fff;
 }
-form:hover{
+.formcss:hover{
     border-color: #fcfcfc;
 }
 
@@ -197,47 +198,44 @@ label {
   margin: 1;
 }
 
-.sexM,
-.sexW {
-  width: 40%;
-  display: inline-block;
-  border: 1px solid #ffffff;
-  background-color: #000;
-  color: #ffffff;
-  border-radius: 10px;
-  padding: 0.8em 0;
-  text-align: center;
-  box-sizing: border-box;
+input[type="radio"] {
+	display: none;
 }
 
-.hovered{
-    border-color: #ee2522;
-    color: #ee2522;
+.radio-label {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 100px;
+	border: 1px solid #fff;
+	border-radius: 10px;
+	cursor: pointer;
+	color: #fff;
+	background-color: #000;
+	padding: 10px;
+	margin: 0 5px;
+	font-weight: normal;
 }
 
-.clicked {
-  background-color: #da4946;/*ここの色好きに決めていいよ*/
-  color: white;
-  border-color: #ee2522;/*ここの色好きに決めていいよ*/
+.radio-label:hover {
+	border-color: #ee2522;
+	color: #ee2522;
 }
 
-
-.sexM {
-  margin-right: 3px;
-}
-
-.sexW {
-  margin-left: 3px;
+input[type="radio"]:checked + .radio-label {
+	border-color: #ee2522;
+	background-color: #da4946;
+	color: #000;
+	font-weight: bold;
 }
 
 .button {
-  text-align: center;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 
-.right,
-.left {
-  width: 50%;
-}
+
 
 .textbox {
   width: 100%;

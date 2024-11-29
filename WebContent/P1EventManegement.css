@@ -14,11 +14,18 @@ h2 {
   color: #ffffff;
 }
 
+.form-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 form {
   padding: 20px;
   display: inline-block;
   width: 90;
   color: #ffffff;
+  padding-bottom: 10px;
 }
 
 input[type="text"],
@@ -101,7 +108,7 @@ input[type="submit"]:hover {
   border: 1px solid #ffffff;
   border-radius: 10px;
   background-color: #000000; 
-  color: #888; 
+  color: white; 
   pointer-events: none; /* 入力不可にする */
   cursor: not-allowed;
 }
