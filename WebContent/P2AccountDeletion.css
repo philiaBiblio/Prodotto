@@ -48,32 +48,27 @@ h2 {
 }
 
 .menu ul {
-  list-style-type: none;
-  padding: 0;
-  display: flex; /* 横並びにする */
-  justify-content: center; /* 項目の間隔を均等にする */
+    list-style-type: none;
+    display: flex; /* 横並びにする */
+    justify-content: center; /* 項目の間隔を均等にする */
+    gap: 10px; /* ボタン間のスペースを指定 */
 }
 
-.menu li {
-  margin: 10px 10px; /* 各項目に横の余白を追加 */
-  background-color: #000000;
-  border-radius: 10px;
-  padding: 10px;
-  width: 100px; /* 項目の幅を固定 */
-  border: solid 1px #ffffff;
+.menu input {
+    background-color: #000000;
+    color: #ffffff;
+    border-radius: 10px;
+    padding: 10px;
+    width: 100px; /* ボタンの幅を固定 */
+    border: solid 1px #ffffff;
+    font-size: 16px;
+    text-align: center;
+    cursor: pointer;
 }
 
-.menu a {
-  color: rgb(255, 255, 255);
-  text-decoration: none;
-  font-size: 16px;
-  display: block;
-  text-align: center;
-}
-
-.menu a :hover {
-  color: #11dadd;
-  border-color: #11dadd;
+.menu input:hover {
+    color: #11dadd;
+    border-color: #11dadd;
 }
 
 .arrow01 {

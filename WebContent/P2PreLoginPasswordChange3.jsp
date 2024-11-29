@@ -8,12 +8,21 @@
     <title>新しいパスワード設定</title>
     <link rel="stylesheet" href="P2PreLoginPasswordChange3.css">
 </head>
+<%
+	//セッションの取得
+	HttpSession ses = request.getSession();
+	// メールアドレスの取得
+	String mail = (String)ses.getAttribute("INMAIL");
+	String messPass = (String)ses.getAttribute("ERRORPASS");
+	String messPass1 = (String)ses.getAttribute("ERRORPASS1");
+ %>
+
 <body>
     <div class="form-container">
         <h1>新規パスワード</h1>
         <p></p>
         
-        <form action="#" method="post" id="password-form">
+        <form action="P2PreLoginPasswordChange3Servlet">
             <!-- 新しいパスワード入力 -->
             <label for="new-password"></label>
             <input type="password" id="new-password" name="new-password" required placeholder="新しいパスワード">
@@ -21,10 +30,20 @@
             <!-- 再入力 -->
             <label for="confirm-password"></label>
             <input type="password" id="confirm-password" name="confirm-password" required placeholder="新しいパスワードを再入力">
-
+            
+             <%if(messPass != null){ %>
+				<p style="color:#ff0000"><%=messPass %></p>
+			<%} %>
+			<%ses.removeAttribute("ERRORPASS"); %>
+            
+            <%if(messPass1 != null){ %>
+				<p style="color:#ff0000"><%=messPass1 %></p>
+			<%} %>
+			<%ses.removeAttribute("ERRORPASS1"); %>
+            
             <!-- 確定ボタン -->
             <div class="button-group">
-                <button type="submit"><a href="P2Login.jsp">確定</a></button>
+                <button type="submit">確定</button>
             </div>
         </form>
     </div>

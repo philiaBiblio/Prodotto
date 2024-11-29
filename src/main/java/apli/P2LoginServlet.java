@@ -2,6 +2,7 @@ package apli;
 
 import java.io.IOException;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -34,24 +35,39 @@ public class P2LoginServlet extends HttpServlet {
 		String url = "";
 		// DBアクセス用部品の生成
 		DBAcs dba = new DBAcs();
+		DBAcs dba2 = new DBAcs();
+		DBAcs dba3 = new DBAcs();
 		
 		try {
-			// 入力した会員IDを取得
+			// 入力したメールアドレスを取得
 			String inMailadd = request.getParameter("mailadd");
 			// sql用にシングルコーテーションで囲む
 			inMailadd = "'" + inMailadd + "'";
 			
 			// 入力したパスワードを取得
 			String inPassword = request.getParameter("pw");
+			
+			// inpass暗号化
+			// 暗号化部品の生成
+			Angou a = new Angou();
+		
+			// 暗号化前のinPasswordをmojiに入れる
+			String moji = inPassword;
+			// 暗号化実行(半角64文字に変換)
+			String AinPassword = a.getAngo(moji);
+			System.out.println("暗号化後："+AinPassword);
+			
 			// sql用にシングルコーテーションで囲む
-			inPassword = "'" + inPassword + "'";
+			AinPassword = "'" + AinPassword + "'";
 			
 			// ログイン用のsql文
-			String sql = "select * from ユーザー where メールアドレス = " + inMailadd + " and パスワード = " + inPassword;
+			String sql = "select * from ユーザー where メールアドレス = " + inMailadd + " and パスワード = " + AinPassword;
+			
 			// sql文実行
 			ResultSet rs = dba.selectExe(sql);
 			
 			if(rs.next()) {
+				System.out.println("ユーザーログイン実行");
 				// ユーザー情報をDBから取得
 				String userid = rs.getString("ユーザーID");
 				String name = rs.getString("名前");
@@ -71,39 +87,116 @@ public class P2LoginServlet extends HttpServlet {
 				u.setSex(sex);
 				u.setHistory(history);
 				u.setFq(fq);
-				u.setBirth(birth);
+				u.setBirth(birth.substring(0,10));
 				u.setIconImage(iconImage);
 				u.setMailadd(inMailadd);
 				
-				// ログインした会員情報を保存
+				// ログインしたユーザー情報を保存
 				ses.setAttribute("LOGIN", u);
+				System.out.println(sex);
+				System.out.println(userid);
+				System.out.println("ユーザーログイン成功");
 				
-				// マイページへ
+				// dm情報の取得
+				String sqldm = "select max(タイムスタンプ) as タイムスタンプ,相手,sum(CASE WHEN 既読未読 = '0' THEN 1 ELSE 0 END) as 未読数,"
+						+ "名前 from (select タイムスタンプ,y1.ユーザーID as 相手,既読未読,y1.名前 from DM "
+						+ "join ユーザー y1 on y1.ユーザーID = DM.送信元 join ユーザー y2 on y2.ユーザーID = DM.受信元 where DMID like '%"
+						+ u.getUserid() + "-%' union select タイムスタンプ,y2.ユーザーID as 相手,既読未読,y2.名前 from DM"
+						+ " join ユーザー y1 on y1.ユーザーID = DM.送信元 join ユーザー y2 on y2.ユーザーID = DM.受信元 where DMID like '%"
+						+ u.getUserid() + "-%') group by 相手,名前 order by タイムスタンプ desc";
+				
+				// sql文実行
+				ResultSet rs3 = dba3.selectExe(sqldm);
+				// アレイリストの取得
+				ArrayList<DM> dmssList = new ArrayList<DM>();
+				// 繰り返しでsqlからすべての情報を得る
+				while(rs3.next()) {
+					String time = rs3.getString("タイムスタンプ");
+					System.out.println("タイムスタンプ：" + time);
+					String your = rs3.getString("相手");
+					System.out.println("相手：" + your);
+					String midoku = rs3.getString("未読数");
+					System.out.println("未読数：" + midoku);
+					String yourName = rs3.getString("名前");
+					
+					if(your.equals(u.getUserid())) {
+						System.out.println("相手の名前とログインしてるIDが一緒なのでアレイリストに入れない");
+					}else {
+						// インスタンス生成
+						DM dm = new DM();
+						dm.setTime(time);
+						dm.setYour(your);
+						dm.setKidoku(midoku);
+						dm.setYourName(yourName);
+						// アレイリストに追加
+						dmssList.add(dm);
+					}
+				}
+				ses.setAttribute("DMSSLIST", dmssList);
+		
+				// タイムラインへ
 				url = "P2Timeline.jsp";
 				System.out.println(url);
+				
+				// ログアウト処理
+				dba.closeDB();
+				dba3.closeDB();
 			}else {
-				// ログイン失敗時
-				System.out.println(url);
-//				String mess = "ログインに失敗しました<br>会員IDまたはパスワードが間違っています";
-//				ses.setAttribute("LOGINERROR", mess);
-				url = "P2Login.jsp";
+				System.out.println("管理者ログイン実行");
+				// ユーザーログイン失敗後管理者用データベースへ接続
+				String sql2 = "select * from 管理者 where メールアドレス = " + inMailadd + " and パスワード = " + AinPassword;
+				// sql文実行
+				ResultSet rs2 = dba2.selectExe(sql2);
+	
+				if(rs2.next()) {
+					// ユーザー情報をDBから取得
+					String AdminUserid = rs2.getString("管理者ID");
+					String AdminName = rs2.getString("名前");
+					String AdminSex = rs2.getString("性別");
+					String AdminBirth = rs2.getString("生年月日");
+					String AdminMailadd = rs2.getString("メールアドレス");
+					String AdminLevel = rs2.getString("管理者レベル");
+					
+					// 管理者インスタンス生成
+					AdminUser au = new AdminUser();
+					
+					// 取得した情報を保存
+					au.setAdminUserid(AdminUserid);
+					au.setAdminName(AdminName);
+					au.setAdminSex(AdminSex);
+					au.setAdminBirth(AdminBirth);
+					au.setAdminMailadd(AdminMailadd);
+					au.setAdminLevel(AdminLevel);
+					
+					// ログインした管理者情報を保存
+					ses.setAttribute("ADMINLOGIN", au);
+					System.out.println("管理者ログイン成功");
+					
+					if(au.getAdminLevel().equals("1")) {
+						// 管理者管理画面へ
+						url = "P1AdminManegement.jsp";
+						System.out.println(url);
+					}else {
+						// タイムラインへ
+						url = "P1TLManagement.jsp";
+						System.out.println(url);
+					}
+					// ログアウト処理
+					dba2.closeDB();
+				}
 			}
 			
-			// マイページへ画面遷移
+			// 画面遷移
 			RequestDispatcher rd = request.getRequestDispatcher(url);
 			rd.forward(request, response);
 			
-			// ログアウト処理
-			dba.closeDB();
-			
 		} catch (Exception e) {
 			// TODO: handle exception
-			
 			e.printStackTrace();
 			// ログアウト処理
 			dba.closeDB();
-			
+			dba2.closeDB();
+			dba3.closeDB();	
 		}
 	}
-
 }

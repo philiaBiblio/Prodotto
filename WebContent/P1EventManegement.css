@@ -14,25 +14,37 @@ h2 {
   color: #ffffff;
 }
 
+.form-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 form {
   padding: 20px;
   display: inline-block;
   width: 90;
   color: #ffffff;
+  padding-bottom: 10px;
 }
 
 input[type="text"],
-select {
-  width: 300px;
+select{
+
   height: 40px;
   font-size: 16px;
-  margin-top: 20px;
+/*  margin-top: 20px;*/
   padding: 5px;
   background-color: #000;
   border: rgb(255, 255, 255) ffffff;
   color: rgb(255, 255, 255);
   border-radius: 10px;
 }
+input[type="text"],
+select#nen,#tuki,#kako-nen,#kako-tuki{
+	width: 300px;
+}
+
 select:focus {
   border-color: #ee2522;
   background-color: black;
@@ -96,7 +108,7 @@ input[type="submit"]:hover {
   border: 1px solid #ffffff;
   border-radius: 10px;
   background-color: #000000; 
-  color: #888; 
+  color: white; 
   pointer-events: none; /* 入力不可にする */
   cursor: not-allowed;
 }

@@ -91,11 +91,12 @@ label {
   width: 80%;
   min-width: 80%;
 }
+/*こいつが検索バーに影響を出しているので一旦コメアウトさせてもらうにょ*/
+/*input,*/
+/*select{*/
+/*  margin: 0 20px 15px 0;*/
+/*}*/
 
-input,
-select {
-  margin: 0 20px 15px 0;
-}
 .nomargin {
   margin: 0;
 }
@@ -107,50 +108,52 @@ select {
     width: 100%;
 }
 
-.button div {
-    margin: 0 10px;
+
+
+input[type="radio"] {
+	display: none;
 }
 
-.sexM,
-.sexW {
-  width: 100px;
-  display: inline-block;
-  border: 1px solid #ffffff;
-  color: #ffffff;
-  background-color: #000000;
-  border-radius: 10px;
-  padding: 0.8em 0;
-  text-align: center;
-  box-sizing: border-box;
-}
-.sexM {
-  left: 0;
-  margin-right: 3px;
-  margin-right: 10px;
-}
-.sexW {
-  right: 0;
-  margin-left: 3px;
+.radio-label {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 100px;
+	border: 1px solid #fff;
+	border-radius: 10px;
+	cursor: pointer;
+	color: #fff;
+	background-color: #000;
+	padding: 10px;
+	margin: 0 5px;
+	font-weight: normal;
 }
 
-.right {
-  width: 50%;
+.radio-label:hover {
+	border-color: #11dadd;
+	color: #11dadd;
 }
 
-.left {
-  width: 50%;
+input[type="radio"]:checked + .radio-label {
+	border-color: #11dadd;
+	background-color: #4bc8ca;
+	color: #000;
+	font-weight: bold;
 }
 
-.hovered {
-  border-color: #11dadd;
-  color: #11dadd;
+.button {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+  
+
+div #sex-input{
+	display: none;
 }
 
-.clicked {
-  background-color: #4bc8ca;
-  border-color: #11dadd;
-  color: white;
-}
+
+
 
 .textbox {
   width: 100%;
@@ -160,6 +163,7 @@ select {
   margin: 5px;
   border: 1px solid #ccc;
 }
+
 input[type="text"] {
   border: 1px solid white;
   background-color: black;
@@ -304,12 +308,24 @@ input[type="date"]:hover::-webkit-calendar-picker-indicator {
   color: #0056b3;
 }
 
-#sex-input {
-  display: none;
-}
 
 .button-container {
   display: none; /* 最初に非表示 */
 }
+
+
+
+
+
+.sexM + span {
+  color: rgb(255, 255, 255);
+}
+
+.sexW + span {
+  color: rgb(255, 255, 255);
+}
+
+
+
 
 

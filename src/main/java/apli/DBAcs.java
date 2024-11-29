@@ -13,14 +13,14 @@ public class DBAcs {
 	private Statement stmt = null;
 	private ResultSet rs = null;
 	//★オラクルで利用するidとパスワードを設定してください
-	private String  id = "x23j058";
-	private String  pw = "fjbj058";
+	private String  id = "x23j1E";
+	private String  pw = "fjbj1E";
 
 	//コンストラクタ
 	public DBAcs(){
 		System.out.println("ログイン処理実行");
 		try {
-			String url = "jdbc:oracle:thin:@ux1.chiba-fjb.ac.jp:1521:orcl";
+			String url = "jdbc:oracle:thin:@ux2.chiba-fjb.ac.jp:1521:orcl";
 			OracleDriver driver = new OracleDriver();
 			// DBに接続
 			con = DriverManager.getConnection(url,id,pw);
@@ -34,6 +34,11 @@ public class DBAcs {
 		}
 	}
 
+	// DB接続を外部から取得するメソッド
+    public Connection getConnection() { 
+        return this.con; // 現在のDB接続をそのまま返す
+    }
+	
 	//select文実行メソッド
 	public ResultSet selectExe(String sql){
 		System.out.println("SELECT文実行");
@@ -51,14 +56,14 @@ public class DBAcs {
 
 	//insert、update文実行メソッド
 	public int UpdateExe(String sql){
-		System.out.println("INSERT、又はUPDATE文実行");
+		System.out.println("INSERT、又はUPDATE文、DELETE文実行");
 		System.out.println("SQL文"+sql);
 		int cnt =0;
 		try {
 			cnt = stmt.executeUpdate(sql);
-			System.out.println("INSERT、又はUPDATE文成功");
+			System.out.println("INSERT、又はUPDATE文、DELETE文実行成功");
 		} catch (Exception ex) {
-			System.out.println("INSERT、又はUPDATE文失敗");
+			System.out.println("INSERT、又はUPDATE文、DELETE文実行失敗");
 			this.closeDB();
 			ex.printStackTrace();
 		}
