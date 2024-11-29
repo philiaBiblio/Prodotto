@@ -28,7 +28,7 @@
 				
 					<!-- フィルターボタン -->
 					<select id="filter" class="filter-button" name="url">
-					          <option value="P2UserSearch.jsp">アカウント名</option>
+					          <option selected value="P2UserSearch.jsp">アカウント名</option>
 					          <option value="P2Search.jsp">動画タイトル</option> 
 					</select>
 
@@ -46,10 +46,12 @@
 	<section class="nav" id="navbar">
 		<nav class="nav_container">
 			<div>
-				<a href="#" class="nav_link nav_logo"> <i
-					class="fa-solid fa-bars nav_icon"></i> <span class="logo_name">
-						<!-- ここにProDottoアイコンを入れる --> <i class="fab fa-"></i> ProDotto
-				</span>
+				<a href="#" class="nav_link nav_logo"> 
+					<i class="fa-solid fa-bars nav_icon"></i> 
+					<span class="logo_name">
+						<!-- ここにProDottoアイコンを入れる --> 
+						<i class="fab fa-"></i> ProDotto
+					</span>
 				</a>
 
 				<div class="nav_list">

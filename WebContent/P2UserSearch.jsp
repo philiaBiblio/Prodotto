@@ -5,19 +5,18 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-<meta charset="UTF-8" />
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<link type="images/png" rel="icon" href="images/icons8-youtube.png" />
+<link type="images/png" rel="icon" href="images/icons8-youtube.png">
 <link rel="stylesheet"
 	href="https://use.fontawesome.com/releases/v6.0.0/css/all.css"
 	integrity="sha384-3B6NwesSXE7YJlcLI9RpRqGf2p/EgVH8BgoKTaUrmKNDkHPStTQ3EyoYjCGXaOTS"
-	crossorigin="anonymous" />
+	crossorigin="anonymous">
 <link rel="stylesheet"
 	href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=settings" />
-<link rel="stylesheet" href="P2kensaku.css" />
-<link rel="stylesheet" href="P2UserSearch.css" />
+<link rel="stylesheet" href="P2kensaku.css">
+<link rel="stylesheet" href="P2UserSearch.css">
 <title>ProDotto</title>
-
 
 </head>
 
@@ -30,19 +29,10 @@ ArrayList<User> searchU = (ArrayList<User>) ses.getAttribute("USERLIST");
 
 <body>
 
-<form action="UserProfileServlet" method="GET">
-    <input type="hidden" name="userID" value="<%= searchU.get(i).getID() %>">
-    <button type="submit" class="icon-button">
-        <img src="image/ききゅう.jpg" alt="アイコン" class="icon">
-    </button>
-</form>
-
 	<form action="UserSearchServlet" method="GET">
 
 		<div class="user-section">
-			<% if (searchU == null) { %>
-			<p>検索キーワードを入力してください</p>
-			<% } else if (searchU.isEmpty()) { %>
+			<% if (searchU == null || searchU.isEmpty()) { %>
 			<p>検索結果が見つかりません</p>
 			<% } else { 
 				for (int i = 0; i < searchU.size(); i++) { %>
@@ -60,7 +50,8 @@ ArrayList<User> searchU = (ArrayList<User>) ses.getAttribute("USERLIST");
 				</div>
 			</div>
 			<hr>
-			<% } } ses.removeAttribute("USERLIST"); %>
+			<% } } %>
+			
 
 
 		</div>

@@ -5,7 +5,7 @@
 	<body>
 
 	<%
-	String filename = "dummy.jpg";//アップロードした画像のファイル名（DBから取得）
+	String filename = "dummy.mp3";//アップロードした画像のファイル名（DBから取得）
 	%>
 	画像<br>
 	<img src="img\<%=filename%>">
