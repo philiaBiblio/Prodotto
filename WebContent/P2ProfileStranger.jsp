@@ -98,7 +98,7 @@ ArrayList<Post> postList = (ArrayList<Post>) request.getAttribute("postList");
 			
 			<!-- 投稿IDの頭六桁が000000じゃなかったら。-->
 			String postId = postList.get(i).getPostId();
-			<%!if (postId.startsWith("000000")){ %>
+			<%if (!postId.startsWith("000000")){ %>
 	          <div class="video-card">
 	            <div class="thumbnail-placeholder">
 	              <img
@@ -139,7 +139,37 @@ ArrayList<Post> postList = (ArrayList<Post>) request.getAttribute("postList");
 	                  <span><%= postList.get(i).getLikeCount()%></span>
 	                </button>
 	                
-	                <button>
+	                
+	                <!-- チャットGPTからそのまま拝借 -->
+	                <!-- 合っているかわからん -->
+					<%
+					// タイムスタンプからイベントIDを生成
+					java.util.Calendar cal = java.util.Calendar.getInstance();
+					int year = cal.get(java.util.Calendar.YEAR);      // 現在の西暦年
+					int month = cal.get(java.util.Calendar.MONTH) + 1; // 現在の月 (0ベースなので+1)
+					String eventId = String.format("%04d%02d", year, month); // 西暦4桁+月2桁のイベントID
+					
+					// 投稿IDの頭六桁とイベントIDを比較
+					String postId = postList.get(i).getPostId(); // 投稿ID
+					String postIdPrefix = postId.substring(0, 6); // 投稿IDの頭六桁
+					%>
+
+					<form action="P2SessionRecPostServlet" method="post">
+					    <% if (postIdPrefix.equals(eventId)) { %> <!-- 投稿IDの頭六桁とイベントIDが一致 -->
+					        <input type="hidden" name="postId" value="<%= postId %>" />
+					        <button type="submit">
+					            <span>
+					                <div class="nav_icon">
+					                    <i class="gg-duplicate"></i>
+					                </div>
+					            </span>
+					        </button>
+					    <% } %>
+					</form>
+
+
+	                
+	                <!-- <button type="submit" >
 		                <span>
 		                  <a href="P2Recording.jsp">
 		                    <div class="nav_icon">
@@ -147,8 +177,13 @@ ArrayList<Post> postList = (ArrayList<Post>) request.getAttribute("postList");
 		                    </div>
 		                  </a>
 		                </span>
-		              </button>
-	  
+		              </button> -->
+		              
+					<!--  自分の投稿なら表示-->
+					<!--  今回は他人プロフィール画面なのでここはコメントアウトにしておきます。-->
+	                <!-- User u = (User)ses.getAttribute("LOGIN"); 必要だよ-->
+	                <% if (up.getUserid()==u.getUserid()) { %>
+	                
 	                <button id="openDialog<%= postList.get(i).getPostId()%>" onclick="test('trash<%= up.getUserid() %>')">
 	                  <span>
 	                    <div class="nav_icon trash">
@@ -178,6 +213,7 @@ ArrayList<Post> postList = (ArrayList<Post>) request.getAttribute("postList");
 	                    閉じる
 	                  </button>
 	                </dialog>
+	                
 	              </div>
 	            </div>
 	          </div>
