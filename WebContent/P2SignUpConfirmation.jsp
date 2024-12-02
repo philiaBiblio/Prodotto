@@ -28,12 +28,14 @@
         <div class="icon">
           <img id="iconImage" src="image/ききゅう.jpg" alt="icon" />
           <label for="fileInput">写真を選択</label>
+          <form id="fileinput" enctype="multipart/form-data" action="P2SignUpConfirmationServlet" method="post">
           <input
             type="file"
             name="icon"
             id="fileInput"
             accept="image/jpeg, image/png"
           />
+          </form>
 
           <p>以下の内容でよろしいですか？</p>
         </div>
@@ -143,12 +145,12 @@
       <footer>
         <!-- 戻る場合もう一度すべて入力しなおすのかわいそうだから、
         データそのまま戻して入力途中みたいにしてあげるといいかも -->
-        <form action="P2SignUp.jsp" method="post">
+        <form  action="P2SignUp.jsp" method="post">
           <input type="submit" name="modoru" id="modoru" value="戻る" />
         </form>
 
-        <form action="P2SignUpConfirmationServlet" method="post">
-          <input type="submit" name="touroku" id="touroku" value="登録" />
+        <form enctype="multipart/form-data" action="P2SignUpConfirmationServlet" method="post">
+          <input type="submit" name="touroku"  form="fileinput" id="touroku" value="登録" />
         </form>
       </footer>
     </div>
