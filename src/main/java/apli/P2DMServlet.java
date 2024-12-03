@@ -109,12 +109,14 @@ public class P2DMServlet extends HttpServlet {
 			
 			// ログアウト処理
 			dba.closeDB();
+			dba2.closeDB();
 			
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
 			// ログアウト処理
 			dba.closeDB();
+			dba2.closeDB();
 		}
 		
 		
