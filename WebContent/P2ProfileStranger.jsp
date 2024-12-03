@@ -22,6 +22,7 @@
 
 
 <% 
+HttpSession ses = request.getSession();
 User up = (User) request.getAttribute("PROF");
 
 request.setAttribute("isFollowing", isFollowing);
@@ -37,7 +38,7 @@ ArrayList<Post> postList = (ArrayList<Post>) request.getAttribute("postList");
         
       <div class="leftheader">
         <img
-          src="<%= up.getIconImage()%>"
+          src="image/<%= up.getIconImage()%>"
           alt="Profile Icon"
           class="profile-header-icon"
         />
@@ -85,7 +86,6 @@ ArrayList<Post> postList = (ArrayList<Post>) request.getAttribute("postList");
 
     <!-- 1行目のタイトルと左右ボタン -->
     <div class="section-header">
-    
         <h3 class="section-title">セッション</h3>
         <button class="show-all-button">すべて表示</button>
       </div>
@@ -119,16 +119,22 @@ ArrayList<Post> postList = (ArrayList<Post>) request.getAttribute("postList");
 	                  class="profile-icon"
 	                />
 	              </a>
+	              
+	              
+	              
 	              <div class="like-comment">
-	                <button class="comment" onclick="openPopup()">
-	                  <img
-	                    src="image/こめんと1.png"
-	                    alt="comment icon"
-	                    style="width: 20px; height: 20px"
-	                  />
-	                  <span><%= postList.get(i).getCommentCount() %></span>
-	                </button>
-	  
+					<form action="P2CommentServlet" method="post">
+						<input type="hidden" name="coment" value="<%= postList.get(i).getPostId() %>" />
+						<button type="submit" class="comment" onclick="openPopup()">
+							<img
+							src="image/こめんと1.png"
+							alt="comment icon"
+							style="width: 20px; height: 20px"
+							>
+							<span><%= postList.get(i).getCommentCount() %></span>
+						</button>
+					</form>
+
 	                <button class="heart" onclick="changeImage('heartImage<%= up.getUserid() %>')">
 	                  <img
 	                    id="Heart<%= postList.get(i).getPostId()%>"
@@ -156,7 +162,7 @@ ArrayList<Post> postList = (ArrayList<Post>) request.getAttribute("postList");
 
 					<form action="P2SessionRecPostServlet" method="post">
 					    <% if (postIdPrefix.equals(eventId)) { %> <!-- 投稿IDの頭六桁とイベントIDが一致 -->
-					        <input type="hidden" name="postId" value="<%= postId %>" />
+					        <input type="hidden" name="postId" value="<%= postList.get(i).getPostId() %>" />
 					        <button type="submit">
 					            <span>
 					                <div class="nav_icon">
@@ -168,7 +174,7 @@ ArrayList<Post> postList = (ArrayList<Post>) request.getAttribute("postList");
 					</form>
 
 
-	                
+	                <!-- css崩れた時用で残しとく -->
 	                <!-- <button type="submit" >
 		                <span>
 		                  <a href="P2Recording.jsp">
@@ -213,11 +219,12 @@ ArrayList<Post> postList = (ArrayList<Post>) request.getAttribute("postList");
 	                    閉じる
 	                  </button>
 	                </dialog>
+	                <%}%>
 	                
 	              </div>
 	            </div>
 	          </div>
-			<%}}} %>
+			<%}} %>
         </div>
         <button class="scroll-right" id="scroll-right-1">▶</button>
       </div>
@@ -230,7 +237,7 @@ ArrayList<Post> postList = (ArrayList<Post>) request.getAttribute("postList");
       </div>
       <div class="scroll-container">
         <button class="scroll-left" id="scroll-left-2">◀</button>
-        
+        <div class="video-grid" id="video-grid-1">
         <!-- セッションのビデオカード生成 -->
 		<% for (int i = 0; i <postList.size() ; i++) { %>
 			<!-- 投稿IDの頭六桁が000000だったら。-->
@@ -257,6 +264,7 @@ ArrayList<Post> postList = (ArrayList<Post>) request.getAttribute("postList");
 	                />
 	              </a>
 	              <div class="like-comment">
+	              <!-- コメントボタン -->
 	                <button class="comment" onclick="openPopup()">
 	                  <img
 	                    src="image/こめんと1.png"
@@ -265,7 +273,7 @@ ArrayList<Post> postList = (ArrayList<Post>) request.getAttribute("postList");
 	                  />
 	                  <span><%= postList.get(i).getCommentCount() %></span>
 	                </button>
-	  
+	  				<!-- いいねボタン -->
 	                <button class="heart" onclick="changeImage('heartImage<%= up.getUserid() %>')">
 	                  <img
 	                    id="Heart<%= postList.get(i).getPostId()%>"
@@ -276,6 +284,11 @@ ArrayList<Post> postList = (ArrayList<Post>) request.getAttribute("postList");
 	                  <span><%= postList.get(i).getLikeCount()%></span>
 	                </button>
 	                
+		              
+					<!--  自分の投稿なら表示-->
+					<!--  今回は他人プロフィール画面なのでここはコメントアウトにしておきます。-->
+	                <!-- User u = (User)ses.getAttribute("LOGIN"); 必要だよ-->
+	                <%-- <% if (up.getUserid()==u.getUserid()) { %>
 	                
 	                <button id="openDialog<%= postList.get(i).getPostId()%>" onclick="test('trash<%= up.getUserid() %>')">
 	                  <span>
@@ -306,10 +319,12 @@ ArrayList<Post> postList = (ArrayList<Post>) request.getAttribute("postList");
 	                    閉じる
 	                  </button>
 	                </dialog>
+	                <%}%> --%>
+	               
 	              </div>
 	            </div>
 	          </div>
-			<%}}} %>
+			<%}} %>
         </div>
         <button class="scroll-right" id="scroll-right-2">▶</button>
       </div>
@@ -324,6 +339,7 @@ ArrayList<Post> postList = (ArrayList<Post>) request.getAttribute("postList");
         <div class="song-bar">
           <div class="song-infos">
             <div class="image-container">
+              <!-- ここうまく切り替わらん場合はセッション入れればいいにょ -->
               <img src="." alt="" >
             </div>
             <div class="song-description">
