@@ -78,6 +78,8 @@ public class P2SignUpConfirmationServlet extends HttpServlet {
 	        // インサート文実行
 	        dba.UpdateExe(insertSQL);
 	        
+	        u.setIconImage(name);
+	        
 	        // その会員情報を保存
 	        ses.setAttribute("LOGIN", u);
 	        
@@ -89,7 +91,7 @@ public class P2SignUpConfirmationServlet extends HttpServlet {
 	        rd.forward(request, response);
 			
 	     // ログアウト処理
-	     dba.closeDB();		
+	     dba.closeDB();
 	     
 		} catch (Exception e) {
 			// TODO: handle exception
