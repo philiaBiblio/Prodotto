@@ -33,7 +33,7 @@
         
       <div class="leftheader">
         <img
-          src="image/<%=u.getIconImage() %>"
+          src="image\<%=u.getIconImage() %>"
           alt="Profile Icon"
           class="profile-header-icon"
         />
