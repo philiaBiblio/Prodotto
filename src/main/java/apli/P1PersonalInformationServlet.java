@@ -40,7 +40,6 @@ public class P1PersonalInformationServlet extends HttpServlet {
 
 		try {
 			// 変更された情報の取得
-			String inIconImage = request.getParameter("iconImage");
 			String inName = request.getParameter("name");
 			String inUserid = request.getParameter("userid");
 			String inSex = request.getParameter("sexy");
@@ -48,13 +47,13 @@ public class P1PersonalInformationServlet extends HttpServlet {
 			System.out.println(inSex);
 
 			// ユーザーの検索のsql文実行
-			ResultSet rs = dba.selectExe("select * from ユーザー where ユーザーID = '" + au.getAdminUserid() + "'");
+			ResultSet rs = dba.selectExe("select * from 管理者ユーザー where 管理者ID = '" + au.getAdminUserid() + "'");
 
 			if (rs.next()) {
 				// データベースの情報をアップデート
-				String updateSQL = "UPDATE ユーザー SET アイコン = '" + inIconImage +
+				String updateSQL = "UPDATE 管理者ユーザー SET " + 
 						"', 名前 = '" + inName +
-						"', ユーザーID = '" + inUserid +
+						"', 管理者ID = '" + inUserid +
 						"', 性別 = '" + inSex +
 						"', 生年月日 = '" + inBirth +
 						"' WHERE ユーザーID = '" + au.getAdminUserid() + "'";
@@ -62,7 +61,6 @@ public class P1PersonalInformationServlet extends HttpServlet {
 				dba.UpdateExe(updateSQL);
 
 				// 取得した情報を保存
-				au.setAdminIconImage(inIconImage);
 				au.setAdminName(inName);
 				au.setAdminUserid(inUserid);
 				au.setAdminSex(inSex);
@@ -72,7 +70,7 @@ public class P1PersonalInformationServlet extends HttpServlet {
 				ses.setAttribute("ADMINLOGIN", au);
 
 				// プロフィール編集画面へ
-				url = "P2ProfileEdit.jsp";
+				url = "P1PaersonalInformation..jsp";
 				System.out.println(url);
 				// 画面遷移
 				RequestDispatcher rd = request.getRequestDispatcher(url);

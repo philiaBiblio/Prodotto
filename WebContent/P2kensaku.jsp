@@ -20,7 +20,6 @@
   
 
 <body>
-	<form action="P2SearchServlet" >
 	<header class="header">
 		<div class="header_container">
 			<div class="none"></div>
