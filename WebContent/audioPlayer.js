@@ -1,3 +1,4 @@
+console.log("aaa")
 document.addEventListener("DOMContentLoaded", function () {
   const playButtons = document.querySelectorAll(".play-button");
   const musicPlayer = document.querySelector(".music-player"); // 音楽プレイヤーの要素を取得
@@ -122,7 +123,8 @@ document.addEventListener("DOMContentLoaded", function () {
       // buttonの次の要素であるaudioタグを取得
       const audioPlayer = this.nextElementSibling;
       const thumbnailImage = this.parentElement.querySelector(".thumbnail"); // サムネイル画像を取得
-
+      console.log(audioPlayer)
+      
       // サムネイル画像URLを音楽プレイヤーに設定
       musicPlayerImage.src = thumbnailImage.src; // プレイヤーの画像を更新
       currentThumbnailButton = this; // 現在のサムネイルのボタンを設定
@@ -152,8 +154,10 @@ document.addEventListener("DOMContentLoaded", function () {
   // 音楽プレイヤー内の再生ボタンに対する処理
   playerPlayButton.addEventListener("click", function () {
     const audioPlayer = document.querySelector(".audio-player"); // プレイヤー内のaudio要素を取得
+    console.log("155")
     if (audioPlayer.paused) {
-      audioPlayer.play();
+		 console.log(audioPlayer.play())
+    /*  audioPlayer.play();*/
       playerPlayButton.classList.replace("fa-play", "fa-pause"); // ボタンを一時停止アイコンに変更
       if (currentThumbnailButton) {
         currentThumbnailButton.textContent = "⏸"; // サムネイルのボタンも更新

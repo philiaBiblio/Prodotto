@@ -1,3 +1,4 @@
+<%@page import="apli.Toukou"%>
 <%@page import="apli.DM"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="apli.User"%>
@@ -29,6 +30,8 @@
 	HttpSession ses = request.getSession();
 	// ログイン情報の取得
 	User u = (User)ses.getAttribute("LOGIN");
+	// 音声情報の取得
+	ArrayList<Toukou> toukouList = (ArrayList)ses.getAttribute("TOUKOULIST");
 	// DM画面に必要な情報
 	ArrayList<DM> dmList = (ArrayList)ses.getAttribute("DMLIST");
 %>
@@ -38,16 +41,18 @@
     <main>
       <!-- グリッドコンテナ -->
       <section class="video-grid">
+       <%if(toukouList != null){ %>
+       <% for (int i = 0; i < toukouList.size(); i++) { %>
         <div class="video-card">
           <div class="thumbnail-placeholder">
             <img
-              src="image/サムネジャマイカ.jpg"
+              src="image/<%=toukouList.get(i).getThumbnail() %>"
               alt="Video Thumbnail"
               class="thumbnail"
             />
             <button class="play-button">▶️</button>
             <!-- 音声再生ボタン -->
-            <audio class="audio-player" src="ジャマイカテスト.mp3"></audio>
+            <audio class="audio-player" src="audio/<%=toukouList.get(i).getSound() %>"></audio>
           </div>
 
           <div class="video-info">
@@ -80,8 +85,11 @@
             </div>
           </div>
         </div>
-
-        <!-- 他の動画カードもここに追加 -->
+        <% } %>			
+	 	<%} %>
+	 	
+	 	
+ <!--        他の動画カードもここに追加
         <div class="video-card">
           <div class="thumbnail-placeholder">
             <button class="play-button">▶️</button>
@@ -128,7 +136,7 @@
           </div>
         </div>
 
-        <!-- 他の動画カードもここに追加 -->
+        他の動画カードもここに追加
         <div class="video-card">
           <div class="thumbnail-placeholder">
             <button class="play-button">▶️</button>
@@ -175,7 +183,7 @@
           </div>
         </div>
 
-        <!-- 他の動画カードもここに追加 -->
+        他の動画カードもここに追加
         <div class="video-card">
           <div class="thumbnail-placeholder">
             <button class="play-button">▶️</button>
@@ -212,7 +220,7 @@
           </div>
         </div>
 
-        <!-- 他の動画カードもここに追加 -->
+        他の動画カードもここに追加
         <div class="video-card">
           <div class="thumbnail-placeholder">
             <button class="play-button">▶️</button>
@@ -249,7 +257,7 @@
           </div>
         </div>
 
-        <!-- 他の動画カードもここに追加 -->
+        他の動画カードもここに追加
         <div class="video-card">
           <div class="thumbnail-placeholder">
             <button class="play-button">▶️</button>
@@ -296,7 +304,7 @@
           </div>
         </div>
 
-        <!-- 他の動画カードもここに追加 -->
+        他の動画カードもここに追加
         <div class="video-card">
           <div class="thumbnail-placeholder">
             <button class="play-button">▶️</button>
@@ -343,7 +351,7 @@
           </div>
         </div>
 
-        <!-- 他の動画カードもここに追加 -->
+        他の動画カードもここに追加
         <div class="video-card">
           <div class="thumbnail-placeholder">
             <button class="play-button">▶️</button>
@@ -390,7 +398,7 @@
           </div>
         </div>
 
-        <!-- 他の動画カードもここに追加 -->
+        他の動画カードもここに追加
         <div class="video-card">
           <div class="thumbnail-placeholder">
             <button class="play-button">▶️</button>
@@ -427,7 +435,7 @@
           </div>
         </div>
 
-        <!-- 他の動画カードもここに追加 -->
+        他の動画カードもここに追加
         <div class="video-card">
           <div class="thumbnail-placeholder">
             <button class="play-button">▶️</button>
@@ -464,7 +472,7 @@
           </div>
         </div>
 
-        <!-- 他の動画カードもここに追加 -->
+        他の動画カードもここに追加
         <div class="video-card">
           <div class="thumbnail-placeholder">
             <button class="play-button">▶️</button>
@@ -501,7 +509,7 @@
           </div>
         </div>
 
-        <!-- 他の動画カードもここに追加 -->
+        他の動画カードもここに追加
         <div class="video-card">
           <div class="thumbnail-placeholder">
             <button class="play-button">▶️</button>
@@ -894,7 +902,7 @@
               </button>
             </div>
           </div>
-        </div>
+        </div> -->
       </section>
 
       <!-- 音楽プレイヤー -->
