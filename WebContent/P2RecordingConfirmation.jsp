@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>録音確定画面</title>
   <!-- CSSファイルを読み込み -->
-  <link rel="stylesheet" href="録音確定画面.css">
+  <link rel="stylesheet" href="P2RecordingConfirmation.css">
 </head>
 <body>
   <% 
@@ -51,7 +51,6 @@
         >◀</button>
         
         <!-- 再生ボタン -->
-        <form action="P2TLuploadServlet" method="post">
         <button
           type="button"
           class="btn-play btn btn-outline-success"
@@ -59,8 +58,7 @@
         >▶</button>
       </div>
       <div class="submit">
-        <button>投稿</button>
-        </form>
+        <button>投稿して次へ →</button>
       </div>
     </div>
   </div>
@@ -68,38 +66,36 @@
   <!-- JavaScriptを追加 -->
   <script src="https://unpkg.com/wavesurfer.js"></script>
   <script>
-    // JSPから音声ファイルのパスをJavaScript変数に渡す
+    // サーバーから渡された音声ファイルのパスを取得
     const audioPath = "<%= filename %>";
 
-    if (audioPath && audioPath.trim() !== "") {
-      // WaveSurferのインスタンスを作成
-      const wavesurfer = WaveSurfer.create({
-        container: '#waveform',
-        waveColor: '#11dadd',
-        progressColor: 'purple',
-        barWidth: 2,
-        height: 100,
-        responsive: true,
-        cursorColor: 'white',
-      });
+// WaveSurferのインスタンスを作成
+const wavesurfer = WaveSurfer.create({
+  container: '#waveform', // 一つ目のコードのwaveformコンテナを利用
+  waveColor: '#11dadd',
+  progressColor: '#ff5c5c;',
+  barWidth: 2,
+  height: 100,
+  responsive: false,
+  cursorColor: 'white',
+  minPxPerSec: 50, // 初期ズームレベルを指定（200は適当な値）
+});
 
-      // 音声ファイルをロード
-      wavesurfer.load(audioPath);
+// 音声ファイルをロード
+wavesurfer.load(audioPath); // 必要に応じて動的パスを指定
 
-      // 再生ボタンの設定
-      const playButton = document.querySelector('.btn-play');
-      playButton.addEventListener('click', () => {
-        wavesurfer.playPause();
-      });
+// 再生ボタンの設定
+const playButton = document.querySelector('.btn-play');
+playButton.addEventListener('click', () => {
+  wavesurfer.playPause();
+  playButton.textContent = wavesurfer.isPlaying() ? '⏸' : '▶';
+});
 
-      // 巻き戻しボタンの設定
-      const rewindButton = document.querySelector('.btn-rewind');
-      rewindButton.addEventListener('click', () => {
-        wavesurfer.skip(-5); // 5秒巻き戻し
-      });
-    } else {
-      console.error('音声ファイルのパスが取得できませんでした');
-    }
+// 巻き戻しボタンの設定
+const rewindButton = document.querySelector('.btn-rewind');
+rewindButton.addEventListener('click', () => {
+  wavesurfer.skip(-5); // 5秒巻き戻し
+});
   </script>
 </body>
 </html>

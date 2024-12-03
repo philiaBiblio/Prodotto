@@ -39,7 +39,6 @@ public class P2ProfileEditServlet extends HttpServlet {
 		HttpSession ses = request.getSession();
 		// ログイン情報の取得
 		User u = (User)ses.getAttribute("LOGIN");
-		
 		// URLの生成
 		String url = "";
 		// DBアクセス用部品の生成
@@ -55,23 +54,32 @@ public class P2ProfileEditServlet extends HttpServlet {
 			System.out.println(inSex);
 			
 			// 画像の受け取り
-			Part part = request.getPart("icon");		//jspのtype="file"のnameを指定
-						
+			Part part = request.getPart("icon");		//jspのtype="file"のnameを指定						
 			//jspからアップロードしたい画像ファイル名を取得
 			String name = this.getFileName(part);
 			System.out.println("fileName："+name);
-			//WebContent内のimgフォルダまでのパスを取得
-			String pathfilename=getServletContext().getRealPath("\\image");
-			//imgフォルダまでのパスとアップロードしたい画像ファイルを文字連結する
-			pathfilename=pathfilename+"\\"+name;
-			System.out.println("pathfilename："+pathfilename);
-			//画像ファイルのアップロードを実行
-			part.write(pathfilename);
+			
+			if (!(name.equals("")) ) {
+				//WebContent内のimgフォルダまでのパスを取得
+				String pathfilename=getServletContext().getRealPath("\\image");
+				//imgフォルダまでのパスとアップロードしたい画像ファイルを文字連結する
+				pathfilename=pathfilename+"\\"+name;
+				System.out.println("pathfilename："+pathfilename);
+				//画像ファイルのアップロードを実行
+				part.write(pathfilename);
+				
+				inIconImage = name;
+			}
+			else {
+				System.out.println(inIconImage);
+				System.out.println("アイコン変更なし");
+			}
 			
 			// ユーザーの検索のsql文実行
 			ResultSet rs = dba.selectExe("select * from ユーザー where ユーザーID = '" + u.getUserid() + "'");
 			
 			if(rs.next()) {
+				
 				// データベースの情報をアップデート
 		        String updateSQL = 
 		        		"UPDATE ユーザー SET アイコン = '" + inIconImage +
@@ -79,19 +87,22 @@ public class P2ProfileEditServlet extends HttpServlet {
 		        		"', ユーザーID = '" + inUserid +
 		        		"', 性別 = '" + inSex +
 		        		"', 生年月日 = '" + inBirth +
-		        		"', アイコン = '" + name +
+
 		        		"'WHERE ユーザーID = '" + u.getUserid() + "'";
 		        // アップデート文実行
+
 		        dba.UpdateExe(updateSQL);
 		        
 		        // 取得した情報を保存
+		        System.out.println(u.getIconImage());
 		        u.setIconImage(inIconImage);
 		        u.setName(inName);
 		        u.setUserid(inUserid);
 		        u.setSex(inSex);
 		        u.setBirth(inBirth.substring(0,10));
-		        u.setIconImage(name);
 		        
+		        System.out.println(inIconImage);
+		        System.out.println(u.getIconImage());
 		        // ログインした会員情報を保存
 		        ses.setAttribute("LOGIN", u);
 		        

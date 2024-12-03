@@ -14,15 +14,16 @@
 // セッションの取得
 HttpSession ses = request.getSession();
 // ログイン情報の取得
-User u = (User) ses.getAttribute("LOGIN");
+User u = (User)ses.getAttribute("LOGIN");
 %>
 <body>
-	<form action="P2ProfileEditServlet" method="post">
+	<form action="P2ProfileEditServlet" method="post" enctype="multipart/form-data">
 		<div class="icon">
 			<!--  srcのところを値に変更する？ -->
-			<img id="iconImage" src="image/<%=u.getIconImage() %>" alt="icon" name="iconImage" />
+			<img id="iconImage" src="image/<%=u.getIconImage() %>"  alt="icon"  />
+			<input type="hidden" name="iconImage" value="<%=u.getIconImage()%>">
 			<label for="fileInput">写真を選択</label> <input type="file" name="icon"
-				id="fileInput" accept="image/jpeg, image/png" />
+				id="fileInput" accept="image/jpeg, image/png" onchange="showSaveButton()" />
 		</div>
 		<div class="nakami">
 			<!-- ユーザー名 -->
@@ -94,6 +95,11 @@ User u = (User) ses.getAttribute("LOGIN");
 
 			// 保存ボタンを表示
 			buttonContainer.style.display = "block";
+		}
+
+		function showSaveButton() {
+		    const buttonContainer = document.getElementById("button-container");
+		    buttonContainer.style.display = "block";
 		}
 	</script>
 </body>

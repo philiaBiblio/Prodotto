@@ -1,97 +1,121 @@
 body {
-    background: #000000;
-    color: #ffffff;
-    font-family: Arial, sans-serif;
-    padding: 20px;
- }
-  
-  #container {
-    height: 200px;
-    margin: 20px 0;
-    background: #000000;
-  }
-  
-  button {
-    margin-right: 10px;
-  }
-  
-  input[type="file"] {
-    margin-bottom: 10px;
-  }
-  
-  button {
-    margin-right: 10px;
-  }
-  
-  #record,
-  #stop {
-    background-color: #d72f21; /* 録音ボタンの色 */
-  }
-  
-  #stop {
-    display: none; /* 初期状態では停止ボタンを非表示にする */
-  }
-  
-  
-  /* gptcss↓ */
-  
-  /* ボタングループ全体のスタイル */
-  .btn-group {
-    margin: 10px 0;
-    justify-content: center;
-  }
-  
-  /* ボタンの共通スタイル */
-  .btn {
-    border-radius: 8px; /* ボタンを丸みのある形に */
-    padding: 10px 20px;
-    font-size: 16px; /* ボタンのテキストサイズを大きく */
-    transition: background-color 0.3s ease, transform 0.3s ease; /* ホバー時のアニメーションを追加 */
-  }
-  
-  /* ボタンのデフォルトスタイル */
-  .btn-outline-warning {
-    border-color: #ffc107;
-    color: #ffc107;
-  }
-  .btn-outline-warning:hover {
-    background-color: #ffc107;
-    color: white;
-    transform: scale(1.05); /* ホバー時に少し大きくなるエフェクト */
-  }
-  
-  /* 他のボタンのカスタムスタイル */
-  .btn-outline-success {
-    border-color: #28a745;
-    color: #28a745;
-  }
-  .btn-outline-success:hover {
-    background-color: #28a745;
-    color: white;
-    transform: scale(1.05);
-  }
-  
-  .btn-outline-danger {
-    border-color: #dc3545;
-    color: #dc3545;
-  }
-  .btn-outline-danger:hover {
-    background-color: #dc3545;
-    color: white;
-    transform: scale(1.05);
-  }
-  
-  /* ボタンのアクティブスタイル */
-  .btn:active {
-    background-color: #0056b3; /* アクティブ時の背景色 */
-    color: white;
-    box-shadow: 0 4px #999; /* クリック時に影を少し追加 */
-    transform: translateY(2px); /* クリック時に押し込まれるような効果 */
-  }
-  
-  /* カスタムホバーエフェクト */
-  .btn:hover {
-    cursor: pointer;
-  }
-  
-  
+  background: #000000;
+  color: #ffffff; /* 文字 */
+  font-family: Arial, sans-serif;
+  padding: 20px;
+}
+
+.btn{
+  margin: 0.9px;  /* ボタン間のスペース */
+}
+
+/* 一時停止ボタン */
+.btn-pause {
+  width: 50px;  /* 幅 */
+  height: 50px; /* 高さ */
+}
+
+/* 再生ボタン */
+.btn-play {
+  width: 50px;  /* 幅 */
+  height: 50px; /* 高さ */
+}
+
+/* 停止ボタン */
+.btn-stop {
+  width: 50px;  /* 幅 */
+  height: 50px; /* 高さ */
+}
+
+/* 巻き戻しボタン */
+.btn-rewind {
+  width: 50px;  /* 幅 */
+  height: 50px; /* 高さ */
+}
+
+/* 早送りボタン */
+.btn-fast-forward {
+  width: 50px;  /* 幅 */
+  height: 50px; /* 高さ */
+}
+
+/* 録音ボタン */
+.btn-record{
+  width: 50px;  /* 幅 */
+  height: 50px; /* 高さ */
+}
+
+.controls{
+  position: sticky; /* スクロール時に固定 */
+  top: 0; /* 上端に固定 */
+  left: 0; /* 左端に固定 */
+}
+
+.playlist-tracks{
+  max-height: 480px;
+  position: relative; /* 子要素の位置決めに影響を与える */
+  overflow: auto; /* スクロール領域を確保 */
+
+}
+
+.channel-wrapper {
+  display: flex;
+}
+
+.playlist-overrlay {
+  position: relative;
+}
+
+#message-area {
+  background-color: #ffffff; /* 背景色を白に設定 */
+  color: #555; /* 文字色 */
+  font-size: 16px; /* 文字サイズ */
+  padding: 0.5rem 1rem; /* 内側余白 */
+  border: 1px solid #ddd; /* 枠線 */
+  border-radius: 5px; /* 角を丸める */
+  white-space: nowrap; /* メッセージを1行で表示 */
+  width: 200px;  /* 幅 */
+  height: 50px; /* 高さ */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 軽い影を追加 */
+}
+.playlist-toolbar {
+  display: flex; /* 横並び配置 */
+  align-items: center; /* ボタン群とメッセージエリアの垂直方向中央揃え */
+  gap: 0.3rem; /* ボタン群とメッセージエリアの間隔を調整 */
+}
+
+/* スクロールバー全体のスタイル */
+.playlist-tracks::-webkit-scrollbar {
+  width: 10px; /* 横スクロールバーの幅 */
+  height: 10px; /* 縦スクロールバーの高さ */
+}
+
+/* スクロールバーのトラック（背景）のスタイル */
+.playlist-tracks::-webkit-scrollbar-track {
+  background: #000000; /* 背景色 */
+  border-radius: 5px; /* 角を丸くする */
+}
+
+/* スクロールバーのつまみ（ドラッグ部分）のスタイル */
+.playlist-tracks::-webkit-scrollbar-thumb {
+  background: #025963; /* 色 */
+  border-radius: 5px; /* 角を丸くする */
+}
+
+/* スクロールバーのつまみをホバーした時のスタイル */
+.playlist-tracks::-webkit-scrollbar-thumb:hover {
+  background: #049dae; /* ホバー時の色 */
+}
+
+/* トラック移動ボタンを押すと光ってかっこE */
+.playlist-overlay.state-shift {
+  margin-left: 0px;
+  height: 120px; /* 修正: `height120px` を正しい形式に */
+  border-bottom: 2px solid #ff0000; /* 下線の太さ、スタイル、色 */
+}
+
+.playlist-overlay {
+  margin-left: 0px;
+  height: 120px; /* 修正: `height120px` を正しい形式に */
+  border-bottom: 1px solid #ffffff; /* 下線の太さ、スタイル、色 */
+}
