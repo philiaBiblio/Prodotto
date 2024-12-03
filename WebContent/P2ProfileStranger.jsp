@@ -1,3 +1,6 @@
+<%@page import="apli.Post"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="apli.User"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -23,11 +26,12 @@
 
 <% 
 HttpSession ses = request.getSession();
-User up = (User) request.getAttribute("PROF");
 
-request.setAttribute("isFollowing", isFollowing);
-request.setAttribute("followCount", followCount);
-request.setAttribute("followerCount", followerCount);
+User u = (User)ses.getAttribute("LOGIN");
+User up = (User) request.getAttribute("PROF");
+boolean isFollowing = (boolean)ses.getAttribute("isFollowing");
+int followCount = (int)ses.getAttribute("followCount");
+int followerCount = (int)ses.getAttribute("followerCount");
 
 ArrayList<Post> postList = (ArrayList<Post>) request.getAttribute("postList");
 
@@ -47,8 +51,8 @@ ArrayList<Post> postList = (ArrayList<Post>) request.getAttribute("postList");
             <h2 class="username"><%= up.getName() %></h2>
             <p class="user-id">@<%= up.getUserid() %></p>
             <div class="follower-info">
-              <span class="follower-count">フォロワー: <%= request.getAttribute("followCount")%></span>
-              <span class="following-count">フォロー中: <%= request.getAttribute("followerCount")%></span>
+              <span class="follower-count">フォロワー: <%= followCount%></span>
+              <span class="following-count">フォロー中: <%= followerCount%></span>
             </div>
         </div>
 
@@ -97,7 +101,7 @@ ArrayList<Post> postList = (ArrayList<Post>) request.getAttribute("postList");
 		<% for (int i = 0; i <postList.size() ; i++) { %>
 			
 			<!-- 投稿IDの頭六桁が000000じゃなかったら。-->
-			String postId = postList.get(i).getPostId();
+		<% String postId = postList.get(i).getPostId();%>
 			<%if (!postId.startsWith("000000")){ %>
 	          <div class="video-card">
 	            <div class="thumbnail-placeholder">
@@ -156,7 +160,6 @@ ArrayList<Post> postList = (ArrayList<Post>) request.getAttribute("postList");
 					String eventId = String.format("%04d%02d", year, month); // 西暦4桁+月2桁のイベントID
 					
 					// 投稿IDの頭六桁とイベントIDを比較
-					String postId = postList.get(i).getPostId(); // 投稿ID
 					String postIdPrefix = postId.substring(0, 6); // 投稿IDの頭六桁
 					%>
 
@@ -241,7 +244,7 @@ ArrayList<Post> postList = (ArrayList<Post>) request.getAttribute("postList");
         <!-- セッションのビデオカード生成 -->
 		<% for (int i = 0; i <postList.size() ; i++) { %>
 			<!-- 投稿IDの頭六桁が000000だったら。-->
-			String postId2 = postList.get(i).getPostId();
+		<%	String postId2 = postList.get(i).getPostId(); %>
 			<%if (postId2.startsWith("000000")){ %>
 	          <div class="video-card">
 	            <div class="thumbnail-placeholder">
