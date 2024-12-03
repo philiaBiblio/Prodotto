@@ -31,7 +31,7 @@ public class P1AdminManagementKensakuServlet extends HttpServlet {
 		// セッションの生成
 		HttpSession ses = request.getSession();
 		// ログイン情報の取得
-		AdminUser au = (AdminUser)ses.getAttribute("ADMINLOGIN");
+//		AdminUser au = (AdminUser)ses.getAttribute("ADMINLOGIN");
 		// URLの生成
 		String url = "";
 		// DBアクセス用部品の生成
@@ -50,35 +50,39 @@ public class P1AdminManagementKensakuServlet extends HttpServlet {
 			String admin = request.getParameter("kensaku");
 			System.out.println(admin);
 			
-			// ユーザーの検索実行
-			ResultSet rs = dba.selectExe
-					("SELECT * FROM 管理者 WHERE 名前 LIKE '%" + admin + "%' "
-					+ "OR 管理者ID LIKE '%" + admin + "%'");
-			
-			// rs.nextした結果、行が存在する場合 true
-			boolean flg = rs.next(); 
-			while(flg == true) {
-				String id = rs.getString("管理者ID");
-				String name = rs.getString("名前");
+			// 検索キーワードが空の場合の処理
+			if (admin.equals("")) {
+				System.out.println("検索キーワードが空です。");
+				// USERLIST をクリア
+				auList.clear();
+				ses.setAttribute("ADMINLIST", auList);
+			}else {
+				// ユーザーの検索実行
+				ResultSet rs = dba.selectExe
+						("SELECT * FROM 管理者 WHERE 名前 LIKE '%" + admin + "%' "
+						+ "OR 管理者ID LIKE '%" + admin + "%'");
 				
-				// アドミンインスタンスの生成
-				AdminUser a = new AdminUser();
-				a.setAdminUserid(id);
-				a.setAdminName(name);
-				
-				// 管理者リストに情報を保存する
-				auList.add(a);
-				
-				// カーソルを一行ずらす
-				flg = rs.next();
+				// rs.nextした結果、行が存在する場合 true
+				boolean flg = rs.next(); 
+				while(flg == true) {
+					String id = rs.getString("管理者ID");
+					String name = rs.getString("名前");
+					
+					// アドミンインスタンスの生成
+					AdminUser a = new AdminUser();
+					a.setAdminUserid(id);
+					a.setAdminName(name);
+					
+					// 管理者リストに情報を保存する
+					auList.add(a);
+					
+					// カーソルを一行ずらす
+					flg = rs.next();
+				}
+				// リストをセッションに保存
+				ses.setAttribute("ADMINLIST", auList);
 			}
 			
-			// リストをセッションに保存
-			ses.setAttribute("ADMINLIST", auList);
-					
-			// ログアウト処理
-			dba.closeDB();
-		
 		// 画面遷移
 		url = "P1AdminManegement.jsp";
 		RequestDispatcher rd = request.getRequestDispatcher(url);
@@ -92,9 +96,6 @@ public class P1AdminManagementKensakuServlet extends HttpServlet {
 			e.printStackTrace();
 			// ログアウト処理
 			dba.closeDB();
-		}
-		
-		
+		}	
 	}
-
 }

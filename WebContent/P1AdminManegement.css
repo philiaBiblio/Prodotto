@@ -394,3 +394,65 @@ button {
     caret-color: #ee2522;
     outline: 0;
   }
+  
+dialog {
+  text-align: center;
+  border-radius: 10px;
+  background-color: #000000;
+  border: solid 3px #ee2522;
+  color: white;
+}
+
+#yesButton,
+#noButton {
+  width: 90px;
+  height: 50px;
+  color: rgb(255, 255, 255);
+  background-color: #000000;
+  border: 1px solid #ffffff;
+  border-radius: 10px;
+  cursor: pointer;
+  margin: 0 15px;
+  /* フレックスボックスでテキストを中央揃え */
+  display: flex;
+  justify-content: center; /* 水平方向の中央揃え */
+  align-items: center; /* 垂直方向の中央揃え */
+}
+
+#yesButton:hover,
+#noButton:hover {
+  color: #ee2522;
+  border-color: #ee2522;
+}
+
+.buttonContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+#closeConfirmationButton {
+  width: 90px;
+  display: inline-block;
+  padding: 10px;
+  margin: auto 30px;
+  color: rgb(255, 255, 255);
+  background-color: #000000;
+  border: 1px solid #ffffff;
+  border-radius: 10px;
+  cursor: pointer;
+  text-align: center;
+}
+
+#closeConfirmationButton:hover {
+  color: #ee2522;
+  border-color: #ee2522;
+}
+
+.button-group2 {
+  /* border: solid 1px #fff; */
+  margin: 0;
+  margin-right: 20px;
+  justify-content: center;
+}

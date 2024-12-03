@@ -15,7 +15,8 @@
 	//セッションの取得
 	HttpSession ses = request.getSession();
 	//会員リストを取得
-	ArrayList<User> u = (ArrayList<User>)ses.getAttribute("USERLIST");  
+	ArrayList<User> u = (ArrayList<User>)ses.getAttribute("USERLIST");
+	String trueMess = (String)ses.getAttribute("TRUEMESS");
    %>
   
   <body>
@@ -42,15 +43,29 @@
         <td><%= u.get(i).getUserid() %></td>
         <td class="delete-button">
         <input type="hidden" name="USERID" value="<%=i%>">
-        <button type="submit" >アカウント削除</button>
+        <button type="button" id="openDialogButton" onclick="dialog('sakuzyo')">アカウント削除</button>
+        <dialog id="myDialog">
+        	<p>このアカウントを削除しますか？</p>
+        	<div class="buttonContainer">
+        		<button type="submit" class="dialogButton" id="yesButton">はい</button>
+        		<button type="button" class="dialogButton" id="noButton">いいえ</button>
+        	</div>
+        </dialog>
+  
+        <dialog id="confirmationDialog">
+        	<p>削除しました</p>
+            <button type="button" class="dialogButton" id="closeConfirmationButton">閉じる</button>
+        </dialog>
         </td>
       	</tr>
       	</form>
 		<% } %>			
 	  <%} %>
-      
-
     </table>
+    <dialog id="confirmationDialog">
+    	<p>削除しました</p>
+        <button type="button" class="dialogButton" id="closeConfirmationButton" onclick="confirmationDialog.close();">閉じる</button>
+    </dialog>
     
      <jsp:include page="P1kensaku.jsp"></jsp:include>
 
@@ -65,22 +80,43 @@
           searchButton.textContent = '一括';
         }
       });
-    
-      document
-        .getElementById("delete-button-sanma")
-        .addEventListener("click", function () {
-          if (confirm("本当に変更しますか？")) {
-            alert("アカウントが削除されました");
-          }
-        });
-    
-      document
-        .getElementById("delete-button-yusei")
-        .addEventListener("click", function () {
-          if (confirm("本当に変更しますか？")) {
-            alert("アカウントが削除されました");
-          }
-        });
+
+      <%if(trueMess != null ){ %>
+      window.onload = function(){
+  		const dialog = document.querySelector("#confirmationDialog");
+      	dialog.showModal();
+      	} 	
+      	<%} %>
+      	<%ses.removeAttribute("TRUEMESS"); %>
+
+      // ダイアログのスクリプト
+      function dialog(id){
+          console.log("274")
+      const openDialogButton = document.getElementById('openDialogButton');
+      const yesButton = document.getElementById('yesButton');
+      const noButton = document.getElementById('noButton');
+      const myDialog = document.getElementById('myDialog');
+      const confirmationDialog = document.getElementById('confirmationDialog');
+      const closeConfirmationButton = document.getElementById('closeConfirmationButton');
+      myDialog.showModal();
+
+      openDialogButton.addEventListener('click', () => {
+         myDialog.showModal();
+      });
+
+      yesButton.addEventListener('click', () => {
+        myDialog.close();
+        confirmationDialog.showModal();
+      });
+
+      noButton.addEventListener('click', () => {
+        myDialog.close();
+      });
+
+      closeConfirmationButton.addEventListener('click', () => {
+        confirmationDialog.close();
+      });
+      }
     </script>
   </body>
 </html>

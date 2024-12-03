@@ -134,10 +134,13 @@ public class P2LoginServlet extends HttpServlet {
 				}
 				ses.setAttribute("DMSSLIST", dmssList);
 		
-				// タイムラインへ
-				url = "P2Timeline.jsp";
+				// タイムラインのためのサーブレットへ
+				url = "P2TimelineServlet";
 				System.out.println(url);
 				
+				// 画面遷移
+				response.sendRedirect(url);
+
 				// ログアウト処理
 				dba.closeDB();
 				dba3.closeDB();
@@ -168,27 +171,31 @@ public class P2LoginServlet extends HttpServlet {
 					au.setAdminMailadd(AdminMailadd);
 					au.setAdminLevel(AdminLevel);
 					
-					// ログインした管理者情報を保存
-					ses.setAttribute("ADMINLOGIN", au);
 					System.out.println("管理者ログイン成功");
 					
 					if(au.getAdminLevel().equals("1")) {
 						// 管理者管理画面へ
 						url = "P1AdminManegement.jsp";
 						System.out.println(url);
+						// 画面遷移
+						RequestDispatcher rd = request.getRequestDispatcher(url);
+						rd.forward(request, response);
+						
 					}else {
-						// タイムラインへ
-						url = "P1TLManagement.jsp";
+						// タイムラインのためのサーブレットへ
+						url = "TLManagementServlet";
 						System.out.println(url);
+						
+						// 画面遷移
+						response.sendRedirect(url);
+						
+						// ログインした管理者情報を保存
+						ses.setAttribute("ADMINLOGIN", au);
 					}
 					// ログアウト処理
 					dba2.closeDB();
 				}
 			}
-			
-			// 画面遷移
-			RequestDispatcher rd = request.getRequestDispatcher(url);
-			rd.forward(request, response);
 			
 		} catch (Exception e) {
 			// TODO: handle exception

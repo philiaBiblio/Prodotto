@@ -20,7 +20,7 @@ User u = (User) ses.getAttribute("LOGIN");
 	<form action="P2ProfileEditServlet" method="post">
 		<div class="icon">
 			<!--  srcのところを値に変更する？ -->
-			<img id="iconImage" src="image/ききゅう.jpg" alt="icon" name="iconImage" />
+			<img id="iconImage" src="image/<%=u.getIconImage() %>" alt="icon" name="iconImage" />
 			<label for="fileInput">写真を選択</label> <input type="file" name="icon"
 				id="fileInput" accept="image/jpeg, image/png" />
 		</div>
