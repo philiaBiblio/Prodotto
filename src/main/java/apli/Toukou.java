@@ -3,12 +3,12 @@ package apli;
 public class Toukou {
 	// フィールド
 	private String toukouid;		// 投稿ID
-	private String userid;		// ユーザーID
+	private String userid;			// ユーザーID
 	private String eventid;			// イベントID
 	private String deriveid;		// 派生ID
 	private String upday;			// アップロード日
-	private String sound;		// 音声ファイルパス名
-	private String thumbnail;	// サムネイル画像パス名
+	private String sound;			// 音声ファイルパス名
+	private String thumbnail;		// サムネイル画像パス名
 	
 	
 	

@@ -35,8 +35,7 @@
     <header class="profile-header">
         
       <div class="leftheader">
-        <img
-          src="image/<%= up.getIconImage()%>"
+        <img src="image/<%=u.getIconImage() %>"
           alt="Profile Icon"
           class="profile-header-icon"
         />
