@@ -2,7 +2,6 @@ package apli;
 
 import java.io.IOException;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -83,12 +82,12 @@ public class P2SignUpConfirmationServlet extends HttpServlet {
 	        // その会員情報を保存
 	        ses.setAttribute("LOGIN", u);
 	        
-	        // プロフィール編集画面へ
-	        url = "P2Timeline.jsp";
-	        System.out.println(url);
-	        // 画面遷移
-	        RequestDispatcher rd = request.getRequestDispatcher(url);
-	        rd.forward(request, response);
+	        // タイムラインのためのサーブレットへ
+			url = "P2TimelineServlet";
+			System.out.println(url);
+			
+			// 画面遷移
+			response.sendRedirect(url);
 			
 	     // ログアウト処理
 	     dba.closeDB();

@@ -4476,7 +4476,7 @@ var WaveformPlaylist;
 													.concat(o * t.height, "px; width: ")
 													.concat(
 														t.controls.width,
-														"px; position: absolute; left: 0; z-index: 10;"
+                            "px; position: sticky; top: 0; left: 0; z-index: 10; overflow: visible"
 													),
 											},
 										},
@@ -4670,8 +4670,7 @@ var WaveformPlaylist;
 									"div.channel-wrapper".concat(g).concat(k),
 									{
 										attributes: {
-											style: "margin-left: "
-												.concat(m, "px; height: ")
+											style: "margin-left: 0px"
 												.concat(t.height * s, "px;"),
 										},
 									},
@@ -5443,7 +5442,7 @@ var WaveformPlaylist;
 						formData.append("audioData", file);  // "audioData"はサーブレットで受け取るパラメータ名
 
 						// サーバーにPOSTリクエストを送信
-						fetch("http://localhost:8080/Prodotto/DownloadServlet", {
+						fetch("http://localhost:8080/Prodotto/P2RecordingServlet", {
 							method: "POST",
 							body: formData
 						})
@@ -5452,7 +5451,7 @@ var WaveformPlaylist;
 									console.log(responseL.ok);
 									// サーバー側での処理が成功した後、画面遷移はサーブレットで行うので不要
 									console.log("ファイルが正常に送信されました");
-									location.href = "http://localhost:8080/Prodotto/DownloadServlet"
+									location.href = "http://localhost:8080/Prodotto/P2RecordingServlet"
 								} else {
 									console.log(responseL.ok);
 									console.error("サーバーとの通信に失敗しました");

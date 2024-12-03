@@ -26,24 +26,25 @@
 	HttpSession ses = request.getSession();
 	// ログイン情報の取得
 	User u = (User)ses.getAttribute("LOGIN");
+	//request.setAttribute("followCount", followCount);
+	//request.setAttribute("followerCount", followerCount);
+	//ArrayList<Post> postList = (ArrayList<Post>) request.getAttribute("postList");
 %>
 
   <body>
     <header class="profile-header">
         
       <div class="leftheader">
-        <img
-          src="image/<%=u.getIconImage() %>"
-          alt="Profile Icon"
-          class="profile-header-icon"
-        />
+        <img src="image/<%=u.getIconImage() %>" 
+        alt="Profile Icon"
+        class="profile-header-icon"/>
 
         <div class="user-details">
             <h2 class="username"><%=u.getName() %></h2>
-            <p class="user-id"><%=u.getUserid() %></p>
+            <p class="user-id">@<%=u.getUserid() %></p>
             <div class="follower-info">
-              <span class="follower-count">フォロワー: 100</span>
-              <span class="following-count">フォロー中: 50</span>
+              <span class="follower-count">フォロワー: <%= request.getAttribute("followCount")%></span>
+              <span class="following-count">フォロー中: <%= request.getAttribute("followerCount")%></span>
             </div>
         </div>
 
@@ -64,8 +65,10 @@
        
 
     </header>
+    
+    
 
-        <!-- 1行目のタイトルと左右ボタン -->
+  <!-- 1行目のタイトルと左右ボタン -->
     <div class="section-header">
         <h3 class="section-title">セッション</h3>
         <button class="show-all-button">すべて表示</button>
@@ -73,458 +76,144 @@
       <div class="scroll-container">
         <button class="scroll-left" id="scroll-left-1">◀</button>
         <div class="video-grid" id="video-grid-1">
+	        
+	    <!-- セッションのビデオカード生成 -->
+		<% for (int i = 0; i <postList.size() ; i++) { %>
+			
+			<!-- 投稿IDの頭六桁が000000じゃなかったら。-->
+			String postId = postList.get(i).getPostId();
+			<%if (!postId.startsWith("000000")){ %>
+	          <div class="video-card">
+	            <div class="thumbnail-placeholder">
+	              <img
+	                src="<%= postList.get(i).getThumbnailPath() %>"
+	                alt="Video Thumbnail"
+	                class="thumbnail"
+	              />
+	              <button class="play-button">▶️</button>
+	              <!-- 音声再生ボタン -->
+	              <audio class="audio-player" src="<%= postList.get(i).getAudioPath()%>"></audio>
+	            </div>
+	  
+	            <div class="video-info">
+	              <a href="P1AdminProfile.jsp" class="profile-info">
+	                <img
+	                  src="<%= up.getIconImage()%>"
+	                  alt="profile icon"
+	                  class="profile-icon"
+	                />
+	              </a>
+	              
+	              
+	              
+	              <div class="like-comment">
+					<form action="P2CommentServlet" method="post">
+						<input type="hidden" name="coment" value="<%= postList.get(i).getPostId() %>" />
+						<button type="submit" class="comment" onclick="openPopup()">
+							<img
+							src="image/こめんと1.png"
+							alt="comment icon"
+							style="width: 20px; height: 20px"
+							>
+							<span><%= postList.get(i).getCommentCount() %></span>
+						</button>
+					</form>
 
-          <div class="video-card">
-            <div class="thumbnail-placeholder">
-              <img
-                src="image/サムネジャマイカ.jpg"
-                alt="Video Thumbnail"
-                class="thumbnail"
-              />
-              <button class="play-button">▶️</button>
-              <!-- 音声再生ボタン -->
-              <audio class="audio-player" src="ジャマイカテスト.mp3"></audio>
-            </div>
-  
-            <div class="video-info">
-              <a href="P1AdminProfile.jsp" class="profile-info">
-                <img
-                  src="image/ききゅう.jpg"
-                  alt="profile icon"
-                  class="profile-icon"
-                />
-              </a>
-              <div class="like-comment">
-                <button class="comment" onclick="openPopup()">
-                  <img
-                    src="image/こめんと1.png"
-                    alt="comment icon"
-                    style="width: 20px; height: 20px"
-                  />
-                  <span>5</span>
-                </button>
-  
-                <button class="heart" onclick="changeImage('heartImage2')">
-                  <img
-                    id="heartImage2"
-                    src="image/Heart-512x512 test.png"
-                    alt="like icon"
-                    style="width: 20px; height: 20px"
-                  />
-                  <span>10</span>
-                </button>
-  
-                <button id="openDialogButton" onclick="test('trash')">
-                  <span>
-                    <div class="nav_icon trash">
-                      <i class="gg-trash"></i>
-                    </div>
-                  </span>
-                </button>
-  
-                <dialog id="myDialog">
-                  <p>この投稿を削除しますか？</p>
-                  <div class="buttonContainer">
-                    <button type="button" class="dialogButton" id="yesButton">
-                      はい
-                    </button>
-                    <button type="button" class="dialogButton" id="noButton">
-                      いいえ
-                    </button>
-                  </div>
-                </dialog>
-  
-                <dialog id="confirmationDialog">
-                  <p>削除しました</p>
-                  <button
-                    type="button"
-                    class="dialogButton"
-                    id="closeConfirmationButton"
-                  >
-                    閉じる
-                  </button>
-                </dialog>
-              </div>
-            </div>
-          </div>
+	                <button class="heart" onclick="changeImage('heartImage<%= up.getUserid() %>')">
+	                  <img
+	                    id="Heart<%= postList.get(i).getPostId()%>"
+	                    src="image/Heart-512x512 test.png"
+	                    alt="like icon"
+	                    style="width: 20px; height: 20px"
+	                  />
+	                  <span><%= postList.get(i).getLikeCount()%></span>
+	                </button>
+	                
+	                
+	                <!-- チャットGPTからそのまま拝借 -->
+	                <!-- 合っているかわからん -->
+					<%
+					// タイムスタンプからイベントIDを生成
+					java.util.Calendar cal = java.util.Calendar.getInstance();
+					int year = cal.get(java.util.Calendar.YEAR);      // 現在の西暦年
+					int month = cal.get(java.util.Calendar.MONTH) + 1; // 現在の月 (0ベースなので+1)
+					String eventId = String.format("%04d%02d", year, month); // 西暦4桁+月2桁のイベントID
+					
+					// 投稿IDの頭六桁とイベントIDを比較
+					String postId = postList.get(i).getPostId(); // 投稿ID
+					String postIdPrefix = postId.substring(0, 6); // 投稿IDの頭六桁
+					%>
 
-          <div class="video-card">
-            <div class="thumbnail-placeholder">
-              <img
-                src="image/サムネジャマイカ.jpg"
-                alt="Video Thumbnail"
-                class="thumbnail"
-              />
-              <button class="play-button">▶️</button>
-              <!-- 音声再生ボタン -->
-              <audio class="audio-player" src="ジャマイカテスト.mp3"></audio>
-            </div>
-  
-            <div class="video-info">
-              <a href="P1AdminProfile.jsp" class="profile-info">
-                <img
-                  src="image/ききゅう.jpg"
-                  alt="profile icon"
-                  class="profile-icon"
-                />
-              </a>
-              <div class="like-comment">
-                <button class="comment" onclick="openPopup()">
-                  <img
-                    src="image/こめんと1.png"
-                    alt="comment icon"
-                    style="width: 20px; height: 20px"
-                  />
-                  <span>5</span>
-                </button>
-  
-                <button class="heart" onclick="changeImage('heartImage3')">
-                  <img
-                    id="heartImage3"
-                    src="image/Heart-512x512 test.png"
-                    alt="like icon"
-                    style="width: 20px; height: 20px"
-                  />
-                  <span>10</span>
-                </button>
-  
-                <button id="openDialogButton1" onclick="test('trash')">
-                  <span>
-                    <div class="nav_icon trash">
-                      <i class="gg-trash"></i>
-                    </div>
-                  </span>
-                </button>
-  
-                <dialog id="myDialog1">
-                  <p>この投稿を削除しますか？</p>
-                  <div class="buttonContainer">
-                    <button type="button" class="dialogButton" id="yesButton1">
-                      はい
-                    </button>
-                    <button type="button" class="dialogButton" id="noButton1">
-                      いいえ
-                    </button>
-                  </div>
-                </dialog>
-  
-                <dialog id="confirmationDialog1">
-                  <p>削除しました</p>
-                  <button
-                    type="button"
-                    class="dialogButton"
-                    id="closeConfirmationButton1"
-                  >
-                    閉じる
-                  </button>
-                </dialog>
-              </div>
-            </div>
-          </div>
+					<form action="P2SessionRecPostServlet" method="post">
+					    <% if (postIdPrefix.equals(eventId)) { %> <!-- 投稿IDの頭六桁とイベントIDが一致 -->
+					        <input type="hidden" name="postId" value="<%= postList.get(i).getPostId() %>" />
+					        <button type="submit">
+					            <span>
+					                <div class="nav_icon">
+					                    <i class="gg-duplicate"></i>
+					                </div>
+					            </span>
+					        </button>
+					    <% } %>
+					</form>
 
-          <div class="video-card">
-            <div class="thumbnail-placeholder">
-              <img
-                src="image/サムネジャマイカ.jpg"
-                alt="Video Thumbnail"
-                class="thumbnail"
-              />
-              <button class="play-button">▶️</button>
-              <!-- 音声再生ボタン -->
-              <audio class="audio-player" src="ジャマイカテスト.mp3"></audio>
-            </div>
-  
-            <div class="video-info">
-              <a href="P1AdminProfile.jsp" class="profile-info">
-                <img
-                  src="image/ききゅう.jpg"
-                  alt="profile icon"
-                  class="profile-icon"
-                />
-              </a>
-              <div class="like-comment">
-                <button class="comment" onclick="openPopup()">
-                  <img
-                    src="image/こめんと1.png"
-                    alt="comment icon"
-                    style="width: 20px; height: 20px"
-                  />
-                  <span>5</span>
-                </button>
-  
-                <button class="heart" onclick="changeImage('heartImage4')">
-                  <img
-                    id="heartImage4"
-                    src="image/Heart-512x512 test.png"
-                    alt="like icon"
-                    style="width: 20px; height: 20px"
-                  />
-                  <span>10</span>
-                </button>
-  
-                <button id="openDialogButton2" onclick="test('trash')">
-                  <span>
-                    <div class="nav_icon trash">
-                      <i class="gg-trash"></i>
-                    </div>
-                  </span>
-                </button>
-  
-                <dialog id="myDialog2">
-                  <p>この投稿を削除しますか？</p>
-                  <div class="buttonContainer">
-                    <button type="button" class="dialogButton" id="yesButton2">
-                      はい
-                    </button>
-                    <button type="button" class="dialogButton" id="noButton2">
-                      いいえ
-                    </button>
-                  </div>
-                </dialog>
-  
-                <dialog id="confirmationDialog2">
-                  <p>削除しました</p>
-                  <button
-                    type="button"
-                    class="dialogButton"
-                    id="closeConfirmationButton2"
-                  >
-                    閉じる
-                  </button>
-                </dialog>
-              </div>
-            </div>
-          </div>
 
-          <div class="video-card">
-            <div class="thumbnail-placeholder">
-              <img
-                src="image/サムネジャマイカ.jpg"
-                alt="Video Thumbnail"
-                class="thumbnail"
-              />
-              <button class="play-button">▶️</button>
-              <!-- 音声再生ボタン -->
-              <audio class="audio-player" src="ジャマイカテスト.mp3"></audio>
-            </div>
-  
-            <div class="video-info">
-              <a href="P1AdminProfile.jsp" class="profile-info">
-                <img
-                  src="image/ききゅう.jpg"
-                  alt="profile icon"
-                  class="profile-icon"
-                />
-              </a>
-              <div class="like-comment">
-                <button class="comment" onclick="openPopup()">
-                  <img
-                    src="image/こめんと1.png"
-                    alt="comment icon"
-                    style="width: 20px; height: 20px"
-                  />
-                  <span>5</span>
-                </button>
-  
-                <button class="heart" onclick="changeImage('heartImage5')">
-                  <img
-                    id="heartImage5"
-                    src="image/Heart-512x512 test.png"
-                    alt="like icon"
-                    style="width: 20px; height: 20px"
-                  />
-                  <span>10</span>
-                </button>
-  
-                <button id="openDialogButton3" onclick="test('trash')">
-                  <span>
-                    <div class="nav_icon trash">
-                      <i class="gg-trash"></i>
-                    </div>
-                  </span>
-                </button>
-  
-                <dialog id="myDialog3">
-                  <p>この投稿を削除しますか？</p>
-                  <div class="buttonContainer">
-                    <button type="button" class="dialogButton" id="yesButton3">
-                      はい
-                    </button>
-                    <button type="button" class="dialogButton" id="noButton3">
-                      いいえ
-                    </button>
-                  </div>
-                </dialog>
-  
-                <dialog id="confirmationDialog3">
-                  <p>削除しました</p>
-                  <button
-                    type="button"
-                    class="dialogButton"
-                    id="closeConfirmationButton3"
-                  >
-                    閉じる
-                  </button>
-                </dialog>
-              </div>
-            </div>
-          </div>
-
-          <div class="video-card">
-            <div class="thumbnail-placeholder">
-              <img
-                src="image/サムネジャマイカ.jpg"
-                alt="Video Thumbnail"
-                class="thumbnail"
-              />
-              <button class="play-button">▶️</button>
-              <!-- 音声再生ボタン -->
-              <audio class="audio-player" src="ジャマイカテスト.mp3"></audio>
-            </div>
-  
-            <div class="video-info">
-              <a href="P1AdminProfile.jsp" class="profile-info">
-                <img
-                  src="image/ききゅう.jpg"
-                  alt="profile icon"
-                  class="profile-icon"
-                />
-              </a>
-              <div class="like-comment">
-                <button class="comment" onclick="openPopup()">
-                  <img
-                    src="image/こめんと1.png"
-                    alt="comment icon"
-                    style="width: 20px; height: 20px"
-                  />
-                  <span>5</span>
-                </button>
-  
-                <button class="heart" onclick="changeImage('heartImage6')">
-                  <img
-                    id="heartImage6"
-                    src="image/Heart-512x512 test.png"
-                    alt="like icon"
-                    style="width: 20px; height: 20px"
-                  />
-                  <span>10</span>
-                </button>
-  
-                <button id="openDialogButton4" onclick="test('trash')">
-                  <span>
-                    <div class="nav_icon trash">
-                      <i class="gg-trash"></i>
-                    </div>
-                  </span>
-                </button>
-  
-                <dialog id="myDialog4">
-                  <p>この投稿を削除しますか？</p>
-                  <div class="buttonContainer">
-                    <button type="button" class="dialogButton" id="yesButton4">
-                      はい
-                    </button>
-                    <button type="button" class="dialogButton" id="noButton4">
-                      いいえ
-                    </button>
-                  </div>
-                </dialog>
-  
-                <dialog id="confirmationDialog4">
-                  <p>削除しました</p>
-                  <button
-                    type="button"
-                    class="dialogButton"
-                    id="closeConfirmationButton4"
-                  >
-                    閉じる
-                  </button>
-                </dialog>
-              </div>
-            </div>
-          </div>
-
-          <div class="video-card">
-            <div class="thumbnail-placeholder">
-              <img
-                src="image/サムネジャマイカ.jpg"
-                alt="Video Thumbnail"
-                class="thumbnail"
-              />
-              <button class="play-button">▶️</button>
-              <!-- 音声再生ボタン -->
-              <audio class="audio-player" src="ジャマイカテスト.mp3"></audio>
-            </div>
-  
-            <div class="video-info">
-              <a href="P1AdminProfile.jsp" class="profile-info">
-                <img
-                  src="image/ききゅう.jpg"
-                  alt="profile icon"
-                  class="profile-icon"
-                />
-              </a>
-              <div class="like-comment">
-                <button class="comment" onclick="openPopup()">
-                  <img
-                    src="image/こめんと1.png"
-                    alt="comment icon"
-                    style="width: 20px; height: 20px"
-                  />
-                  <span>5</span>
-                </button>
-  
-                <button class="heart" onclick="changeImage('heartImage7')">
-                  <img
-                    id="heartImage7"
-                    src="image/Heart-512x512 test.png"
-                    alt="like icon"
-                    style="width: 20px; height: 20px"
-                  />
-                  <span>10</span>
-                </button>
-  
-                <button id="openDialogButton5" onclick="test('trash')">
-                  <span>
-                    <div class="nav_icon trash">
-                      <i class="gg-trash"></i>
-                    </div>
-                  </span>
-                </button>
-  
-                <dialog id="myDialog5">
-                  <p>この投稿を削除しますか？</p>
-                  <div class="buttonContainer">
-                    <button type="button" class="dialogButton" id="yesButton5">
-                      はい
-                    </button>
-                    <button type="button" class="dialogButton" id="noButton5">
-                      いいえ
-                    </button>
-                  </div>
-                </dialog>
-  
-                <dialog id="confirmationDialog5">
-                  <p>削除しました</p>
-                  <button
-                    type="button"
-                    class="dialogButton"
-                    id="closeConfirmationButton5"
-                  >
-                    閉じる
-                  </button>
-                </dialog>
-              </div>
-            </div>
-          </div>
-
-          
-
-          <!-- 動画カードがここに配置される -->
+	                <!-- css崩れた時用で残しとく -->
+	                <!-- <button type="submit" >
+		                <span>
+		                  <a href="P2Recording.jsp">
+		                    <div class="nav_icon">
+		                      <i class="gg-duplicate"></i>
+		                    </div>
+		                  </a>
+		                </span>
+		              </button> -->
+		              
+					<!--  自分の投稿なら表示-->
+					<!--  今回は他人プロフィール画面なのでここはコメントアウトにしておきます。-->
+	                <!-- User u = (User)ses.getAttribute("LOGIN"); 必要だよ-->
+	                <% if (up.getUserid()==u.getUserid()) { %>
+	                
+	                <button id="openDialog<%= postList.get(i).getPostId()%>" onclick="test('trash<%= up.getUserid() %>')">
+	                  <span>
+	                    <div class="nav_icon trash">
+	                      <i class="gg-trash"></i>
+	                    </div>
+	                  </span>
+	                </button>
+	  
+	                <dialog id="myDialog<%= postList.get(i).getPostId()%>">
+	                  <p>この投稿を削除しますか？</p>
+	                  <div class="buttonContainer">
+	                    <button type="button" class="dialogButton" id="yesButton<%= postList.get(i).getPostId()%>">
+	                      はい
+	                    </button>
+	                    <button type="button" class="dialogButton" id="noButton<%= postList.get(i).getPostId()%>">
+	                      いいえ
+	                    </button>
+	                  </div>
+	                </dialog>
+	  
+	                <dialog id="confirmationDialog<%= postList.get(i).getPostId()%>">
+	                  <p>削除しました</p>
+	                  <button
+	                    type="button"
+	                    class="dialogButton"
+	                    id="closeConfirmationButton<%= postList.get(i).getPostId()%>">
+	                    閉じる
+	                  </button>
+	                </dialog>
+	                <%}%>
+	                
+	              </div>
+	            </div>
+	          </div>
+			<%}} %>
         </div>
         <button class="scroll-right" id="scroll-right-1">▶</button>
       </div>
-  
+
+
       <!-- 2行目のタイトルと左右ボタン -->
       <div class="section-header">
         <h3 class="section-title">自由投稿</h3>
@@ -532,527 +221,94 @@
       </div>
       <div class="scroll-container">
         <button class="scroll-left" id="scroll-left-2">◀</button>
-        <div class="video-grid" id="video-grid-2">
-
-          <div class="video-card">
-            <div class="thumbnail-placeholder">
-              <img
-                src="image/サムネジャマイカ.jpg"
-                alt="Video Thumbnail"
-                class="thumbnail"
-              />
-              <button class="play-button">▶️</button>
-              <!-- 音声再生ボタン -->
-              <audio class="audio-player" src="ジャマイカテスト.mp3"></audio>
-            </div>
-  
-            <div class="video-info">
-              <a href="P1AdminProfile.jsp" class="profile-info">
-                <img
-                  src="image/ききゅう.jpg"
-                  alt="profile icon"
-                  class="profile-icon"
-                />
-              </a>
-              <div class="like-comment">
-                <button class="comment" onclick="openPopup()">
-                  <img
-                    src="image/こめんと1.png"
-                    alt="comment icon"
-                    style="width: 20px; height: 20px"
-                  />
-                  <span>5</span>
-                </button>
-  
-                <button class="heart" onclick="changeImage('heartImage8')">
-                  <img
-                    id="heartImage8"
-                    src="image/Heart-512x512 test.png"
-                    alt="like icon"
-                    style="width: 20px; height: 20px"
-                  />
-                  <span>10</span>
-                </button>
-  
-                <button id="openDialogButton12" onclick="test('trash')">
-                  <span>
-                    <div class="nav_icon trash">
-                      <i class="gg-trash"></i>
-                    </div>
-                  </span>
-                </button>
-  
-                <dialog id="myDialog12">
-                  <p>この投稿を削除しますか？</p>
-                  <div class="buttonContainer">
-                    <button type="button" class="dialogButton" id="yesButton12">
-                      はい
-                    </button>
-                    <button type="button" class="dialogButton" id="noButton12">
-                      いいえ
-                    </button>
-                  </div>
-                </dialog>
-  
-                <dialog id="confirmationDialog12">
-                  <p>削除しました</p>
-                  <button
-                    type="button"
-                    class="dialogButton"
-                    id="closeConfirmationButton12"
-                  >
-                    閉じる
-                  </button>
-                </dialog>
-              </div>
-            </div>
-          </div>
-
-          <div class="video-card">
-            <div class="thumbnail-placeholder">
-              <img
-                src="image/サムネジャマイカ.jpg"
-                alt="Video Thumbnail"
-                class="thumbnail"
-              />
-              <button class="play-button">▶️</button>
-              <!-- 音声再生ボタン -->
-              <audio class="audio-player" src="ジャマイカテスト.mp3"></audio>
-            </div>
-  
-            <div class="video-info">
-              <a href="P1AdminProfile.jsp" class="profile-info">
-                <img
-                  src="image/ききゅう.jpg"
-                  alt="profile icon"
-                  class="profile-icon"
-                />
-              </a>
-              <div class="like-comment">
-                <button class="comment" onclick="openPopup()">
-                  <img
-                    src="image/こめんと1.png"
-                    alt="comment icon"
-                    style="width: 20px; height: 20px"
-                  />
-                  <span>5</span>
-                </button>
-  
-                <button class="heart" onclick="changeImage('heartImage9')">
-                  <img
-                    id="heartImage9"
-                    src="image/Heart-512x512 test.png"
-                    alt="like icon"
-                    style="width: 20px; height: 20px"
-                  />
-                  <span>10</span>
-                </button>
-  
-                <button id="openDialogButton8" onclick="test('trash')">
-                  <span>
-                    <div class="nav_icon trash">
-                      <i class="gg-trash"></i>
-                    </div>
-                  </span>
-                </button>
-  
-                <dialog id="myDialog8">
-                  <p>この投稿を削除しますか？</p>
-                  <div class="buttonContainer">
-                    <button type="button" class="dialogButton" id="yesButton8">
-                      はい
-                    </button>
-                    <button type="button" class="dialogButton" id="noButton8">
-                      いいえ
-                    </button>
-                  </div>
-                </dialog>
-  
-                <dialog id="confirmationDialog8">
-                  <p>削除しました</p>
-                  <button
-                    type="button"
-                    class="dialogButton"
-                    id="closeConfirmationButton6"
-                  >
-                    閉じる
-                  </button>
-                </dialog>
-              </div>
-            </div>
-          </div>
-
-          <div class="video-card">
-            <div class="thumbnail-placeholder">
-              <img
-                src="image/サムネジャマイカ.jpg"
-                alt="Video Thumbnail"
-                class="thumbnail"
-              />
-              <button class="play-button">▶️</button>
-              <!-- 音声再生ボタン -->
-              <audio class="audio-player" src="ジャマイカテスト.mp3"></audio>
-            </div>
-  
-            <div class="video-info">
-              <a href="P1AdminProfile.jsp" class="profile-info">
-                <img
-                  src="image/ききゅう.jpg"
-                  alt="profile icon"
-                  class="profile-icon"
-                />
-              </a>
-              <div class="like-comment">
-                <button class="comment" onclick="openPopup()">
-                  <img
-                    src="image/こめんと1.png"
-                    alt="comment icon"
-                    style="width: 20px; height: 20px"
-                  />
-                  <span>5</span>
-                </button>
-  
-                <button class="heart" onclick="changeImage('heartImage10')">
-                  <img
-                    id="heartImage10"
-                    src="image/Heart-512x512 test.png"
-                    alt="like icon"
-                    style="width: 20px; height: 20px"
-                  />
-                  <span>10</span>
-                </button>
-  
-                <button id="openDialogButton9" onclick="test('trash')">
-                  <span>
-                    <div class="nav_icon trash">
-                      <i class="gg-trash"></i>
-                    </div>
-                  </span>
-                </button>
-  
-                <dialog id="myDialog9">
-                  <p>この投稿を削除しますか？</p>
-                  <div class="buttonContainer">
-                    <button type="button" class="dialogButton" id="yesButton9">
-                      はい
-                    </button>
-                    <button type="button" class="dialogButton" id="noButton9">
-                      いいえ
-                    </button>
-                  </div>
-                </dialog>
-  
-                <dialog id="confirmationDialog9">
-                  <p>削除しました</p>
-                  <button
-                    type="button"
-                    class="dialogButton"
-                    id="closeConfirmationButton9"
-                  >
-                    閉じる
-                  </button>
-                </dialog>
-              </div>
-            </div>
-          </div>
-
-          <div class="video-card">
-            <div class="thumbnail-placeholder">
-              <img
-                src="image/サムネジャマイカ.jpg"
-                alt="Video Thumbnail"
-                class="thumbnail"
-              />
-              <button class="play-button">▶️</button>
-              <!-- 音声再生ボタン -->
-              <audio class="audio-player" src="ジャマイカテスト.mp3"></audio>
-            </div>
-  
-            <div class="video-info">
-              <a href="P1AdminProfile.jsp" class="profile-info">
-                <img
-                  src="image/ききゅう.jpg"
-                  alt="profile icon"
-                  class="profile-icon"
-                />
-              </a>
-              <div class="like-comment">
-                <button class="comment" onclick="openPopup()">
-                  <img
-                    src="image/こめんと1.png"
-                    alt="comment icon"
-                    style="width: 20px; height: 20px"
-                  />
-                  <span>5</span>
-                </button>
-  
-                <button class="heart" onclick="changeImage('heartImage11')">
-                  <img
-                    id="heartImage11"
-                    src="image/Heart-512x512 test.png"
-                    alt="like icon"
-                    style="width: 20px; height: 20px"
-                  />
-                  <span>10</span>
-                </button>
-  
-                <button id="openDialogButton0" onclick="test('trash')">
-                  <span>
-                    <div class="nav_icon trash">
-                      <i class="gg-trash"></i>
-                    </div>
-                  </span>
-                </button>
-  
-                <dialog id="myDialog0">
-                  <p>この投稿を削除しますか？</p>
-                  <div class="buttonContainer">
-                    <button type="button" class="dialogButton" id="yesButton0">
-                      はい
-                    </button>
-                    <button type="button" class="dialogButton" id="noButton0">
-                      いいえ
-                    </button>
-                  </div>
-                </dialog>
-  
-                <dialog id="confirmationDialog0">
-                  <p>削除しました</p>
-                  <button
-                    type="button"
-                    class="dialogButton"
-                    id="closeConfirmationButton0"
-                  >
-                    閉じる
-                  </button>
-                </dialog>
-              </div>
-            </div>
-          </div>
-
-          <div class="video-card">
-            <div class="thumbnail-placeholder">
-              <img
-                src="image/サムネジャマイカ.jpg"
-                alt="Video Thumbnail"
-                class="thumbnail"
-              />
-              <button class="play-button">▶️</button>
-              <!-- 音声再生ボタン -->
-              <audio class="audio-player" src="ジャマイカテスト.mp3"></audio>
-            </div>
-  
-            <div class="video-info">
-              <a href="P1AdminProfile.jsp" class="profile-info">
-                <img
-                  src="image/ききゅう.jpg"
-                  alt="profile icon"
-                  class="profile-icon"
-                />
-              </a>
-              <div class="like-comment">
-                <button class="comment" onclick="openPopup()">
-                  <img
-                    src="image/こめんと1.png"
-                    alt="comment icon"
-                    style="width: 20px; height: 20px"
-                  />
-                  <span>5</span>
-                </button>
-  
-                <button class="heart" onclick="changeImage('heartImage12')">
-                  <img
-                    id="heartImage12"
-                    src="image/Heart-512x512 test.png"
-                    alt="like icon"
-                    style="width: 20px; height: 20px"
-                  />
-                  <span>10</span>
-                </button>
-  
-                <button id="openDialogButton00" onclick="test('trash')">
-                  <span>
-                    <div class="nav_icon trash">
-                      <i class="gg-trash"></i>
-                    </div>
-                  </span>
-                </button>
-  
-                <dialog id="myDialog00">
-                  <p>この投稿を削除しますか？</p>
-                  <div class="buttonContainer">
-                    <button type="button" class="dialogButton" id="yesButton00">
-                      はい
-                    </button>
-                    <button type="button" class="dialogButton" id="noButton00">
-                      いいえ
-                    </button>
-                  </div>
-                </dialog>
-  
-                <dialog id="confirmationDialog00">
-                  <p>削除しました</p>
-                  <button
-                    type="button"
-                    class="dialogButton"
-                    id="closeConfirmationButton00"
-                  >
-                    閉じる
-                  </button>
-                </dialog>
-              </div>
-            </div>
-          </div>
-
-          <div class="video-card">
-            <div class="thumbnail-placeholder">
-              <img
-                src="image/サムネジャマイカ.jpg"
-                alt="Video Thumbnail"
-                class="thumbnail"
-              />
-              <button class="play-button">▶️</button>
-              <!-- 音声再生ボタン -->
-              <audio class="audio-player" src="ジャマイカテスト.mp3"></audio>
-            </div>
-  
-            <div class="video-info">
-              <a href="P1AdminProfile.jsp" class="profile-info">
-                <img
-                  src="image/ききゅう.jpg"
-                  alt="profile icon"
-                  class="profile-icon"
-                />
-              </a>
-              <div class="like-comment">
-                <button class="comment" onclick="openPopup()">
-                  <img
-                    src="image/こめんと1.png"
-                    alt="comment icon"
-                    style="width: 20px; height: 20px"
-                  />
-                  <span>5</span>
-                </button>
-  
-                <button class="heart" onclick="changeImage('heartImage13')">
-                  <img
-                    id="heartImage13"
-                    src="image/Heart-512x512 test.png"
-                    alt="like icon"
-                    style="width: 20px; height: 20px"
-                  />
-                  <span>10</span>
-                </button>
-  
-                <button id="openDialogButton000" onclick="test('trash')">
-                  <span>
-                    <div class="nav_icon trash">
-                      <i class="gg-trash"></i>
-                    </div>
-                  </span>
-                </button>
-  
-                <dialog id="myDialog000">
-                  <p>この投稿を削除しますか？</p>
-                  <div class="buttonContainer">
-                    <button type="button" class="dialogButton" id="yesButton000">
-                      はい
-                    </button>
-                    <button type="button" class="dialogButton" id="noButton000">
-                      いいえ
-                    </button>
-                  </div>
-                </dialog>
-  
-                <dialog id="confirmationDialog000">
-                  <p>削除しました</p>
-                  <button
-                    type="button"
-                    class="dialogButton"
-                    id="closeConfirmationButton000"
-                  >
-                    閉じる
-                  </button>
-                </dialog>
-              </div>
-            </div>
-          </div>
-
-          <div class="video-card">
-            <div class="thumbnail-placeholder">
-              <img
-                src="image/サムネジャマイカ.jpg"
-                alt="Video Thumbnail"
-                class="thumbnail"
-              />
-              <button class="play-button">▶️</button>
-              <!-- 音声再生ボタン -->
-              <audio class="audio-player" src="ジャマイカテスト.mp3"></audio>
-            </div>
-  
-            <div class="video-info">
-              <a href="P1AdminProfile.jsp" class="profile-info">
-                <img
-                  src="image/ききゅう.jpg"
-                  alt="profile icon"
-                  class="profile-icon"
-                />
-              </a>
-              <div class="like-comment">
-                <button class="comment" onclick="openPopup()">
-                  <img
-                    src="image/こめんと1.png"
-                    alt="comment icon"
-                    style="width: 20px; height: 20px"
-                  />
-                  <span>5</span>
-                </button>
-  
-                <button class="heart" onclick="changeImage('heartImage14')">
-                  <img
-                    id="heartImage14"
-                    src="image/Heart-512x512 test.png"
-                    alt="like icon"
-                    style="width: 20px; height: 20px"
-                  />
-                  <span>10</span>
-                </button>
-  
-                <button id="openDialogButton0000" onclick="test('trash')">
-                  <span>
-                    <div class="nav_icon trash">
-                      <i class="gg-trash"></i>
-                    </div>
-                  </span>
-                </button>
-  
-                <dialog id="myDialog00000">
-                  <p>この投稿を削除しますか？</p>
-                  <div class="buttonContainer">
-                    <button type="button" class="dialogButton" id="yesButton0000">
-                      はい
-                    </button>
-                    <button type="button" class="dialogButton" id="noButton0000">
-                      いいえ
-                    </button>
-                  </div>
-                </dialog>
-  
-                <dialog id="confirmationDialog0000">
-                  <p>削除しました</p>
-                  <button
-                    type="button"
-                    class="dialogButton"
-                    id="closeConfirmationButton0000"
-                  >
-                    閉じる
-                  </button>
-                </dialog>
-              </div>
-            </div>
-          </div>
-
-          <!-- 動画カードがここに配置される -->
+        <div class="video-grid" id="video-grid-1">
+        <!-- セッションのビデオカード生成 -->
+		<% for (int i = 0; i <postList.size() ; i++) { %>
+			<!-- 投稿IDの頭六桁が000000だったら。-->
+			String postId2 = postList.get(i).getPostId();
+			<%if (postId2.startsWith("000000")){ %>
+	          <div class="video-card">
+	            <div class="thumbnail-placeholder">
+	              <img
+	                src="<%= postList.get(i).getThumbnailPath() %>"
+	                alt="Video Thumbnail"
+	                class="thumbnail"
+	              />
+	              <button class="play-button">▶️</button>
+	              <!-- 音声再生ボタン -->
+	              <audio class="audio-player" src="<%= postList.get(i).getAudioPath()%>"></audio>
+	            </div>
+	  
+	            <div class="video-info">
+	              <a href="P1AdminProfile.jsp" class="profile-info">
+	                <img
+	                  src="<%= up.getIconImage()%>"
+	                  alt="profile icon"
+	                  class="profile-icon"
+	                />
+	              </a>
+	              <div class="like-comment">
+	              <!-- コメントボタン -->
+	                <button class="comment" onclick="openPopup()">
+	                  <img
+	                    src="image/こめんと1.png"
+	                    alt="comment icon"
+	                    style="width: 20px; height: 20px"
+	                  />
+	                  <span><%= postList.get(i).getCommentCount() %></span>
+	                </button>
+	  				<!-- いいねボタン -->
+	                <button class="heart" onclick="changeImage('heartImage<%= up.getUserid() %>')">
+	                  <img
+	                    id="Heart<%= postList.get(i).getPostId()%>"
+	                    src="image/Heart-512x512 test.png"
+	                    alt="like icon"
+	                    style="width: 20px; height: 20px"
+	                  />
+	                  <span><%= postList.get(i).getLikeCount()%></span>
+	                </button>
+	                
+		              
+					<!--  自分の投稿なら表示-->
+					<!--  今回は他人プロフィール画面なのでここはコメントアウトにしておきます。-->
+	                <!-- User u = (User)ses.getAttribute("LOGIN"); 必要だよ-->
+	                <%-- <% if (up.getUserid()==u.getUserid()) { %>
+	                
+	                <button id="openDialog<%= postList.get(i).getPostId()%>" onclick="test('trash<%= up.getUserid() %>')">
+	                  <span>
+	                    <div class="nav_icon trash">
+	                      <i class="gg-trash"></i>
+	                    </div>
+	                  </span>
+	                </button>
+	  
+	                <dialog id="myDialog<%= postList.get(i).getPostId()%>">
+	                  <p>この投稿を削除しますか？</p>
+	                  <div class="buttonContainer">
+	                    <button type="button" class="dialogButton" id="yesButton<%= postList.get(i).getPostId()%>">
+	                      はい
+	                    </button>
+	                    <button type="button" class="dialogButton" id="noButton<%= postList.get(i).getPostId()%>">
+	                      いいえ
+	                    </button>
+	                  </div>
+	                </dialog>
+	  
+	                <dialog id="confirmationDialog<%= postList.get(i).getPostId()%>">
+	                  <p>削除しました</p>
+	                  <button
+	                    type="button"
+	                    class="dialogButton"
+	                    id="closeConfirmationButton<%= postList.get(i).getPostId()%>">
+	                    閉じる
+	                  </button>
+	                </dialog>
+	                <%}%> --%>
+	               
+	              </div>
+	            </div>
+	          </div>
+			<%}} %>
         </div>
         <button class="scroll-right" id="scroll-right-2">▶</button>
       </div>
@@ -1067,13 +323,17 @@
         <div class="song-bar">
           <div class="song-infos">
             <div class="image-container">
+              <!-- ここうまく切り替わらん場合はセッション入れればいいにょ -->
               <img src="." alt="" />
             </div>
             <div class="song-description">
+              <!-- このタイトルはいらないから一旦コメントアウト -->
+              <!-- 
               <p class="title">
                 Watashitachi wa Sou Yatte Ikite Iku Jinshu na no
-              </p>
-              <p class="artist">Masaru Yokoyama</p>
+              </p> 
+              -->
+              <p class="artist"><%= up.getName()%></p>
             </div>
           </div>
           <div class="icons">

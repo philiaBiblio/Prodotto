@@ -17,10 +17,19 @@
   --wp-btn-info-focus-color: rgba(58, 176, 195, 0.5);
   --wp-btn-info-color: #fff;
   --wp-fade-background-color: rgba(0, 0, 0, 0.1);
-  --wp-channel-color: #11dadd; /* 音波の色 */
+  --wp-channel-color: linear-gradient(
+  90deg,
+  red,
+  orange,
+  yellow,
+  green,
+  cyan,
+  blue,
+  violet
+); /* 音波の色 */
   --wp-channel-progress-color: #ff5c5c; /* 進行部分の色 */
   --wp-cursor-color: rgb(255, 0, 0);
-  --wp-selection-background-color: rgba(255, 0, 0, 0.1);
+  --wp-selection-background-color: rgba(255, 0, 0, 0.322);
   --wp-selection-point-color: red;
   --wp-tracks-container-background-color: #ffffff62; /*koreeeeeeeeeeeeeeeeeeeee*/
   --wp-range-slider-label-color: black;
@@ -131,8 +140,16 @@
   background: var(--b); /*トラック色*/
   /* border-bottom: 2px solid #253532; 太さ2pxの黒い下線を追加 */
 }
+
+@keyframes gradientMove {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
 .playlist .channel {
   background: var(--wp-channel-color); /* 音波 */
+  background-size: 200% 200%;
+  animation: gradientMove 0.1s ease infinite;
 }
 .volume-slider{
   background: #253532;
