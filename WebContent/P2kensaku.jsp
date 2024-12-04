@@ -79,8 +79,8 @@
 							<div class="nav_icon nav_soroe">
 								<i class="gg-boy"></i>
 							</div> <span class="nav_name">プロフィール</span>
-						</a> <a href="P2Settings.jsp" class="nav_link navtop"
-							id="P2Settingsid"> <!-- <i class="fa-solid fa-video nav_icon"></i> -->
+						</a> <a href="P2ProfileServlet" class="nav_link navtop" id="P2Settingsid">
+							 <!-- <i class="fa-solid fa-video nav_icon"></i> -->
 							<div class="nav_icon nav_soroe">
 								<span class="material-symbols-outlined"> settings </span>
 							</div> <span class="nav_name">設定</span>
