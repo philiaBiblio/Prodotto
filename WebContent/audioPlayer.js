@@ -256,18 +256,20 @@ function openPopup() {
 
 // いいねボタンクリック
 function changeImage(id) {
-	console.log("aaa")
   var img = document.getElementById(id);
-  console.log(img);
-  console.log(img.src);
 
-  if(img.src == 'image/Heart-512x512 test.png'){
-    console.log("a")
-    img.src = 'image/Heart-512x512 test.png'; // 変更後の画像パス
-  }else{
-    img.src = 'image/Heart-512x512 test2.png'; // 元の画像パス
+  // カスタム属性を取得または初期化
+  var isLiked = img.getAttribute('data-liked') === 'true';
+
+  if (isLiked) {
+    img.src = 'image/Heart-512x512%20test.png'; // 元の画像
+    img.setAttribute('data-liked', 'false'); // 状態を更新
+  } else {
+    img.src = 'image/Heart-512x512%20test2.png'; // 切り替え後の画像
+    img.setAttribute('data-liked', 'true'); // 状態を更新
   }
 }
+
 
 // ダイアログのスクリプト
 function test(id){
