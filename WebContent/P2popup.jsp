@@ -17,7 +17,7 @@
       <div class="comment-content">
         <p class="username">KAITO</p>
         <p class="comment">ええやんええやん</p>
-      </div>
+      </div>tou
     </div>
 
     <div class="comment-item">

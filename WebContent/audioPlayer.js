@@ -256,6 +256,7 @@ function openPopup() {
 
 // いいねボタンクリック
 function changeImage(id) {
+	console.log("aaa")
   var img = document.getElementById(id);
   console.log(img);
   console.log(img.src);
