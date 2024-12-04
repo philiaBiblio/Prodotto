@@ -48,7 +48,7 @@ public class P2DMSousinServlet extends HttpServlet {
 			// データベースにインサート
 	        String insertSQL = 
 	        		"INSERT INTO DM values ('" + u.getUserid() + "-" + name + "-' || to_char(systimestamp,'yyyymmdd') || '-' || LPAD(連番.nextval,3,'0'),'"
-	        				+ u.getUserid() + "','" + name + "','" + mess + "','0', to_char(systimestamp,'yyyy-mm-dd HH24:MI:SS'))";
+	        				+ u.getUserid() + "','" + name + "','" + mess + "','1', to_char(systimestamp,'yyyy-mm-dd HH24:MI:SS'))";
 	        ses.setAttribute("MESS", mess);
 	        				
 	        // インサート文実行
