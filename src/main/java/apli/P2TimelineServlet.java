@@ -32,6 +32,8 @@ public class P2TimelineServlet extends HttpServlet {
 		HttpSession ses = request.getSession();
 		// アレイリストの取得
 		ArrayList<Toukou> toukouList = new ArrayList<Toukou>();
+		ArrayList<User> userIconList = new ArrayList<User>();
+		ArrayList<Post> postList = new ArrayList<Post>();
 
 		// URLの生成
 		String url = "";
@@ -40,7 +42,12 @@ public class P2TimelineServlet extends HttpServlet {
 		
 		try {
 			// 投稿用のsql文
-			String sql = "select * from 投稿";
+			String sql = "select 投稿.投稿ID,投稿.ユーザーID,投稿.イベントID,投稿.派生ID,アップロード日,作品,サムネイル,タグID,名前,アイコン,"
+					+ "(SELECT COUNT(*) FROM コメント WHERE コメント.投稿ID = 投稿.投稿ID) AS コメント数,"
+					+ "(SELECT COUNT(*) FROM いいね WHERE いいね.投稿ID = 投稿.投稿ID) AS いいね数"
+					+ " from 投稿"
+					+ " join ユーザー on 投稿.ユーザーID = ユーザー.ユーザーID";
+			
 			// sql文実行
 			ResultSet rs = dba.selectExe(sql);
 			
@@ -53,18 +60,12 @@ public class P2TimelineServlet extends HttpServlet {
 				String time = rs.getString("アップロード日");
 				String audio = rs.getString("作品");
 				String samune = rs.getString("サムネイル");
-				
-				 //WebContent内のimgフォルダまでのパスを取得
-		        String pathfilename=getServletContext().getRealPath("\\image");
-		        //imgフォルダまでのパスと画像ファイルを文字連結する
-		        pathfilename=pathfilename+"\\"+samune;
-		        System.out.println("pathfilename："+pathfilename);
-		        
-		      //WebContent内のimgフォルダまでのパスを取得
-		        String pathfilename2=getServletContext().getRealPath("\\audio");
-		        //imgフォルダまでのパスと画像ファイルを文字連結する
-		        pathfilename2=pathfilename2+"\\"+audio;
-		        System.out.println("pathfilename2："+pathfilename2);
+				// タグID作るときはここに記入
+				String upName = rs.getString("名前");
+				String toukouIcon = rs.getString("アイコン");
+				int comm = rs.getInt("コメント数");
+				int iine = rs.getInt("いいね数");
+				System.out.println(toukouId.substring(0,6));
 				
 				// インスタンス生成
 				Toukou toukou = new Toukou();
@@ -76,10 +77,22 @@ public class P2TimelineServlet extends HttpServlet {
 				toukou.setSound(audio);
 				toukou.setThumbnail(samune);
 				
+				User up = new User();
+				up.setName(upName);
+				up.setIconImage(toukouIcon);
+				
+				Post kazu = new Post();
+				kazu.setCommentCount(comm);
+				kazu.setLikeCount(iine);
+				
 				// アレイリストに追加
 				toukouList.add(toukou);
+				userIconList.add(up);
+				postList.add(kazu);
 			}
 			ses.setAttribute("TOUKOULIST", toukouList);
+			ses.setAttribute("ICONLIST", userIconList);
+			ses.setAttribute("POSTLIST", postList);
 			
 			// タイムライン画面へ
 			url = "P2Timeline.jsp";

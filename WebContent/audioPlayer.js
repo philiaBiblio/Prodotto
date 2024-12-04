@@ -70,7 +70,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
 	// サムネイル再生のボタン
 	playButtons.forEach((button) => {
-		button.addEventListener("click", function() {
+		button.addEventListener("click", function onClickHandler(event){
 			console.log("サムネイル再生ボタンがクリックされました");
 
 			// buttonの次の要素であるaudioタグを取得
@@ -95,7 +95,7 @@ document.addEventListener("DOMContentLoaded", function() {
 					audio.pause();
 					audio.currentTime = 0; // 必要ならリセット
 				}
-			});
+			}); { once: true }; // このリスナーは1回だけ実行される
 
 			// 状態に応じて再生/停止処理
 			switch (true) {
@@ -254,9 +254,11 @@ function openPopup() {
 
 // いいねボタンクリック
 function changeImage(id) {
+
 	var img = document.getElementById(id);
 	console.log(img);
 	console.log(img.src);
+
 
 	if (img.src == 'http://127.0.0.1:3000/image/Heart-512x512%20test.png') {
 		console.log("a")

@@ -22,34 +22,38 @@
   </head>
   
  <%
-	// セッションの取得
-	HttpSession ses = request.getSession();
-	// ログイン情報の取得
-	User u = (User)ses.getAttribute("LOGIN");
-	//request.setAttribute("followCount", followCount);
-	//request.setAttribute("followerCount", followerCount);
-	//ArrayList<Post> postList = (ArrayList<Post>) request.getAttribute("postList");
+ //一旦コピペ
+ HttpSession ses = request.getSession();
+
+ User u = (User)ses.getAttribute("LOGIN");
+ 
+ int followCount = (int)ses.getAttribute("followCount");
+ int followerCount = (int)ses.getAttribute("followerCount");
+
+ ArrayList<Post> postList = (ArrayList<Post>) request.getAttribute("postList");
 %>
 
   <body>
     <header class="profile-header">
         
       <div class="leftheader">
-        <img src="image/<%=u.getIconImage() %>" 
-        alt="Profile Icon"
-        class="profile-header-icon"/>
+        <img
+          src="image/<%= up.getIconImage()%>"
+          alt="Profile Icon"
+          class="profile-header-icon"
+        />
 
         <div class="user-details">
-            <h2 class="username"><%=u.getName() %></h2>
-            <p class="user-id">@<%=u.getUserid() %></p>
+            <h2 class="username"><%= up.getName() %></h2>
+            <p class="user-id">@<%= up.getUserid() %></p>
             <div class="follower-info">
-              <span class="follower-count">フォロワー: <%= request.getAttribute("followCount")%></span>
-              <span class="following-count">フォロー中: <%= request.getAttribute("followerCount")%></span>
+              <span class="follower-count">フォロワー: <%= followCount%></span>
+              <span class="following-count">フォロー中: <%= followerCount%></span>
             </div>
         </div>
 
       </div>
-      
+      <!-- 通知画面に飛ぶのでサーブレットありますが一旦無視 -->
       <div class="rightheader">
         <div class="button-group2">
           <a href="P2Notifications.jsp">
@@ -57,11 +61,13 @@
               <i class="fas fa-bell  changeb"></i>
             </button>
           </a>
-          <a href="P2ProfileEdit.jsp" class="edit-profile-button">
-            <i class="fas fa-pen changeb"></i>
-          </a>
-        </div>
-      </div>
+          
+		<!-- プロフ編集画面に飛ぶのでサーブレットたてな -->
+		<a href="P2ProfileEdit.jsp" class="edit-profile-button">
+			<i class="fas fa-pen changeb"></i>
+		</a>
+		</div>
+	</div>
        
 
     </header>
@@ -81,7 +87,7 @@
 		<% for (int i = 0; i <postList.size() ; i++) { %>
 			
 			<!-- 投稿IDの頭六桁が000000じゃなかったら。-->
-			String postId = postList.get(i).getPostId();
+		<% String postId = postList.get(i).getPostId();%>
 			<%if (!postId.startsWith("000000")){ %>
 	          <div class="video-card">
 	            <div class="thumbnail-placeholder">
@@ -107,8 +113,8 @@
 	              
 	              
 	              <div class="like-comment">
-					<form action="P2CommentServlet" method="post">
-						<input type="hidden" name="coment" value="<%= postList.get(i).getPostId() %>" />
+					<form action="P2CommentJusinServlet" method="post">
+						<input type="hidden" name="toukouId" value="<%= postList.get(i).getPostId() %>" />
 						<button type="submit" class="comment" onclick="openPopup()">
 							<img
 							src="image/こめんと1.png"
@@ -140,7 +146,6 @@
 					String eventId = String.format("%04d%02d", year, month); // 西暦4桁+月2桁のイベントID
 					
 					// 投稿IDの頭六桁とイベントIDを比較
-					String postId = postList.get(i).getPostId(); // 投稿ID
 					String postIdPrefix = postId.substring(0, 6); // 投稿IDの頭六桁
 					%>
 
@@ -170,8 +175,7 @@
 		              </button> -->
 		              
 					<!--  自分の投稿なら表示-->
-					<!--  今回は他人プロフィール画面なのでここはコメントアウトにしておきます。-->
-	                <!-- User u = (User)ses.getAttribute("LOGIN"); 必要だよ-->
+					<!--  今回はマイプロフィール画面なので表示しておきます。-->
 	                <% if (up.getUserid()==u.getUserid()) { %>
 	                
 	                <button id="openDialog<%= postList.get(i).getPostId()%>" onclick="test('trash<%= up.getUserid() %>')">
@@ -182,6 +186,7 @@
 	                  </span>
 	                </button>
 	  
+	  				<!-- 削除サーブレットへ。元のページに戻りダイアログ表示 -->
 	                <dialog id="myDialog<%= postList.get(i).getPostId()%>">
 	                  <p>この投稿を削除しますか？</p>
 	                  <div class="buttonContainer">
@@ -225,7 +230,7 @@
         <!-- セッションのビデオカード生成 -->
 		<% for (int i = 0; i <postList.size() ; i++) { %>
 			<!-- 投稿IDの頭六桁が000000だったら。-->
-			String postId2 = postList.get(i).getPostId();
+		<%	String postId2 = postList.get(i).getPostId(); %>
 			<%if (postId2.startsWith("000000")){ %>
 	          <div class="video-card">
 	            <div class="thumbnail-placeholder">
@@ -249,14 +254,17 @@
 	              </a>
 	              <div class="like-comment">
 	              <!-- コメントボタン -->
-	                <button class="comment" onclick="openPopup()">
-	                  <img
-	                    src="image/こめんと1.png"
-	                    alt="comment icon"
-	                    style="width: 20px; height: 20px"
-	                  />
-	                  <span><%= postList.get(i).getCommentCount() %></span>
-	                </button>
+	                <form action="P2CommentJusinServlet" method="post">
+						<input type="hidden" name="toukouId" value="<%= postList.get(i).getPostId() %>" />
+						<button type="submit" class="comment" onclick="openPopup()">
+							<img
+							src="image/こめんと1.png"
+							alt="comment icon"
+							style="width: 20px; height: 20px"
+							>
+							<span><%= postList.get(i).getCommentCount() %></span>
+						</button>
+					</form>
 	  				<!-- いいねボタン -->
 	                <button class="heart" onclick="changeImage('heartImage<%= up.getUserid() %>')">
 	                  <img
@@ -270,9 +278,8 @@
 	                
 		              
 					<!--  自分の投稿なら表示-->
-					<!--  今回は他人プロフィール画面なのでここはコメントアウトにしておきます。-->
-	                <!-- User u = (User)ses.getAttribute("LOGIN"); 必要だよ-->
-	                <%-- <% if (up.getUserid()==u.getUserid()) { %>
+					<!--  今回はマイプロフィール画面なので表示しておきます。-->
+	                <% if (up.getUserid()==u.getUserid()) { %>
 	                
 	                <button id="openDialog<%= postList.get(i).getPostId()%>" onclick="test('trash<%= up.getUserid() %>')">
 	                  <span>
@@ -303,7 +310,7 @@
 	                    閉じる
 	                  </button>
 	                </dialog>
-	                <%}%> --%>
+	                <%}%>
 	               
 	              </div>
 	            </div>
@@ -314,6 +321,8 @@
       </div>
 
       
+
+
 
 
       <main>
