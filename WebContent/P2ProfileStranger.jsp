@@ -77,13 +77,16 @@ ArrayList<Post> postList = (ArrayList<Post>) request.getAttribute("postList");
             		フォローする
             	<%} %>
             </p>
-            <form action="P2DMServlet" method="post">
-        		<a href="P2DMServlet?yourId=<%= up.getUserid() %>">
-					<a class="edit-profile-button">
-	            		<i class="fas fa-envelope changeb"></i>
-            		</a>
-            	</a>
-            </form>
+            
+			<a href="P2DMServlet?yourId=<%= up.getUserid() %>" class="edit-profile-button">
+	            <i class="fas fa-envelope changeb"></i>
+            </a>
+            <!--
+            css崩れた時ように元の用意 
+            <a href="P2DM.html" class="edit-profile-button">
+            	<i class="fas fa-envelope changeb"></i>
+          	</a> 
+          	-->
 		</div>
       </div>
     </header>
@@ -127,8 +130,8 @@ ArrayList<Post> postList = (ArrayList<Post>) request.getAttribute("postList");
 	              
 	              
 	              <div class="like-comment">
-					<form action="P2CommentServlet" method="post">
-						<input type="hidden" name="coment" value="<%= postList.get(i).getPostId() %>" />
+					<form action="P2CommentJusinServlet" method="post">
+						<input type="hidden" name="toukouId" value="<%= postList.get(i).getPostId() %>" />
 						<button type="submit" class="comment" onclick="openPopup()">
 							<img
 							src="image/こめんと1.png"
