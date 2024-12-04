@@ -261,11 +261,11 @@ function changeImage(id) {
   console.log(img);
   console.log(img.src);
 
-  if(img.src == 'http://127.0.0.1:3000/image/Heart-512x512%20test.png'){
+  if(img.src == 'image/Heart-512x512 test.png'){
     console.log("a")
-    img.src = 'http://127.0.0.1:3000/image/Heart-512x512%20test2.png'; // 変更後の画像パス
+    img.src = 'image/Heart-512x512 test.png'; // 変更後の画像パス
   }else{
-    img.src = 'http://127.0.0.1:3000/image/Heart-512x512%20test.png'; // 元の画像パス
+    img.src = 'image/Heart-512x512 test2.png'; // 元の画像パス
   }
 }
 

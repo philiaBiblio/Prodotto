@@ -64,7 +64,12 @@
                 class="profile-icon"
               />
             </a>
+            
             <div class="like-comment">
+           	 
+           	<form action="P2CommentJusinServlet" method="post">
+			<input type="hidden" name="toukouId" value="<%= postList.get(i).getPostId() %>" />
+			 			
               <button class="comment" onclick="openPopup()">
                 <img
                   src="image/こめんと1.png"
@@ -73,10 +78,11 @@
                 />
                 <span><%=postList.get(i).getCommentCount() %></span>
               </button>
+               </form>
 
-              <button class="heart" onclick="changeImage('heartImage2')">
+              <button class="heart" onclick="changeImage('heartImage<%= postList.get(i) %>')">
                 <img
-                  id="heartImage2"
+                  id="heartImage<%= postList.get(i) %>"
                   src="image/Heart-512x512 test.png"
                   alt="like icon"
                   style="width: 20px; height: 20px"

@@ -109,19 +109,19 @@ ArrayList<Post> postList = (ArrayList<Post>) request.getAttribute("postList");
 	          <div class="video-card">
 	            <div class="thumbnail-placeholder">
 	              <img
-	                src="<%= postList.get(i).getThumbnailPath() %>"
+	                src="image/<%= postList.get(i).getThumbnailPath() %>"
 	                alt="Video Thumbnail"
 	                class="thumbnail"
 	              />
 	              <button class="play-button">▶️</button>
 	              <!-- 音声再生ボタン -->
-	              <audio class="audio-player" src="<%= postList.get(i).getAudioPath()%>"></audio>
+	              <audio class="audio-player" src="audio/<%= postList.get(i).getAudioPath()%>"></audio>
 	            </div>
 	  
 	            <div class="video-info">
 	              <a href="P1AdminProfile.jsp" class="profile-info">
 	                <img
-	                  src="<%= up.getIconImage()%>"
+	                  src="image/<%= up.getIconImage()%>"
 	                  alt="profile icon"
 	                  class="profile-icon"
 	                />
