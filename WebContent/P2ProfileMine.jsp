@@ -125,15 +125,12 @@
 						</button>
 					</form>
 
-	                <button class="heart" onclick="changeImage('heartImage<%= up.getUserid() %>')">
-	                  <img
-	                    id="Heart<%= postList.get(i).getPostId()%>"
-	                    src="image/Heart-512x512 test.png"
-	                    alt="like icon"
-	                    style="width: 20px; height: 20px"
-	                  />
-	                  <span><%= postList.get(i).getLikeCount()%></span>
-	                </button>
+	                <button class="heart"
+							onclick="changeImage('heartImage<%=postList.get(i)%>')">
+							<img id="heartImage<%=postList.get(i)%>"
+								src="image/Heart-512x512 test.png" alt="like icon"
+								style="width: 20px; height: 20px" /> <span><%=postList.get(i).getLikeCount()%></span>
+						</button>
 	                
 	                
 	                <!-- チャットGPTからそのまま拝借 -->
@@ -266,15 +263,12 @@
 						</button>
 					</form>
 	  				<!-- いいねボタン -->
-	                <button class="heart" onclick="changeImage('heartImage<%= up.getUserid() %>')">
-	                  <img
-	                    id="Heart<%= postList.get(i).getPostId()%>"
-	                    src="image/Heart-512x512 test.png"
-	                    alt="like icon"
-	                    style="width: 20px; height: 20px"
-	                  />
-	                  <span><%= postList.get(i).getLikeCount()%></span>
-	                </button>
+	                <button class="heart"
+							onclick="changeImage('heartImageS<%=postList.get(i)%>')">
+							<img id="heartImageS<%=postList.get(i)%>"
+								src="image/Heart-512x512 test.png" alt="like icon"
+								style="width: 20px; height: 20px" /> <span><%=postList.get(i).getLikeCount()%></span>
+						</button>
 	                
 		              
 					<!--  自分の投稿なら表示-->
