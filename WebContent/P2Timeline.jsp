@@ -113,7 +113,7 @@
             </div>
             <div class="song-description">
               <p class="title"></p>
-              <p class="artist">Masaru Yokoyama</p>
+              <p class="artist"></p>
             </div>
           </div>
           <div class="icons">

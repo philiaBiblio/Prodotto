@@ -47,6 +47,18 @@ public class P2LoginServlet extends HttpServlet {
 			// 入力したパスワードを取得
 			String inPassword = request.getParameter("pw");
 			
+			// メールアドレスが存在するかチェック
+		    String emailCheckSql = "SELECT * FROM ユーザー WHERE メールアドレス = " + inMailadd;
+		    ResultSet emailCheckRs = dba.selectExe(emailCheckSql);
+			
+		    if (!emailCheckRs.next()) {
+		        // メールアドレスが存在しない場合
+		        request.setAttribute("errorMessage", "※メールアドレスかパスワードが違います");
+		        RequestDispatcher rd = request.getRequestDispatcher("P2Login.jsp");
+		        rd.forward(request, response);
+		        return;
+		    }
+		
 			// inpass暗号化
 			// 暗号化部品の生成
 			Angou a = new Angou();
@@ -59,6 +71,18 @@ public class P2LoginServlet extends HttpServlet {
 			
 			// sql用にシングルコーテーションで囲む
 			AinPassword = "'" + AinPassword + "'";
+			
+			String passwordCheckSql = "SELECT * FROM ユーザー WHERE メールアドレス = " + inMailadd + " AND パスワード = " + AinPassword;
+		    ResultSet passwordCheckRs = dba.selectExe(passwordCheckSql);
+			
+		    if (!passwordCheckRs.next()) {
+		        // パスワードが間違っている場合
+		        request.setAttribute("errorMessage", "※メールアドレスかパスワードが違います");
+		        RequestDispatcher rd = request.getRequestDispatcher("P2Login.jsp");
+		        rd.forward(request, response);
+		        return;
+		    }
+			
 			
 			// ログイン用のsql文
 			String sql = "select * from ユーザー where メールアドレス = " + inMailadd + " and パスワード = " + AinPassword;

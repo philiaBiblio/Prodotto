@@ -15,6 +15,12 @@
     <div class="container">
       <h2>ログイン</h2>
 
+		<% if (request.getAttribute("errorMessage") != null) { %>
+    		<div class="error-message">
+        	<%= request.getAttribute("errorMessage") %>
+    		</div>
+		<% } %>
+
       <form action="P2LoginServlet">
         <div class="menu">
           <ul>
@@ -74,6 +80,7 @@
                 value="ログイン"
               />
             </div>
+            
             <div class="nolog">
               <div class="new">
                 <a href="P2SignUp.jsp">新規登録の方はこちら</a>
