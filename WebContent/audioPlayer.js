@@ -68,34 +68,21 @@ document.addEventListener("DOMContentLoaded", function() {
 		}
 	}
 
-	// サムネイル再生のボタン
-	playButtons.forEach((button) => {
-		button.addEventListener("click", function onClickHandler(event){
-			console.log("サムネイル再生ボタンがクリックされました");
-
-			// buttonの次の要素であるaudioタグを取得
-			const audioPlayer = this.nextElementSibling;
-			console.log("Clicked thumbnail button:", this);
-			console.log("AudioPlayer Element:", audioPlayer);
-
-			const thumbnailImage = this.parentElement.querySelector(".thumbnail"); // サムネイル画像を取得
-			if (!audioPlayer || audioPlayer.tagName !== "AUDIO") {
-				console.error("Audio要素が正しく取得されませんでした");
-				return;
-			}
-
-			// サムネイル画像URLを音楽プレイヤーに設定
-			musicPlayerImage.src = thumbnailImage.src; // プレイヤーの画像を更新
-			currentThumbnailButton = this; // 現在のサムネイルのボタンを設定
-
-			// 他の再生中の音声を停止
-			document.querySelectorAll("audio").forEach((audio) => {
-				if (!audio.paused) {
-					console.log("他の音声を停止:", audio.src);
-					audio.pause();
-					audio.currentTime = 0; // 必要ならリセット
-				}
-			}); // このリスナーは1回だけ実行される
+  // サムネイル再生のボタン
+  playButtons.forEach((button) => {
+    button.addEventListener("click", function (title,artist) {
+      // buttonの次の要素であるaudioタグを取得
+      const audioPlayer = this.nextElementSibling;
+      const thumbnailImage = this.parentElement.querySelector(".thumbnail"); // サムネイル画像を取得
+      console.log(audioPlayer)
+      
+      // サムネイル画像URLを音楽プレイヤーに設定
+      musicPlayerImage.src = thumbnailImage.src; // プレイヤーの画像を更新
+      currentThumbnailButton = this; // 現在のサムネイルのボタンを設定
+      // 名前を音楽プレイヤーに設定
+      const artistName = document.querySelector(".artist");
+      artistName.innerText = artist
+      console.log("134" + artist);
 
 			// 状態に応じて再生/停止処理
 			switch (true) {
