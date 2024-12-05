@@ -60,13 +60,21 @@ public class P2SignUpConfirmationServlet extends HttpServlet {
 			//jspからアップロードしたい画像ファイル名を取得
 	        String name = this.getFileName(part);
 	        System.out.println("fileName："+name);
-	        //WebContent内のimgフォルダまでのパスを取得
-	        String pathfilename=getServletContext().getRealPath("\\image");
-	        //imgフォルダまでのパスとアップロードしたい画像ファイルを文字連結する
-	        pathfilename=pathfilename+"\\"+name;
-	        System.out.println("pathfilename："+pathfilename);
-	        //画像ファイルのアップロードを実行
-	        part.write(pathfilename);
+	        
+	        //ファイルが選択されてない場合
+	        if(name.equals("")) {
+	        	System.out.println("画像選択なし");
+	        	name = "ききゅう.jpg";
+	        }
+	        else {
+	        	//WebContent内のimgフォルダまでのパスを取得
+	        	String pathfilename=getServletContext().getRealPath("\\image");
+	        	//imgフォルダまでのパスとアップロードしたい画像ファイルを文字連結する
+	        	pathfilename=pathfilename+"\\"+name;
+	        	System.out.println("pathfilename："+pathfilename);	
+	        	//画像ファイルのアップロードを実行
+	        	part.write(pathfilename);	
+	        }
 			
 			// このデータをDBにインサートする
 	        String insertSQL = 

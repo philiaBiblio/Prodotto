@@ -27,8 +27,8 @@
 				
 					<!-- フィルターボタン -->
 					<select id="filter" class="filter-button" name="url">
-					          <option selected value="P2UserSearch.jsp">アカウント名</option>
-					          <option value="P2Search.jsp">動画タイトル</option> 
+					          <option selected value="P2Search.jsp">動画タイトル</option>
+					          <option value="P2UserSearch.jsp">アカウント名</option> 
 					</select>
 
 
@@ -79,8 +79,8 @@
 							<div class="nav_icon nav_soroe">
 								<i class="gg-boy"></i>
 							</div> <span class="nav_name">プロフィール</span>
-						</a> <a href="P2Settings.jsp" class="nav_link navtop"
-							id="P2Settingsid"> <!-- <i class="fa-solid fa-video nav_icon"></i> -->
+						</a> <a href="P2ProfileServlet" class="nav_link navtop" id="P2Settingsid">
+							 <!-- <i class="fa-solid fa-video nav_icon"></i> -->
 							<div class="nav_icon nav_soroe">
 								<span class="material-symbols-outlined"> settings </span>
 							</div> <span class="nav_name">設定</span>
@@ -135,8 +135,13 @@
   	    	}
   	    }
 
-  	    
-  			
+  	     // フィルターボタンの変更を検知
+    	document.getElementById('filter').addEventListener('change', function() {
+        const selectedUrl = this.value; // 選択された値（URL）を取得
+        if (selectedUrl) {
+            window.location.href = selectedUrl; // 指定されたURLに遷移
+       		 }
+    	});
 	</script>
 
 </body>
