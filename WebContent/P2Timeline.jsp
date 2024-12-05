@@ -87,7 +87,7 @@
               <%if(!(toukouList.get(i).getToukouid().substring(0,6).equals("000000"))){ %>
                <button>
                 <span>
-                  <a href="P2Recording.html">
+                  <a href="P2Recording.jsp">
                     <div class="nav_icon">
                       <i class="gg-duplicate"></i>
                     </div>
