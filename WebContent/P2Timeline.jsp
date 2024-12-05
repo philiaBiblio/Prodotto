@@ -10,7 +10,6 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<link type="images/png" rel="icon" href="images/icons8-youtube.png" />
 <link rel="stylesheet"
 	href="https://use.fontawesome.com/releases/v6.0.0/css/all.css"
 	integrity="sha384-3B6NwesSXE7YJlcLI9RpRqGf2p/EgVH8BgoKTaUrmKNDkHPStTQ3EyoYjCGXaOTS"
@@ -66,10 +65,10 @@ ArrayList<Post> postList = (ArrayList) ses.getAttribute("POSTLIST");
 							<input type="hidden" name="toukouId"
 								value="<%=postList.get(i).getPostId()%>" />
 
+
 							<button class="submit comment" onclick="openPopup()">
 								<img src="image/こめんと1.png" alt="comment icon"
-									style="width: 20px; height: 20px" /> 
-									<span><%=postList.get(i).getCommentCount()%></span>
+									style="width: 20px; height: 20px" /> <span><%=postList.get(i).getCommentCount()%></span>
 							</button>
 						</form>
 
@@ -106,6 +105,10 @@ ArrayList<Post> postList = (ArrayList) ses.getAttribute("POSTLIST");
 			%>
 		</section>
 
+
+
+
+
 		<!-- 音楽プレイヤー -->
 		<div class="music-player" style="display: none">
 			<!-- 初期表示を非表示に -->
@@ -116,7 +119,7 @@ ArrayList<Post> postList = (ArrayList) ses.getAttribute("POSTLIST");
 					</div>
 					<div class="song-description">
 						<p class="title"></p>
-						<p class="artist">Masaru Yokoyama</p>
+						<p class="artist"></p>
 					</div>
 				</div>
 				<div class="icons">
@@ -158,3 +161,7 @@ ArrayList<Post> postList = (ArrayList) ses.getAttribute("POSTLIST");
 	<script src="https://unpkg.com/wavesurfer.js"></script>
 </body>
 </html>
+
+
+
+
