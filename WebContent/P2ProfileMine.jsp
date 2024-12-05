@@ -124,8 +124,7 @@
 	                <button class="heart"
 							onclick="changeImage('heartImage<%=postList.get(i)%>')">
 							<img id="heartImage<%=postList.get(i)%>"
-								src="image/Heart-512x512 test.png" alt="like icon"
-								style="width: 20px; height: 20px" />
+								src="image/Heart-512x512 test.png" alt="like icon" style="width: 20px; height: 20px" /> 
 								<span><%=postList.get(i).getLikeCount()%></span>
 						</button>
 						

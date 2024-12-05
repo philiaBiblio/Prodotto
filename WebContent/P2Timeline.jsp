@@ -11,7 +11,6 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<link type="images/png" rel="icon"/>
 <link rel="stylesheet"
 	href="https://use.fontawesome.com/releases/v6.0.0/css/all.css"
 	integrity="sha384-3B6NwesSXE7YJlcLI9RpRqGf2p/EgVH8BgoKTaUrmKNDkHPStTQ3EyoYjCGXaOTS"
@@ -57,12 +56,14 @@ ArrayList<Post> postList = (ArrayList) ses.getAttribute("POSTLIST");
 					</a>
 					<div class="like-comment">
 						<form action="P2CommentJusinServlet" method="post">
+							<input type="hidden" name="toukouId"
+								value="<%=postList.get(i).getPostId()%>" />
 							<button class="submit comment" onclick="openPopup()">
-								<img src="image/こめんと1.png" alt="comment icon" style="width: 20px; height: 20px" /> 
-									<span><%=postList.get(i).getCommentCount()%></span>
+								<img src="image/こめんと1.png" alt="comment icon"
+									style="width: 20px; height: 20px" /> <span><%=postList.get(i).getCommentCount()%></span>
 							</button>
 						</form>
-
+						
 						<button class="heart" onclick="changeImage('heartImage<%=postList.get(i)%>')">
 							<img id="heartImage<%=postList.get(i)%>" src="image/Heart-512x512 test.png" alt="like icon"
 								style="width: 20px; height: 20px" />
@@ -96,7 +97,7 @@ ArrayList<Post> postList = (ArrayList) ses.getAttribute("POSTLIST");
         <% } %>			
 	 	<%} %>
       </section>
-      
+
 		<!-- 音楽プレイヤー -->
 		<div class="music-player" style="display: none">
 			<!-- 初期表示を非表示に -->
@@ -156,3 +157,7 @@ ArrayList<Post> postList = (ArrayList) ses.getAttribute("POSTLIST");
 	</script>
 </body>
 </html>
+
+
+
+
