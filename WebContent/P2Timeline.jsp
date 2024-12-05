@@ -39,7 +39,7 @@ ArrayList<Post> postList = (ArrayList) ses.getAttribute("POSTLIST");
 		<!-- グリッドコンテナ -->
 		<section class="video-grid">
 			<%if (toukouList != null) {%>
-			<%for (int i = 0; i < toukouList.size(); i++) {%>
+			<%for (int i = 1; i < toukouList.size(); i++) {%>
 			<div class="video-card">
 				<div class="thumbnail-placeholder">
 					<img src="image/<%=toukouList.get(i).getThumbnail()%>" alt="Video Thumbnail" class="thumbnail" />
@@ -53,8 +53,9 @@ ArrayList<Post> postList = (ArrayList) ses.getAttribute("POSTLIST");
 					<img src="image/<%=userIconList.get(i).getIconImage()%>" alt="profile icon" class="profile-icon" />
 					</a>
 					<div class="like-comment">
-						<form action="P2CommentJusinServlet" method="post">
-							<input type="hidden" name="toukouId" value="<%=postList.get(i).getPostId()%>" />
+						<form action="P2CommentJusinServlet" >
+							<input type="hidden" name="toukouId" value="<%= i%>" />
+							
 
 							<button class="submit comment" onclick="openPopup()">
 								<img src="image/こめんと1.png" alt="comment icon" style="width: 20px; height: 20px" /> 
