@@ -36,7 +36,7 @@
         	<% for (int i = 0; i < dmssList.size(); i++) { %>
         		<form action="P2DMServlet" method="post">
         		<a href="P2DMServlet?yourId=<%= dmssList.get(i).getYour() %>&hensuu=<%=i%>"><div class="message-item">
-            		<img src="image/ききゅう.jpg" alt="アイコン" class="icon" />
+            		<img src="image/<%=dmssList.get(i).getYourIcon() %>" alt="アイコン" class="icon" />
             		<%= dmssList.get(i).getYourName() %>
             		<!--未読アイコン-->
             		<!--画面読み込み時、未読ある人はここに未読数表示-->
