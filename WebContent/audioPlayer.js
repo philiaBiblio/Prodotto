@@ -119,7 +119,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // サムネイル再生のボタン
   playButtons.forEach((button) => {
-    button.addEventListener("click", function () {
+    button.addEventListener("click", function (title,artist) {
       // buttonの次の要素であるaudioタグを取得
       const audioPlayer = this.nextElementSibling;
       const thumbnailImage = this.parentElement.querySelector(".thumbnail"); // サムネイル画像を取得
@@ -128,6 +128,10 @@ document.addEventListener("DOMContentLoaded", function () {
       // サムネイル画像URLを音楽プレイヤーに設定
       musicPlayerImage.src = thumbnailImage.src; // プレイヤーの画像を更新
       currentThumbnailButton = this; // 現在のサムネイルのボタンを設定
+      // 名前を音楽プレイヤーに設定
+      const artistName = document.querySelector(".artist");
+      artistName.innerText = artist
+      console.log("134" + artist);
 
       if (audioPlayer.paused) {
         audioPlayer.play(); //音楽を再生

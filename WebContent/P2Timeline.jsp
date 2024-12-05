@@ -1,3 +1,4 @@
+<%@page import="org.eclipse.jdt.internal.compiler.env.IUpdatableModule.UpdateKind"%>
 <%@page import="apli.Post"%>
 <%@page import="apli.Toukou"%>
 <%@page import="apli.DM"%>
@@ -10,7 +11,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<link type="images/png" rel="icon" href="images/icons8-youtube.png" />
+<link type="images/png" rel="icon"/>
 <link rel="stylesheet"
 	href="https://use.fontawesome.com/releases/v6.0.0/css/all.css"
 	integrity="sha384-3B6NwesSXE7YJlcLI9RpRqGf2p/EgVH8BgoKTaUrmKNDkHPStTQ3EyoYjCGXaOTS"
@@ -33,6 +34,8 @@ ArrayList<User> userIconList = (ArrayList) ses.getAttribute("ICONLIST");
 ArrayList<Post> postList = (ArrayList) ses.getAttribute("POSTLIST");
 %>
 
+<jsp:include page="P2kensaku.jsp"></jsp:include>
+
 <body>
 	<!-- 追加するコード -->
 	<main>
@@ -42,7 +45,7 @@ ArrayList<Post> postList = (ArrayList) ses.getAttribute("POSTLIST");
 			<%for (int i = 0; i < toukouList.size(); i++) {%>
 			<div class="video-card">
 				<div class="thumbnail-placeholder">
-					<img src="image/<%=toukouList.get(i).getThumbnail()%>" alt="Video Thumbnail" class="thumbnail" />
+					<img src="image/<%=toukouList.get(i).getThumbnail()%>" alt="Video Thumbnail" class="thumbnail"/>
 					<button class="play-button">▶️</button>
 					<!-- 音声再生ボタン -->
 					<audio class="audio-player" src="audio/<%=toukouList.get(i).getSound()%>"></audio>
@@ -54,8 +57,6 @@ ArrayList<Post> postList = (ArrayList) ses.getAttribute("POSTLIST");
 					</a>
 					<div class="like-comment">
 						<form action="P2CommentJusinServlet" method="post">
-							<input type="hidden" name="toukouId" value="<%=postList.get(i).getPostId()%>" />
-
 							<button class="submit comment" onclick="openPopup()">
 								<img src="image/こめんと1.png" alt="comment icon" style="width: 20px; height: 20px" /> 
 									<span><%=postList.get(i).getCommentCount()%></span>
@@ -80,6 +81,15 @@ ArrayList<Post> postList = (ArrayList) ses.getAttribute("POSTLIST");
               </button>
               <%} %>
               
+              <%--  <%if(toukouList.get(i).getUserid().equals(u.getUserid())){ %>
+               <button id="openDialog<%= postList.get(i).getPostId()%>" onclick="test('trash<%= postList.get(i) %>')">
+	                  <span>
+	                    <div class="nav_icon trash">
+	                      <i class="gg-trash"></i>
+	                    </div>
+	                  </span>
+	                </button>
+	                <%} %> --%>
             </div>
           </div>
         </div>
@@ -97,7 +107,7 @@ ArrayList<Post> postList = (ArrayList) ses.getAttribute("POSTLIST");
 					</div>
 					<div class="song-description">
 						<p class="title"></p>
-						<p class="artist">Masaru Yokoyama</p>
+						<p class="artist"></p>
 					</div>
 				</div>
 				<div class="icons">
@@ -133,9 +143,16 @@ ArrayList<Post> postList = (ArrayList) ses.getAttribute("POSTLIST");
 			</div>
 		</div>
 	</main>
-	<jsp:include page="P2kensaku.jsp"></jsp:include>
 
 	<script src="audioPlayer.js"></script>
 	<script src="https://unpkg.com/wavesurfer.js"></script>
+	<script>
+	function Saisei(){
+		var e1 = document.getElementById("num");
+		var e2 = document.getElementById("test");
+
+		e2.value = e1;"
+
+	</script>
 </body>
 </html>
