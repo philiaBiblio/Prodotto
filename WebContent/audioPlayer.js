@@ -95,7 +95,7 @@ document.addEventListener("DOMContentLoaded", function() {
 					audio.pause();
 					audio.currentTime = 0; // 必要ならリセット
 				}
-			}); { once: true }; // このリスナーは1回だけ実行される
+			}); // このリスナーは1回だけ実行される
 
 			// 状態に応じて再生/停止処理
 			switch (true) {
@@ -129,7 +129,7 @@ document.addEventListener("DOMContentLoaded", function() {
 				console.log("再生終了:", audioPlayer.src);
 				this.textContent = "▶️"; // ボタンを初期状態に戻す
 				playerPlayButton.classList.replace("fa-pause", "fa-play");
-			});
+			}, { once: true });
 
 			// サムネイル再生ボタンとプレイヤー再生ボタンの同期
 			syncPlayerPlayButton(audioPlayer);
