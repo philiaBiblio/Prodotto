@@ -10,7 +10,6 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<link type="images/png" rel="icon" href="images/icons8-youtube.png" />
 <link rel="stylesheet"
 	href="https://use.fontawesome.com/releases/v6.0.0/css/all.css"
 	integrity="sha384-3B6NwesSXE7YJlcLI9RpRqGf2p/EgVH8BgoKTaUrmKNDkHPStTQ3EyoYjCGXaOTS"
@@ -38,56 +37,70 @@ ArrayList<Post> postList = (ArrayList) ses.getAttribute("POSTLIST");
 	<main>
 		<!-- グリッドコンテナ -->
 		<section class="video-grid">
-			<%if (toukouList != null) {%>
-			<%for (int i = 1; i < toukouList.size(); i++) {%>
+			<%
+			if (toukouList != null) {
+			%>
+			<%
+			for (int i = 1; i < toukouList.size(); i++) {
+			%>
 			<div class="video-card">
 				<div class="thumbnail-placeholder">
-					<img src="image/<%=toukouList.get(i).getThumbnail()%>" alt="Video Thumbnail" class="thumbnail" />
+					<img src="image/<%=toukouList.get(i).getThumbnail()%>"
+						alt="Video Thumbnail" class="thumbnail" />
 					<button class="play-button">▶️</button>
 					<!-- 音声再生ボタン -->
-					<audio class="audio-player" src="audio/<%=toukouList.get(i).getSound()%>"></audio>
+					<audio class="audio-player"
+						src="audio/<%=toukouList.get(i).getSound()%>"></audio>
 				</div>
 
 				<div class="video-info">
-					<a href="P2ProfileStranger.jsp" class="profile-info">
-					<img src="image/<%=userIconList.get(i).getIconImage()%>" alt="profile icon" class="profile-icon" />
+					<a href="P2ProfileStranger.jsp" class="profile-info"> <img
+						src="image/<%=userIconList.get(i).getIconImage()%>"
+						alt="profile icon" class="profile-icon" />
 					</a>
 					<div class="like-comment">
-						<form action="P2CommentJusinServlet" >
-							<input type="hidden" name="toukouId" value="<%= i%>" />
-							
 
+						<form action="P2CommentJusinServlet">
+							<input type="hidden" name="toukouId" value="<%=i%>" />
 							<button class="submit comment" onclick="openPopup()">
-								<img src="image/こめんと1.png" alt="comment icon" style="width: 20px; height: 20px" /> 
-									<span><%=postList.get(i).getCommentCount()%></span>
+								<img src="image/こめんと1.png" alt="comment icon"
+									style="width: 20px; height: 20px" /> <span><%=postList.get(i).getCommentCount()%></span>
 							</button>
 						</form>
 
-						<button class="heart" onclick="changeImage('heartImage<%=postList.get(i)%>')">
-							<img id="heartImage<%=postList.get(i)%>" src="image/Heart-512x512 test.png" alt="like icon"
-								style="width: 20px; height: 20px" />
-								<span><%=postList.get(i).getLikeCount()%></span>
+						<button class="heart"
+							onclick="changeImage('heartImage<%=postList.get(i)%>')">
+							<img id="heartImage<%=postList.get(i)%>"
+								src="image/Heart-512x512 test.png" alt="like icon"
+								style="width: 20px; height: 20px" /> <span><%=postList.get(i).getLikeCount()%></span>
 						</button>
-              
-              <%if(!(toukouList.get(i).getToukouid().substring(0,6).equals("000000"))){ %>
-               <button>
-                <span>
-                  <a href="P2Recording.jsp">
-                    <div class="nav_icon">
-                      <i class="gg-duplicate"></i>
-                    </div>
-                  </a>
-                </span>
-              </button>
-              <%} %>
-              
-            </div>
-          </div>
-        </div>
-        <% } %>			
-	 	<%} %>
-      </section>
-      
+
+						<%
+						if (!(toukouList.get(i).getToukouid().substring(0, 6).equals("000000"))) {
+						%>
+						<button>
+							<span> <a href="P2Recording.html">
+									<div class="nav_icon">
+										<i class="gg-duplicate"></i>
+									</div>
+							</a>
+							</span>
+						</button>
+						<%
+						}
+						%>
+
+					</div>
+				</div>
+			</div>
+			<%
+			}
+			%>
+			<%
+			}
+			%>
+		</section>
+
 		<!-- 音楽プレイヤー -->
 		<div class="music-player" style="display: none">
 			<!-- 初期表示を非表示に -->
@@ -98,7 +111,7 @@ ArrayList<Post> postList = (ArrayList) ses.getAttribute("POSTLIST");
 					</div>
 					<div class="song-description">
 						<p class="title"></p>
-						<p class="artist">Masaru Yokoyama</p>
+						<p class="artist"></p>
 					</div>
 				</div>
 				<div class="icons">
@@ -140,3 +153,7 @@ ArrayList<Post> postList = (ArrayList) ses.getAttribute("POSTLIST");
 	<script src="https://unpkg.com/wavesurfer.js"></script>
 </body>
 </html>
+
+
+
+
