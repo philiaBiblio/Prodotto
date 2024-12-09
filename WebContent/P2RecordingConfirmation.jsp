@@ -74,10 +74,11 @@
 const wavesurfer = WaveSurfer.create({
   container: '#waveform', // 一つ目のコードのwaveformコンテナを利用
   waveColor: '#11dadd',
-  progressColor: '#ff5c5c;',
+  progressColor: '#ff5c5c',
   barWidth: 2,
   height: 100,
   responsive: false,
+  scrollParent: false, // スクロールを無効にする
   cursorColor: 'white',
   minPxPerSec: 50, // 初期ズームレベルを指定（200は適当な値）
 });

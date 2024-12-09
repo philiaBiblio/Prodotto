@@ -35,6 +35,66 @@ ArrayList<Post> postList = (ArrayList) ses.getAttribute("POSTLIST");
 %>
 
 <jsp:include page="P2kensaku.jsp"></jsp:include>
+<script>
+//ダイアログのスクリプト
+function dialog(id){
+	console.log("274")
+	const openDialogButton = document.getElementById('openDialogButton');
+	const yesButton = document.getElementById('yesButton');
+	const noButton = document.getElementById('noButton');
+	const myDialog = document.getElementById('myDialog');
+	const confirmationDialog = document.getElementById('confirmationDialog');
+	const closeConfirmationButton = document.getElementById('closeConfirmationButton');
+	myDialog.showModal();
+
+	openDialogButton.addEventListener('click', () => {
+    myDialog.showModal();
+	});
+}
+
+document.addEventListener('DOMContentLoaded', (event) => {
+    function dialog(id) {
+        console.log("274");
+        const openDialogButton = document.getElementById('openDialogButton');
+        const yesButton = document.getElementById('yesButton');
+        const noButton = document.getElementById('noButton');
+        const myDialog = document.getElementById('myDialog');
+        const confirmationDialog = document.getElementById('confirmationDialog');
+        const closeConfirmationButton = document.getElementById('closeConfirmationButton');
+
+        if (yesButton) {
+            yesButton.addEventListener('click', () => {
+                if (myDialog) {
+                    myDialog.close();
+                }
+                if (confirmationDialog) {
+                    confirmationDialog.showModal();
+                }
+            });
+        }
+
+        if (noButton) {
+            noButton.addEventListener('click', () => {
+                if (myDialog) {
+                    myDialog.close();
+                }
+            });
+        }
+
+        if (closeConfirmationButton) {
+            closeConfirmationButton.addEventListener('click', () => {
+                if (confirmationDialog) {
+                    confirmationDialog.close();
+                }
+            });
+        }
+    }
+
+    // dialog関数を呼び出す
+    dialog();
+});
+
+</script>
 
 <body>
 	<!-- 追加するコード -->
@@ -52,18 +112,27 @@ ArrayList<Post> postList = (ArrayList) ses.getAttribute("POSTLIST");
 
 					<img src="image/<%=toukouList.get(i).getThumbnail()%>"
 						alt="Video Thumbnail" class="thumbnail" />
-
 					<button class="play-button">▶️</button>
 					<!-- 音声再生ボタン -->
 					<audio class="audio-player"
 						src="audio/<%=toukouList.get(i).getSound()%>"></audio>
 				</div>
 
+
 				<div class="video-info">
-					<a href="P2ProfileStranger.jsp" class="profile-info"> <img
-						src="image/<%=userIconList.get(i).getIconImage()%>"
-						alt="profile icon" class="profile-icon" />
-					</a>
+					
+					
+					<form action="P2ProfileServletStrangerServlet" method="get" style="margin: 0; padding: 0; display: inline;">
+    				<input type="hidden" name="StrangertoukouId" value="<%=toukouList.get(i).getToukouid()%>" />
+    					<button type="submit" class="profile-info" style="all: unset; cursor: pointer;">
+	    					<a>
+	    						<img src="image/<%=userIconList.get(i).getIconImage()%>" alt="profile icon" class="profile-icon" />
+	    					</a>
+        				</button>
+					</form>
+
+					
+					
 					<div class="like-comment">
 
 						<form action="P2CommentJusinServlet">
@@ -96,26 +165,33 @@ ArrayList<Post> postList = (ArrayList) ses.getAttribute("POSTLIST");
 						<%
 						}
 						%>
-						<!-- 削除ボタンイフ -->
-						
-						<%-- 
+
+						<!-- 削除ボタンイフ --> 
 						<%
 						if (toukouList.get(i).getUserid().equals(u.getUserid())) {
 						%>
-						<button id="openDialog<%=postList.get(i).getPostId()%>"
-							onclick="test('trash<%=postList.get(i)%>')">
+						<form action="P2PostDeliteServlet" method="post">
+						<input type="hidden" name="toukouId" value="<%=i%>" />
+						<button type="button" id="openDialogButton<%=toukouList.get(i).getToukouid() %>"
+						onclick="dialog('trash')">
 							<span>
 								<div class="nav_icon trash">
 									<i class="gg-trash"></i>
 								</div>
 							</span>
-						</button>
+						</button>  
+						
+						 <dialog id="myDialog">
+            				<p>この投稿を削除しますか？</p>
+            			<div class="buttonContainer">
+                			<button type="submit" class="dialogButton" id="yesButton">はい</button>
+                			<button type="button" class="dialogButton" id="noButton">いいえ</button>
+            			</div>
+        				</dialog>
 						<%
 						}
-						%> 
-						
-						--%>
-
+						%>
+						</form>
 					</div>
 				</div>
 			</div>
@@ -184,6 +260,13 @@ ArrayList<Post> postList = (ArrayList) ses.getAttribute("POSTLIST");
 		e2.value = e1;"
 
 	</script>
+	
+	<dialog id="confirmationDialog">
+		<p>削除しました</p>
+		<button type="button" class="dialogButton" id="closeConfirmationButton" onclick="confirmationDialog.close();">閉じる</button>
+	</dialog>
+	
+	
 </body>
 </html>
 

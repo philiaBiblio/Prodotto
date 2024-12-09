@@ -2,7 +2,6 @@ package apli;
 
 import java.io.IOException;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -31,7 +30,7 @@ public class P2TLuploadServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		System.out.println("P2SignUpConfirmationServlet実行");
+		System.out.println("P2TLuploadServlet実行");
 		
 		// 文字化け防止
 		request.setCharacterEncoding("UTF-8");
@@ -58,23 +57,30 @@ public class P2TLuploadServlet extends HttpServlet {
 		    adpath=adpath.substring(6);
 			
 			// このデータをDBにインサートする
-
 			String insertSQL = 
 				    "INSERT INTO 投稿 VALUES (" +
 				    "to_char(systimestamp,'yyyymm') || '-a' || LPAD(連番1.nextval, 4, '0') || '-' || LPAD(連番2.nextval, 8, '0'),'" +
 				    u.getUserid() + "', '000000', 'a0000', " +
 				    "to_char(systimestamp,'yyyy-mm-dd HH24:MI:SS'), " +
 				    "'" + adpath + "', '" + name + "', NULL)";
-
+			
+			
+	        //WebContent内のimgフォルダまでのパスを取得
+	        String pathfilename = getServletContext().getRealPath("\\image");
+	        //imgフォルダまでのパスとアップロードしたい画像ファイルを文字連結する
+	        pathfilename=pathfilename+"\\"+name;
+	        System.out.println("pathfilename"+pathfilename);
+	        //画像ファイルのアップロードを実行
+	        part.write(pathfilename);
+			
 	        // インサート文実行
 	        dba.UpdateExe(insertSQL);
 	        
 	        // タイムライン画面へ
-	        url = "P2Timeline.jsp";
+	        url = "P2TimelineServlet";
 	        System.out.println(url);
 	        // 画面遷移
-	        RequestDispatcher rd = request.getRequestDispatcher(url);
-	        rd.forward(request, response);
+	        response.sendRedirect(url);
 			
 	     // ログアウト処理
 	     dba.closeDB();		
