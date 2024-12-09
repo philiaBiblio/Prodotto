@@ -112,7 +112,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
 					<img src="image/<%=toukouList.get(i).getThumbnail()%>"
 						alt="Video Thumbnail" class="thumbnail" />
-
 					<button class="play-button">▶️</button>
 					<!-- 音声再生ボタン -->
 					<audio class="audio-player"
