@@ -115,8 +115,8 @@
 								<i class="fas fa-download" aria-hidden="true"></i>
 							</button>
 						</div>
-                      <!-- メッセージ表示エリア -->
-					<div id="odai-area"></div>
+						<!-- メッセージ表示エリア -->
+						<div id="message-area"></div>
 					</div>
 				</div>
 
@@ -139,10 +139,35 @@
 				<div class="btn-group">
 					<button type="submit" class="btn btn-download btn-outline-primary"
 						title="録音確定" id="confirmRecordingBtn"
-						onclick="setTimeout(function () { location.href='P2RecordingServlet' }, 30000);">
+						onclick="redirectAfterDelay()">
 						録音を確定 <i class="fas fa-download" aria-hidden="true"></i>
 					</button>
 				</div>
+
+				<!-- 幅を持つ要素例 -->
+				<div class="channel channel-0" style="width: 200px;"></div>
+
+				<script>
+					function redirectAfterDelay() {
+						// `channel-0` 要素を取得
+						const channelElement = document
+								.querySelector('.channel.channel-0');
+
+						// 要素の幅を取得 (px を除去して数値として取得)
+						const widthValue = parseInt(window
+								.getComputedStyle(channelElement).width, 10);
+
+						// 遅延値 (幅をそのまま使う、または変換する)
+						const l = widthValue * 6; // ミリ秒単位
+						console.log(l);
+						console.log(`Redirecting after ${l}ms based on channel width`);
+
+						// 遷移の遅延処理
+						setTimeout(function() {
+							location.href = 'P2RecordingServlet';
+						}, l);
+					}
+				</script>
 
 				<script src="https://code.jquery.com/jquery-3.6.0.min.js"
 					integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
