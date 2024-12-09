@@ -58,12 +58,14 @@ public class P2TLuploadServlet extends HttpServlet {
 		    adpath=adpath.substring(6);
 			
 			// このデータをDBにインサートする
+
 			String insertSQL = 
 				    "INSERT INTO 投稿 VALUES (" +
 				    "to_char(systimestamp,'yyyymm') || '-a' || LPAD(連番1.nextval, 4, '0') || '-' || LPAD(連番2.nextval, 8, '0'),'" +
 				    u.getUserid() + "', '000000', 'a0000', " +
 				    "to_char(systimestamp,'yyyy-mm-dd HH24:MI:SS'), " +
 				    "'" + adpath + "', '" + name + "', NULL)";
+
 	        // インサート文実行
 	        dba.UpdateExe(insertSQL);
 	        
