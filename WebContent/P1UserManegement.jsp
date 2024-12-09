@@ -41,10 +41,13 @@
 		<tr>
         <td><%= u.get(i).getName() %></td>
         <td><%= u.get(i).getUserid() %></td>
+        <%System.out.println("ユーザマネジメントのi："+i); %>
         <td class="delete-button">
         <input type="hidden" name="USERID" value="<%=i%>">
+        
         <button type="button" id="openDialogButton" onclick="dialog('sakuzyo')">アカウント削除</button>
         <dialog id="myDialog">
+   
         	<p>このアカウントを削除しますか？</p>
         	<div class="buttonContainer">
         		<button type="submit" class="dialogButton" id="yesButton">はい</button>
@@ -101,19 +104,24 @@
       myDialog.showModal();
 
       openDialogButton.addEventListener('click', () => {
-         myDialog.showModal();
+    	  console.log("うわわわわわわわ")
+           myDialog.showModal();
       });
 
       yesButton.addEventListener('click', () => {
+    	  console.log("ありゃりゃらやｔらｙ")
         myDialog.close();
         confirmationDialog.showModal();
       });
 
       noButton.addEventListener('click', () => {
-        myDialog.close();
+    	  console.log("いいいいいいいいいいいいいい")
+          myDialog.close();
       });
 
       closeConfirmationButton.addEventListener('click', () => {
+    	  console.log("ぽいうｙｔｒｆｇｈｊｋｌきうｙｇｈｊ")
+          console.log("117")
         confirmationDialog.close();
       });
       }

@@ -56,7 +56,7 @@ public class P1UserManeDelServlet extends HttpServlet {
 		try {
 			// ユーザーの検索のsql文実行
 			ResultSet rss = dba.selectExe("select * from 投稿 where ユーザーID = '" + u.get(uIndex).getUserid() + "'");
-
+			System.out.println("uiの値："+uIndex);
 			// 検索結果が存在する場合
 			while (rss.next()) {
 			    // 投稿情報を変数に保存する
