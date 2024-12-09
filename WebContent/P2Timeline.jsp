@@ -84,11 +84,21 @@ function dialog(id){
 						src="audio/<%=toukouList.get(i).getSound()%>"></audio>
 				</div>
 
+
 				<div class="video-info">
-					<a href="P2ProfileStranger.jsp" class="profile-info"> <img
-						src="image/<%=userIconList.get(i).getIconImage()%>"
-						alt="profile icon" class="profile-icon" />
-					</a>
+					
+					
+					<form action="P2ProfileServletStrangerServlet" method="get" style="margin: 0; padding: 0; display: inline;">
+    				<input type="hidden" name="StrangertoukouId" value="<%=toukouList.get(i).getToukouid()%>" />
+    					<button type="submit" class="profile-info" style="all: unset; cursor: pointer;">
+	    					<a>
+	    						<img src="image/<%=userIconList.get(i).getIconImage()%>" alt="profile icon" class="profile-icon" />
+	    					</a>
+        				</button>
+					</form>
+
+					
+					
 					<div class="like-comment">
 
 						<form action="P2CommentJusinServlet">
