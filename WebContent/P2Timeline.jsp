@@ -35,6 +35,32 @@ ArrayList<Post> postList = (ArrayList) ses.getAttribute("POSTLIST");
 %>
 
 <jsp:include page="P2kensaku.jsp"></jsp:include>
+<script>
+//ダイアログのスクリプト
+function dialog(id){
+	console.log("274")
+	const openDialogButton = document.getElementById('openDialogButton');
+	const yesButton = document.getElementById('yesButton');
+	const noButton = document.getElementById('noButton');
+	const myDialog = document.getElementById('myDialog');
+	const confirmationDialog = document.getElementById('confirmationDialog');
+	const closeConfirmationButton = document.getElementById('closeConfirmationButton');
+	myDialog.showModal();
+
+	openDialogButton.addEventListener('click', () => {
+    myDialog.showModal();
+	});
+
+	yesButton.addEventListener('click', () => {
+  	myDialog.close();
+  	confirmationDialog.showModal();
+	});
+
+	noButton.addEventListener('click', () => {
+  	myDialog.close();
+	});
+}
+</script>
 
 <body>
 	<!-- 追加するコード -->
@@ -96,26 +122,30 @@ ArrayList<Post> postList = (ArrayList) ses.getAttribute("POSTLIST");
 						<%
 						}
 						%>
-						<!-- 削除ボタンイフ -->
-						
-						<%-- 
+
+						<!-- 削除ボタンイフ --> 
 						<%
 						if (toukouList.get(i).getUserid().equals(u.getUserid())) {
 						%>
-						<button id="openDialog<%=postList.get(i).getPostId()%>"
-							onclick="test('trash<%=postList.get(i)%>')">
+						<button type="button" id="openDialogButton<%=toukouList.get(i).getToukouid() %>"
+						onclick="dialog('trash')">
 							<span>
 								<div class="nav_icon trash">
 									<i class="gg-trash"></i>
 								</div>
 							</span>
-						</button>
+						</button>  
+						
+						 <dialog id="myDialog">
+            				<p>この投稿を削除しますか？</p>
+            			<div class="buttonContainer">
+                			<button type="button" class="dialogButton" id="yesButton">はい</button>
+                			<button type="button" class="dialogButton" id="noButton">いいえ</button>
+            			</div>
+        				</dialog>
 						<%
 						}
-						%> 
-						
-						--%>
-
+						%>
 					</div>
 				</div>
 			</div>
@@ -184,6 +214,13 @@ ArrayList<Post> postList = (ArrayList) ses.getAttribute("POSTLIST");
 		e2.value = e1;"
 
 	</script>
+	
+	<dialog id="confirmationDialog">
+		<p>削除しました</p>
+		<button type="button" class="dialogButton" id="closeConfirmationButton" onclick="confirmationDialog.close();">閉じる</button>
+	</dialog>
+	
+	
 </body>
 </html>
 

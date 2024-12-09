@@ -176,19 +176,3 @@ function changeImage(id) {
 	img.setAttribute('data-liked', !isLiked);
 
 }
-
-
-// ダイアログのスクリプト
-function test(id) {
-	const openDialogButton = document.getElementById('openDialogButton');
-	const yesButton = document.getElementById('yesButton');
-	const noButton = document.getElementById('noButton');
-	const myDialog = document.getElementById('myDialog');
-	const confirmationDialog = document.getElementById('confirmationDialog');
-	const closeConfirmationButton = document.getElementById('closeConfirmationButton');
-
-	openDialogButton.addEventListener('click', () => myDialog.showModal());
-	yesButton.addEventListener('click', () => { myDialog.close(); confirmationDialog.showModal(); });
-	noButton.addEventListener('click', () => myDialog.close());
-	closeConfirmationButton.addEventListener('click', () => confirmationDialog.close());
-}
