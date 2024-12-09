@@ -8,7 +8,9 @@
   <!-- CSSファイルを読み込み -->
   <link rel="stylesheet" href="P2RecordingConfirmation.css">
 </head>
+
 <body>
+<form action="P2TLuploadServlet" method="post" enctype="multipart/form-data">
   <% 
     HttpSession ses = request.getSession();
     // サーブレットから渡された音声ファイルのパスを取得
@@ -37,7 +39,7 @@
     <div class="right-block">
       <div class="upload">
         <span>サムネイル画像をアップロード (0MBまで)</span>
-        <input type="file" accept="image/*">
+        <input type="file" name = "samune" accept="image/*">
       </div>
       <div class="waveform" id="waveform-container">
         <div id="waveform"></div>
@@ -68,7 +70,6 @@
   <script>
     // サーバーから渡された音声ファイルのパスを取得
     const audioPath = "<%= filename %>";
-
 // WaveSurferのインスタンスを作成
 const wavesurfer = WaveSurfer.create({
   container: '#waveform', // 一つ目のコードのwaveformコンテナを利用
@@ -96,6 +97,8 @@ const rewindButton = document.querySelector('.btn-rewind');
 rewindButton.addEventListener('click', () => {
   wavesurfer.skip(-5); // 5秒巻き戻し
 });
+
   </script>
+  </form>
 </body>
 </html>
