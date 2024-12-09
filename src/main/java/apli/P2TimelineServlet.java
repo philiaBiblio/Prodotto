@@ -65,7 +65,15 @@ public class P2TimelineServlet extends HttpServlet {
 				// タグID作るときはここに記入
 				String upName = rs.getString("名前");
 				String toukouIcon = rs.getString("アイコン");
-				int comm = rs.getInt("コメント数");
+				
+				int comm; 
+				if (rs.getInt("コメント数") > 0) {
+				    comm = rs.getInt("コメント数") - 1;
+				} else {
+				    comm = rs.getInt("コメント数");
+				}
+				
+				
 				int iine = rs.getInt("いいね数");
 //				System.out.println(toukouId.substring(0,6));
 				

@@ -718,6 +718,53 @@ a,a:visited{
   top: -8px;
 }
 
+/* ゴミ箱 */
+.gg-trash {
+    box-sizing: border-box;
+    position: relative;
+    display: block;
+    transform: scale(var(--ggs, 1));
+    width: 10px;
+    height: 12px;
+    border: 2px solid transparent;
+    box-shadow:
+      0 0 0 2px,
+      inset -2px 0 0,
+      inset 2px 0 0;
+    border-bottom-left-radius: 1px;
+    border-bottom-right-radius: 1px;
+    margin-top: 4px;
+  }
+.gg-trash::after,
+.gg-trash::before {
+    content: "";
+    display: block;
+    box-sizing: border-box;
+    position: absolute;
+}
+.gg-trash::after {
+    background: currentColor;
+    border-radius: 3px;
+    width: 16px;
+    height: 2px;
+    top: -4px;
+    left: -5px;
+}
+.gg-trash::before {
+    width: 10px;
+    height: 4px;
+    border: 2px solid;
+    border-bottom: transparent;
+    border-top-left-radius: 2px;
+    border-top-right-radius: 2px;
+    top: -7px;
+    left: -2px;
+}
+
+.trash{
+  padding-left: 30px;
+}
+
 .heart {
   cursor: pointer;
 }
@@ -841,4 +888,66 @@ a,a:visited{
   width: 50px; /* 必要に応じて幅を調整してください */
   text-align: center; /* 数字を中央揃え */
   display: inline-block; /* 幅を固定するために inline-block を使用 */
+}
+
+dialog {
+  text-align: center;
+  border-radius: 10px;
+  background-color: #000000;
+  border: solid 3px #11dadd;
+  color: white;
+}
+
+#yesButton,
+#noButton {
+  width: 90px;
+  height: 50px;
+  color: rgb(255, 255, 255);
+  background-color: #000000;
+  border: 1px solid #ffffff;
+  border-radius: 10px;
+  cursor: pointer;
+  margin: 0 15px;
+  /* フレックスボックスでテキストを中央揃え */
+  display: flex;
+  justify-content: center; /* 水平方向の中央揃え */
+  align-items: center; /* 垂直方向の中央揃え */
+}
+
+#yesButton:hover,
+#noButton:hover {
+  color: #11dadd;
+  border-color: #11dadd;
+}
+
+.buttonContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+#closeConfirmationButton {
+  width: 90px;
+  display: inline-block;
+  padding: 10px;
+  margin: auto 30px;
+  color: rgb(255, 255, 255);
+  background-color: #000000;
+  border: 1px solid #ffffff;
+  border-radius: 10px;
+  cursor: pointer;
+  text-align: center;
+}
+
+#closeConfirmationButton:hover {
+  color: #11dadd;
+  border-color: #11dadd;
+}
+
+.button-group2 {
+  /* border: solid 1px #fff; */
+  margin: 0;
+  margin-right: 20px;
+  justify-content: center;
 }
