@@ -9,7 +9,6 @@
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="ja">
-
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -174,7 +173,6 @@ ArrayList<Post> postList = (ArrayList) ses.getAttribute("POSTLIST");
 			</div>
 		</div>
 	</main>
-
 
 	<script src="audioPlayer.js"></script>
 	<script src="https://unpkg.com/wavesurfer.js"></script>
