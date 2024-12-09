@@ -1,8 +1,10 @@
 package apli;
 
 import java.io.IOException;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -46,9 +48,42 @@ public class P2PostDeliteServlet extends HttpServlet {
 	    	 
 	    	 String toukouId = toukouList.get(i).getToukouid();
 	    	 
+	    	 // 投稿ID検索のsql文実行
+	    	 ResultSet rs = dba.selectExe("select * from 投稿 where 投稿ID = '" + toukouId + "'");
 	    	 
+	    	 if(rs.next()) {
+	    		 String deleteSQL;
+	    		 // 指定した投稿をテーブルから削除
+	    		 deleteSQL =  "DELETE FROM 再生 where 投稿ID = '" + toukouId + "'"; 		        
+	    		 // デリート文実行
+	    		 dba.UpdateExe(deleteSQL);
+	    		 
+	    		 deleteSQL = "DELETE FROM いいね where 投稿ID = '" + toukouId + "'"; 		        
+	    		 // デリート文実行
+	    		 dba.UpdateExe(deleteSQL);
+	    		 
+	    		 deleteSQL = "DELETE FROM コメント where 投稿ID = '" + toukouId + "'"; 		        
+	    		 // デリート文実行
+	    		 dba.UpdateExe(deleteSQL);
+	    		 
+	    		 deleteSQL = "DELETE FROM 投稿 where 投稿ID = '" + toukouId + "'"; 		        
+	    		 // デリート文実行
+	    		 dba.UpdateExe(deleteSQL);
+	    	 }
 	    	 
-	    	 // ログアウト処理
+	    	 //リストから削除する
+	    	 toukouList.remove(i);
+	    	 
+		     String trueMess = "変更できました。";
+		     ses.setAttribute("TRUEMESS", trueMess);
+		        	        
+		     // 画面へ遷移
+		     url = "P2Timeline.jsp";
+		     
+		     RequestDispatcher rd = request.getRequestDispatcher(url);
+		     rd.forward(request, response);
+	    	 
+		     // ログアウト処理
 	    	 dba.closeDB();
 	    	 
 		} catch (Exception e) {
