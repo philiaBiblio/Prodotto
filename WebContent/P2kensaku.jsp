@@ -55,7 +55,7 @@
 
 				<div class="nav_list">
 					<div class="nav_items navtop">
-						<a href="P2Timeline.jsp" class="nav_link navtop nav_soroe "
+						<a href="P2TimelineServlet" class="nav_link navtop nav_soroe "
 							id="P2Timelineid"> <i class="fa fa-house nav_icon"></i> <span
 							class="nav_name">タイムライン</span>
 						</a> <a href="P2DM.jsp" class="nav_link navtop nav_soroe" id="P2DMid">
