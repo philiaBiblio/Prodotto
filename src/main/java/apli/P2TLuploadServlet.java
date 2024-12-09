@@ -44,7 +44,7 @@ public class P2TLuploadServlet extends HttpServlet {
 			// このデータをDBにインサートする
 	        String insertSQL = 
 	        		"INSERT INTO ユーザー values (to_char(systimestamp,'yyyymm') ||'- a'|| LPAD(連番.nextval,4,'0')|| '- '|| LPAD(連番.nextval,8,'0'),'"
-	        		+ u.getUserid() + "'",")";
+	        		+ u.getUserid() + "'";
 	        // インサート文実行
 	        dba.UpdateExe(insertSQL);
 	        
