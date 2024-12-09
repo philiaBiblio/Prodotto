@@ -1,225 +1,146 @@
-console.log("aaa")
+console.log("aaa");
+
 document.addEventListener("DOMContentLoaded", function() {
 	const playButtons = document.querySelectorAll(".play-button");
-	const musicPlayer = document.querySelector(".music-player"); // 音楽プレイヤーの要素を取得
-	const musicPlayerImage = musicPlayer.querySelector(".image-container img"); // プレイヤー内の画像を取得
-	const progressContainer = musicPlayer.querySelector(".progress-container .progress-bar"); // 音楽プレイヤー内のシークバーを取得
+	const musicPlayer = document.querySelector(".music-player");
+	const musicPlayerImage = musicPlayer.querySelector(".image-container img");
+	const progressContainer = musicPlayer.querySelector(".progress-container .progress-bar");
 	const progress = progressContainer.querySelector(".progress");
-	const audio = document.querySelector(".audio-player"); // 音楽プレイヤーを取得
-	const volumeBarContainer = document.querySelector(".volume-bar .progress-bar"); // 音量バーのコンテナ
-	const volumeBar = volumeBarContainer.querySelector(".progress"); // 実際の音量バー
-	const volumeIcon = document.querySelector(".volume-bar i"); // 音量アイコン
-	const playerPlayButton = musicPlayer.querySelector(".play-pause"); // 音楽プレイヤー内の再生ボタン
-	const backButton = musicPlayer.querySelector(".fa-step-backward"); // 戻るボタン
-	const nextButton = musicPlayer.querySelector(".fa-step-forward"); // 次へボタン
-	let currentTrackIndex = 0; // 現在の再生曲のインデックス
-	let isDragging = false; // ドラッグ中かどうかを判断するフラグ
-	let currentThumbnailButton = null; // 現在再生中のサムネイルの再生ボタンを追跡する変数
+	const audio = document.querySelector(".audio-player");
+	const volumeBarContainer = document.querySelector(".volume-bar .progress-bar");
+	const volumeBar = volumeBarContainer.querySelector(".progress");
+	const volumeIcon = document.querySelector(".volume-bar i");
+	const playerPlayButton = musicPlayer.querySelector(".play-pause");
+	const backButton = musicPlayer.querySelector(".fa-step-backward");
+	const nextButton = musicPlayer.querySelector(".fa-step-forward");
+
+	let currentTrackIndex = 0;
+	let isDragging = false;
+	let currentThumbnailButton = null;
 	let isVolumeDragging = false;
 
 	// 初期状態で音量を設定
-	audio.volume = 0.5; // デフォルトで50%の音量
-	updateVolumeBar(audio.volume); // 音量バーを初期化
+	audio.volume = 0.5;
+	updateVolumeBar(audio.volume);
 
 	// 音量バーをクリックしたときの処理
-	volumeBarContainer.addEventListener("click", function(e) {
-		const clickX = e.clientX - this.getBoundingClientRect().left; // クリックした位置
-		const width = this.clientWidth; // 音量バーの全体の幅
-		const volumePercent = Math.min(Math.max(clickX / width, 0), 1); // 0〜1の範囲にクランプ
-		audio.volume = volumePercent; // 音量を更新
-		updateVolumeBar(audio.volume); // 音量バーを更新
+	volumeBarContainer.addEventListener("click", (e) => {
+		const volumePercent = Math.min(Math.max((e.clientX - volumeBarContainer.getBoundingClientRect().left) / volumeBarContainer.clientWidth, 0), 1);
+		audio.volume = volumePercent;
+		updateVolumeBar(audio.volume);
 	});
 
 	// 音量バーをドラッグ操作するための処理
-	volumeBarContainer.addEventListener("mousedown", function() {
-		isVolumeDragging = true; // ドラッグ中フラグを立てる
+	volumeBarContainer.addEventListener("mousedown", () => { isVolumeDragging = true; });
+	document.addEventListener("mousemove", (e) => {
+		if (!isVolumeDragging) return;
+		const volumePercent = Math.min(Math.max((e.clientX - volumeBarContainer.getBoundingClientRect().left) / volumeBarContainer.clientWidth, 0), 1);
+		audio.volume = volumePercent;
+		updateVolumeBar(audio.volume);
 	});
 
-	document.addEventListener("mousemove", function(e) {
-		if (!isVolumeDragging) return; // ドラッグ中でなければ何もしない
-		const mouseX = e.clientX - volumeBarContainer.getBoundingClientRect().left; // マウスのX座標
-		const width = volumeBarContainer.clientWidth; // 音量バーの全体の幅
-		const volumePercent = Math.min(Math.max(mouseX / width, 0), 1); // 0〜1の範囲にクランプ
-		audio.volume = volumePercent; // 音量を更新
-		updateVolumeBar(audio.volume); // 音量バーを更新
-	});
-
-	document.addEventListener("mouseup", function() {
-		isVolumeDragging = false; // ドラッグ終了
-	});
+	document.addEventListener("mouseup", () => { isVolumeDragging = false; });
 
 	// 音量バーを更新する関数
 	function updateVolumeBar(volume) {
-		volumeBar.style.width = `${volume * 100}%`; // 音量バーの幅を更新
-		updateVolumeIcon(volume); // 音量アイコンを更新
+		volumeBar.style.width = `${volume * 100}%`;
+		updateVolumeIcon(volume);
 	}
 
 	// 音量アイコンを音量に応じて更新する関数
 	function updateVolumeIcon(volume) {
+		volumeIcon.classList.remove("fa-volume-mute", "fa-volume-down", "fa-volume-up");
 		if (volume === 0) {
-			volumeIcon.classList.remove("fa-volume-down", "fa-volume-up");
-			volumeIcon.classList.add("fa-volume-mute"); // ミュートアイコンに変更
-		} else if (volume > 0 && volume <= 0.5) {
-			volumeIcon.classList.remove("fa-volume-mute", "fa-volume-up");
-			volumeIcon.classList.add("fa-volume-down"); // 小音量アイコンに変更
+			volumeIcon.classList.add("fa-volume-mute");
+		} else if (volume <= 0.5) {
+			volumeIcon.classList.add("fa-volume-down");
 		} else {
-			volumeIcon.classList.remove("fa-volume-mute", "fa-volume-down");
-			volumeIcon.classList.add("fa-volume-up"); // 大音量アイコンに変更
+			volumeIcon.classList.add("fa-volume-up");
 		}
 	}
 
-	// サムネイル再生のボタン
+	// サムネイル再生ボタン
 	playButtons.forEach((button) => {
-		button.addEventListener("click", function onClickHandler(event){
-			console.log("サムネイル再生ボタンがクリックされました");
-
-			// buttonの次の要素であるaudioタグを取得
+		button.addEventListener("click", function() {
 			const audioPlayer = this.nextElementSibling;
-			console.log("Clicked thumbnail button:", this);
-			console.log("AudioPlayer Element:", audioPlayer);
+			const thumbnailImage = this.parentElement.querySelector(".thumbnail");
 
-			const thumbnailImage = this.parentElement.querySelector(".thumbnail"); // サムネイル画像を取得
 			if (!audioPlayer || audioPlayer.tagName !== "AUDIO") {
 				console.error("Audio要素が正しく取得されませんでした");
 				return;
 			}
 
-			// サムネイル画像URLを音楽プレイヤーに設定
-			musicPlayerImage.src = thumbnailImage.src; // プレイヤーの画像を更新
-			currentThumbnailButton = this; // 現在のサムネイルのボタンを設定
+			musicPlayerImage.src = thumbnailImage.src;
+			currentThumbnailButton = this;
 
 			// 他の再生中の音声を停止
 			document.querySelectorAll("audio").forEach((audio) => {
 				if (!audio.paused) {
-					console.log("他の音声を停止:", audio.src);
 					audio.pause();
-					audio.currentTime = 0; // 必要ならリセット
+					audio.currentTime = 0;
 				}
-			}); { once: true }; // このリスナーは1回だけ実行される
-
-			// 状態に応じて再生/停止処理
-			switch (true) {
-				case audioPlayer.paused: // 音声が停止している場合
-					audioPlayer.play()
-						.then(() => {
-							console.log("再生開始:", audioPlayer.src);
-							this.textContent = "⏸"; // 再生中はボタンを一時停止アイコンに変更
-							playerPlayButton.classList.replace("fa-play", "fa-pause"); // プレイヤーのボタンも同期
-							musicPlayer.style.display = "flex"; // 音楽プレイヤーを表示
-							updateProgress(audioPlayer); // 進行状況を更新
-						})
-						.catch((error) => {
-							console.error("再生中にエラー発生:", error);
-						});
-					break;
-
-				case !audioPlayer.paused: // 音声が再生中の場合
-					console.log("音声を一時停止:", audioPlayer.src);
-					audioPlayer.pause();
-					this.textContent = "▶️"; // 一時停止中はボタンを再生アイコンに戻す
-					playerPlayButton.classList.replace("fa-pause", "fa-play");
-					break;
-
-				default:
-					console.error("不正な状態:", audioPlayer);
-			}
-
-			// 再生終了後にボタンを元に戻す
-			audioPlayer.addEventListener("ended", () => {
-				console.log("再生終了:", audioPlayer.src);
-				this.textContent = "▶️"; // ボタンを初期状態に戻す
-				playerPlayButton.classList.replace("fa-pause", "fa-play");
 			});
 
-			// サムネイル再生ボタンとプレイヤー再生ボタンの同期
+			// 音声の再生/停止処理
+			handlePlayback(audioPlayer);
 			syncPlayerPlayButton(audioPlayer);
+
+			// 再生終了後の処理
+			audioPlayer.addEventListener("ended", () => {
+				this.textContent = "▶️";
+				playerPlayButton.classList.replace("fa-pause", "fa-play");
+			}, { once: true });
 		});
 	});
 
 	// 音楽プレイヤー内の再生ボタンに対する処理
 	playerPlayButton.addEventListener("click", function() {
-		const audioPlayer = document.querySelector(".audio-player"); // プレイヤー内のaudio要素を取得
+		const audioPlayer = document.querySelector(".audio-player");
+
 		if (!audioPlayer) {
 			console.error("音楽プレイヤー内のAudio要素が見つかりません");
 			return;
 		}
 
-		console.log("プレイヤーの再生ボタンがクリックされました");
-		console.log("現在のAudio要素:", audioPlayer);
-
-		// 状態に応じて再生/停止処理
-		switch (true) {
-			case audioPlayer.paused: // 音声が停止している場合
-				audioPlayer.play()
-					.then(() => {
-						console.log("プレイヤーでの再生成功");
-						playerPlayButton.classList.replace("fa-play", "fa-pause");
-						if (currentThumbnailButton) {
-							currentThumbnailButton.textContent = "⏸"; // サムネイルのボタンも更新
-						}
-						updateProgress(audioPlayer);
-					})
-					.catch((error) => {
-						console.error("プレイヤーでの再生エラー:", error);
-					});
-				break;
-
-			case !audioPlayer.paused: // 音声が再生中の場合
-				console.log("プレイヤーで一時停止");
-				audioPlayer.pause();
-				playerPlayButton.classList.replace("fa-pause", "fa-play");
-				if (currentThumbnailButton) {
-					currentThumbnailButton.textContent = "▶️"; // サムネイルのボタンも更新
-				}
-				break;
-
-			default:
-				console.error("不正な状態:", audioPlayer);
-		}
+		handlePlayback(audioPlayer);
 	});
 
-	// サムネイル再生ボタンとプレイヤー再生ボタンの同期
-	function syncPlayerPlayButton(audioPlayer) {
-		console.log("サムネイルとプレイヤーの再生ボタンを同期");
-		if (!audioPlayer.paused) {
-			playerPlayButton.classList.replace("fa-play", "fa-pause");
+	// 音声の再生/停止処理
+	function handlePlayback(audioPlayer) {
+		if (audioPlayer.paused) {
+			audioPlayer.play().then(() => {
+				musicPlayer.style.display = "flex"; // 音楽プレイヤーを表示
+				playerPlayButton.classList.replace("fa-play", "fa-pause");
+				if (currentThumbnailButton) currentThumbnailButton.textContent = "⏸";
+				updateProgress(audioPlayer);
+			}).catch((error) => {
+				console.error("再生中にエラー発生:", error);
+			});
 		} else {
+			audioPlayer.pause();
 			playerPlayButton.classList.replace("fa-pause", "fa-play");
+			if (currentThumbnailButton) currentThumbnailButton.textContent = "▶️";
 		}
 	}
 
-	document.addEventListener("mousemove", function(e) {
-		if (!isVolumeDragging) return;
-		const mouseX = e.clientX - volumeBarContainer.getBoundingClientRect().left;
-		const width = volumeBarContainer.clientWidth;
-		const volumePercent = Math.min(Math.max(mouseX / width, 0), 1);
-		audio.volume = volumePercent;
-		updateVolumeBar(audio);
-	});
-
-	document.addEventListener("mouseup", function() {
-		isDragging = false; // ドラッグ中フラグを下げる
-		isVolumeDragging = false; // ドラッグ中フラグを下げる
-	});
+	// サムネイルとプレイヤーの再生ボタンを同期
+	function syncPlayerPlayButton(audioPlayer) {
+		if (audioPlayer.paused) {
+			playerPlayButton.classList.replace("fa-pause", "fa-play");
+		} else {
+			playerPlayButton.classList.replace("fa-play", "fa-pause");
+		}
+	}
 
 	// 進行状況を更新する関数
 	function updateProgress(audio) {
-		const duration = audio.duration; // 音楽の全体の長さ
-		const currentTime = audio.currentTime; // 現在の再生位置
-		const percent = (currentTime / duration) * 100; // パーセンテージを計算
-		progress.style.width = `${percent}%`; // シークバーの幅を更新
+		const percent = (audio.currentTime / audio.duration) * 100;
+		progress.style.width = `${percent}%`;
+		musicPlayer.querySelector(".current-time").textContent = formatTime(audio.currentTime);
+		musicPlayer.querySelector(".duration").textContent = formatTime(audio.duration);
 
-		// 現在の再生時間を表示
-		const currentTimeElement = musicPlayer.querySelector(".current-time");
-		currentTimeElement.textContent = formatTime(currentTime);
-
-		// 全体の音楽の時間を表示
-		const durationElement = musicPlayer.querySelector(".duration");
-		durationElement.textContent = formatTime(duration);
-
-		// 音楽が再生中の場合、進行状況を更新
 		if (!audio.paused) {
-			requestAnimationFrame(() => updateProgress(audio)); // 次のフレームで再度実行
+			requestAnimationFrame(() => updateProgress(audio));
 		}
 	}
 
@@ -227,24 +148,19 @@ document.addEventListener("DOMContentLoaded", function() {
 	function formatTime(time) {
 		const minutes = Math.floor(time / 60);
 		const seconds = Math.floor(time % 60);
-		return `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`; // 01:05 の形式
+		return `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
 	}
 
-	// シークバーをドラッグ操作するための処理
-	progressContainer.addEventListener("mousedown", function() {
-		isDragging = true; // ドラッグ中フラグを立てる
+	// シークバーの操作
+	progressContainer.addEventListener("mousedown", () => { isDragging = true; });
+	document.addEventListener("mousemove", (e) => {
+		if (!isDragging) return;
+		const percent = Math.min(Math.max((e.clientX - progressContainer.getBoundingClientRect().left) / progressContainer.clientWidth, 0), 1);
+		audio.currentTime = percent * audio.duration;
+		updateProgress(audio);
 	});
 
-	document.addEventListener("mousemove", function(e) {
-		if (!isDragging) return; // ドラッグ中でなければ何もしない
-		const mouseX = e.clientX - progressContainer.getBoundingClientRect().left; // マウスのX座標
-		const width = progressContainer.clientWidth; // シークバーの全体の幅
-		const percent = Math.min(Math.max(mouseX / width, 0), 1); // 0から1の範囲にクランプ
-		audio.currentTime = percent * audio.duration; // 音楽の再生位置を更新
-		updateProgress(audio); // シークバーを更新
-	});
-
-	// その他のコード（再生ボタンやシークバーの処理など）はそのまま維持
+	document.addEventListener("mouseup", () => { isDragging = false; });
 });
 
 // コメント表示用
@@ -254,18 +170,10 @@ function openPopup() {
 
 // いいねボタンクリック
 function changeImage(id) {
-
-	var img = document.getElementById(id);
-	console.log(img);
-	console.log(img.src);
-
-
-	if (img.src == 'http://127.0.0.1:3000/image/Heart-512x512%20test.png') {
-		console.log("a")
-		img.src = 'http://127.0.0.1:3000/image/Heart-512x512%20test2.png'; // 変更後の画像パス
-	} else {
-		img.src = 'http://127.0.0.1:3000/image/Heart-512x512%20test.png'; // 元の画像パス
-	}
+	const img = document.getElementById(id);
+	const isLiked = img.getAttribute('data-liked') === 'true';
+	img.src = isLiked ? 'image/Heart-512x512%20test.png' : 'image/Heart-512x512%20test2.png';
+	img.setAttribute('data-liked', !isLiked);
 }
 
 // ダイアログのスクリプト
@@ -276,22 +184,9 @@ function test(id) {
 	const myDialog = document.getElementById('myDialog');
 	const confirmationDialog = document.getElementById('confirmationDialog');
 	const closeConfirmationButton = document.getElementById('closeConfirmationButton');
-	myDialog.showModal();
 
-	openDialogButton.addEventListener('click', () => {
-		myDialog.showModal();
-	});
-
-	yesButton.addEventListener('click', () => {
-		myDialog.close();
-		confirmationDialog.showModal();
-	});
-
-	noButton.addEventListener('click', () => {
-		myDialog.close();
-	});
-
-	closeConfirmationButton.addEventListener('click', () => {
-		confirmationDialog.close();
-	});
+	openDialogButton.addEventListener('click', () => myDialog.showModal());
+	yesButton.addEventListener('click', () => { myDialog.close(); confirmationDialog.showModal(); });
+	noButton.addEventListener('click', () => myDialog.close());
+	closeConfirmationButton.addEventListener('click', () => confirmationDialog.close());
 }
