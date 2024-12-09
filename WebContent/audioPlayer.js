@@ -254,6 +254,7 @@ function openPopup() {
 
 // いいねボタンクリック
 function changeImage(id) {
+<<<<<<< HEAD
 
 	var img = document.getElementById(id);
 	console.log(img);
@@ -266,7 +267,22 @@ function changeImage(id) {
 	} else {
 		img.src = 'http://127.0.0.1:3000/image/Heart-512x512%20test.png'; // 元の画像パス
 	}
+=======
+  var img = document.getElementById(id);
+
+  // カスタム属性を取得または初期化
+  var isLiked = img.getAttribute('data-liked') === 'true';
+
+  if (isLiked) {
+    img.src = 'image/Heart-512x512%20test.png'; // 元の画像
+    img.setAttribute('data-liked', 'false'); // 状態を更新
+  } else {
+    img.src = 'image/Heart-512x512%20test2.png'; // 切り替え後の画像
+    img.setAttribute('data-liked', 'true'); // 状態を更新
+  }
+>>>>>>> refs/remotes/origin/main
 }
+
 
 // ダイアログのスクリプト
 function test(id) {

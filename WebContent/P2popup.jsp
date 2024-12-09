@@ -1,3 +1,4 @@
+<%@page import="apli.User"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -11,13 +12,19 @@
 <body>
 
   <div class="comment-section">
-    
+    <%
+	//セッションの取得
+	HttpSession ses = request.getSession();
+	// ログイン情報の取得
+	User u = (User)ses.getAttribute("LOGIN");
+	
+	%>
     <div class="comment-item">
       <a href="P2ProfileStranger.jsp"><img src="image/ききゅう.jpg" alt="アイコン" class="icon"></a>
       <div class="comment-content">
         <p class="username">KAITO</p>
         <p class="comment">ええやんええやん</p>
-      </div>tou
+      </div>
     </div>
 
     <div class="comment-item">

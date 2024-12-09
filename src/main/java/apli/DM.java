@@ -10,6 +10,7 @@ public class DM {
 	private String time;		// タイムスタンプ
 	private String your;		// 相手のID
 	private String yourName;	// 相手の名前
+	private String yourIcon;	// 相手のアイコン
 	
 	// ゲッターセッター
 	public String getDmId() {
@@ -59,5 +60,11 @@ public class DM {
 	}
 	public void setYourName(String yourName) {
 		this.yourName = yourName;
+	}
+	public String getYourIcon() {
+		return yourIcon;
+	}
+	public void setYourIcon(String yourIcon) {
+		this.yourIcon = yourIcon;
 	}
 }
