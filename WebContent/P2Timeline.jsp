@@ -74,7 +74,6 @@ ArrayList<Post> postList = (ArrayList) ses.getAttribute("POSTLIST");
 									style="width: 20px; height: 20px" /> <span><%=postList.get(i).getCommentCount()%></span>
 							</button>
 						</form>
-						<<<<<<< HEAD
 
 						<button class="heart"
 							onclick="changeImage('heartImage<%=postList.get(i)%>')">
