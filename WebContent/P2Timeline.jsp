@@ -50,16 +50,50 @@ function dialog(id){
 	openDialogButton.addEventListener('click', () => {
     myDialog.showModal();
 	});
-
-	yesButton.addEventListener('click', () => {
-  	myDialog.close();
-  	confirmationDialog.showModal();
-	});
-
-	noButton.addEventListener('click', () => {
-  	myDialog.close();
-	});
 }
+
+document.addEventListener('DOMContentLoaded', (event) => {
+    function dialog(id) {
+        console.log("274");
+        const openDialogButton = document.getElementById('openDialogButton');
+        const yesButton = document.getElementById('yesButton');
+        const noButton = document.getElementById('noButton');
+        const myDialog = document.getElementById('myDialog');
+        const confirmationDialog = document.getElementById('confirmationDialog');
+        const closeConfirmationButton = document.getElementById('closeConfirmationButton');
+
+        if (yesButton) {
+            yesButton.addEventListener('click', () => {
+                if (myDialog) {
+                    myDialog.close();
+                }
+                if (confirmationDialog) {
+                    confirmationDialog.showModal();
+                }
+            });
+        }
+
+        if (noButton) {
+            noButton.addEventListener('click', () => {
+                if (myDialog) {
+                    myDialog.close();
+                }
+            });
+        }
+
+        if (closeConfirmationButton) {
+            closeConfirmationButton.addEventListener('click', () => {
+                if (confirmationDialog) {
+                    confirmationDialog.close();
+                }
+            });
+        }
+    }
+
+    // dialog関数を呼び出す
+    dialog();
+});
+
 </script>
 
 <body>
@@ -131,6 +165,33 @@ function dialog(id){
 						<%
 						}
 						%>
+
+						<!-- 削除ボタンイフ --> 
+						<%
+						if (toukouList.get(i).getUserid().equals(u.getUserid())) {
+						%>
+						<form action="P2PostDeliteServlet" method="post">
+						<input type="hidden" name="toukouId" value="<%=i%>" />
+						<button type="button" id="openDialogButton<%=toukouList.get(i).getToukouid() %>"
+						onclick="dialog('trash')">
+							<span>
+								<div class="nav_icon trash">
+									<i class="gg-trash"></i>
+								</div>
+							</span>
+						</button>  
+						
+						 <dialog id="myDialog">
+            				<p>この投稿を削除しますか？</p>
+            			<div class="buttonContainer">
+                			<button type="submit" class="dialogButton" id="yesButton">はい</button>
+                			<button type="button" class="dialogButton" id="noButton">いいえ</button>
+            			</div>
+        				</dialog>
+						<%
+						}
+						%>
+						</form>
 					</div>
 				</div>
 			</div>

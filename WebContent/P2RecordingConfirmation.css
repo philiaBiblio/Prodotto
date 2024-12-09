@@ -1,148 +1,161 @@
 body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #000000;
-    color: #ffffff;
-  }
-  
-  .container {
-    display: flex;
-    flex-direction: row;
-    width: 100%;
-    max-width: 1200px;
-    margin: 20px auto;
-    padding: 20px;
-    background: rgb(0, 0, 0);
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(255, 255, 255, 0.2);
-  }
-  
-  .left-block,
-  .right-block {
-    padding: 20px;
-  }
-  
-  .left-block {
-    flex: 1;
-    border-right: 1px solid #ccc;
-  }
-  
-.right-block {
-    width: 70%; /* 右ブロックの幅を固定 */
-    padding-left: 30px;
-    height: 100%; /* 高さを100%に設定 */
+	font-family: Arial, sans-serif;
+	margin: 0;
+	padding: 0;
+	background-color: #000000;
+	color: #ffffff;
 }
-  
-  .header {
-    display: flex;
-    align-items: center;
-    margin-bottom: 20px;
-  }
-  
-  .header a {
-    margin-right: 10px;
-    text-decoration: none;
-    color: #007BFF;
-    font-size: 18px;
-  }
-  
-  .header span {
-    font-size: 20px;
-    font-weight: bold;
-  }
-  
-  .left-block div {
-    margin-bottom: 20px;
-  }
-  
-  .left-block div span {
-    font-size: 16px;
-    font-weight: bold;
-  }
-  
-  .left-block div a {
-    color: #007BFF;
-    text-decoration: none;
-    margin-left: 10px;
-  }
-  
-  .upload {
-    margin-bottom: 30px;
-  }
-  
-  .upload span {
-    display: block;
-    margin-bottom: 10px;
-    font-size: 16px;
-  }
-  
-  .upload input {
-    display: block;
-    margin: 10px 0;
-  }
-  
-  .waveform {
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    margin: 20px 0;
-    padding: 10px;
-    text-align: center;
-  }
-  
-  
-  .controls {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 20px 0;
-  }
-  
-  .btn {
-    margin: 0 10px;
-    padding: 10px 20px;
-    border-radius: 5px;
-    font-size: 14px;
-    cursor: pointer;
-    border: 2px solid #28a745;
-    background-color: transparent;
-    color: #28a745;
-  }
-  
-  .btn:hover {
-    background-color: #28a745;
-    color: white;
-  }
-  
-  .submit {
-    text-align: center;
-    margin-top: 20px;
-  }
-  
-  .submit button {
-    background-color: #28a745;
-    color: white;
-    border: none;
-    padding: 15px 30px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-  }
-  
-  .submit button:hover {
-    background-color: #218838;
-  }
-  
-  .scroll::-webkit-scrollbar {
-    width: 10px; /* スクロールバーの幅 */
-  }
-  .scroll::-webkit-scrollbar-track {
-    background: #f50000; /* スクロールバーの背景 */
-  }
-  .scroll::-webkit-scrollbar-thumb {
-    background: #888; /* スクロールバーの色 */
-  }
-  .scroll::-webkit-scrollbar-thumb:hover {
-    background: #555; /* ホバー時の色 */
-  }
-  
+
+.container {
+	display: flex;
+	flex-direction: row;
+	width: 100%;
+	max-width: 1200px;
+	margin: 20px auto;
+	padding: 20px;
+	background: rgb(0, 0, 0);
+	border-radius: 8px;
+	box-shadow: 0 2px 5px rgba(255, 255, 255, 0.2);
+}
+
+.left-block,
+.right-block {
+	padding: 20px;
+}
+
+.left-block {
+	flex: 1;
+	border-right: 1px solid #ccc;
+}
+
+.right-block {
+	width: 70%;
+	/* 右ブロックの幅を固定 */
+	padding-left: 30px;
+	height: 100%;
+	/* 高さを100%に設定 */
+}
+
+.header {
+	display: flex;
+	align-items: center;
+	margin-bottom: 20px;
+}
+
+.header a {
+	margin-right: 10px;
+	text-decoration: none;
+	color: #007BFF;
+	font-size: 18px;
+}
+
+.header span {
+	font-size: 20px;
+	font-weight: bold;
+}
+
+.left-block div {
+	margin-bottom: 20px;
+}
+
+.left-block div span {
+	font-size: 16px;
+	font-weight: bold;
+}
+
+.left-block div a {
+	color: #007BFF;
+	text-decoration: none;
+	margin-left: 10px;
+}
+
+.upload {
+	margin-bottom: 30px;
+}
+
+.upload span {
+	display: block;
+	margin-bottom: 10px;
+	font-size: 16px;
+}
+
+.upload input {
+	display: block;
+	margin: 10px 0;
+}
+
+.waveform {
+	border: 1px solid #ccc;
+	border-radius: 5px;
+	margin: 20px 0;
+	padding: 10px;
+	text-align: center;
+}
+
+
+.controls {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin: 20px 0;
+}
+
+.btn {
+	margin: 0 10px;
+	padding: 10px 20px;
+	border-radius: 5px;
+	font-size: 14px;
+	cursor: pointer;
+	border: 2px solid #28a745;
+	background-color: transparent;
+	color: #28a745;
+}
+
+.btn:hover {
+	background-color: #28a745;
+	color: white;
+}
+
+.submit {
+	text-align: center;
+	margin-top: 20px;
+}
+
+.submit button {
+	background-color: #28a745;
+	color: white;
+	border: none;
+	padding: 15px 30px;
+	border-radius: 5px;
+	cursor: pointer;
+	font-size: 16px;
+}
+
+.submit button:hover {
+	background-color: #218838;
+}
+
+.scroll::-webkit-scrollbar {
+	width: 10px;
+	/* スクロールバーの幅 */
+}
+
+.scroll::-webkit-scrollbar-track {
+	background: #f50000;
+	/* スクロールバーの背景 */
+}
+
+.scroll::-webkit-scrollbar-thumb {
+	background: #888;
+	/* スクロールバーの色 */
+}
+
+.scroll::-webkit-scrollbar-thumb:hover {
+	background: #555;
+	/* ホバー時の色 */
+}
+
+.scroll {
+	overflow: hidden;
+	/* スクロールバーを完全に非表示に */
+}
