@@ -204,7 +204,8 @@
 	        type="radio" 
 	        id="otoko" 
 	        name="sexy" 
-	        value="0">
+	        value="0" 
+	        required>
 	        <label 
 	        class="radio-label" 
 	        for="otoko">男</label>
@@ -213,11 +214,12 @@
 	        type="radio" 
 	        id="onna" 
 	        name="sexy" 
-	        value="1">
+	        value="1" 
+	        required>
 	        <label 
 	        class="radio-label" 
 	        for="onna">女</label>
-    </div>
+    	</div>
     <div>
     	<label class="soroe">生年月日</label><br />
             <input
@@ -225,34 +227,34 @@
               class="textbox birth"
               name="birth"
               id="birth"
+              required
               value="<%if(u != null) %><%=u.getBirth()%>"
             /><br />
-	</div>
-  
+           	</div>
           <div>
             <label class="soroe">演奏頻度</label><br />
-            <select class="textbox" name="fq" id="fq">
+            <select class="textbox" name="fq" id="fq" required>     
+              <option value="" disabled selected>選択してください</option>
               <option value="none">演奏しない</option>
               <option value="everyday">毎日</option>
               <option value="usually">週3、4回</option>
               <option value="sometimes">月1</option>
               <option value="never">その他</option>
-              <option value="" selected>選択してください</option>
              </select>
               <br/>
           </div>
   
           <div>
             <label class="soroe">楽器歴</label><br />
-            <select class="textbox" name="history" id="history">
+            <select class="textbox" name="history" id="history" required>
+              <option value="" disabled selected>選択してください</option>
               <option value="first">はじめて</option>
               <option value="3months">～3ヵ月</option>
               <option value="half">～半年</option>
               <option value="year">～1年</option>
               <option value="5years">～5年</option>
-              <option value="moreYears">5年～</option>
-              <option value="" selected>選択してください</option></select
-            ><br />
+              <option value="moreYears">5年～</option> 
+              </select><br />
           </div>
         </div>
         <footer>
