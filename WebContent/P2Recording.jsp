@@ -116,7 +116,7 @@
 							</button>
 						</div>
                       <!-- メッセージ表示エリア -->
-					<div id="message-area"></div>
+					<div id="odai-area"></div>
 					</div>
 				</div>
 
