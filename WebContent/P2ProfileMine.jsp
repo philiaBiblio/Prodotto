@@ -1,3 +1,6 @@
+<%@page import="apli.Post"%>
+<%@page import="apli.Toukou"%>
+<%@page import="java.util.ArrayList"%>
 <%@page import="apli.User"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -26,11 +29,12 @@
  HttpSession ses = request.getSession();
 
  User u = (User)ses.getAttribute("LOGIN");
+ ArrayList<Toukou> upList = (ArrayList)ses.getAttribute("UPLIST");
+ ArrayList<Post> postList = (ArrayList) ses.getAttribute("POSTLIST");
  
  int followCount = (int)ses.getAttribute("followCount");
  int followerCount = (int)ses.getAttribute("followerCount");
 
- ArrayList<Post> postList = (ArrayList<Post>) request.getAttribute("postList");
 %>
 
   <body>
@@ -38,14 +42,14 @@
         
       <div class="leftheader">
         <img
-          src="image/<%= up.getIconImage()%>"
+          src="image/<%= u.getIconImage()%>"
           alt="Profile Icon"
           class="profile-header-icon"
         />
 
         <div class="user-details">
-            <h2 class="username"><%= up.getName() %></h2>
-            <p class="user-id">@<%= up.getUserid() %></p>
+            <h2 class="username"><%= u.getName() %></h2>
+            <p class="user-id">@<%= u.getUserid() %></p>
             <div class="follower-info">
               <span class="follower-count">フォロワー: <%= followCount%></span>
               <span class="following-count">フォロー中: <%= followerCount%></span>
@@ -61,56 +65,48 @@
               <i class="fas fa-bell  changeb"></i>
             </button>
           </a>
-          
-		<!-- プロフ編集画面に飛ぶのでサーブレットたてな -->
+
 		<a href="P2ProfileEdit.jsp" class="edit-profile-button">
 			<i class="fas fa-pen changeb"></i>
 		</a>
 		</div>
 	</div>
-       
-
     </header>
-    
     
 
   <!-- 1行目のタイトルと左右ボタン -->
     <div class="section-header">
         <h3 class="section-title">セッション</h3>
-        <button class="show-all-button">すべて表示</button>
+  <!--       <button class="show-all-button">すべて表示</button> -->
       </div>
       <div class="scroll-container">
         <button class="scroll-left" id="scroll-left-1">◀</button>
         <div class="video-grid" id="video-grid-1">
 	        
 	    <!-- セッションのビデオカード生成 -->
-		<% for (int i = 0; i <postList.size() ; i++) { %>
-			
+		<% for (int i = 0; i <upList.size() ; i++) { %>
 			<!-- 投稿IDの頭六桁が000000じゃなかったら。-->
-		<% String postId = postList.get(i).getPostId();%>
-			<%if (!postId.startsWith("000000")){ %>
+			 <%if(!(upList.get(i).getToukouid().substring(0,6).equals("000000"))){ %>
 	          <div class="video-card">
 	            <div class="thumbnail-placeholder">
 	              <img
-	                src="<%= postList.get(i).getThumbnailPath() %>"
+	                src="image/<%= upList.get(i).getThumbnail() %>"
 	                alt="Video Thumbnail"
 	                class="thumbnail"
 	              />
 	              <button class="play-button">▶️</button>
 	              <!-- 音声再生ボタン -->
-	              <audio class="audio-player" src="<%= postList.get(i).getAudioPath()%>"></audio>
+	              <audio class="audio-player" src="audio/<%= upList.get(i).getSound()%>"></audio>
 	            </div>
 	  
 	            <div class="video-info">
-	              <a href="P1AdminProfile.jsp" class="profile-info">
+	              <a href="P2ProfileMine.jsp" class="profile-info">
 	                <img
-	                  src="<%= up.getIconImage()%>"
+	                  src="image/<%= u.getIconImage()%>"
 	                  alt="profile icon"
 	                  class="profile-icon"
 	                />
 	              </a>
-	              
-	              
 	              
 	              <div class="like-comment">
 					<form action="P2CommentJusinServlet" method="post">
@@ -125,32 +121,14 @@
 						</button>
 					</form>
 
-	                <button class="heart" onclick="changeImage('heartImage<%= up.getUserid() %>')">
-	                  <img
-	                    id="Heart<%= postList.get(i).getPostId()%>"
-	                    src="image/Heart-512x512 test.png"
-	                    alt="like icon"
-	                    style="width: 20px; height: 20px"
-	                  />
-	                  <span><%= postList.get(i).getLikeCount()%></span>
-	                </button>
-	                
-	                
-	                <!-- チャットGPTからそのまま拝借 -->
-	                <!-- 合っているかわからん -->
-					<%
-					// タイムスタンプからイベントIDを生成
-					java.util.Calendar cal = java.util.Calendar.getInstance();
-					int year = cal.get(java.util.Calendar.YEAR);      // 現在の西暦年
-					int month = cal.get(java.util.Calendar.MONTH) + 1; // 現在の月 (0ベースなので+1)
-					String eventId = String.format("%04d%02d", year, month); // 西暦4桁+月2桁のイベントID
-					
-					// 投稿IDの頭六桁とイベントIDを比較
-					String postIdPrefix = postId.substring(0, 6); // 投稿IDの頭六桁
-					%>
-
-					<form action="P2SessionRecPostServlet" method="post">
-					    <% if (postIdPrefix.equals(eventId)) { %> <!-- 投稿IDの頭六桁とイベントIDが一致 -->
+	                <button class="heart"
+							onclick="changeImage('heartImage<%=postList.get(i)%>')">
+							<img id="heartImage<%=postList.get(i)%>"
+								src="image/Heart-512x512 test.png" alt="like icon" style="width: 20px; height: 20px" /> 
+								<span><%=postList.get(i).getLikeCount()%></span>
+						</button>
+						
+				<form action="P2SessionRecPostServlet" method="post">
 					        <input type="hidden" name="postId" value="<%= postList.get(i).getPostId() %>" />
 					        <button type="submit">
 					            <span>
@@ -159,9 +137,7 @@
 					                </div>
 					            </span>
 					        </button>
-					    <% } %>
 					</form>
-
 
 	                <!-- css崩れた時用で残しとく -->
 	                <!-- <button type="submit" >
@@ -176,9 +152,7 @@
 		              
 					<!--  自分の投稿なら表示-->
 					<!--  今回はマイプロフィール画面なので表示しておきます。-->
-	                <% if (up.getUserid()==u.getUserid()) { %>
-	                
-	                <button id="openDialog<%= postList.get(i).getPostId()%>" onclick="test('trash<%= up.getUserid() %>')">
+	                <button id="openDialog<%= postList.get(i).getPostId()%>" onclick="test('trash<%= postList.get(i) %>')">
 	                  <span>
 	                    <div class="nav_icon trash">
 	                      <i class="gg-trash"></i>
@@ -208,7 +182,7 @@
 	                    閉じる
 	                  </button>
 	                </dialog>
-	                <%}%>
+	                
 	                
 	              </div>
 	            </div>
@@ -222,32 +196,31 @@
       <!-- 2行目のタイトルと左右ボタン -->
       <div class="section-header">
         <h3 class="section-title">自由投稿</h3>
-        <button class="show-all-button">すべて表示</button>
+      <!--   <button class="show-all-button">すべて表示</button> -->
       </div>
       <div class="scroll-container">
         <button class="scroll-left" id="scroll-left-2">◀</button>
         <div class="video-grid" id="video-grid-1">
         <!-- セッションのビデオカード生成 -->
-		<% for (int i = 0; i <postList.size() ; i++) { %>
+		<% for (int i = 0; i < upList.size() ; i++) { %>
 			<!-- 投稿IDの頭六桁が000000だったら。-->
-		<%	String postId2 = postList.get(i).getPostId(); %>
-			<%if (postId2.startsWith("000000")){ %>
+			 <%if(upList.get(i).getToukouid().substring(0,6).equals("000000")){ %>
 	          <div class="video-card">
 	            <div class="thumbnail-placeholder">
 	              <img
-	                src="<%= postList.get(i).getThumbnailPath() %>"
+	                src="image/<%= upList.get(i).getThumbnail() %>"
 	                alt="Video Thumbnail"
 	                class="thumbnail"
 	              />
 	              <button class="play-button">▶️</button>
 	              <!-- 音声再生ボタン -->
-	              <audio class="audio-player" src="<%= postList.get(i).getAudioPath()%>"></audio>
+	              <audio class="audio-player" src="audio/<%= upList.get(i).getSound()%>"></audio>
 	            </div>
 	  
 	            <div class="video-info">
-	              <a href="P1AdminProfile.jsp" class="profile-info">
+	              <a href="P2ProfileMine.jsp" class="profile-info">
 	                <img
-	                  src="<%= up.getIconImage()%>"
+	                  src="image/<%= u.getIconImage()%>"
 	                  alt="profile icon"
 	                  class="profile-icon"
 	                />
@@ -255,7 +228,7 @@
 	              <div class="like-comment">
 	              <!-- コメントボタン -->
 	                <form action="P2CommentJusinServlet" method="post">
-						<input type="hidden" name="toukouId" value="<%= postList.get(i).getPostId() %>" />
+						<input type="hidden" name="toukouId" value="<%= postList.get(i) %>" />
 						<button type="submit" class="comment" onclick="openPopup()">
 							<img
 							src="image/こめんと1.png"
@@ -266,22 +239,17 @@
 						</button>
 					</form>
 	  				<!-- いいねボタン -->
-	                <button class="heart" onclick="changeImage('heartImage<%= up.getUserid() %>')">
-	                  <img
-	                    id="Heart<%= postList.get(i).getPostId()%>"
-	                    src="image/Heart-512x512 test.png"
-	                    alt="like icon"
-	                    style="width: 20px; height: 20px"
-	                  />
-	                  <span><%= postList.get(i).getLikeCount()%></span>
-	                </button>
+	                <button class="heart"
+							onclick="changeImage('heartImageS<%=postList.get(i)%>')">
+							<img id="heartImageS<%=postList.get(i)%>"
+								src="image/Heart-512x512 test.png" alt="like icon"
+								style="width: 20px; height: 20px" /> <span><%=postList.get(i).getLikeCount()%></span>
+						</button>
 	                
 		              
 					<!--  自分の投稿なら表示-->
-					<!--  今回はマイプロフィール画面なので表示しておきます。-->
-	                <% if (up.getUserid()==u.getUserid()) { %>
-	                
-	                <button id="openDialog<%= postList.get(i).getPostId()%>" onclick="test('trash<%= up.getUserid() %>')">
+					<!--  今回はマイプロフィール画面なので表示しておきます。-->               
+	                <button id="openDialog<%= postList.get(i).getPostId()%>" onclick="test('trash<%= u.getUserid() %>')">
 	                  <span>
 	                    <div class="nav_icon trash">
 	                      <i class="gg-trash"></i>
@@ -310,7 +278,6 @@
 	                    閉じる
 	                  </button>
 	                </dialog>
-	                <%}%>
 	               
 	              </div>
 	            </div>
@@ -342,7 +309,7 @@
                 Watashitachi wa Sou Yatte Ikite Iku Jinshu na no
               </p> 
               -->
-              <p class="artist"><%= up.getName()%></p>
+              <p class="artist"><%= u.getName()%></p>
             </div>
           </div>
           <div class="icons">

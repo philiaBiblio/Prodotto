@@ -174,7 +174,9 @@ function changeImage(id) {
 	const isLiked = img.getAttribute('data-liked') === 'true';
 	img.src = isLiked ? 'image/Heart-512x512%20test.png' : 'image/Heart-512x512%20test2.png';
 	img.setAttribute('data-liked', !isLiked);
+
 }
+
 
 // ダイアログのスクリプト
 function test(id) {

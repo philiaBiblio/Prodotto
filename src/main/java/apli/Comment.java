@@ -9,6 +9,7 @@ public class Comment {
 	private String creciver;
 	private String ccontent;
 	private String timestamp;
+	private String cicon;
 	
 	//Getter&Setter
 	public String getCommentId() {
@@ -46,5 +47,11 @@ public class Comment {
 	}
 	public void setTimestamp(String timestamp) {
 		this.timestamp = timestamp;
+	}
+	public String getCicon() {
+		return timestamp;
+	}
+	public void setCicon(String cicon) {
+		this.cicon = cicon;
 	}
 }

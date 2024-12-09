@@ -1,91 +1,57 @@
+<%@page import="apli.Comment"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="apli.User"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>コメント画面</title>
-  <link rel="stylesheet" href="P2popup.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>コメント画面</title>
+<link rel="stylesheet" href="P2popup.css">
 </head>
 <body>
 
-  <div class="comment-section">
-    
-    <div class="comment-item">
-      <a href="P2ProfileStranger.jsp"><img src="image/ききゅう.jpg" alt="アイコン" class="icon"></a>
-      <div class="comment-content">
-        <p class="username">KAITO</p>
-        <p class="comment">ええやんええやん</p>
-      </div>tou
-    </div>
+	<div class="comment-section">
+		<%
+		//セッションの取得
+		HttpSession ses = request.getSession();
+		// ログイン情報の取得
+		User u = (User) ses.getAttribute("LOGIN");
+		//AllayListの取得
+		ArrayList<Comment> cmList = (ArrayList<Comment>) ses.getAttribute("CM");
+		System.out.println("ポップ:");
+/* 		System.out.println("a:"+cmList.get(1).getCsender());
+		System.out.println("b:"+cmList.get(1).getCcontent()) */;
+	
+		/* Integer cnt = (Integer)ses.getAttribute("rs1");
+		System.out.println(cnt); */
+		%>
 
-    <div class="comment-item">
-      <a href="P2ProfileStranger.jsp"><img src="image/ききゅう.jpg" alt="アイコン" class="icon"></a>
-      <div class="comment-content">
-        <p class="username">DAIDAI</p>
-        <p class="comment">シュシュってるね！</p>
-      </div>
-    </div>
+		<%-- <%if(cnt!=null){ %> --%>
+		<% for (int i = 1; i < cmList.size(); i++) { %>
+		<div class="comment-item">
+			<a href="P2ProfileStranger.jsp"><img src="image/ききゅう.jpg"
+				alt="アイコン" class="icon"></a>
+			<div class="comment-content">
+				<p class="username"><%=cmList.get(i).getCsender()%></p>
+				<p class="comment"><%=cmList.get(i).getCcontent()%></p>
+			</div>
+			}
+		</div>
+		<% } %>
+		<%-- <%} %> --%>
+	</div>
 
-    <div class="comment-item">
-        <a href="P2ProfileStranger.jsp"><img src="image/ききゅう.jpg" alt="アイコン" class="icon"></a>
-        <div class="comment-content">
-          <p class="username">TSUBASA</p>
-          <p class="comment">シュシュってるね！</p>
-        </div>
-      </div>
-
-    <div class="comment-item">
-        <a href="P2ProfileStranger.jsp"><img src="image/ききゅう.jpg" alt="アイコン" class="icon"></a>
-        <div class="comment-content">
-          <p class="username">BOB</p>
-          <p class="comment">シュシュってるね！</p>
-        </div>
-      </div>
-
-    <div class="comment-item">
-        <a href="P2ProfileStranger.jsp"><img src="image/ききゅう.jpg" alt="アイコン" class="icon"></a>
-        <div class="comment-content">
-          <p class="username">KIYOTA</p>
-          <p class="comment">シュシュってるね！</p>
-        </div>
-      </div>
-
-    <div class="comment-item">
-        <a href="P2ProfileStranger.jsp"><img src="image/ききゅう.jpg" alt="アイコン" class="icon"></a>
-        <div class="comment-content">
-          <p class="username">ASAKA</p>
-          <p class="comment">シュシュってるね！</p>
-        </div>
-      </div>
-   
-    <div class="comment-item">
-        <a href="P2ProfileStranger.jsp"><img src="image/ききゅう.jpg" alt="アイコン" class="icon"></a>
-        <div class="comment-content">
-          <p class="username">UZAWA</p>
-          <p class="comment">シュシュってるね！</p>
-        </div>
-      </div>
-
-    <div class="comment-item">
-        <a href="P2ProfileStranger.jsp"><img src="image/ききゅう.jpg" alt="アイコン" class="icon"></a>
-        <div class="comment-content">
-          <p class="username">KOBAYASHI</p>
-          <p class="comment">シュシュってるね！</p>
-        </div>
-      </div>
-  </div>
-
-  
-
-  <!-- 入力ボックスをDM画面から持ってくる -->
-  <form action="" method="post" class="chat-form">
-    <div class="chat-input">
-      <input type="text" name="comment" id="comment" required placeholder="コメントを入力">
-      <input type="submit" name="submit" id="submit" value="送信">
-    </div>
-  </form>
+	<!-- 入力ボックスをDM画面から持ってくる -->
+	<form action="" method="post" class="chat-form">
+		<div class="chat-input">
+			<input type="text" name="comment" id="comment" required
+				placeholder="コメントを入力"> <input type="submit" name="submit"
+				id="submit" value="送信">
+		</div>
+	</form>
 
 </body>
 </html>

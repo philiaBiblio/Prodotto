@@ -1,3 +1,5 @@
+<%@page
+	import="org.eclipse.jdt.internal.compiler.env.IUpdatableModule.UpdateKind"%>
 <%@page import="apli.Post"%>
 <%@page import="apli.Toukou"%>
 <%@page import="apli.DM"%>
@@ -66,11 +68,51 @@ ArrayList<Post> postList = (ArrayList) ses.getAttribute("POSTLIST");
 								value="<%=postList.get(i).getPostId()%>" />
 
 
+<jsp:include page="P2kensaku.jsp"></jsp:include>
+
+<body>
+	<!-- 追加するコード -->
+	<main>
+		<!-- グリッドコンテナ -->
+		<section class="video-grid">
+			<%
+			if (toukouList != null) {
+			%>
+			<%
+			for (int i = 1; i < toukouList.size(); i++) {
+			%>
+			<div class="video-card">
+				<div class="thumbnail-placeholder">
+
+					<img src="image/<%=toukouList.get(i).getThumbnail()%>"
+						alt="Video Thumbnail" class="thumbnail" />
+
+					<button class="play-button">▶️</button>
+					<!-- 音声再生ボタン -->
+					<audio class="audio-player"
+						src="audio/<%=toukouList.get(i).getSound()%>"></audio>
+				</div>
+
+				<div class="video-info">
+					<a href="P2ProfileStranger.jsp" class="profile-info"> <img
+						src="image/<%=userIconList.get(i).getIconImage()%>"
+						alt="profile icon" class="profile-icon" />
+					</a>
+					<div class="like-comment">
+
+						<form action="P2CommentJusinServlet">
+							<input type="hidden" name="toukouId" value="<%=i%>" />
+
+>>>>>>> 0cc53349370cc1ae5ceb8e626b5da018cfaf0bbb
 							<button class="submit comment" onclick="openPopup()">
 								<img src="image/こめんと1.png" alt="comment icon"
 									style="width: 20px; height: 20px" /> <span><%=postList.get(i).getCommentCount()%></span>
 							</button>
 						</form>
+<<<<<<< HEAD
+=======
+						<<<<<<< HEAD
+>>>>>>> 0cc53349370cc1ae5ceb8e626b5da018cfaf0bbb
 
 						<button class="heart"
 							onclick="changeImage('heartImage<%=postList.get(i)%>')">
@@ -93,6 +135,28 @@ ArrayList<Post> postList = (ArrayList) ses.getAttribute("POSTLIST");
 						<%
 						}
 						%>
+<<<<<<< HEAD
+=======
+						<!-- 削除ボタンイフ -->
+						
+						<%-- 
+						<%
+						if (toukouList.get(i).getUserid().equals(u.getUserid())) {
+						%>
+						<button id="openDialog<%=postList.get(i).getPostId()%>"
+							onclick="test('trash<%=postList.get(i)%>')">
+							<span>
+								<div class="nav_icon trash">
+									<i class="gg-trash"></i>
+								</div>
+							</span>
+						</button>
+						<%
+						}
+						%> 
+						
+						--%>
+>>>>>>> 0cc53349370cc1ae5ceb8e626b5da018cfaf0bbb
 
 					</div>
 				</div>
@@ -105,10 +169,13 @@ ArrayList<Post> postList = (ArrayList) ses.getAttribute("POSTLIST");
 			%>
 		</section>
 
+<<<<<<< HEAD
 
 
 
 
+=======
+>>>>>>> 0cc53349370cc1ae5ceb8e626b5da018cfaf0bbb
 		<!-- 音楽プレイヤー -->
 		<div class="music-player" style="display: none">
 			<!-- 初期表示を非表示に -->
@@ -156,8 +223,21 @@ ArrayList<Post> postList = (ArrayList) ses.getAttribute("POSTLIST");
 			</div>
 		</div>
 	</main>
-	<jsp:include page="P2kensaku.jsp"></jsp:include>
+
+
 	<script src="audioPlayer.js"></script>
 	<script src="https://unpkg.com/wavesurfer.js"></script>
+	<script>
+	function Saisei(){
+		var e1 = document.getElementById("num");
+		var e2 = document.getElementById("test");
+
+		e2.value = e1;"
+
+	</script>
 </body>
 </html>
+
+
+
+
