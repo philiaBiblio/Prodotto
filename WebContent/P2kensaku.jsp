@@ -68,7 +68,7 @@
 							<div class="nav_icon nav_soroe">
 								<i class="gg-crown"></i>
 							</div> <span class="nav_name">ランキング</span>
-						</a> <a href="P2PostAndRecording.jsp"
+						</a> <a href="P2PostAndRecordingServlet"
 							class="nav_link navtop nav_soroe" id="P2PostAndRecordingid">
 							<!-- <i class="fa-solid fa-users nav_icon"></i> -->
 							<div class="nav_icon nav_soroe">

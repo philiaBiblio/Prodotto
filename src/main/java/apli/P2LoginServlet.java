@@ -41,28 +41,22 @@ public class P2LoginServlet extends HttpServlet {
 		try {
 			// 入力したメールアドレスを取得
 			String inMailadd = request.getParameter("mailadd");
+			
 			// sql用にシングルコーテーションで囲む
 			inMailadd = "'" + inMailadd + "'";
 			
 			// 入力したパスワードを取得
 			String inPassword = request.getParameter("pw");
 			
-			// メールアドレスが存在するかチェック
-		    String emailCheckSql = "SELECT * FROM ユーザー WHERE メールアドレス = " + inMailadd;
-		    ResultSet emailCheckRs = dba.selectExe(emailCheckSql);
+			// ユーザーか管理者か判定するためのフラグ
+			boolean isUser = false; 
 			
-		    if (!emailCheckRs.next()) {
-		        // メールアドレスが存在しない場合
-		        request.setAttribute("errorMessage", "※メールアドレスかパスワードが違います");
-		        RequestDispatcher rd = request.getRequestDispatcher("P2Login.jsp");
-		        rd.forward(request, response);
-		        return;
-		    }
-		
+			
+			//まずはパスワードを暗号化
 			// inpass暗号化
 			// 暗号化部品の生成
 			Angou a = new Angou();
-		
+					
 			// 暗号化前のinPasswordをmojiに入れる
 			String moji = inPassword;
 			// 暗号化実行(半角64文字に変換)
@@ -72,25 +66,67 @@ public class P2LoginServlet extends HttpServlet {
 			// sql用にシングルコーテーションで囲む
 			AinPassword = "'" + AinPassword + "'";
 			
-			String passwordCheckSql = "SELECT * FROM ユーザー WHERE メールアドレス = " + inMailadd + " AND パスワード = " + AinPassword;
-		    ResultSet passwordCheckRs = dba.selectExe(passwordCheckSql);
 			
-		    if (!passwordCheckRs.next()) {
-		        // パスワードが間違っている場合
-		        request.setAttribute("errorMessage", "※メールアドレスかパスワードが違います");
-		        RequestDispatcher rd = request.getRequestDispatcher("P2Login.jsp");
-		        rd.forward(request, response);
-		        return;
+			// ユーザーのメールアドレスが存在するかチェック
+		    String emailCheckSql = "SELECT * FROM ユーザー WHERE メールアドレス = " + inMailadd;
+		    ResultSet emailCheckRs = dba.selectExe(emailCheckSql);
+		    
+		    // ユーザーにメールアドレスが存在する場合
+		    if (emailCheckRs.next()) {
+		    	
+		    	// パスワードをチェック
+		        String passwordCheckSql = "SELECT * FROM ユーザー WHERE メールアドレス = " + inMailadd + " AND パスワード = " + AinPassword;
+		        ResultSet passwordCheckRs = dba.selectExe(passwordCheckSql);
+		        
+		        if (passwordCheckRs.next()) {
+		            isUser = true; // ユーザーが確認された
+		        } 
+		        else {
+		            // メールアドレスは存在するがパスワードが違う
+		            request.setAttribute("errorMessage", "※メールアドレスかパスワードが違います");
+		            RequestDispatcher rd = request.getRequestDispatcher("P2Login.jsp");
+		            rd.forward(request, response);
+		            return;
+		        }
 		    }
+		    // ユーザーにメールアドレスが存在しなかった場合
+		    else {
+		    	// 管理者のメールアドレスをチェック
+		        String adminEmailCheckSql = "SELECT * FROM 管理者 WHERE メールアドレス = " + inMailadd;
+		        ResultSet adminEmailCheckRs = dba.selectExe(adminEmailCheckSql);
+		        
+		        if (adminEmailCheckRs.next()) {		        	
+		            // 管理者のパスワードをチェック
+		            String adminPasswordCheckSql = 
+		                "SELECT * FROM 管理者 WHERE メールアドレス = " + inMailadd + " AND パスワード = " + AinPassword;
+		            ResultSet adminPasswordCheckRs = dba.selectExe(adminPasswordCheckSql);
+		            
+		            if (!adminPasswordCheckRs.next()) {
+		                // 管理者にメールアドレスは存在するがパスワードが違う
+		                request.setAttribute("errorMessage", "※メールアドレスかパスワードが違います");
+		                RequestDispatcher rd = request.getRequestDispatcher("P2Login.jsp");
+		                rd.forward(request, response);
+		                return;
+		            }
+		        }
+		        // 両方のテーブルにメールアドレスが存在しない場合
+		        else {
+		        	//エラーメッセージを表示
+		        	request.setAttribute("errorMessage", "※メールアドレスかパスワードが違います");
+		            RequestDispatcher rd = request.getRequestDispatcher("P2Login.jsp");
+		            rd.forward(request, response);
+		            return;
+		        }
+		    }
+		    
 			
+				// ログイン用のsql文
+				String sql = "select * from ユーザー where メールアドレス = " + inMailadd + " and パスワード = " + AinPassword;
 			
-			// ログイン用のsql文
-			String sql = "select * from ユーザー where メールアドレス = " + inMailadd + " and パスワード = " + AinPassword;
+				// sql文実行
+				ResultSet rs = dba.selectExe(sql);
 			
-			// sql文実行
-			ResultSet rs = dba.selectExe(sql);
-			
-			if(rs.next()) {
+			if(isUser && rs.next()) {
 				System.out.println("ユーザーログイン実行");
 				// ユーザー情報をDBから取得
 				String userid = rs.getString("ユーザーID");
@@ -178,7 +214,8 @@ public class P2LoginServlet extends HttpServlet {
 				// ログアウト処理
 				dba.closeDB();
 				dba3.closeDB();
-			}else {
+			}
+			else {
 				System.out.println("管理者ログイン実行");
 				// ユーザーログイン失敗後管理者用データベースへ接続
 				String sql2 = "select * from 管理者 where メールアドレス = " + inMailadd + " and パスワード = " + AinPassword;
