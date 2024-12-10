@@ -2,26 +2,21 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-<meta charset="utf-8" />
-<!-- 文字エンコーディングをUTF-8に設定 -->
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<!-- IE互換モードをEdgeに設定 -->
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<!-- デバイスの幅に基づいて表示サイズを調整 -->
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<!-- IE互換モードをEdgeに設定 -->
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<!-- デバイスの幅に基づいて表示サイズを調整 -->
 
-<!-- Bootstrapスタイルシートのリンク。ボタンやレイアウトのスタイル -->
-<link rel="stylesheet" href="bootstrap.min.css" />
+	<!-- Bootstrapスタイルシートのリンク。ボタンやレイアウトのスタイル -->
+	<link rel="stylesheet" href="bootstrap.min.css" />
+	<link rel="stylesheet" href="main.css" />
+	<link rel="stylesheet" href="P2Recording.css" />
 
-<!-- カスタムスタイルシートのリンク -->
-<link rel="stylesheet" href="main.css" />
-<link rel="stylesheet" href="P2Recording.css" />
+	<!-- Font Awesomeのリンク。ボタンのアイコンを使用するために必要 -->
+	<script src="https://kit.fontawesome.com/032b012e04.js" crossorigin="anonymous"></script>
 
-<!-- Font Awesomeのリンク。ボタンのアイコンを使用するために必要 -->
-<script src="https://kit.fontawesome.com/032b012e04.js"
-	crossorigin="anonymous"></script>
-
-<title>録音画面</title>
-<!-- タイトルを「録音画面」に設定 -->
+	<title>録音画面</title>
 </head>
 <body>
 	<!-- メインコンテンツ部分 -->
@@ -130,51 +125,41 @@
 						<div class="track-drop">::before</div>
 						<!-- 自動スクロール設定のチェックボックス -->
 						<div class="form-check form-check-inline">
-							<input class="form-check-input automatic-scroll" type="checkbox"
-								id="automatic_scroll" /> <label class="form-check-label"
-								for="automatic_scroll"> 自動スクロール </label>
+							<input class="form-check-input automatic-scroll" type="checkbox" id="automatic_scroll" /> <label class="form-check-label" for="automatic_scroll"> 自動スクロール </label>
 						</div>
 					</form>
 				</div>
+				
+				<!-- 録音確定ボタン -->
 				<div class="btn-group">
-					<button type="submit" class="btn btn-download btn-outline-primary"
-						title="録音確定" id="confirmRecordingBtn"
-						onclick="redirectAfterDelay()">
+					<button type="submit" class="btn btn-download btn-outline-primary" title="録音確定" id="confirmRecordingBtn" onclick="redirectAfterDelay()">
 						録音を確定 <i class="fas fa-download" aria-hidden="true"></i>
 					</button>
 				</div>
 
-				<!-- 幅を持つ要素例 -->
-				<div class="channel channel-0" style="width: 200px;"></div>
-
+				<!-- スクリプト -->
 				<script>
 					function redirectAfterDelay() {
 						// `channel-0` 要素を取得
-						const channelElement = document
-								.querySelector('.channel.channel-0');
-
-						// 要素の幅を取得 (px を除去して数値として取得)
-						const widthValue = parseInt(window
-								.getComputedStyle(channelElement).width, 10);
-
-						// 遅延値 (幅をそのまま使う、または変換する)
-						const l = widthValue * 6; // ミリ秒単位
-						console.log(l);
-						console.log(`Redirecting after ${l}ms based on channel width`);
+						const channelElement = document.querySelector('.channel.channel-0');
+						const widthValue = parseInt(window.getComputedStyle(channelElement).width, 10);
+						const delay = widthValue * 6; // ミリ秒単位
+						console.log(`Redirecting after ${delay}ms based on channel width`);
 
 						// 遷移の遅延処理
 						setTimeout(function() {
 							location.href = 'P2RecordingServlet';
-						}, l);
+						}, delay);
 					}
 				</script>
-
-				<script src="https://code.jquery.com/jquery-3.6.0.min.js"
-					integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
-					crossorigin="anonymous"></script>
-				<!-- 外部JavaScriptファイルのリンク -->
-				<script type="text/javascript" src="waveform-playlist.js"></script>
-				<script type="text/javascript" src="record.js"></script>
-				<script type="text/javascript" src="emitter.js"></script>
+			</article>
+		</div>
+	</main>
+	
+	<!-- 外部JavaScriptファイルのリンク -->
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+	<script type="text/javascript" src="waveform-playlist.js"></script>
+	<script type="text/javascript" src="record.js"></script>
+	<script type="text/javascript" src="emitter.js"></script>
 </body>
 </html>

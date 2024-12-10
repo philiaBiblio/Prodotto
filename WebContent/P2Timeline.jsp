@@ -24,75 +24,60 @@
 </head>
 
 <%
-// セッションの取得
-HttpSession ses = request.getSession();
-// ログイン情報の取得
-User u = (User) ses.getAttribute("LOGIN");
-// 音声情報の取得
-ArrayList<Toukou> toukouList = (ArrayList) ses.getAttribute("TOUKOULIST");
-ArrayList<User> userIconList = (ArrayList) ses.getAttribute("ICONLIST");
-ArrayList<Post> postList = (ArrayList) ses.getAttribute("POSTLIST");
+	// 大域変数
+	int globalId;
+	// セッションの取得
+	HttpSession ses = request.getSession();
+	// ログイン情報の取得
+	User u = (User) ses.getAttribute("LOGIN");
+	// 音声情報の取得
+	ArrayList<Toukou> toukouList = (ArrayList) ses.getAttribute("TOUKOULIST");
+	ArrayList<User> userIconList = (ArrayList) ses.getAttribute("ICONLIST");
+	ArrayList<Post> postList = (ArrayList) ses.getAttribute("POSTLIST");
+	String trueMess = (String)ses.getAttribute("TRUEMESS");
 %>
 
 <jsp:include page="P2kensaku.jsp"></jsp:include>
 <script>
 //ダイアログのスクリプト
 function dialog(id){
-	console.log("274")
+	console.log("id:" + id);
 	const openDialogButton = document.getElementById('openDialogButton');
-	const yesButton = document.getElementById('yesButton');
-	const noButton = document.getElementById('noButton');
-	const myDialog = document.getElementById('myDialog');
+	const yesButton = document.getElementById('yesButton' + id);
+	const noButton = document.getElementById('noButton' + id);
+	const myDialog = document.getElementById('myDialog' + id);
 	const confirmationDialog = document.getElementById('confirmationDialog');
 	const closeConfirmationButton = document.getElementById('closeConfirmationButton');
 	myDialog.showModal();
-
-	openDialogButton.addEventListener('click', () => {
-    myDialog.showModal();
-	});
+	console.log("no" + noButton)
+	  if (noButton) {
+          noButton.addEventListener('click', () => {
+              if (myDialog) {
+                  console.log("80")
+                  myDialog.close();
+              }
+          });
+      }
+	globalId = id;
 }
+
 
 document.addEventListener('DOMContentLoaded', (event) => {
     function dialog(id) {
-        console.log("274");
         const openDialogButton = document.getElementById('openDialogButton');
-        const yesButton = document.getElementById('yesButton');
-        const noButton = document.getElementById('noButton');
-        const myDialog = document.getElementById('myDialog');
+        const yesButton = document.getElementById('yesButton' + id);
+        const noButton = document.getElementById('noButton' + id);
+        console.log("no" + noButton)
+        const myDialog = document.getElementById('myDialog' + id);
         const confirmationDialog = document.getElementById('confirmationDialog');
         const closeConfirmationButton = document.getElementById('closeConfirmationButton');
-
-        if (yesButton) {
-            yesButton.addEventListener('click', () => {
-                if (myDialog) {
-                    myDialog.close();
-                }
-                if (confirmationDialog) {
-                    confirmationDialog.showModal();
-                }
-            });
-        }
-
-        if (noButton) {
-            noButton.addEventListener('click', () => {
-                if (myDialog) {
-                    myDialog.close();
-                }
-            });
-        }
-
-        if (closeConfirmationButton) {
-            closeConfirmationButton.addEventListener('click', () => {
-                if (confirmationDialog) {
-                    confirmationDialog.close();
-                }
-            });
-        }
     }
 
     // dialog関数を呼び出す
     dialog();
+    globalId = id;
 });
+
 
 </script>
 
@@ -101,12 +86,8 @@ document.addEventListener('DOMContentLoaded', (event) => {
 	<main>
 		<!-- グリッドコンテナ -->
 		<section class="video-grid">
-			<%
-			if (toukouList != null) {
-			%>
-			<%
-			for (int i = 1; i < toukouList.size(); i++) {
-			%>
+			<%if (toukouList != null) {%>
+			<%for (int i = 0; i < toukouList.size(); i++) {%>
 			<div class="video-card">
 				<div class="thumbnail-placeholder">
 
@@ -120,24 +101,31 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
 
 				<div class="video-info">
-					
-					
-					<form action="P2ProfileServletStrangerServlet" method="get" style="margin: 0; padding: 0; display: inline;">
-    				<input type="hidden" name="StrangertoukouId" value="<%=toukouList.get(i).getToukouid()%>" />
+					<!-- 他人なら他人プロフ。自分ならマイページへ -->
+					<%if (!toukouList.get(i).getUserid().equals(u.getUserid())) {%>
+					<form action="P2UserSearchServlet" method="get">
+    				<input type="hidden" name="userID" value="<%=toukouList.get(i).getUserid()%>" />
+    				
     					<button type="submit" class="profile-info" style="all: unset; cursor: pointer;">
 	    					<a>
 	    						<img src="image/<%=userIconList.get(i).getIconImage()%>" alt="profile icon" class="profile-icon" />
 	    					</a>
         				</button>
 					</form>
+					<%}else{%>
+						<form action="P2ProfileServlet" method="get">
+    					<input type="hidden" name="userID" value="" />
+    					<button type="submit" class="profile-info" style="all: unset; cursor: pointer;">
+	    					<a>
+	    						<img src="image/<%=userIconList.get(i).getIconImage()%>" alt="profile icon" class="profile-icon" />
+	    					</a>
+        				</button>
+					</form>
+					<%} %>
 
-					
-					
 					<div class="like-comment">
-
 						<form action="P2CommentJusinServlet">
 							<input type="hidden" name="toukouId" value="<%=i%>" />
-
 							<button class="submit comment" onclick="openPopup()">
 								<img src="image/こめんと1.png" alt="comment icon"
 									style="width: 20px; height: 20px" /> <span><%=postList.get(i).getCommentCount()%></span>
@@ -151,9 +139,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
 								style="width: 20px; height: 20px" /> <span><%=postList.get(i).getLikeCount()%></span>
 						</button>
 
-						<%
-						if (!(toukouList.get(i).getToukouid().substring(0, 6).equals("000000"))) {
-						%>
+						<%if (!(toukouList.get(i).getToukouid().substring(0, 6).equals("000000"))) {%>
 						<button>
 							<span> <a href="P2Recording.html">
 									<div class="nav_icon">
@@ -162,45 +148,40 @@ document.addEventListener('DOMContentLoaded', (event) => {
 							</a>
 							</span>
 						</button>
-						<%
-						}
-						%>
+						<%}%>
 
 						<!-- 削除ボタンイフ --> 
-						<%
-						if (toukouList.get(i).getUserid().equals(u.getUserid())) {
-						%>
+						<%if (toukouList.get(i).getUserid().equals(u.getUserid())) {%>
+						<script>
+							console.log("i:" + "<%= i %>");
+    						console.log("toukouList.get(i).getUserid()：" + "<%= toukouList.get(i).getUserid() %>");
+    						console.log("u.getUserid()：" + "<%= u.getUserid() %>");
+						</script>
 						<form action="P2PostDeliteServlet" method="post">
 						<input type="hidden" name="toukouId" value="<%=i%>" />
 						<button type="button" id="openDialogButton<%=toukouList.get(i).getToukouid() %>"
-						onclick="dialog('trash')">
+						 onclick="dialog('<%=i%>')">
 							<span>
 								<div class="nav_icon trash">
 									<i class="gg-trash"></i>
 								</div>
 							</span>
-						</button>  
-						
-						 <dialog id="myDialog">
+						</button> 
+						 <dialog id="myDialog<%= i %>">
             				<p>この投稿を削除しますか？</p>
             			<div class="buttonContainer">
-                			<button type="submit" class="dialogButton" id="yesButton">はい</button>
-                			<button type="button" class="dialogButton" id="noButton">いいえ</button>
+            			<a href="P2PostDeliteServlet?hensuu=<%=i%>&sakuzyoId=<%= toukouList.get(i).getToukouid() %>">
+                			<button type="button" class="dialogButton" id="yesButton<%= i%>">はい</button></a>
+                			<button type="button" class="dialogButton" id="noButton<%= i %>">いいえ</button>
             			</div>
         				</dialog>
-						<%
-						}
-						%>
-						</form>
+
+						<%}%>
 					</div>
 				</div>
 			</div>
-			<%
-			}
-			%>
-			<%
-			}
-			%>
+			<%}%>
+			<%}%>
 		</section>
 
 		<!-- 音楽プレイヤー -->
@@ -212,12 +193,8 @@ document.addEventListener('DOMContentLoaded', (event) => {
 						<img src="." alt="" />
 					</div>
 					<div class="song-description">
-						<p class="title"></p>
-						<p class="artist"></p>
+						<p class="artist"><%-- <%=userIconList.get(globalId).getName() %> --%></p>
 					</div>
-				</div>
-				<div class="icons">
-					<i class="far fa-heart"></i> <i class="fas fa-compress"></i>
 				</div>
 			</div>
 			<div class="progress-controller">
@@ -250,7 +227,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
 		</div>
 	</main>
 
-	<script src="audioPlayer.js"></script>
 	<script src="https://unpkg.com/wavesurfer.js"></script>
 	<script>
 	function Saisei(){
@@ -265,11 +241,5 @@ document.addEventListener('DOMContentLoaded', (event) => {
 		<p>削除しました</p>
 		<button type="button" class="dialogButton" id="closeConfirmationButton" onclick="confirmationDialog.close();">閉じる</button>
 	</dialog>
-	
-	
 </body>
 </html>
-
-
-
-

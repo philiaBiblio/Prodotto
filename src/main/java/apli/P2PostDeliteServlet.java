@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -22,7 +21,7 @@ public class P2PostDeliteServlet extends HttpServlet {
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		System.out.println("P2PostDeliteServlet実行");
 		 
@@ -43,30 +42,32 @@ public class P2PostDeliteServlet extends HttpServlet {
 	     
 	     try {
 	    	 // どの投稿に対してか投稿IDを取得
-	    	 String x = request.getParameter("toukouId");
-	    	 int i = Integer.parseInt(x);
-	    	 
-	    	 String toukouId = toukouList.get(i).getToukouid();
+	    	 String x = request.getParameter("hensuu");
+	    	 Integer i = Integer.parseInt(x);
+	    	 System.out.println("48：" + i); 
+
+	    	 String sakuzyoId = request.getParameter("sakuzyoId");
+	    	 System.out.println("51：" + sakuzyoId);
 	    	 
 	    	 // 投稿ID検索のsql文実行
-	    	 ResultSet rs = dba.selectExe("select * from 投稿 where 投稿ID = '" + toukouId + "'");
+	    	 ResultSet rs = dba.selectExe("select * from 投稿 where 投稿ID = '" + sakuzyoId + "'");
 	    	 
 	    	 if(rs.next()) {
 	    		 String deleteSQL;
 	    		 // 指定した投稿をテーブルから削除
-	    		 deleteSQL =  "DELETE FROM 再生 where 投稿ID = '" + toukouId + "'"; 		        
+	    		 deleteSQL =  "DELETE FROM 再生 where 投稿ID = '" + sakuzyoId + "'"; 		        
 	    		 // デリート文実行
 	    		 dba.UpdateExe(deleteSQL);
 	    		 
-	    		 deleteSQL = "DELETE FROM いいね where 投稿ID = '" + toukouId + "'"; 		        
+	    		 deleteSQL = "DELETE FROM いいね where 投稿ID = '" + sakuzyoId + "'"; 		        
 	    		 // デリート文実行
 	    		 dba.UpdateExe(deleteSQL);
 	    		 
-	    		 deleteSQL = "DELETE FROM コメント where 投稿ID = '" + toukouId + "'"; 		        
+	    		 deleteSQL = "DELETE FROM コメント where 投稿ID = '" + sakuzyoId + "'"; 		        
 	    		 // デリート文実行
 	    		 dba.UpdateExe(deleteSQL);
 	    		 
-	    		 deleteSQL = "DELETE FROM 投稿 where 投稿ID = '" + toukouId + "'"; 		        
+	    		 deleteSQL = "DELETE FROM 投稿 where 投稿ID = '" + sakuzyoId + "'"; 		        
 	    		 // デリート文実行
 	    		 dba.UpdateExe(deleteSQL);
 	    	 }
@@ -78,10 +79,8 @@ public class P2PostDeliteServlet extends HttpServlet {
 		     ses.setAttribute("TRUEMESS", trueMess);
 		        	        
 		     // 画面へ遷移
-		     url = "P2Timeline.jsp";
-		     
-		     RequestDispatcher rd = request.getRequestDispatcher(url);
-		     rd.forward(request, response);
+		     url = "P2TimelineServlet";
+		     response.sendRedirect(url);
 	    	 
 		     // ログアウト処理
 	    	 dba.closeDB();

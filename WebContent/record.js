@@ -1,7 +1,6 @@
 var userMediaStream; // ユーザのメディアストリームを格納する変数
 var playlist; // プレイリストのインスタンスを格納する変数
 var constraints = { audio: true }; // オーディオの制約を定義（オーディオを取得する）
-var $container = $("body"); // body 要素を jQuery で取得
 
 // getUserMedia メソッドの互換性を確保するための処理
 navigator.getUserMedia =
@@ -40,20 +39,36 @@ playlist = WaveformPlaylist.init({
   },
 });
 
-// WAV エクスポータの初期化
-playlist.initExporter();
+
+
+//★//★//★//★//★//★//★//★//★//★//★//★//★//★//★//★//★//★//★//★//★//★//★//★//★
+playlist.load([
+  {
+    "src": "",	//ファイルパス
+    "name": "",	//usernameかuser-id
+  },
+  {
+    "src": "",
+    "name": "",
+  },
+  {
+    "src": "",
+    "name": "",
+  },
+]).then(function() {
+  playlist.initExporter();
+}).catch(function(err) {
+  console.error("音声のロードに失敗！！！！！:", err);
+});
+//★//★//★//★//★//★//★//★//★//★//★//★//★//★//★//★//★//★//★//★//★//★//★//★//★
+
+
 
 // メディアデバイスが利用可能な場合
 if (navigator.mediaDevices) {
-  navigator.mediaDevices
-    .getUserMedia(constraints) // ユーザのメディアを取得
-    .then(gotStream) // 成功した場合に gotStream を呼び出す
-    .catch(logError); // エラーが発生した場合は logError を呼び出す
-} else if (navigator.getUserMedia && "MediaRecorder" in window) {
-  // getUserMedia が使用可能で、MediaRecorder がウィンドウに存在する場合
-  navigator.getUserMedia(
-    constraints, // 制約を渡す
-    gotStream, // 成功した場合に gotStream を呼び出す
-    logError // エラーが発生した場合は logError を呼び出す
-  );
+  navigator.mediaDevices.getUserMedia(constraints)
+    .then(gotStream)
+    .catch(logError);
+} else {
+  console.error("使ってるブラウザがgetUserMediaに対応してないよ！！！！！");
 }
