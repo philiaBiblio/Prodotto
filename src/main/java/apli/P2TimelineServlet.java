@@ -48,7 +48,7 @@ public class P2TimelineServlet extends HttpServlet {
 					+ "(SELECT COUNT(*) FROM コメント WHERE コメント.投稿ID = 投稿.投稿ID) AS コメント数,"
 					+ "(SELECT COUNT(*) FROM いいね WHERE いいね.投稿ID = 投稿.投稿ID) AS いいね数"
 					+ " from 投稿"
-					+ " join ユーザー on 投稿.ユーザーID = ユーザー.ユーザーID";
+					+ " join ユーザー on 投稿.ユーザーID = ユーザー.ユーザーID order by アップロード日 desc";
 			
 			// sql文実行
 			ResultSet rs = dba.selectExe(sql);
