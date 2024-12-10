@@ -41,12 +41,13 @@ public class P2LoginServlet extends HttpServlet {
 		try {
 			// 入力したメールアドレスを取得
 			String inMailadd = request.getParameter("mailadd");
-			
+
 			// sql用にシングルコーテーションで囲む
 			inMailadd = "'" + inMailadd + "'";
 			
 			// 入力したパスワードを取得
 			String inPassword = request.getParameter("pw");
+			System.out.println(inPassword);
 			
 			// ユーザーか管理者か判定するためのフラグ
 			boolean isUser = false; 

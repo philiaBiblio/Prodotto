@@ -49,10 +49,13 @@ public class P2ProfileServletStranger extends HttpServlet {
 	    	 String sql = "select 投稿ID,ユーザーID,イベントID,派生ID,アップロード日,作品,サムネイル,タグID,"
 	    	 		+ "(SELECT COUNT(*) FROM コメント WHERE コメント.投稿ID = 投稿.投稿ID) AS コメント数,"
 	    	 		+ "(SELECT COUNT(*) FROM いいね WHERE いいね.投稿ID = 投稿.投稿ID) AS いいね数 "
-	    	 		+ "from 投稿 where ユーザーID = '" + u.getUserid() + "'";
+	    	 		+ "from 投稿 where ユーザーID = '" 
+	    	 		+ u.getUserid() 
+	    	 		+ "'";
 	    	 
 	    	 // sql文実行
 	    	 ResultSet rs = dba.selectExe(sql);
+	    	 
 	    	 while(rs.next()) {
 	    		 String toukouId = rs.getString("投稿ID");
 	    		 String userId = rs.getString("ユーザーID");
