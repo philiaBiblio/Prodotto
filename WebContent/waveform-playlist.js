@@ -4476,7 +4476,7 @@ var WaveformPlaylist;
 													.concat(o * t.height, "px; width: ")
 													.concat(
 														t.controls.width,
-                            "px; position: sticky; top: 0; left: 0; z-index: 10; overflow: visible"
+														"px; position: sticky; top: 0; left: 0; z-index: 10; overflow: visible"
 													),
 											},
 										},
@@ -4528,7 +4528,7 @@ var WaveformPlaylist;
 											var h = Math.min(c, 1e3),
 												f = e.waveOutlineColor
 													? e.waveOutlineColor
-													: t.colors.waveOutlineColor= '#000000';
+													: t.colors.waveOutlineColor = '#000000';
 											o.push(
 												v()("canvas", {
 													attributes: {
@@ -4666,7 +4666,9 @@ var WaveformPlaylist;
 										void 0 === this.customClass
 											? ""
 											: ".".concat(this.customClass);
-								return v()(
+								console.log(k);
+								console.log(g);
+								return console(v)()(
 									"div.channel-wrapper".concat(g).concat(k),
 									{
 										attributes: {
@@ -6467,7 +6469,7 @@ var WaveformPlaylist;
 											soloed: t.soloedTracks.indexOf(e) > -1,
 											muted: t.mutedTracks.indexOf(e) > -1,
 											collapsed: n,
-											height: n ? t.collapsedWaveHeight : t.waveHeight+20, //トラックの高さの調節できるところろろろろろろろろ
+											height: n ? t.collapsedWaveHeight : t.waveHeight + 20, //トラックの高さの調節できるところろろろろろろろろ
 											barGap: t.barGap,
 											barWidth: t.barWidth,
 										})
