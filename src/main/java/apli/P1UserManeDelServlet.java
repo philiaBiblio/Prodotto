@@ -86,7 +86,7 @@ public class P1UserManeDelServlet extends HttpServlet {
 				}
 				
 				for(int x = 0; x < PList.size(); x++) {
-				// 指定したユーザーを再生テーブルから削除
+				// 指定したユーザーをいいねテーブルから削除
 			    deleteSQL = 
 			    "DELETE FROM いいね where ユーザーID = '" + u.get(uIndex).getUserid() + "' OR 投稿ID = '"+ PList.get(x) + "'"; 		        
 			    // デリート文実行
@@ -94,7 +94,7 @@ public class P1UserManeDelServlet extends HttpServlet {
 				}
 				
 				for(int x = 0; x < PList.size(); x++) {
-				// 指定したユーザーを再生テーブルから削除
+				// 指定したユーザーをコメントテーブルから削除
 				deleteSQL = 
 				"DELETE FROM コメント where ユーザーID = '" + u.get(uIndex).getUserid() + "' OR 投稿ID = '"+ PList.get(x) + "'"; 		        
 				// デリート文実行
