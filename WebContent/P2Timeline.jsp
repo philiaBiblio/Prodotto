@@ -105,15 +105,8 @@ document.addEventListener('DOMContentLoaded', (event) => {
 				</div>
 				
 				<div class="video-info">
-<<<<<<< HEAD
-					
-					
-					<form action="P2UserSearchServlet" method="get">
-    				<input type="hidden" name="userID" value="<%=toukouList.get(i).getUserid()%>" />
-=======
 					<form action="P2ProfileServletStrangerServlet" method="get" style="margin: 0; padding: 0; display: inline;">
     				<input type="hidden" name="StrangertoukouId" value="<%=toukouList.get(i).getToukouid()%>" />
->>>>>>> refs/remotes/origin/main
     					<button type="submit" class="profile-info" style="all: unset; cursor: pointer;">
 	    					<a>
 	    						<img src="image/<%=userIconList.get(i).getIconImage()%>" alt="profile icon" class="profile-icon" />
@@ -170,18 +163,8 @@ document.addEventListener('DOMContentLoaded', (event) => {
 					</div>
 				</div>
 			</div>
-<<<<<<< HEAD
 			<%}%>
 			<%}%>
-=======
-			<%
-			}
-			%>
-
-			<%
-			}
-			%>
->>>>>>> refs/remotes/origin/main
 		</section>
 
 		<!-- 音楽プレイヤー -->
@@ -193,7 +176,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
 						<img src="." alt="" />
 					</div>
 					<div class="song-description">
-						<p class="artist"><%=userIconList.get(globalId).getName() %></p>
+						<p class="artist"><%-- <%=userIconList.get().getName() %> --%></p>
 					</div>
 				</div>
 			</div>
@@ -235,16 +218,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
 		var e2 = document.getElementById("test");
 
 		e2.value = e1;"
-
-
-		function openDeleteDialog(toukouId) {
-		    document.getElementById("deleteDialog" + toukouId).showModal();
-		}
-
-		function closeDeleteDialog(toukouId) {
-		    document.getElementById("deleteDialog" + toukouId).close();
-		}
-				
 
 	</script>
 	
