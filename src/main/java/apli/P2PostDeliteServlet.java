@@ -43,10 +43,14 @@ public class P2PostDeliteServlet extends HttpServlet {
 	     
 	     try {
 	    	 // どの投稿に対してか投稿IDを取得
-	    	 String x = request.getParameter("toukouId");
+	    	 String x = request.getParameter("toukousakuzyo");
 	    	 int i = Integer.parseInt(x);
+	    	 System.out.println("48：" + i);
+//	    	 String sakuzyoId = request.getParameter("toukousakuzyo");
+//	    	 System.out.println("50：" + sakuzyoId);
 	    	 
 	    	 String toukouId = toukouList.get(i).getToukouid();
+	    	 System.out.println("51：" + toukouId);
 	    	 
 	    	 // 投稿ID検索のsql文実行
 	    	 ResultSet rs = dba.selectExe("select * from 投稿 where 投稿ID = '" + toukouId + "'");
@@ -56,23 +60,23 @@ public class P2PostDeliteServlet extends HttpServlet {
 	    		 // 指定した投稿をテーブルから削除
 	    		 deleteSQL =  "DELETE FROM 再生 where 投稿ID = '" + toukouId + "'"; 		        
 	    		 // デリート文実行
-	    		 dba.UpdateExe(deleteSQL);
+	    	//	 dba.UpdateExe(deleteSQL);
 	    		 
 	    		 deleteSQL = "DELETE FROM いいね where 投稿ID = '" + toukouId + "'"; 		        
 	    		 // デリート文実行
-	    		 dba.UpdateExe(deleteSQL);
+	    	//	 dba.UpdateExe(deleteSQL);
 	    		 
 	    		 deleteSQL = "DELETE FROM コメント where 投稿ID = '" + toukouId + "'"; 		        
 	    		 // デリート文実行
-	    		 dba.UpdateExe(deleteSQL);
+	    	//	 dba.UpdateExe(deleteSQL);
 	    		 
 	    		 deleteSQL = "DELETE FROM 投稿 where 投稿ID = '" + toukouId + "'"; 		        
 	    		 // デリート文実行
-	    		 dba.UpdateExe(deleteSQL);
+	    	//	 dba.UpdateExe(deleteSQL);
 	    	 }
 	    	 
 	    	 //リストから削除する
-	    	 toukouList.remove(i);
+	    //	 toukouList.remove(i);
 	    	 
 		     String trueMess = "変更できました。";
 		     ses.setAttribute("TRUEMESS", trueMess);

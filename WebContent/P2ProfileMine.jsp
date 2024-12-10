@@ -21,7 +21,7 @@
       href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=settings"
     />
     <link rel="stylesheet" href="P2ProfileMine.css" />
-    <title>ProDotto</title>
+    <title>プロフィール画面</title>
   </head>
   
  <%
@@ -152,38 +152,33 @@
 		              
 					<!--  自分の投稿なら表示-->
 					<!--  今回はマイプロフィール画面なので表示しておきます。-->
-	                <button id="openDialog<%= postList.get(i).getPostId()%>" onclick="test('trash<%= postList.get(i) %>')">
+					<form action="P2PostDeliteServlet" method="post">
+						<input type="hidden" name="toukousakuzyo" value="<%=i%>" />
+						<button type="button" id="openDialogButton<%=upList.get(i).getToukouid() %>"
+						onclick="dialog('trash')">
+							<span>
+								<div class="nav_icon trash">
+									<i class="gg-trash"></i>
+								</div>
+							</span>
+						</button>  
+						
+						 <dialog id="myDialog">
+            				<p>この投稿を削除しますか？</p>
+            			<div class="buttonContainer">
+                			<button type="submit" class="dialogButton" id="yesButton">はい</button>
+                			<button type="button" class="dialogButton" id="noButton">いいえ</button>
+            			</div>
+        				</dialog>
+        				</form>
+        				
+	                <button id="openDialog<%= upList.get(i).getToukouid()%>" onclick="test('trash<%= postList.get(i) %>')">
 	                  <span>
 	                    <div class="nav_icon trash">
 	                      <i class="gg-trash"></i>
 	                    </div>
 	                  </span>
-	                </button>
-	  
-	  				<!-- 削除サーブレットへ。元のページに戻りダイアログ表示 -->
-	                <dialog id="myDialog<%= postList.get(i).getPostId()%>">
-	                  <p>この投稿を削除しますか？</p>
-	                  <div class="buttonContainer">
-	                    <button type="button" class="dialogButton" id="yesButton<%= postList.get(i).getPostId()%>">
-	                      はい
-	                    </button>
-	                    <button type="button" class="dialogButton" id="noButton<%= postList.get(i).getPostId()%>">
-	                      いいえ
-	                    </button>
-	                  </div>
-	                </dialog>
-	  
-	                <dialog id="confirmationDialog<%= postList.get(i).getPostId()%>">
-	                  <p>削除しました</p>
-	                  <button
-	                    type="button"
-	                    class="dialogButton"
-	                    id="closeConfirmationButton<%= postList.get(i).getPostId()%>">
-	                    閉じる
-	                  </button>
-	                </dialog>
-	                
-	                
+	                </button>	                
 	              </div>
 	            </div>
 	          </div>
@@ -286,11 +281,6 @@
         </div>
         <button class="scroll-right" id="scroll-right-2">▶</button>
       </div>
-
-      
-
-
-
 
       <main>
       <!-- 音楽プレイヤー -->
