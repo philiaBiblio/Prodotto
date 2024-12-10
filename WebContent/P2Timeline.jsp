@@ -39,14 +39,6 @@
 
 <jsp:include page="P2kensaku.jsp"></jsp:include>
 <script>
-<%if(trueMess != null ){ %>
-window.onload = function(){
-	const dialog = document.querySelector("#confirmationDialog");
-	dialog.showModal();
-	} 	
-	<%} %>
-	<%ses.removeAttribute("TRUEMESS"); %>
-
 //ダイアログのスクリプト
 function dialog(id){
 	console.log("id:" + id);
@@ -69,6 +61,7 @@ function dialog(id){
 	globalId = id;
 }
 
+
 document.addEventListener('DOMContentLoaded', (event) => {
     function dialog(id) {
         const openDialogButton = document.getElementById('openDialogButton');
@@ -85,6 +78,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     globalId = id;
 });
 
+
 </script>
 
 <body>
@@ -96,6 +90,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
 			<%for (int i = 0; i < toukouList.size(); i++) {%>
 			<div class="video-card">
 				<div class="thumbnail-placeholder">
+
 					<img src="image/<%=toukouList.get(i).getThumbnail()%>"
 						alt="Video Thumbnail" class="thumbnail" />
 					<button class="play-button">▶️</button>
@@ -103,16 +98,30 @@ document.addEventListener('DOMContentLoaded', (event) => {
 					<audio class="audio-player"
 						src="audio/<%=toukouList.get(i).getSound()%>"></audio>
 				</div>
-				
+
+
 				<div class="video-info">
-					<form action="P2ProfileServletStrangerServlet" method="get" style="margin: 0; padding: 0; display: inline;">
-    				<input type="hidden" name="StrangertoukouId" value="<%=toukouList.get(i).getToukouid()%>" />
+					<!-- 他人なら他人プロフ。自分ならマイページへ -->
+					<%if (!toukouList.get(i).getUserid().equals(u.getUserid())) {%>
+					<form action="P2UserSearchServlet" method="get">
+    				<input type="hidden" name="userID" value="<%=toukouList.get(i).getUserid()%>" />
+    				
     					<button type="submit" class="profile-info" style="all: unset; cursor: pointer;">
 	    					<a>
 	    						<img src="image/<%=userIconList.get(i).getIconImage()%>" alt="profile icon" class="profile-icon" />
 	    					</a>
         				</button>
 					</form>
+					<%}else{%>
+						<form action="P2ProfileServlet" method="get">
+    					<input type="hidden" name="userID" value="" />
+    					<button type="submit" class="profile-info" style="all: unset; cursor: pointer;">
+	    					<a>
+	    						<img src="image/<%=userIconList.get(i).getIconImage()%>" alt="profile icon" class="profile-icon" />
+	    					</a>
+        				</button>
+					</form>
+					<%} %>
 
 					<div class="like-comment">
 						<form action="P2CommentJusinServlet">
@@ -143,6 +152,13 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
 						<!-- 削除ボタンイフ --> 
 						<%if (toukouList.get(i).getUserid().equals(u.getUserid())) {%>
+						<script>
+							console.log("i:" + "<%= i %>");
+    						console.log("toukouList.get(i).getUserid()：" + "<%= toukouList.get(i).getUserid() %>");
+    						console.log("u.getUserid()：" + "<%= u.getUserid() %>");
+						</script>
+						<form action="P2PostDeliteServlet" method="post">
+						<input type="hidden" name="toukouId" value="<%=i%>" />
 						<button type="button" id="openDialogButton<%=toukouList.get(i).getToukouid() %>"
 						 onclick="dialog('<%=i%>')">
 							<span>
@@ -159,6 +175,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 			<button type="button" class="dialogButton" id="noButton<%= i %>">いいえ</button>
             			</div>
         				</dialog>
+
 						<%}%>
 					</div>
 				</div>
@@ -176,7 +193,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
 						<img src="." alt="" />
 					</div>
 					<div class="song-description">
-						<p class="artist"><%-- <%=userIconList.get().getName() %> --%></p>
+						<p class="artist"><%-- <%=userIconList.get(globalId).getName() %> --%></p>
 					</div>
 				</div>
 			</div>
@@ -210,7 +227,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
 		</div>
 	</main>
 
-	<script src="audioPlayer.js"></script>
 	<script src="https://unpkg.com/wavesurfer.js"></script>
 	<script>
 	function Saisei(){

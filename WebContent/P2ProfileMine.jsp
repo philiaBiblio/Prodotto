@@ -341,9 +341,7 @@
     </main>
     
   <jsp:include page="P2kensaku.jsp"></jsp:include>
-
-
-    <script src="audioPlayer.js"></script>
+  
     <script>
       const scrollLeftButton1 = document.getElementById("scroll-left-1");
       const scrollRightButton1 = document.getElementById("scroll-right-1");
