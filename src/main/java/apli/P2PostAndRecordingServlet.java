@@ -1,6 +1,9 @@
 package apli;
 
 import java.io.IOException;
+import java.sql.ResultSet;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -31,10 +34,30 @@ public class P2PostAndRecordingServlet extends HttpServlet {
         // DBアクセス用クラス
         DBAcs dba = new DBAcs();
 		
+        // 現在の年月を取得
+        LocalDate currentDate = LocalDate.now();
+        String yearMonth = currentDate.format(DateTimeFormatter.ofPattern("yyyyMM"));
+        
+        // レスポンスに出力
+        response.setContentType("text/plain");
+		System.out.println("現在の年月: " + yearMonth);
+        
+        
 		try {
 			
-			
-			
+			// SELECT文イベント情報を取得
+			ResultSet rs = dba.selectExe("SELECT * FROM イベント WHERE イベントID = '"+yearMonth+"'");
+
+			if(rs.next()) {
+				//DBからイベントを取得
+				String EveId = rs.getString("イベントID");
+				String Eve = rs.getString("お題");
+				// お題を保存
+				ses.setAttribute("ODAI",Eve);
+			}
+			else {
+				System.out.println("イベントがありません");
+			}
 			
 			// 画面遷移
             String url="P2PostAndRecording.jsp";

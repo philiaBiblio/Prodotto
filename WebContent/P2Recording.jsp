@@ -18,6 +18,12 @@
 
 	<title>録音画面</title>
 </head>
+
+<%
+	//セッションの取得
+	HttpSession ses = request.getSession();
+ %>
+
 <body>
 	<!-- メインコンテンツ部分 -->
 	<main class="container" title="demo">
@@ -111,7 +117,7 @@
 							</button>
 						</div>
 						<!-- メッセージ表示エリア -->
-						<div id="message-area"></div>
+						<div id="message-area"><%=ses.getAttribute("ODAI") %></div>
 					</div>
 				</div>
 
