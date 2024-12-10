@@ -3,6 +3,7 @@ package apli;
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.Enumeration;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -34,9 +35,34 @@ public class P1UserManeDelServlet extends HttpServlet {
 		//リストを取得
 		ArrayList<User> u = (ArrayList<User>)ses.getAttribute("USERLIST");
 		
-		//リストの番号を取得
-		String i = request.getParameter("USERID");
-		int uIndex = Integer.parseInt(i); // Stringをintに変換
+		
+		
+		Enumeration<String> parameterNames = request.getParameterNames();
+		int uIndex = -1;
+
+		// 動的に生成されたパラメータを走査
+		while (parameterNames.hasMoreElements()) {
+		    String paramName = parameterNames.nextElement();
+		    
+		    // 動的な`USERID<i>`に一致するものを探す
+		    if (paramName.startsWith("USERID")) {
+		        String paramValue = request.getParameter(paramName);
+		        uIndex = Integer.parseInt(paramValue);
+		        break; // 目的のパラメータが見つかったら終了
+		    }
+		}
+
+		// uIndexが-1のままならエラー
+		if (uIndex == -1) {
+		    response.sendError(HttpServletResponse.SC_BAD_REQUEST, "ユーザーIDが見つかりません");
+		    return;
+		}
+
+		// uIndexを使用して処理を続行
+		System.out.println("取得したインデックス: " + uIndex);
+		
+		
+		
 		
 		//投稿IDリストの生成
 		ArrayList<String> PList = (ArrayList<String>) ses.getAttribute("POSTLIST");
