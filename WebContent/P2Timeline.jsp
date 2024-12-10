@@ -122,8 +122,8 @@ document.addEventListener('DOMContentLoaded', (event) => {
 				<div class="video-info">
 					
 					
-					<form action="P2ProfileServletStrangerServlet" method="get" style="margin: 0; padding: 0; display: inline;">
-    				<input type="hidden" name="StrangertoukouId" value="<%=toukouList.get(i).getToukouid()%>" />
+					<form action="P2UserSearchServlet" method="get">
+    				<input type="hidden" name="userID" value="<%=toukouList.get(i).getUserid()%>" />
     					<button type="submit" class="profile-info" style="all: unset; cursor: pointer;">
 	    					<a>
 	    						<img src="image/<%=userIconList.get(i).getIconImage()%>" alt="profile icon" class="profile-icon" />
@@ -198,6 +198,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
 			<%
 			}
 			%>
+
 			<%
 			}
 			%>
@@ -258,6 +259,16 @@ document.addEventListener('DOMContentLoaded', (event) => {
 		var e2 = document.getElementById("test");
 
 		e2.value = e1;"
+
+
+		function openDeleteDialog(toukouId) {
+		    document.getElementById("deleteDialog" + toukouId).showModal();
+		}
+
+		function closeDeleteDialog(toukouId) {
+		    document.getElementById("deleteDialog" + toukouId).close();
+		}
+				
 
 	</script>
 	
