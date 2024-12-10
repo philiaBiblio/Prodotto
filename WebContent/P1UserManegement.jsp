@@ -19,6 +19,44 @@
 	String trueMess = (String)ses.getAttribute("TRUEMESS");
    %>
   
+  	<script>
+  	
+  	function dialog(id){
+  		console.log("id:" + id);
+  		const openDialogButton = document.getElementById('openDialogButton');
+  		const yesButton = document.getElementById('yesButton' + id);
+  		const noButton = document.getElementById('noButton' + id);
+  		const myDialog = document.getElementById('myDialog' + id);
+  		const confirmationDialog = document.getElementById('confirmationDialog');
+  		const closeConfirmationButton = document.getElementById('closeConfirmationButton');
+  		myDialog.showModal();
+  		console.log("no" + noButton)
+  		  if (noButton) {
+  	          noButton.addEventListener('click', () => {
+  	              if (myDialog) {
+  	                  console.log("80")
+  	                  myDialog.close();
+  	              }
+  	          });
+  	      }
+  		globalId = id;
+  	}
+  	 
+  	document.addEventListener('DOMContentLoaded', (event) => {
+  	    function dialog(id) {
+  	        const openDialogButton = document.getElementById('openDialogButton');
+  	        const yesButton = document.getElementById('yesButton' + id);
+  	        const noButton = document.getElementById('noButton' + id);
+  	        console.log("no" + noButton)
+  	        const myDialog = document.getElementById('myDialog' + id);
+  	        const confirmationDialog = document.getElementById('confirmationDialog');
+  	        const closeConfirmationButton = document.getElementById('closeConfirmationButton');
+  	    }
+  	 
+  		});
+  		</script>
+
+  
   <body>
   <form action="UserManagementServlet">
     <h1>ユーザー管理画面</h1>
@@ -35,44 +73,45 @@
       </tr>
       
       
-      <%if(u != null){ %>
-		<% for (int i = 0; i < u.size(); i++) { %>
-		<form action="P1UserManeDelServlet">
-		<tr>
-        <td><%= u.get(i).getName() %></td>
-        <td><%= u.get(i).getUserid() %></td>
-        <%System.out.println("ユーザマネジメントのi："+i); %>
-        <td class="delete-button">
-        <input type="hidden" name="USERID" value="<%=i%>">
-        
-        <button type="button" id="openDialogButton" onclick="dialog('sakuzyo')">アカウント削除</button>
-        <dialog id="myDialog">
-   
-        	<p>このアカウントを削除しますか？</p>
-        	<div class="buttonContainer">
-        		<button type="submit" class="dialogButton" id="yesButton">はい</button>
-        		<button type="button" class="dialogButton" id="noButton">いいえ</button>
-        	</div>
-        </dialog>
-  
-        <dialog id="confirmationDialog">
-        	<p>削除しました</p>
-            <button type="button" class="dialogButton" id="closeConfirmationButton">閉じる</button>
-        </dialog>
-        </td>
-      	</tr>
-      	</form>
-		<% } %>			
-	  <%} %>
+      <form action="P1UserManeDelServlet">
+    <% if (u != null) { %>
+    	<% for (int i = 0; i < u.size(); i++) { %>
+        <tr>
+            <td><%= u.get(i).getName() %></td>
+            <td><%= u.get(i).getUserid() %></td>
+            <td class="delete-button">
+            
+                <!-- 動的に生成されたIDやName -->
+                <input type="hidden" name="USERID<%=i%>" value="<%=i%>">
+                
+                <!-- 動的に生成されたIDを付与 -->
+                <button type="button" id="openDialogButton" onclick = "dialog('<%=i%>')" >アカウント削除</button>
+                <dialog id="myDialog<%=i%>">
+                    <p>このアカウントを削除しますか？</p>
+                    <div class="buttonContainer">
+                        <button type="submit" class="dialogButton" id="yesButton<%=i%>">はい</button>
+                        <button type="button" class="dialogButton" id="noButton<%=i%>" onclick="closeDialog('<%=i%>')">いいえ</button>
+                    </div>
+                </dialog>
+            </td>
+            
+        </tr>
+    	<% } %>
+	<% } %>
+		</form>
+		
     </table>
     <dialog id="confirmationDialog">
     	<p>削除しました</p>
         <button type="button" class="dialogButton" id="closeConfirmationButton" onclick="confirmationDialog.close();">閉じる</button>
     </dialog>
     
+    
      <jsp:include page="P1kensaku.jsp"></jsp:include>
 
+
     <script>
+    
       const searchBox = document.querySelector('.search-box');
       const searchButton = document.querySelector('.search-button');
     
@@ -92,39 +131,9 @@
       	<%} %>
       	<%ses.removeAttribute("TRUEMESS"); %>
 
-      // ダイアログのスクリプト
-      function dialog(id){
-          console.log("274")
-      const openDialogButton = document.getElementById('openDialogButton');
-      const yesButton = document.getElementById('yesButton');
-      const noButton = document.getElementById('noButton');
-      const myDialog = document.getElementById('myDialog');
-      const confirmationDialog = document.getElementById('confirmationDialog');
-      const closeConfirmationButton = document.getElementById('closeConfirmationButton');
-      myDialog.showModal();
 
-      openDialogButton.addEventListener('click', () => {
-    	  console.log("うわわわわわわわ")
-           myDialog.showModal();
-      });
+    	  			
 
-      yesButton.addEventListener('click', () => {
-    	  console.log("ありゃりゃらやｔらｙ")
-        myDialog.close();
-        confirmationDialog.showModal();
-      });
-
-      noButton.addEventListener('click', () => {
-    	  console.log("いいいいいいいいいいいいいい")
-          myDialog.close();
-      });
-
-      closeConfirmationButton.addEventListener('click', () => {
-    	  console.log("ぽいうｙｔｒｆｇｈｊｋｌきうｙｇｈｊ")
-          console.log("117")
-        confirmationDialog.close();
-      });
-      }
     </script>
   </body>
 </html>
