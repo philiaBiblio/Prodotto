@@ -100,7 +100,6 @@
 		</nav>
 	</section>
 
-	<script src="audioPlayer.js"></script>
 	<script src="https://unpkg.com/wavesurfer.js"></script>
 	<script>
 		const currentFile = window.location.pathname.split("/").pop(); 

@@ -61,19 +61,24 @@ public class P2UserSearchServlet extends HttpServlet {
                 
                 // フォロー状態を確認
                 boolean isFollowing = checkIfFollowing(dba, userID, u.getUserid());
+                ses.setAttribute("isFollowing", isFollowing);
                 
                 int followCount = 0;
                 int followerCount = 0;
+                ses.setAttribute("followCount", followCount);
+                ses.setAttribute("followerCount", followerCount);
                 
                 try (ResultSet rsFollow = dba.selectExe("SELECT COUNT(*) AS follow_count FROM フォロー WHERE フォロワー = '" + userID + "'")) {
                     if (rsFollow.next()) {
                         followCount = rsFollow.getInt("follow_count"); // フォローしている数
+                        System.out.println("followCount："+followCount);
                     }
                 }
 
                 try (ResultSet rsFollower = dba.selectExe("SELECT COUNT(*) AS follower_count FROM フォロー WHERE フォロー = '" + userID + "'")) {
                     if (rsFollower.next()) {
                         followerCount = rsFollower.getInt("follower_count"); // フォロワー数
+                        System.out.println("followerCount："+followerCount);
                     }
                 }
                 
@@ -108,40 +113,50 @@ public class P2UserSearchServlet extends HttpServlet {
 
     private boolean checkIfFollowing(DBAcs dba, String followUserID, String followerUserID) {
         boolean result = false;
-        
+        System.out.println("result："+result);
         String query = "SELECT * FROM フォロー WHERE フォロー = ? AND フォロワー = ?";
-        
+        System.out.println("query："+query);
         try (PreparedStatement pstmt = dba.getConnection().prepareStatement(query)) {
             pstmt.setString(1, followUserID);
+            System.out.println("followUserID："+followUserID);
             pstmt.setString(2, followerUserID);
+            System.out.println("followerUserID："+followerUserID);
             try (ResultSet rs = pstmt.executeQuery()) {
                 result = rs.next(); 
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
+        System.out.println("return result："+result);
         return result;
+        
     }
 
     private ArrayList<Post> getPostList(DBAcs dba, String userID) throws Exception {
         	ArrayList<Post> postList = new ArrayList<>();
 
-        String query = "SELECT 投稿.投稿ID, 投稿.サムネ, 投稿.作品," +
+        String query = "SELECT 投稿.投稿ID, 投稿.サムネイル, 投稿.作品," +
         		"(SELECT COUNT(*) FROM コメント WHERE コメント.投稿ID = 投稿.投稿ID) AS コメント数, " +
         		"(SELECT COUNT(*) FROM いいね WHERE いいね.投稿ID = 投稿.投稿ID) AS いいね数 " +
         		"FROM 投稿 " +
         		"WHERE 投稿.ユーザーID = ? " +
         		"ORDER BY 投稿.アップロード日 DESC";
+        System.out.println("クエリ："+query);
 
         try (PreparedStatement pstmt = dba.getConnection().prepareStatement(query)) {
             pstmt.setString(1, userID); 
+            System.out.println("誰かな："+userID);
 
             try (ResultSet rsPosts = pstmt.executeQuery()) {
+            	System.out.println("投稿リスト："+rsPosts);
                 while (rsPosts.next()) {
                     // データを取得
                     String postId = rsPosts.getString("投稿ID");
-                    String thumbnailPath = rsPosts.getString("サムネイルパス");
-                    String audioPath = rsPosts.getString("音声ファイルパス");
+                    System.out.println("投稿ID："+postId);
+                    String thumbnailPath = rsPosts.getString("サムネイル");
+                    System.out.println("サムネイルパス："+thumbnailPath);
+                    String audioPath = rsPosts.getString("作品");
+                    System.out.println("音声ファイルパス："+audioPath);
                     int commentCount = rsPosts.getInt("コメント数");
                     int likeCount = rsPosts.getInt("いいね数"); 
                     
