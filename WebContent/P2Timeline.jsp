@@ -60,35 +60,24 @@ function dialog(id){
 	});
 }
 
-document.addEventListener('DOMContentLoaded', (event) => {
-    function dialog(id) {
-        const openDialogButton = document.getElementById('openDialogButton');
-        const yesButton = document.getElementById('yesButton');
-        const noButton = document.getElementById('noButton');
-        const myDialog = document.getElementById('myDialog');
-        const confirmationDialog = document.getElementById('confirmationDialog');
-        const closeConfirmationButton = document.getElementById('closeConfirmationButton');
+document.addEventListener('DOMContentLoaded', () => {
+    const openDialogButton = document.getElementById('openDialogButton');
+    const myDialog = document.getElementById('myDialog');
+    const yesButton = document.getElementById('yesButton');
+    const noButton = document.getElementById('noButton');
 
-        if (yesButton) {
-            yesButton.addEventListener('click', () => {
-                if (myDialog) {
-                    myDialog.close();
-                }
-            });
-        }
-
-        if (noButton) {
-            noButton.addEventListener('click', () => {
-                if (myDialog) {
-                    myDialog.close();
-                }
-            });
-        }
+    if (openDialogButton && myDialog) {
+        openDialogButton.addEventListener('click', () => {
+            myDialog.showModal();
+        });
     }
 
-    // dialog関数を呼び出す
-    dialog();
+    if (yesButton && noButton) {
+        yesButton.addEventListener('click', () => myDialog.close());
+        noButton.addEventListener('click', () => myDialog.close());
+    }
 });
+
 
 </script>
 
@@ -114,21 +103,29 @@ document.addEventListener('DOMContentLoaded', (event) => {
 				</div>
 				
 				<div class="video-info">
-<<<<<<< HEAD
 					
-					
+					<!-- 他人なら他人プロフ。自分ならマイページへ -->
+					<%
+						if (toukouList.get(i).getUserid().equals(u.getUserid())) {
+					%>
 					<form action="P2UserSearchServlet" method="get">
     				<input type="hidden" name="userID" value="<%=toukouList.get(i).getUserid()%>" />
-=======
-					<form action="P2ProfileServletStrangerServlet" method="get" style="margin: 0; padding: 0; display: inline;">
-    				<input type="hidden" name="StrangertoukouId" value="<%=toukouList.get(i).getToukouid()%>" />
->>>>>>> refs/remotes/origin/main
+
     					<button type="submit" class="profile-info" style="all: unset; cursor: pointer;">
 	    					<a>
 	    						<img src="image/<%=userIconList.get(i).getIconImage()%>" alt="profile icon" class="profile-icon" />
 	    					</a>
         				</button>
 					</form>
+					
+					<%}else{%>
+						<button class="profile-info" style="all: unset; cursor: pointer;">
+	    					 <a href="https://www.sejuku.net">
+	    						<img src="image/<%=userIconList.get(i).getIconImage()%>" alt="profile icon" class="profile-icon" />
+	    					</a>
+        				</button>
+					
+					<%} %>
 
 					<div class="like-comment">
 						<form action="P2CommentJusinServlet">
@@ -165,6 +162,11 @@ document.addEventListener('DOMContentLoaded', (event) => {
 						<%
 						if (toukouList.get(i).getUserid().equals(u.getUserid())) {
 						%>
+						<script>
+							console.log("i:" + "<%= i %>");
+    						console.log("toukouList.get(i).getUserid()：" + "<%= toukouList.get(i).getUserid() %>");
+    						console.log("u.getUserid()：" + "<%= u.getUserid() %>");
+						</script>
 						<form action="P2PostDeliteServlet" method="post">
 						<input type="hidden" name="toukousakuzyo<%=i%>" value="<%=i%>" />
 						<a>
