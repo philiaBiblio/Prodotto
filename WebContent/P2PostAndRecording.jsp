@@ -8,12 +8,18 @@
     <title>投稿・録音画面</title>
     <link rel="stylesheet" href="P2PostAndRecording.css">
 </head>
+
+<%
+	//セッションの取得
+	HttpSession ses = request.getSession();
+ %>
+
 <body style="margin: 50px 0 0 -5px;">
     <div class="container">
         <!-- セッションセクション -->
         <section class="section session">
             <h1>セッション</h1>
-            <div class="session-content">きょうのおだい</div>
+            <div class="session-content"><%=ses.getAttribute("ODAI") %></div>
             <div class="button-group">
                 <a href="P2Recording.jsp" class="link-button start">セッションをはじめる</a>
                 <a href="P2DerivativesList.jsp" class="link-button party">セッションに参加</a>

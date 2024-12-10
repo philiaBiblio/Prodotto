@@ -49,9 +49,6 @@ h1{
 
 
 
-
-
-
 table {
   border: 1px solid #ffffff; /* テーブル全体の外枠 */
   border-radius: 10px; /* テーブルの四隅を丸くする */
@@ -62,11 +59,11 @@ table {
   background-color: #000000;
 }
 
+
 th,
 td {
   border: 1px solid #ffffff;
   padding: 10px 15px;
-  text-align: left;
   color: #fff;
 }
 
@@ -132,8 +129,9 @@ dialog {
   text-align: center;
   border-radius: 10px;
   background-color: #000000;
-  border: solid 3px #ee2522;
-  color: white;
+  border: solid 3px rgb(255, 255, 255);
+  color: white; 
+  z-index: 1000;
 }
 
 #yesButton,
@@ -182,6 +180,13 @@ dialog {
   color: #ee2522;
   border-color: #ee2522;
 }
+
+body.dialog-open .user-list {
+    pointer-events: none;
+}
+
+
+
 
 .button-group2 {
   /* border: solid 1px #fff; */

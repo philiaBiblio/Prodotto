@@ -102,20 +102,17 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
 				<div class="video-info">
 					<!-- 他人なら他人プロフ。自分ならマイページへ -->
-					<%
-						if (!toukouList.get(i).getUserid().equals(u.getUserid())) {
-					%>
+					<%if (!toukouList.get(i).getUserid().equals(u.getUserid())) {%>
 					<form action="P2UserSearchServlet" method="get">
     				<input type="hidden" name="userID" value="<%=toukouList.get(i).getUserid()%>" />
+    				
     					<button type="submit" class="profile-info" style="all: unset; cursor: pointer;">
 	    					<a>
 	    						<img src="image/<%=userIconList.get(i).getIconImage()%>" alt="profile icon" class="profile-icon" />
 	    					</a>
         				</button>
 					</form>
-					<%
-						}else{
-					%>
+					<%}else{%>
 						<form action="P2ProfileServlet" method="get">
     					<input type="hidden" name="userID" value="" />
     					<button type="submit" class="profile-info" style="all: unset; cursor: pointer;">
@@ -126,13 +123,9 @@ document.addEventListener('DOMContentLoaded', (event) => {
 					</form>
 					<%} %>
 
-					
-					
 					<div class="like-comment">
-
 						<form action="P2CommentJusinServlet">
 							<input type="hidden" name="toukouId" value="<%=i%>" />
-
 							<button class="submit comment" onclick="openPopup()">
 								<img src="image/こめんと1.png" alt="comment icon"
 									style="width: 20px; height: 20px" /> <span><%=postList.get(i).getCommentCount()%></span>
@@ -189,7 +182,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
 			</div>
 			<%}%>
 			<%}%>
-
 		</section>
 
 		<!-- 音楽プレイヤー -->
