@@ -34,8 +34,54 @@
  
  int followCount = (int)ses.getAttribute("followCount");
  int followerCount = (int)ses.getAttribute("followerCount");
+ String trueMess = (String)ses.getAttribute("TRUEMESS");
 
 %>
+
+<script>
+//ダイアログのスクリプト
+function dialog(id){
+	console.log("id:" + id);
+	const openDialogButton = document.getElementById('openDialogButton');
+	const yesButton = document.getElementById('yesButton' + id);
+	const noButton = document.getElementById('noButton' + id);
+	const myDialog = document.getElementById('myDialog' + id);
+	const confirmationDialog = document.getElementById('confirmationDialog');
+	const closeConfirmationButton = document.getElementById('closeConfirmationButton');
+	myDialog.showModal();
+	console.log("no" + noButton)
+	  if (noButton) {
+          noButton.addEventListener('click', () => {
+              if (myDialog) {
+                  console.log("80")
+                  myDialog.close();
+              }
+          });
+      }
+}
+document.addEventListener('DOMContentLoaded', (event) => {
+    function dialog(id) {
+        const openDialogButton = document.getElementById('openDialogButton');
+        const yesButton = document.getElementById('yesButton' + id);
+        const noButton = document.getElementById('noButton' + id);
+        console.log("no" + noButton)
+        const myDialog = document.getElementById('myDialog' + id);
+        const confirmationDialog = document.getElementById('confirmationDialog');
+        const closeConfirmationButton = document.getElementById('closeConfirmationButton');
+    }
+
+    // dialog関数を呼び出す
+    dialog();
+});
+
+<%if(trueMess != null ){ %>
+window.onload = function(){
+	const dialog = document.querySelector("#confirmationDialog");
+	dialog.showModal();
+	} 	
+	<%} %>
+	<%ses.removeAttribute("TRUEMESS"); %>
+</script>
 
   <body>
     <header class="profile-header">
@@ -152,33 +198,22 @@
 		              
 					<!--  自分の投稿なら表示-->
 					<!--  今回はマイプロフィール画面なので表示しておきます。-->
-					<form action="P2PostDeliteServlet" method="post">
-						<input type="hidden" name="toukousakuzyo" value="<%=i%>" />
-						<button type="button" id="openDialogButton<%=upList.get(i).getToukouid() %>"
-						onclick="dialog('trash')">
+					<button type="button" id="openDialogButton<%=upList.get(i).getToukouid() %>"
+						 onclick="dialog('<%=i%>')">
 							<span>
 								<div class="nav_icon trash">
 									<i class="gg-trash"></i>
 								</div>
 							</span>
-						</button>  
-						
-						 <dialog id="myDialog">
+						</button> 
+						 <dialog id="myDialog<%= i %>">
             				<p>この投稿を削除しますか？</p>
             			<div class="buttonContainer">
-                			<button type="submit" class="dialogButton" id="yesButton">はい</button>
-                			<button type="button" class="dialogButton" id="noButton">いいえ</button>
+            			<a href="P2PostDeliteServlet?hensuu=<%=i%>&sakuzyoId=<%= upList.get(i).getToukouid() %>">
+                			<button type="button" class="dialogButton" id="yesButton<%= i%>">はい</button></a>
+                			<button type="button" class="dialogButton" id="noButton<%= i %>">いいえ</button>
             			</div>
-        				</dialog>
-        				</form>
-        				
-	                <button id="openDialog<%= upList.get(i).getToukouid()%>" onclick="test('trash<%= postList.get(i) %>')">
-	                  <span>
-	                    <div class="nav_icon trash">
-	                      <i class="gg-trash"></i>
-	                    </div>
-	                  </span>
-	                </button>	                
+        				</dialog>	                
 	              </div>
 	            </div>
 	          </div>
@@ -244,36 +279,22 @@
 		              
 					<!--  自分の投稿なら表示-->
 					<!--  今回はマイプロフィール画面なので表示しておきます。-->               
-	                <button id="openDialog<%= postList.get(i).getPostId()%>" onclick="test('trash<%= u.getUserid() %>')">
-	                  <span>
-	                    <div class="nav_icon trash">
-	                      <i class="gg-trash"></i>
-	                    </div>
-	                  </span>
-	                </button>
-	  
-	                <dialog id="myDialog<%= postList.get(i).getPostId()%>">
-	                  <p>この投稿を削除しますか？</p>
-	                  <div class="buttonContainer">
-	                    <button type="button" class="dialogButton" id="yesButton<%= postList.get(i).getPostId()%>">
-	                      はい
-	                    </button>
-	                    <button type="button" class="dialogButton" id="noButton<%= postList.get(i).getPostId()%>">
-	                      いいえ
-	                    </button>
-	                  </div>
-	                </dialog>
-	  
-	                <dialog id="confirmationDialog<%= postList.get(i).getPostId()%>">
-	                  <p>削除しました</p>
-	                  <button
-	                    type="button"
-	                    class="dialogButton"
-	                    id="closeConfirmationButton<%= postList.get(i).getPostId()%>">
-	                    閉じる
-	                  </button>
-	                </dialog>
-	               
+	                <button type="button" id="openDialogButton<%=upList.get(i).getToukouid() %>"
+						 onclick="dialog('<%=i%>')">
+							<span>
+								<div class="nav_icon trash">
+									<i class="gg-trash"></i>
+								</div>
+							</span>
+						</button> 
+						 <dialog id="myDialog<%= i %>">
+            				<p>この投稿を削除しますか？</p>
+            			<div class="buttonContainer">
+            			<a href="P2PostProfDeliteServlet?hensuu=<%=i%>&sakuzyoId=<%= upList.get(i).getToukouid() %>">
+                			<button type="button" class="dialogButton" id="yesButton<%= i%>">はい</button></a>
+                			<button type="button" class="dialogButton" id="noButton<%= i %>">いいえ</button>
+            			</div>
+        				</dialog>
 	              </div>
 	            </div>
 	          </div>
@@ -293,18 +314,8 @@
               <img src="." alt="" />
             </div>
             <div class="song-description">
-              <!-- このタイトルはいらないから一旦コメントアウト -->
-              <!-- 
-              <p class="title">
-                Watashitachi wa Sou Yatte Ikite Iku Jinshu na no
-              </p> 
-              -->
               <p class="artist"><%= u.getName()%></p>
             </div>
-          </div>
-          <div class="icons">
-            <i class="far fa-heart"></i>
-            <i class="fas fa-compress"></i>
           </div>
         </div>
         <div class="progress-controller">
@@ -382,5 +393,9 @@
 
     </script>
     <script src="https://unpkg.com/wavesurfer.js"></script>
+    <dialog id="confirmationDialog">
+		<p>削除しました</p>
+		<button type="button" class="dialogButton" id="closeConfirmationButton" onclick="confirmationDialog.close();">閉じる</button>
+	</dialog>
   </body>
 </html>

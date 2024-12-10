@@ -78,7 +78,13 @@ document.addEventListener('DOMContentLoaded', (event) => {
     globalId = id;
 });
 
-
+<%if(trueMess != null ){ %>
+window.onload = function(){
+	const dialog = document.querySelector("#confirmationDialog");
+	dialog.showModal();
+	} 	
+	<%} %>
+	<%ses.removeAttribute("TRUEMESS"); %>
 </script>
 
 <body>
@@ -157,8 +163,8 @@ document.addEventListener('DOMContentLoaded', (event) => {
     						console.log("toukouList.get(i).getUserid()：" + "<%= toukouList.get(i).getUserid() %>");
     						console.log("u.getUserid()：" + "<%= u.getUserid() %>");
 						</script>
-						<form action="P2PostDeliteServlet" method="post">
-						<input type="hidden" name="toukouId" value="<%=i%>" />
+						<!-- <form action="P2PostDeliteServlet" method="post"> -->
+						<%-- <input type="hidden" name="toukouId" value="<%=i%>" /> --%>
 						<button type="button" id="openDialogButton<%=toukouList.get(i).getToukouid() %>"
 						 onclick="dialog('<%=i%>')">
 							<span>
