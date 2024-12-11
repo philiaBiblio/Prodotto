@@ -42,24 +42,18 @@ playlist = WaveformPlaylist.init({
 
 
 //★//★//★//★//★//★//★//★//★//★//★//★//★//★//★//★//★//★//★//★//★//★//★//★//★
-playlist.load([
-  {
-    "src": "",	//ファイルパス
-    "name": "",	//usernameかuser-id
-  },
-  {
-    "src": "",
-    "name": "",
-  },
-  {
-    "src": "",
-    "name": "",
-  },
-]).then(function() {
-  playlist.initExporter();
-}).catch(function(err) {
-  console.error("音声のロードに失敗！！！！！:", err);
-});
+// record.js
+window.loadAudioFile = function(filePath) {
+    playlist.load([{
+        "src": filePath,  // 動的に設定された音声ファイルのパス
+        "name": "username"  // ユーザー名やIDを必要に応じて設定
+    }]).then(function() {
+        playlist.initExporter();  // 初期化
+    }).catch(function(err) {
+        console.error("音声のロードに失敗！:", err);
+    });
+}
+
 //★//★//★//★//★//★//★//★//★//★//★//★//★//★//★//★//★//★//★//★//★//★//★//★//★
 
 

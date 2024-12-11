@@ -16,8 +16,8 @@ import javax.servlet.http.Part;
 @WebServlet("/P2RecordingServlet")
 @MultipartConfig(location = "/org", 
 		fileSizeThreshold = 32768, 
-		maxFileSize = 104857600, 
-		maxRequestSize = 104857600)
+		maxFileSize = 104857600,	//100MB
+		maxRequestSize = 104857600) //100MB
 public class P2RecordingServlet extends HttpServlet {
 
 	// GETリクエスト処理（画面遷移）
@@ -46,7 +46,7 @@ public class P2RecordingServlet extends HttpServlet {
 		String name = this.getFileName(part); // getFileName メソッドを呼び出す
 		System.out.println("fileName: " + name);
 
-		// WebContent内のaudioフォルダまでのパスを取得s
+		// WebContent内のaudioフォルダまでのパスを取得
 		String uniqueFileName = System.currentTimeMillis() + "_" + name;
 		System.out.println("uniqueFileName: " + uniqueFileName);
 		String pathfilename = getServletContext().getRealPath("audio") + File.separator + uniqueFileName;

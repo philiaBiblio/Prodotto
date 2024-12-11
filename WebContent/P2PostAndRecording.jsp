@@ -32,7 +32,9 @@
             <div class="button-group">
                 <a href="P2Recording.jsp" class="link-button recording">今すぐ録音</a>
                 <a class="link-button upload" id="file-select-link">ファイルをアップロード</a>
-                <input type="file" id="file-input" accept="audio/*" style="display: none">
+                <form id="file-upload-form" action="P2FileUploadServlet" method="post" enctype="multipart/form-data" style="display: none;">
+  		  		<input type="file" id="file-input" name="file" accept="audio/*">
+            	</form>
             </div>
         </section>
     </div>
@@ -50,8 +52,8 @@
         document.getElementById("file-input").addEventListener("change", function() {
             // ファイルが選択された後の処理
             if (this.files.length > 0) {
-                // 次のページに遷移
-                window.location.href = "P2PostConfirmation.jsp"; // 遷移先のURL
+                // フォームを送信
+                document.getElementById("file-upload-form").submit();
             }
         });
     </script>
