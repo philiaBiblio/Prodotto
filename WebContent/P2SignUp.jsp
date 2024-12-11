@@ -60,14 +60,18 @@
                 value="<%if(u != null) %><%=u.getUserid() %>"
                 placeholder="英数字4桁～14桁"
                 required /></label
-            ><br />
+            >
             <!-- まだ存在しないユーザIDならOK出しちゃう,存在してたらこのユーザIDは使えませんって出ちゃう -->          
             <%if(errorID != null){ %>
-				<p style="color:#ff0000"><%=errorID %></p>
+            	<div class="error-message">
+        		<%= errorID %>
+    			</div>
 			<%} %>
 			<%ses.removeAttribute("ERRORID"); 
 			if(errorKeta != null){ %>
-				<p style="color:#ff0000"><%=errorKeta %></p>
+				<div class="error-message">
+        		<%= errorKeta %>
+    			</div>
 			<%} %>
 			<%ses.removeAttribute("ERRORKETA"); %>
 			
@@ -94,15 +98,19 @@
                 value="<%if(u != null && errorMail == null) %><%=u.getMailadd() %>"
                 required
                 placeholder="メールアドレスを再入力" /></label
-            ><br />
+            >
           </div>
           <%if(errorMail2 != null){ %>
-				<p style="color:#ff0000"><%=errorMail2 %></p>
+          		<div class="error-message">
+        		<%= errorMail2 %>
+    			</div>
 			<%} %>
 			<%ses.removeAttribute("ERRORMAIL2"); %>
 			
           <%if(errorMail != null){ %>
-				<p style="color:#ff0000"><%=errorMail %></p>
+          		<div class="error-message">
+        		<%= errorMail %>
+    			</div>
 			<%} %>
 			<%ses.removeAttribute("ERRORMAIL"); %>
   
@@ -185,14 +193,17 @@
               <label for="checkPassword2" class="fa fa-eye"></label>
               <label for="checkPassword2" class="fa fa-eye-slash"></label>
             </div>
-            <br />
           </div>
           <%if(errorPass != null){ %>
-				<p style="color:#ff0000"><%=errorPass %></p>
+          		<div class="error-message">
+        		<%= errorPass %>
+    			</div>
 			<%} %>
 			<%ses.removeAttribute("ERRORPASS");
 			if(errorPass2 != null){ %>
-				<p style="color:#ff0000"><%=errorPass2 %></p>
+				<div class="error-message">
+        		<%= errorPass2 %>
+    			</div>
 			<%} %>
 			<%ses.removeAttribute("ERRORPASS2");%>
 

@@ -32,12 +32,16 @@
             <input type="password" id="confirm-password" name="confirm-password" required placeholder="新しいパスワードを再入力">
             
              <%if(messPass != null){ %>
-				<p style="color:#ff0000"><%=messPass %></p>
+             	<div class="error-message">
+        		<%= messPass %>
+    			</div>
 			<%} %>
 			<%ses.removeAttribute("ERRORPASS"); %>
             
             <%if(messPass1 != null){ %>
-				<p style="color:#ff0000"><%=messPass1 %></p>
+           		<div class="error-message">
+        		<%= messPass1 %>
+    			</div>
 			<%} %>
 			<%ses.removeAttribute("ERRORPASS1"); %>
             

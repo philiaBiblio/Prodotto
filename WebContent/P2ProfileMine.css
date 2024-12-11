@@ -327,7 +327,29 @@ img {
   margin-right: 8px; /* アイコンとテキストの間隔を調整 */
 }
 
-/* いいね＆コメントのボタン */
+
+.like-comment .dialogButton {
+  width: 90px ;
+  height: 50px;
+  color: rgb(255, 255, 255);
+  background-color: #000000;
+  border: 1px solid #ffffff;
+  border-radius: 10px;
+  cursor: pointer;
+  margin: 0 15px;
+  display: flex;
+  justify-content: center; 
+  align-items: center; 
+  color: rgb(255, 255, 255);
+  border-color: rgb(255, 255, 255);
+}
+
+.like-comment .dialogButton:hover {
+  color: #11dadd;
+  border-color: #11dadd;
+}
+
+ いいね＆コメントのボタン 
 .like-comment {
   display: flex;
   gap: 10px;
@@ -343,12 +365,12 @@ img {
   align-items: center;
 }
 
-/* いいね＆コメントボタンのカーソル時の色 */
+ いいね＆コメントボタンのカーソル時の色 
 .like-comment button:hover {
   color: #11dadd;
 }
 
-/* コメントボタンと数字の間隔 */
+ コメントボタンと数字の間隔 
 .like-comment button span {
   margin-left: 5px;
 }
@@ -532,28 +554,6 @@ dialog {
   background-color: #000000;
   border: solid 3px #11dadd;
   color: white;
-}
-
-#yesButton,
-#noButton {
-  width: 90px;
-  height: 50px;
-  color: rgb(255, 255, 255);
-  background-color: #000000;
-  border: 1px solid #ffffff;
-  border-radius: 10px;
-  cursor: pointer;
-  margin: 0 15px;
-  /* フレックスボックスでテキストを中央揃え */
-  display: flex;
-  justify-content: center; /* 水平方向の中央揃え */
-  align-items: center; /* 垂直方向の中央揃え */
-}
-
-#yesButton:hover,
-#noButton:hover {
-  color: #11dadd;
-  border-color: #11dadd;
 }
 
 .buttonContainer {

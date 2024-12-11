@@ -230,7 +230,7 @@ window.onload = function(){
       </div>
       <div class="scroll-container">
         <button class="scroll-left" id="scroll-left-2">◀</button>
-        <div class="video-grid" id="video-grid-1">
+        <div class="video-grid" id="video-grid-2">
         <!-- セッションのビデオカード生成 -->
 		<% for (int i = 0; i < upList.size() ; i++) { %>
 			<!-- 投稿IDの頭六桁が000000だったら。-->

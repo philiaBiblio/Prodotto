@@ -50,7 +50,7 @@ public class P2SignUpServlet extends HttpServlet {
 			if(rs.next()) {
 				System.out.println("ユーザー存在している場合なので弾きたい");
 				
-				String messID = "※既に存在しているIDです。<br>別のIDを使用してください。";
+				String messID = "※既に存在しているIDです。別のIDを使用してください。";
 				ses.setAttribute("ERRORID", messID);
 				
 				// 元の画面へ
@@ -63,7 +63,7 @@ public class P2SignUpServlet extends HttpServlet {
 					pageFlg = 1;
 				}else {
 					System.out.println("桁数×");
-					String messKeta = "※ユーザーIDの桁数が正しくありません。<br>桁数を規定の通りに合わせてください。";
+					String messKeta = "※ユーザーIDの桁数が正しくありません。桁数を規定の通りに合わせてください。";
 					ses.setAttribute("ERRORKETA", messKeta);
 					pageFlg = 0;	
 				}
@@ -83,7 +83,7 @@ public class P2SignUpServlet extends HttpServlet {
 				if(rs2.next()) {
 					System.out.println("既にメールアドレスが存在している場合なので弾きたい");
 					
-					String messMail2 = "※既に登録されているメールアドレスです。<br>別のメールアドレスを使用してください。";
+					String messMail2 = "※既に登録されているメールアドレスです。別のメールアドレスを使用してください。";
 					ses.setAttribute("ERRORMAIL2", messMail2);
 					
 					// 元の画面へ
@@ -91,7 +91,7 @@ public class P2SignUpServlet extends HttpServlet {
 					}
 				}else {
 				System.out.println("メールアドレスの入力値が違うので弾く");
-				String messMail = "※メールアドレスが一致しません。<br>もう一度入力してください。";
+				String messMail = "※メールアドレスが一致しません。もう一度入力してください。";
 				ses.setAttribute("ERRORMAIL", messMail);
 				pageFlg = 0;
 			}

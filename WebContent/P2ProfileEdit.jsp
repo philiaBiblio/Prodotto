@@ -34,14 +34,6 @@ User u = (User)ses.getAttribute("LOGIN");
 					id="username-icon" onclick="enableEdit('username')"></span>
 			</div>
 
-			<!-- ユーザーID -->
-			<div class="profile-item">
-				<span id="userid-display" name="userid"><b>ユーザーID:</b><%=u.getUserid()%></span>
-				<input type="text" class="textbox" id="userid-input"
-					value=<%=u.getUserid()%> name="userid" /> <span class="dli-create"
-					id="userid-icon" onclick="enableEdit('userid')"></span>
-			</div>
-
 			<!-- 性別 -->
 			<!-- DBから持ってきて性別選択されてる状態にしておく -->
 			<div class="profile-item">

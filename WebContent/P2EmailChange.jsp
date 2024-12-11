@@ -28,6 +28,14 @@
     <div class="container">
       <h2>メールアドレスを変更</h2>
 
+		<%if(errorMail != null){ %>
+            <div class="error-message">
+        	<%= errorMail %>
+    		</div>
+		<%} %>
+		<%ses.removeAttribute("ERRORMAIL"); %>
+
+
       <form action="P2EmailChangeServlet" onsubmit="showPopup(event)">
         <div class="menu">
           <ul>
@@ -49,10 +57,7 @@
                 placeholder="メールアドレス再入力"
               />
             </div>
-            <%if(errorMail != null){ %>
-				<p style="color:#ff0000"><%=errorMail %></p>
-			<%} %>
-			<%ses.removeAttribute("ERRORMAIL"); %>
+            
 
             <div class="button-container">
               <input

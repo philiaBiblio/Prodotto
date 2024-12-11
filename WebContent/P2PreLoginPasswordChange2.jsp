@@ -36,8 +36,10 @@
                 <button type="submit">送信</button>
             </div>
         </form>
-         <%if(error != null){ %>
-				<p style="color:#ff0000"><%=error %></p>
+         	<%if(error != null){ %>
+         		<div class="error-message">
+        		<%= error %>
+    			</div>
 			<%} %>
 			<%ses.removeAttribute("ERRORPASS"); %>
     </div>

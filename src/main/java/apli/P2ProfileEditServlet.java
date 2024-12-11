@@ -87,10 +87,9 @@ public class P2ProfileEditServlet extends HttpServlet {
 		        		"', ユーザーID = '" + inUserid +
 		        		"', 性別 = '" + inSex +
 		        		"', 生年月日 = '" + inBirth +
-
 		        		"'WHERE ユーザーID = '" + u.getUserid() + "'";
+		        
 		        // アップデート文実行
-
 		        dba.UpdateExe(updateSQL);
 		        
 		        // 取得した情報を保存

@@ -11,6 +11,22 @@ h1{
   color: #fff;
 }
 
+dialogButton {
+  width: 90px !important;;
+  height: 50px !important;;
+  color: rgb(255, 255, 255);
+  background-color: #000000;
+  border: 1px solid #ffffff;
+  border-radius: 10px;
+  cursor: pointer;
+  margin: 0 15px !important;;
+  /* フレックスボックスでテキストを中央揃え */
+  display: flex;
+  justify-content: center; /* 水平方向の中央揃え */
+  align-items: center; /* 垂直方向の中央揃え */
+}
+
+
 .search-container {
   display: flex;
   justify-content: center;
@@ -91,8 +107,34 @@ tr:last-child td:last-child {
   border-bottom-right-radius: 10px; /* 右下角を丸める */
 }
 
+.dialogButton {
+  padding: 10px 20px;
+  border-radius: 10px;
+  border: none;
+  background-color: #000000;
+  color: rgb(255, 255, 255);
+  border: 1px solid #fff;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  width: 100px; /* ボタンの幅を固定 */
+  text-align: center; /* テキストを中央揃え */
+  box-sizing: border-box; /* パディングを含めたサイズ計算 */
+}
 
-button {
+.dialogButton:hover {
+  background-color: #000;
+  color: #ee2522;
+  border: 1px solid #ee2522;
+}
+
+/* ボタン間の余白 */
+.dialogButton + .dialogButton {
+  margin-left: 10px; /* 左側に余白を追加 */
+}
+
+
+Button {
   padding: 10px 20px;
   border-radius: 10px;
   border: none;
@@ -104,7 +146,7 @@ button {
   transition: background-color 0.3s ease;
 }
 
-button:hover {
+Button:hover {
   background-color: #000;
   color: #ee2522;
   border: 1px solid #ee2522;
@@ -132,28 +174,6 @@ dialog {
   border: solid 3px rgb(255, 255, 255);
   color: white; 
   z-index: 1000;
-}
-
-#yesButton,
-#noButton {
-  width: 90px;
-  height: 50px;
-  color: rgb(255, 255, 255);
-  background-color: #000000;
-  border: 1px solid #ffffff;
-  border-radius: 10px;
-  cursor: pointer;
-  margin: 0 15px;
-  /* フレックスボックスでテキストを中央揃え */
-  display: flex;
-  justify-content: center; /* 水平方向の中央揃え */
-  align-items: center; /* 垂直方向の中央揃え */
-}
-
-#yesButton:hover,
-#noButton:hover {
-  color: #ee2522;
-  border-color: #ee2522;
 }
 
 .buttonContainer {
@@ -184,14 +204,3 @@ dialog {
 body.dialog-open .user-list {
     pointer-events: none;
 }
-
-
-
-
-.button-group2 {
-  /* border: solid 1px #fff; */
-  margin: 0;
-  margin-right: 20px;
-  justify-content: center;
-}
-

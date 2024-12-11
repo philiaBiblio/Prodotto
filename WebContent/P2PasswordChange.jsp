@@ -76,9 +76,11 @@
               </div>
               
                 <%if(messPass2 != null){ %>
-				<p style="color:#ff0000"><%=messPass2 %></p>
-			<%} %>
-			<%ses.removeAttribute("ERRORPASS2"); %>
+                <div class="error-message">
+        		<%= messPass2 %>
+    			</div>
+				<%} %>
+				<%ses.removeAttribute("ERRORPASS2"); %>
 
               <input type="checkbox" id="checkPassword2" />
               <div class="togglePassword">
@@ -137,12 +139,16 @@
             </div>
             
             <%if(messPass != null){ %>
-				<p style="color:#ff0000"><%=messPass %></p>
+            	<div class="error-message">
+        		<%= messPass %>
+    			</div>
 			<%} %>
 			<%ses.removeAttribute("ERRORPASS"); %>
 			
-			 <%if(messPass3 != null){ %>
-				<p style="color:#ff0000"><%=messPass3 %></p>
+			<%if(messPass3 != null){ %>
+				<div class="error-message">
+        		<%= messPass3 %>
+    			</div>
 			<%} %>
 			<%ses.removeAttribute("ERRORPASS3"); %>
 			

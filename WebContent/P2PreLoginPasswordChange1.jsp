@@ -32,7 +32,9 @@
             </div>
         </form>
         <%if(error != null){ %>
-				<p style="color:#ff0000"><%=error %></p>
+        	<div class="error-message">
+        	<%= error %>
+    		</div>
 			<%} %>
 			<%ses.removeAttribute("ERROR"); %>
     </div>

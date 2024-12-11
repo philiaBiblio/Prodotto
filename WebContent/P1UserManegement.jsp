@@ -73,7 +73,6 @@
       </tr>
       
       
-      <form action="P1UserManeDelServlet">
     <% if (u != null) { %>
     	<% for (int i = 0; i < u.size(); i++) { %>
         <tr>
@@ -89,7 +88,8 @@
                 <dialog id="myDialog<%=i%>">
                     <p>このアカウントを削除しますか？</p>
                     <div class="buttonContainer">
-                        <button type="submit" class="dialogButton" id="yesButton<%=i%>">はい</button>
+                    <a href="P1UserManeDelServlet?Index=<%=i%>">
+                        <button type="submit" class="dialogButton" id="yesButton<%=i%>">はい</button></a>
                         <button type="button" class="dialogButton" id="noButton<%=i%>" onclick="closeDialog('<%=i%>')">いいえ</button>
                     </div>
                 </dialog>
@@ -98,7 +98,6 @@
         </tr>
     	<% } %>
 	<% } %>
-		</form>
 		
     </table>
     <dialog id="confirmationDialog">
