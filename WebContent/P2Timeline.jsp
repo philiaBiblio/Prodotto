@@ -158,7 +158,6 @@ window.onload = function(){
 								style="width: 20px; height: 20px" /> <span><%=postList.get(i).getLikeCount()%></span>
 						</button>
 
-
 						<%
 						String postId = toukouList.get(i).getToukouid();
 						String postIdPrefix = postId.substring(0, 6);
@@ -168,17 +167,14 @@ window.onload = function(){
 						%>
 
 						<%if(postIdPrefix.equals(noweventId)) {%>
-							<form action="P2SessionRecPostServlet" method="post">
-								<input type="hidden" name="postId"
-									value="<%=postList.get(i).getPostId()%>" />
-								<button type="submit">
-									<span>
-										<div class="nav_icon">
-											<i class="gg-duplicate"></i>
-										</div>
-									</span>
-								</button>
-							</form>
+						<button>
+							<span> <a href="P2SessionParticipation?audioFile=<%= toukouList.get(i).getSound() %>">
+									<div class="nav_icon">
+										<i class="gg-duplicate"></i>
+									</div>
+							</a>
+							</span>
+						</button>
 						<%}%>
 
 						<!-- 削除ボタンイフ --> 
