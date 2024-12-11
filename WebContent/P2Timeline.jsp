@@ -88,10 +88,19 @@ window.onload = function(){
 </script>
 
 <body>
+	<%
+		// タイムスタンプからイベントIDを生成
+		java.util.Calendar cal = java.util.Calendar.getInstance();
+		int year = cal.get(java.util.Calendar.YEAR); // 現在の西暦年
+		int month = cal.get(java.util.Calendar.MONTH) + 1; // 現在の月 (0ベースなので+1)
+		String noweventId = String.format("%04d%02d", year, month); // 西暦4桁+月2桁のイベントID
+	%>
+
 	<!-- 追加するコード -->
 	<main>
 		<!-- グリッドコンテナ -->
 		<section class="video-grid">
+			
 			<%if (toukouList != null) {%>
 			<%for (int i = 0; i < toukouList.size(); i++) {%>
 			<div class="video-card">
@@ -107,6 +116,8 @@ window.onload = function(){
 
 
 				<div class="video-info">
+					
+					
 					<!-- 他人なら他人プロフ。自分ならマイページへ -->
 					<%if (!toukouList.get(i).getUserid().equals(u.getUserid())) {%>
 					<form action="P2UserSearchServlet" method="get">
@@ -127,7 +138,9 @@ window.onload = function(){
 	    					</a>
         				</button>
 					</form>
-					<%} %>
+					<%} %> 
+					
+					
 
 					<div class="like-comment">
 						<form action="P2CommentJusinServlet">
@@ -145,15 +158,27 @@ window.onload = function(){
 								style="width: 20px; height: 20px" /> <span><%=postList.get(i).getLikeCount()%></span>
 						</button>
 
-						<%if (!(toukouList.get(i).getToukouid().substring(0, 6).equals("000000"))) {%>
-						<button>
-							<span> <a href="P2Recording.html">
-									<div class="nav_icon">
-										<i class="gg-duplicate"></i>
-									</div>
-							</a>
-							</span>
-						</button>
+
+						<%
+						String postId = toukouList.get(i).getToukouid();
+						String postIdPrefix = postId.substring(0, 6);
+						System.out.print("postIdPrefix："+postIdPrefix);
+						System.out.print("noweventId："+noweventId);
+						
+						%>
+
+						<%if(postIdPrefix.equals(noweventId)) {%>
+							<form action="P2SessionRecPostServlet" method="post">
+								<input type="hidden" name="postId"
+									value="<%=postList.get(i).getPostId()%>" />
+								<button type="submit">
+									<span>
+										<div class="nav_icon">
+											<i class="gg-duplicate"></i>
+										</div>
+									</span>
+								</button>
+							</form>
 						<%}%>
 
 						<!-- 削除ボタンイフ --> 

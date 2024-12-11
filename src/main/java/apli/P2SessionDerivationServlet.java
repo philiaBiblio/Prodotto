@@ -44,7 +44,7 @@ public class P2SessionDerivationServlet extends HttpServlet {
 		
 		try {
 			
-			
+			//今月のイベントID取得
 			java.util.Calendar cal = java.util.Calendar.getInstance();
 			int year = cal.get(java.util.Calendar.YEAR); // 現在の西暦年
 			int month = cal.get(java.util.Calendar.MONTH) + 1; // 現在の月 (0ベースなので+1)

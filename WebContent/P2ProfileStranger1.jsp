@@ -99,15 +99,16 @@ ArrayList<Post> postList = (ArrayList<Post>) request.getAttribute("postList");
 		<button class="scroll-left" id="scroll-left-1">◀</button>
 		<div class="video-grid" id="video-grid-1">
 
-			<!-- 
-			CSS対策で一度div
-			<section class="video-grid"> 
-			
-			-->
-			<%if (postList != null) { %>
-			<%for (int i = 0; i < postList.size(); i++) {%>
+			<!-- セッションのビデオカード生成 -->
+			<%
+			for (int i = 0; i < postList.size(); i++) {
+			%>
+
+			<!-- 投稿IDの頭六桁が000000じゃなかったら。-->
 			<%
 			String postId = postList.get(i).getPostId();
+			%>
+			<%
 			if (!postId.startsWith("000000")) {
 			%>
 			<div class="video-card">
@@ -121,75 +122,119 @@ ArrayList<Post> postList = (ArrayList<Post>) request.getAttribute("postList");
 				</div>
 
 				<div class="video-info">
-					<form action="P2UserSearchServlet" method="get">
-    				<input type="hidden" name="userID" value="<%=up.getUserid()%>" />
-    				
-    					<button type="submit" class="profile-info" style="all: unset; cursor: pointer;">
-	    					<a>
-	    						<img src="image/<%=up.getIconImage()%>" alt="profile icon" class="profile-icon" />
-	    					</a>
-        				</button>
-					</form>
-					
-					
+					<a href="P1AdminProfile.jsp" class="profile-info"> <img
+						src="image/<%=up.getIconImage()%>" alt="profile icon"
+						class="profile-icon" />
+					</a>
+
+
 
 					<div class="like-comment">
-					
-						<form action="P2CommentJusinServlet">
-							<input type="hidden" name="toukouId" value="<%=i%>" />
+
+						<form action="P2CommentJusinServlet" method="post">
+							<input type="hidden" name="toukouId"
+								value="<%=postList.get(i).getPostId()%>" />
 							<button class="submit comment" onclick="openPopup()">
 								<img src="image/こめんと1.png" alt="comment icon"
-									style="width: 20px; height: 20px" /> 
-									<span><%=postList.get(i).getCommentCount()%></span>
+									style="width: 20px; height: 20px" /> <span><%=postList.get(i).getCommentCount()%></span>
 							</button>
 						</form>
 
-						
 						<button class="heart"
-							onclick="changeImage('heartImage<%=postList.get(i)%>')">
-							<img id="heartImage<%=postList.get(i)%>"
+							onclick="changeImage('heartImage<%=up.getUserid()%>')">
+							<img id="heartImage<%=postList.get(i).getPostId()%>"
 								src="image/Heart-512x512 test.png" alt="like icon"
-								style="width: 20px; height: 20px" /> 
-								<span><%=postList.get(i).getLikeCount()%></span>
+								style="width: 20px; height: 20px" /> <span><%=postList.get(i).getLikeCount()%></span>
 						</button>
 
 
-
+						<!-- チャットGPTからそのまま拝借 -->
+						<!-- 合っているかわからん -->
 						<%
 						// タイムスタンプからイベントIDを生成
 						java.util.Calendar cal = java.util.Calendar.getInstance();
 						int year = cal.get(java.util.Calendar.YEAR); // 現在の西暦年
 						int month = cal.get(java.util.Calendar.MONTH) + 1; // 現在の月 (0ベースなので+1)
-						String noweventId = String.format("%04d%02d", year, month); // 西暦4桁+月2桁のイベントID
+						String eventId = String.format("%04d%02d", year, month); // 西暦4桁+月2桁のイベントID
 
-						String postIdPrefix = postId.substring(0, 6);
-						System.out.print("postIdPrefix："+postIdPrefix);
-						System.out.print("noweventId："+noweventId);
-						
+						// 投稿IDの頭六桁とイベントIDを比較
+						String postIdPrefix = postId.substring(0, 6); // 投稿IDの頭六桁
 						%>
 
-						<!-- 今のイベントIDとこの投稿のイベントIDが同じなら表示 -->
-						<%if(postIdPrefix.equals(noweventId)) {%>
-							<form action="P2SessionRecPostServlet" method="post">
-								<input type="hidden" name="postId"
-									value="<%=postList.get(i).getPostId()%>" />
-								<button type="submit">
-									<span>
-										<div class="nav_icon">
-											<i class="gg-duplicate"></i>
-										</div>
-									</span>
-								</button>
-							</form>
-						<%}%>
+						<form action="P2SessionRecPostServlet" method="post">
+							<%
+							if (postIdPrefix.equals(eventId)) {
+							%>
+							<!-- 投稿IDの頭六桁とイベントIDが一致 -->
+							<input type="hidden" name="postId"
+								value="<%=postList.get(i).getPostId()%>" />
+							<button type="submit">
+								<span>
+									<div class="nav_icon">
+										<i class="gg-duplicate"></i>
+									</div>
+								</span>
+							</button>
+							<%
+							}
+							%>
+						</form>
 
-						<%}%>
+
+						<!-- css崩れた時用で残しとく -->
+						<!-- <button type="submit" >
+		                <span>
+		                  <a href="P2Recording.jsp">
+		                    <div class="nav_icon">
+		                      <i class="gg-duplicate"></i>
+		                    </div>
+		                  </a>
+		                </span>
+		              </button> -->
+
+						<!--  自分の投稿なら表示-->
+						<!--  今回は他人プロフィール画面なのでここはコメントアウトにしておきます。-->
+						<!-- User u = (User)ses.getAttribute("LOGIN"); 必要だよ-->
+						<%
+						if (up.getUserid() == u.getUserid()) {
+						%>
+
+						<button id="openDialog<%=postList.get(i).getPostId()%>"
+							onclick="test('trash<%=up.getUserid()%>')">
+							<span>
+								<div class="nav_icon trash">
+									<i class="gg-trash"></i>
+								</div>
+							</span>
+						</button>
+
+						<dialog id="myDialog<%=postList.get(i).getPostId()%>">
+						<p>この投稿を削除しますか？</p>
+						<div class="buttonContainer">
+							<button type="button" class="dialogButton"
+								id="yesButton<%=postList.get(i).getPostId()%>">はい</button>
+							<button type="button" class="dialogButton"
+								id="noButton<%=postList.get(i).getPostId()%>">いいえ</button>
+						</div>
+						</dialog>
+
+						<dialog id="confirmationDialog<%=postList.get(i).getPostId()%>">
+						<p>削除しました</p>
+						<button type="button" class="dialogButton"
+							id="closeConfirmationButton<%=postList.get(i).getPostId()%>">
+							閉じる</button>
+						</dialog>
+						<%
+						}
+						%>
+
 					</div>
 				</div>
 			</div>
-			<%}%>
-			<%}%>
-		<!-- </section> -->
+			<%
+			}
+			}
+			%>
 		</div>
 		<button class="scroll-right" id="scroll-right-1">▶</button>
 	</div>
