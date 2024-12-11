@@ -162,8 +162,8 @@ window.onload = function(){
 						<%
 						String postId = toukouList.get(i).getToukouid();
 						String postIdPrefix = postId.substring(0, 6);
-						System.out.print("postIdPrefix："+postIdPrefix);
-						System.out.print("noweventId："+noweventId);
+						System.out.println("postIdPrefix："+postIdPrefix+"i:"+i);
+						System.out.println("noweventId："+noweventId);
 						
 						%>
 

@@ -32,6 +32,16 @@ int followerCount = (int) ses.getAttribute("followerCount");
 ArrayList<Post> postList = (ArrayList<Post>) request.getAttribute("postList");
 %>
 
+
+<%
+// タイムスタンプからイベントIDを生成
+java.util.Calendar cal = java.util.Calendar.getInstance();
+int year = cal.get(java.util.Calendar.YEAR); // 現在の西暦年
+int month = cal.get(java.util.Calendar.MONTH) + 1; // 現在の月 (0ベースなので+1)
+String noweventId = String.format("%04d%02d", year, month); // 西暦4桁+月2桁のイベントID
+
+%>
+
 <body>
 	<header class="profile-header">
 
@@ -97,13 +107,12 @@ ArrayList<Post> postList = (ArrayList<Post>) request.getAttribute("postList");
 	</div>
 	<div class="scroll-container">
 		<button class="scroll-left" id="scroll-left-1">◀</button>
-		<div class="video-grid" id="video-grid-1">
+		<!-- <div class="video-grid" id="video-grid-1"> -->
 
-			<!-- 
-			CSS対策で一度div
-			<section class="video-grid"> 
 			
-			-->
+			<section class="video-grid" id="video-grid-1"> 
+			
+		
 			<%if (postList != null) { %>
 			<%for (int i = 0; i < postList.size(); i++) {%>
 			<%
@@ -156,20 +165,17 @@ ArrayList<Post> postList = (ArrayList<Post>) request.getAttribute("postList");
 
 
 						<%
-						// タイムスタンプからイベントIDを生成
-						java.util.Calendar cal = java.util.Calendar.getInstance();
-						int year = cal.get(java.util.Calendar.YEAR); // 現在の西暦年
-						int month = cal.get(java.util.Calendar.MONTH) + 1; // 現在の月 (0ベースなので+1)
-						String noweventId = String.format("%04d%02d", year, month); // 西暦4桁+月2桁のイベントID
-
+						
 						String postIdPrefix = postId.substring(0, 6);
+						System.out.print("postIdPrefix："+postIdPrefix);
 						System.out.print("postIdPrefix："+postIdPrefix);
 						System.out.print("noweventId："+noweventId);
 						
 						%>
 
 						<!-- 今のイベントIDとこの投稿のイベントIDが同じなら表示 -->
-						<%if(postIdPrefix.equals(noweventId)) {%>
+						<%if(postIdPrefix.equals(noweventId)) { %>
+						<% System.out.println("セッションできるよpostIdPrefix："+postIdPrefix);%>
 							<form action="P2SessionRecPostServlet" method="post">
 								<input type="hidden" name="postId"
 									value="<%=postList.get(i).getPostId()%>" />
@@ -189,8 +195,8 @@ ArrayList<Post> postList = (ArrayList<Post>) request.getAttribute("postList");
 			</div>
 			<%}%>
 			<%}%>
-		<!-- </section> -->
-		</div>
+		</section>
+		<!-- </div> -->
 		<button class="scroll-right" id="scroll-right-1">▶</button>
 	</div>
 
