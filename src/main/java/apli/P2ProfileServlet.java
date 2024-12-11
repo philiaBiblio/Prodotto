@@ -36,6 +36,7 @@ public class P2ProfileServlet extends HttpServlet {
 	     // アレイリストの取得
 	     ArrayList<Toukou> upList = new ArrayList<Toukou>();
 	     ArrayList<Post> postList = new ArrayList<Post>();
+	     ArrayList<Heart> heartList = new ArrayList<Heart>();
 	     
 	     // URLの生成
 	     String url = "";   
@@ -43,6 +44,7 @@ public class P2ProfileServlet extends HttpServlet {
 	     DBAcs dba = new DBAcs();
 	     DBAcs dba2 = new DBAcs();
 	     DBAcs dba3 = new DBAcs();
+	     DBAcs dba4 = new DBAcs();
 	     
 	     try {
 	    	 // 自分の投稿を持ってくる
@@ -104,6 +106,25 @@ public class P2ProfileServlet extends HttpServlet {
              
              ses.setAttribute("followCount", followCount);
              ses.setAttribute("followerCount", followerCount);
+             
+     		// 自分がいいねしたかの判別用のsql
+ 			String sql4 = "select * from いいね";
+ 			// sql文実行
+ 			ResultSet rs4 = dba.selectExe(sql4);
+ 			
+ 			while(rs4.next()) {
+ 				String toukouId = rs4.getString("投稿ID");
+ 				String userId = rs4.getString("ユーザーID");
+ 				
+ 				// インスタンス生成
+ 				Heart heart = new Heart();
+ 				heart.setPostId(toukouId);
+ 				heart.setUserId(userId);
+ 				
+ 				// アレイリストに追加
+ 				heartList.add(heart);
+ 			}
+ 			ses.setAttribute("HEARTLIST", heartList);
  
 	    	// プロフィール画面へ
 	    	 url = "P2ProfileMine.jsp";
@@ -117,6 +138,7 @@ public class P2ProfileServlet extends HttpServlet {
 	    	 dba.closeDB();
 	    	 dba2.closeDB();
 	    	 dba3.closeDB();
+	    	 dba4.closeDB();
 	    	 
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -125,6 +147,7 @@ public class P2ProfileServlet extends HttpServlet {
 			dba.closeDB();
 			dba2.closeDB();
 			dba3.closeDB();
+			dba4.closeDB();
 		}
 	}
 

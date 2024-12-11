@@ -61,10 +61,6 @@ public class P2DMSousinServlet extends HttpServlet {
 						
 			// 画面遷移
 			response.sendRedirect(url);
-			
-			
-//			RequestDispatcher rd = request.getRequestDispatcher(url);
-//			rd.forward(request, response);
 						
 			// ログアウト処理
 			dba.closeDB();

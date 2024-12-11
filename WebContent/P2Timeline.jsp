@@ -1,3 +1,4 @@
+<%@page import="apli.Heart"%>
 <%@page
 	import="org.eclipse.jdt.internal.compiler.env.IUpdatableModule.UpdateKind"%>
 <%@page import="apli.Post"%>
@@ -34,6 +35,7 @@
 	ArrayList<Toukou> toukouList = (ArrayList) ses.getAttribute("TOUKOULIST");
 	ArrayList<User> userIconList = (ArrayList) ses.getAttribute("ICONLIST");
 	ArrayList<Post> postList = (ArrayList) ses.getAttribute("POSTLIST");
+	ArrayList<Heart> heartList = (ArrayList) ses.getAttribute("HEARTLIST");
 	String trueMess = (String)ses.getAttribute("TRUEMESS");
 %>
 
@@ -94,6 +96,7 @@ window.onload = function(){
 		<section class="video-grid">
 			<%if (toukouList != null) {%>
 			<%for (int i = 0; i < toukouList.size(); i++) {%>
+			<%boolean flg = false; %>
 			<div class="video-card">
 				<div class="thumbnail-placeholder">
 
@@ -138,12 +141,37 @@ window.onload = function(){
 							</button>
 						</form>
 
-						<button class="heart"
-							onclick="changeImage('heartImage<%=postList.get(i)%>')">
+						<a href="P2heartServlet?hensuu=<%=i%>&heartId=<%= toukouList.get(i).getToukouid() %>&page=TL">
+						<button class="heart" onclick="changeImage('heartImage<%=postList.get(i)%>')">
 							<img id="heartImage<%=postList.get(i)%>"
-								src="image/Heart-512x512 test.png" alt="like icon"
-								style="width: 20px; height: 20px" /> <span><%=postList.get(i).getLikeCount()%></span>
-						</button>
+							
+							<%for(int j = 0; j < heartList.size(); j++){
+								System.out.println("for文開始" + i);
+								if(flg == false){
+									System.out.println(toukouList.get(i).getToukouid()+":"+heartList.get(j).getPostId());
+									if(toukouList.get(i).getToukouid().equals(heartList.get(j).getPostId())){
+										System.out.println(u.getUserid()+":"+heartList.get(j).getUserId());	
+										if(u.getUserid().equals(heartList.get(j).getUserId())){
+											System.out.println("152");
+											flg = true;
+										}else{
+											System.out.println("158");					
+										}
+									}else{
+										System.out.println("162");
+									}
+								System.out.println("for文終わり" + i);
+								} 
+							}
+							
+							if(flg == true){ %>
+							src="image/Heart-512x512 test2.png"
+							<%}else{ %>
+							src="image/Heart-512x512 test.png"
+							<%} %>
+							alt="like icon" style="width: 20px; height: 20px" /> 
+							<span><%=postList.get(i).getLikeCount()%></span>
+						</button></a>
 
 						<%if (!(toukouList.get(i).getToukouid().substring(0, 6).equals("000000"))) {%>
 						<button>
