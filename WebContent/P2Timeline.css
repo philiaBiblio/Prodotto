@@ -633,6 +633,12 @@ a,a:visited{
   align-items: center;
   gap: 20px; /* プロフィールとボタンの間にスペースをあける */
   width: 100%;
+  
+  
+  flex-wrap: wrap; /* 必要に応じて改行させる */
+  box-sizing: border-box; /* パディングや境界線を幅に含める */
+
+
 }
 
 /* プロフィール情報を横並びにする */
@@ -761,9 +767,11 @@ a,a:visited{
     left: -2px;
 }
 
+/*
 .trash{
   padding-left: 30px;
 }
+*/
 
 .heart {
   cursor: pointer;
@@ -951,3 +959,15 @@ dialog {
   margin-right: 20px;
   justify-content: center;
 }
+
+/*
+.video-info {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 20px;
+  width: 100%;  親要素の幅に合わせる 
+  flex-wrap: wrap;  必要に応じて改行させる 
+  box-sizing: border-box;  パディングや境界線を幅に含める 
+}
+*/

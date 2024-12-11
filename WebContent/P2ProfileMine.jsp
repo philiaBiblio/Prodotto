@@ -1,3 +1,4 @@
+<%@page import="apli.Heart"%>
 <%@page import="apli.Post"%>
 <%@page import="apli.Toukou"%>
 <%@page import="java.util.ArrayList"%>
@@ -31,6 +32,7 @@
  User u = (User)ses.getAttribute("LOGIN");
  ArrayList<Toukou> upList = (ArrayList)ses.getAttribute("UPLIST");
  ArrayList<Post> postList = (ArrayList) ses.getAttribute("POSTLIST");
+ ArrayList<Heart> heartList = (ArrayList) ses.getAttribute("HEARTLIST");
  
  int followCount = (int)ses.getAttribute("followCount");
  int followerCount = (int)ses.getAttribute("followerCount");
@@ -131,6 +133,7 @@ window.onload = function(){
 	        
 	    <!-- セッションのビデオカード生成 -->
 		<% for (int i = 0; i <upList.size() ; i++) { %>
+		<%boolean flgin = false; %>
 			<!-- 投稿IDの頭六桁が000000じゃなかったら。-->
 			 <%if(!(upList.get(i).getToukouid().substring(0,6).equals("000000"))){ %>
 	          <div class="video-card">
@@ -167,13 +170,38 @@ window.onload = function(){
 						</button>
 					</form>
 
-	                <button class="heart"
-							onclick="changeImage('heartImage<%=postList.get(i)%>')">
+	                <a href="P2heartServlet?hensuu=<%=i%>&heartId=<%= upList.get(i).getToukouid() %>&page=mine">
+						<button class="heart" onclick="changeImage('heartImage<%=postList.get(i)%>')">
 							<img id="heartImage<%=postList.get(i)%>"
-								src="image/Heart-512x512 test.png" alt="like icon" style="width: 20px; height: 20px" /> 
-								<span><%=postList.get(i).getLikeCount()%></span>
-						</button>
-						
+							
+							<%for(int j = 0; j < heartList.size(); j++){
+								System.out.println("for文開始" + i);
+								if(flgin == false){
+									System.out.println(upList.get(i).getToukouid()+":"+heartList.get(j).getPostId());
+									if(upList.get(i).getToukouid().equals(heartList.get(j).getPostId())){
+										System.out.println(u.getUserid()+":"+heartList.get(j).getUserId());	
+										if(u.getUserid().equals(heartList.get(j).getUserId())){
+											System.out.println("152");
+											flgin = true;
+										}else{
+											System.out.println("158");					
+										}
+									}else{
+										System.out.println("162");
+									}
+								System.out.println("for文終わり" + i);
+								} 
+							}
+							
+							if(flgin == true){ %>
+							src="image/Heart-512x512 test2.png"
+							<%}else{ %>
+							src="image/Heart-512x512 test.png"
+							<%} %>
+							alt="like icon" style="width: 20px; height: 20px" /> 
+							<span><%=postList.get(i).getLikeCount()%></span>
+						</button></a>
+
 				<form action="P2SessionRecPostServlet" method="post">
 					        <input type="hidden" name="postId" value="<%= postList.get(i).getPostId() %>" />
 					        <button type="submit">
@@ -233,6 +261,7 @@ window.onload = function(){
         <div class="video-grid" id="video-grid-2">
         <!-- セッションのビデオカード生成 -->
 		<% for (int i = 0; i < upList.size() ; i++) { %>
+		<%boolean flg = false; %>
 			<!-- 投稿IDの頭六桁が000000だったら。-->
 			 <%if(upList.get(i).getToukouid().substring(0,6).equals("000000")){ %>
 	          <div class="video-card">
@@ -268,15 +297,43 @@ window.onload = function(){
 							<span><%= postList.get(i).getCommentCount() %></span>
 						</button>
 					</form>
+					
 	  				<!-- いいねボタン -->
-	                <button class="heart"
-							onclick="changeImage('heartImageS<%=postList.get(i)%>')">
-							<img id="heartImageS<%=postList.get(i)%>"
-								src="image/Heart-512x512 test.png" alt="like icon"
-								style="width: 20px; height: 20px" /> <span><%=postList.get(i).getLikeCount()%></span>
-						</button>
+	                	<a href="P2heartServlet?hensuu=<%=i%>&heartId=<%= upList.get(i).getToukouid() %>&page=mine">
+						<button class="heart" onclick="changeImage('heartImage<%=postList.get(i)%>')">
+							<img id="heartImage<%=postList.get(i)%>"
+							
+							<%for(int j = 0; j < heartList.size(); j++){
+								System.out.println("for文開始" + i);
+								if(flg == false){
+									System.out.println(upList.get(i).getToukouid()+":"+heartList.get(j).getPostId());
+									if(upList.get(i).getToukouid().equals(heartList.get(j).getPostId())){
+										System.out.println(u.getUserid()+":"+heartList.get(j).getUserId());	
+										if(u.getUserid().equals(heartList.get(j).getUserId())){
+											flg = true;
+											System.out.println("152" + flg);
+										}else{
+											System.out.println("158");					
+										}
+									}else{
+										System.out.println("162");
+									}
+								System.out.println("for文終わり" + i);
+								} 
+							}
+							System.out.println("324" + flg);
+							
+							if(flg == true){ 
+							System.out.println("trueの処理" + flg);%>
+								src="image/Heart-512x512 test2.png"
+							<%}else{ 
+							System.out.println("elseの処理" + flg);%>
+								src="image/Heart-512x512 test.png"
+							<%} %>
+							alt="like icon" style="width: 20px; height: 20px" /> 
+							<span><%=postList.get(i).getLikeCount()%></span>
+						</button></a>
 	                
-		              
 					<!--  自分の投稿なら表示-->
 					<!--  今回はマイプロフィール画面なので表示しておきます。-->               
 	                <button type="button" id="openDialogButton<%=upList.get(i).getToukouid() %>"

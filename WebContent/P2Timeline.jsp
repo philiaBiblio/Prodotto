@@ -1,3 +1,4 @@
+<%@page import="apli.Heart"%>
 <%@page
 	import="org.eclipse.jdt.internal.compiler.env.IUpdatableModule.UpdateKind"%>
 <%@page import="apli.Post"%>
@@ -34,6 +35,7 @@
 	ArrayList<Toukou> toukouList = (ArrayList) ses.getAttribute("TOUKOULIST");
 	ArrayList<User> userIconList = (ArrayList) ses.getAttribute("ICONLIST");
 	ArrayList<Post> postList = (ArrayList) ses.getAttribute("POSTLIST");
+	ArrayList<Heart> heartList = (ArrayList) ses.getAttribute("HEARTLIST");
 	String trueMess = (String)ses.getAttribute("TRUEMESS");
 %>
 
@@ -88,12 +90,22 @@ window.onload = function(){
 </script>
 
 <body>
+	<%
+		// タイムスタンプからイベントIDを生成
+		java.util.Calendar cal = java.util.Calendar.getInstance();
+		int year = cal.get(java.util.Calendar.YEAR); // 現在の西暦年
+		int month = cal.get(java.util.Calendar.MONTH) + 1; // 現在の月 (0ベースなので+1)
+		String noweventId = String.format("%04d%02d", year, month); // 西暦4桁+月2桁のイベントID
+	%>
+
 	<!-- 追加するコード -->
 	<main>
 		<!-- グリッドコンテナ -->
 		<section class="video-grid">
+			
 			<%if (toukouList != null) {%>
 			<%for (int i = 0; i < toukouList.size(); i++) {%>
+			<%boolean flg = false; %>
 			<div class="video-card">
 				<div class="thumbnail-placeholder">
 
@@ -107,6 +119,8 @@ window.onload = function(){
 
 
 				<div class="video-info">
+					
+					
 					<!-- 他人なら他人プロフ。自分ならマイページへ -->
 					<%if (!toukouList.get(i).getUserid().equals(u.getUserid())) {%>
 					<form action="P2UserSearchServlet" method="get">
@@ -127,7 +141,9 @@ window.onload = function(){
 	    					</a>
         				</button>
 					</form>
-					<%} %>
+					<%} %> 
+					
+					
 
 					<div class="like-comment">
 						<form action="P2CommentJusinServlet">
@@ -138,16 +154,49 @@ window.onload = function(){
 							</button>
 						</form>
 
-						<button class="heart"
-							onclick="changeImage('heartImage<%=postList.get(i)%>')">
+						<a href="P2heartServlet?hensuu=<%=i%>&heartId=<%= toukouList.get(i).getToukouid() %>&page=TL">
+						<button class="heart" onclick="changeImage('heartImage<%=postList.get(i)%>')">
 							<img id="heartImage<%=postList.get(i)%>"
-								src="image/Heart-512x512 test.png" alt="like icon"
-								style="width: 20px; height: 20px" /> <span><%=postList.get(i).getLikeCount()%></span>
-						</button>
+							
+							<%for(int j = 0; j < heartList.size(); j++){
+								System.out.println("for文開始" + i);
+								if(flg == false){
+									System.out.println(toukouList.get(i).getToukouid()+":"+heartList.get(j).getPostId());
+									if(toukouList.get(i).getToukouid().equals(heartList.get(j).getPostId())){
+										System.out.println(u.getUserid()+":"+heartList.get(j).getUserId());	
+										if(u.getUserid().equals(heartList.get(j).getUserId())){
+											System.out.println("152");
+											flg = true;
+										}else{
+											System.out.println("158");					
+										}
+									}else{
+										System.out.println("162");
+									}
+								System.out.println("for文終わり" + i);
+								} 
+							}
+							
+							if(flg == true){ %>
+							src="image/Heart-512x512 test2.png"
+							<%}else{ %>
+							src="image/Heart-512x512 test.png"
+							<%} %>
+							alt="like icon" style="width: 20px; height: 20px" /> 
+							<span><%=postList.get(i).getLikeCount()%></span>
+						</button></a>
 
-						<%if (!(toukouList.get(i).getToukouid().substring(0, 6).equals("000000"))) {%>
+						<%
+						String postId = toukouList.get(i).getToukouid();
+						String postIdPrefix = postId.substring(0, 6);
+						System.out.println("postIdPrefix："+postIdPrefix+"i:"+i);
+						System.out.println("noweventId："+noweventId);
+						
+						%>
+
+						<%if(postIdPrefix.equals(noweventId)) {%>
 						<button>
-							<span> <a href="P2Recording.html">
+							<span> <a href="P2SessionParticipation?audioFile=<%= toukouList.get(i).getSound() %>">
 									<div class="nav_icon">
 										<i class="gg-duplicate"></i>
 									</div>
