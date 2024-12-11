@@ -34,13 +34,13 @@ public class P2TimelineServlet extends HttpServlet {
 		ArrayList<Toukou> toukouList = new ArrayList<Toukou>();
 		ArrayList<User> userIconList = new ArrayList<User>();
 		ArrayList<Post> postList = new ArrayList<Post>();
-		
-		
+		ArrayList<Heart> heartList = new ArrayList<Heart>();
 
 		// URLの生成
 		String url = "";
 		// DBアクセス用部品の生成
 		DBAcs dba = new DBAcs();
+		DBAcs dba2 = new DBAcs();
 		
 		try {
 			// 投稿用のsql文
@@ -62,7 +62,7 @@ public class P2TimelineServlet extends HttpServlet {
 				String time = rs.getString("アップロード日");
 				String audio = rs.getString("作品");
 				String samune = rs.getString("サムネイル");
-				System.out.println("サムネイル："+samune);
+		//		System.out.println("サムネイル："+samune);
 				// タグID作るときはここに記入
 				String upName = rs.getString("名前");
 				String toukouIcon = rs.getString("アイコン");
@@ -105,6 +105,25 @@ public class P2TimelineServlet extends HttpServlet {
 			ses.setAttribute("ICONLIST", userIconList);
 			ses.setAttribute("POSTLIST", postList);
 			
+			// 自分がいいねしたかの判別用のsql
+			String sql2 = "select * from いいね";
+			// sql文実行
+			ResultSet rs2 = dba.selectExe(sql2);
+			
+			while(rs2.next()) {
+				String toukouId = rs2.getString("投稿ID");
+				String userId = rs2.getString("ユーザーID");
+				
+				// インスタンス生成
+				Heart heart = new Heart();
+				heart.setPostId(toukouId);
+				heart.setUserId(userId);
+				
+				// アレイリストに追加
+				heartList.add(heart);
+			}
+			ses.setAttribute("HEARTLIST", heartList);
+			
 			// タイムライン画面へ
 			url = "P2Timeline.jsp";
 			System.out.println(url);
@@ -115,10 +134,12 @@ public class P2TimelineServlet extends HttpServlet {
 			
 			// ログアウト処理
 			dba.closeDB();
+			dba2.closeDB();
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
 			// ログアウト処理
+			dba.closeDB();
 			dba.closeDB();
 		}
 	}
