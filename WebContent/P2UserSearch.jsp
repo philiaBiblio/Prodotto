@@ -58,7 +58,6 @@ ArrayList<User> searchU = (ArrayList<User>) ses.getAttribute("USERLIST");
 
 		<jsp:include page="P2kensaku.jsp"></jsp:include>
 
-		<script src="audioPlayer.js"></script>
 		<script src="https://unpkg.com/wavesurfer.js"></script>
 	</form>
 </body>
