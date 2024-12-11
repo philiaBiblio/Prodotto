@@ -1,3 +1,7 @@
+<%@ page import="java.util.*" %>
+<%
+    String audioFile = (String) request.getAttribute("audioFile");  // サーブレットから音声ファイル名を取得
+%>
 <%@ page contentType="text/html; charset=UTF-8" language="java"%>
 <!DOCTYPE html>
 <html lang="ja">
@@ -167,5 +171,11 @@
 	<script type="text/javascript" src="waveform-playlist.js"></script>
 	<script type="text/javascript" src="record.js"></script>
 	<script type="text/javascript" src="emitter.js"></script>
+	
+	<!-- 音声ファイルのパスをrecord.jsに渡す -->
+    <script type="text/javascript">
+        const audioFilePath = "audio/<%= audioFile %>";  // サーブレットから渡された音声ファイルのパス
+        loadAudioFile(audioFilePath);  // record.js内で音声をロード
+    </script>
 </body>
 </html>
