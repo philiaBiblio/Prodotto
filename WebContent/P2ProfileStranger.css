@@ -926,7 +926,10 @@ img {
   justify-content: flex-start;
   align-items: center;
   gap: 20px; /* プロフィールとボタンの間にスペースをあける */
+  
   width: 100%;
+  flex-wrap: wrap; /* 必要に応じて改行させる */
+  box-sizing: border-box; /* パディングや境界線を幅に含める */
 }
 
 /* プロフィール情報を横並びにする */
@@ -1281,3 +1284,51 @@ p.follow{
   margin-top: 0;
   padding-top: 0;
 }
+
+
+
+.gg-duplicate {
+  box-sizing: border-box;
+  position: relative;
+  display: block;
+  transform: scale(var(--ggs, 1));
+  width: 10px;
+  height: 10px;
+  border: 2px solid transparent;
+  border-bottom: 4px solid transparent;
+  box-shadow:
+    0 0 0 2px,
+    inset 0 -2px 0 0;
+  margin-left: -4px;
+  margin-top: 4px;
+}
+.gg-duplicate::after,
+.gg-duplicate::before {
+  content: "";
+  display: block;
+  box-sizing: border-box;
+  position: absolute;
+}
+.gg-duplicate::before {
+  background: currentColor;
+  left: 2px;
+  bottom: -2px;
+  width: 2px;
+  height: 6px;
+}
+.gg-duplicate::after {
+  width: 14px;
+  height: 14px;
+  border-right: 2px solid;
+  border-top: 2px solid;
+  right: -8px;
+  top: -8px;
+}
+
+
+
+
+
+
+
+
