@@ -18,8 +18,9 @@
 
   
   
-
+ 
 <body>
+<form action = "P2SearchServlet">
 	<header class="header">
 		<div class="header_container">
 			<div class="none"></div>
@@ -135,14 +136,22 @@
   	    	}
   	    }
 
-  	     // フィルターボタンの変更を検知
-    	document.getElementById('filter').addEventListener('change', function() {
-        const selectedUrl = this.value; // 選択された値（URL）を取得
-        if (selectedUrl) {
-            window.location.href = selectedUrl; // 指定されたURLに遷移
-       		 }
-    	});
-	</script>
+  	// 現在のURLからクエリパラメータを取得
+  		const params = new URLSearchParams(window.location.search);
+  		const selectedUrl = params.get('url');
 
+  		// 選択状態を反映
+  		if (selectedUrl) {
+  		    const filterElement = document.getElementById('filter');
+  		    filterElement.value = selectedUrl;
+  		}
+
+        		
+
+
+
+        
+	</script>
+</form>
 </body>
 </html>

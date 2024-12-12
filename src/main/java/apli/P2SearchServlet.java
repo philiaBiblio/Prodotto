@@ -25,7 +25,7 @@ public class P2SearchServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		System.out.println("P2PasswordChangeServlet実行");
+		System.out.println("P2SearchServlet実行");
 
 		// 文字化け防止
 		request.setCharacterEncoding("UTF-8");
@@ -45,10 +45,12 @@ public class P2SearchServlet extends HttpServlet {
 		} else {
 			UList.clear(); // 既存データをクリア
 		}
-
+		
+		System.out.println(request.getParameter("url"));
+		
 		try {
 			
-			if(request.getParameter("url")=="P2UserSearch.jsp") {
+			if("P2UserSearch.jsp".equals(request.getParameter("url"))) {
 				
 				// 検索キーワードの取得
 				String username = request.getParameter("search");
