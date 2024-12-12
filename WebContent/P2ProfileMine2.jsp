@@ -1,4 +1,6 @@
+<%@page import="apli.Heart"%>
 <%@page import="apli.Post"%>
+<%@page import="apli.Toukou"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="apli.User"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -15,34 +17,91 @@
 	crossorigin="anonymous" />
 <link rel="stylesheet"
 	href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=settings" />
-<link rel="stylesheet" href="P2ProfileStranger.css" />
-<title>ProDotto</title>
+<link rel="stylesheet" href="P2ProfileMine.css" />
+<title>プロフィール画面</title>
 </head>
 
-
 <%
+//一旦コピペ
 HttpSession ses = request.getSession();
 
 User u = (User) ses.getAttribute("LOGIN");
-User up = (User) request.getAttribute("PROF");
-boolean isFollowing = (boolean) ses.getAttribute("isFollowing");
+ArrayList<Toukou> upList = (ArrayList) ses.getAttribute("UPLIST");
+ArrayList<Post> postList = (ArrayList) ses.getAttribute("POSTLIST");
+ArrayList<Heart> heartList = (ArrayList) ses.getAttribute("HEARTLIST");
+
 int followCount = (int) ses.getAttribute("followCount");
 int followerCount = (int) ses.getAttribute("followerCount");
-
-ArrayList<Post> postList = (ArrayList<Post>) request.getAttribute("postList");
+String trueMess = (String) ses.getAttribute("TRUEMESS");
 %>
+
+
+<%
+// タイムスタンプからイベントIDを生成
+java.util.Calendar cal = java.util.Calendar.getInstance();
+int year = cal.get(java.util.Calendar.YEAR); // 現在の西暦年
+int month = cal.get(java.util.Calendar.MONTH) + 1; // 現在の月 (0ベースなので+1)
+String noweventId = String.format("%04d%02d", year, month); // 西暦4桁+月2桁のイベントID
+%>
+
+
+<script>
+//ダイアログのスクリプト
+function dialog(id){
+	console.log("id:" + id);
+	const openDialogButton = document.getElementById('openDialogButton');
+	const yesButton = document.getElementById('yesButton' + id);
+	const noButton = document.getElementById('noButton' + id);
+	const myDialog = document.getElementById('myDialog' + id);
+	const confirmationDialog = document.getElementById('confirmationDialog');
+	const closeConfirmationButton = document.getElementById('closeConfirmationButton');
+	myDialog.showModal();
+	console.log("no" + noButton)
+	  if (noButton) {
+          noButton.addEventListener('click', () => {
+              if (myDialog) {
+                  console.log("80")
+                  myDialog.close();
+              }
+          });
+      }
+}
+document.addEventListener('DOMContentLoaded', (event) => {
+    function dialog(id) {
+        const openDialogButton = document.getElementById('openDialogButton');
+        const yesButton = document.getElementById('yesButton' + id);
+        const noButton = document.getElementById('noButton' + id);
+        console.log("no" + noButton)
+        const myDialog = document.getElementById('myDialog' + id);
+        const confirmationDialog = document.getElementById('confirmationDialog');
+        const closeConfirmationButton = document.getElementById('closeConfirmationButton');
+    }
+
+    // dialog関数を呼び出す
+    dialog();
+});
+
+<%if (trueMess != null) {%>
+window.onload = function(){
+	const dialog = document.querySelector("#confirmationDialog");
+	dialog.showModal();
+	} 	
+	<%}%>
+	<%ses.removeAttribute("TRUEMESS");%>
+</script>
+
 
 <body>
 	<header class="profile-header">
 
 		<div class="leftheader">
-			<img src="image/<%=up.getIconImage()%>" alt="Profile Icon"
+			<img src="image/<%=u.getIconImage()%>" alt="Profile Icon"
 				class="profile-header-icon" />
 
 			<div class="user-details">
-				<h2 class="username"><%=up.getName()%></h2>
+				<h2 class="username"><%=u.getName()%></h2>
 				<p class="user-id">
-					@<%=up.getUserid()%></p>
+					@<%=u.getUserid()%></p>
 				<div class="follower-info">
 					<span class="follower-count">フォロワー: <%=followCount%></span> <span
 						class="following-count">フォロー中: <%=followerCount%></span>
@@ -51,41 +110,18 @@ ArrayList<Post> postList = (ArrayList<Post>) request.getAttribute("postList");
 
 		</div>
 
-		<!-- フォロー中/フォローボタン切り替えに変更 -->
-		<!-- isFollowingがtrueならフォローしているのでフォロー済みボタン -->
-		<!-- isFollowingがfolseならフォローしていないのでフォローボタン表示 -->
+		<!-- 通知画面に飛ぶのでサーブレットありますが一旦無視 -->
 		<div class="rightheader">
 			<div class="button-group2">
-				<button class="notification-button toggle-notification"
-					id="notificationButton">
-					<i class="fas changeb"> <span class="dli-user-plus"> <span
-							class="user"></span>
-					</span>
-					</i>
-				</button>
-				<p class="follow">
-					<%
-					if (isFollowing == true) {
-					%>
-					フォロー中
-					<%
-					} else {
-					%>
-					フォローする
-					<%
-					}
-					%>
-				</p>
-
-				<a href="P2DMServlet?yourId=<%=up.getUserid()%>"
-					class="edit-profile-button"> <i class="fas fa-envelope changeb"></i>
+				<a href="P2Notifications.jsp">
+					<button class="notification-button toggle-notification"
+						id="notificationButton">
+						<i class="fas fa-bell  changeb"></i>
+					</button>
+				</a> 
+				<a href="P2ProfileEdit.jsp" class="edit-profile-button"> <i
+					class="fas fa-pen changeb"></i>
 				</a>
-				<!--
-            	css崩れた時ように元の用意 
-            	<a href="P2DM.html" class="edit-profile-button">
-            		<i class="fas fa-envelope changeb"></i>
-          		</a> 
-          		-->
 			</div>
 		</div>
 	</header>
@@ -97,18 +133,17 @@ ArrayList<Post> postList = (ArrayList<Post>) request.getAttribute("postList");
 	</div>
 	<div class="scroll-container">
 		<button class="scroll-left" id="scroll-left-1">◀</button>
-		<div class="video-grid" id="video-grid-1">
+		<section class="video-grid" id="video-grid-1">
 
-			<!-- セッションのビデオカード生成 -->
+
 			<%
-			for (int i = 0; i < postList.size(); i++) {
+			if (upList != null) {
 			%>
-
-			<!-- 投稿IDの頭六桁が000000じゃなかったら。-->
+			<%
+			for (int i = 0; i < upList.size(); i++) {
+			%>
 			<%
 			String postId = postList.get(i).getPostId();
-			%>
-			<%
 			if (!postId.startsWith("000000")) {
 			%>
 			<div class="video-card">
@@ -122,50 +157,54 @@ ArrayList<Post> postList = (ArrayList<Post>) request.getAttribute("postList");
 				</div>
 
 				<div class="video-info">
-					<a href="P1AdminProfile.jsp" class="profile-info"> <img
-						src="image/<%=up.getIconImage()%>" alt="profile icon"
-						class="profile-icon" />
-					</a>
+					<form action="P2UserSearchServlet" method="get">
+						<input type="hidden" name="userID" value="<%=up.getUserid()%>" />
+
+						<button type="submit" class="profile-info"
+							style="all: unset; cursor: pointer;">
+							<a> <img src="image/<%=up.getIconImage()%>"
+								alt="profile icon" class="profile-icon" />
+							</a>
+						</button>
+					</form>
 
 
 
 					<div class="like-comment">
 
-						<form action="P2CommentJusinServlet" method="post">
-							<input type="hidden" name="toukouId"
-								value="<%=postList.get(i).getPostId()%>" />
+						<form action="P2CommentJusinServlet">
+							<input type="hidden" name="toukouId" value="<%=i%>" />
 							<button class="submit comment" onclick="openPopup()">
 								<img src="image/こめんと1.png" alt="comment icon"
 									style="width: 20px; height: 20px" /> <span><%=postList.get(i).getCommentCount()%></span>
 							</button>
 						</form>
 
+
 						<button class="heart"
-							onclick="changeImage('heartImage<%=up.getUserid()%>')">
-							<img id="heartImage<%=postList.get(i).getPostId()%>"
+							onclick="changeImage('heartImage<%=postList.get(i)%>')">
+							<img id="heartImage<%=postList.get(i)%>"
 								src="image/Heart-512x512 test.png" alt="like icon"
 								style="width: 20px; height: 20px" /> <span><%=postList.get(i).getLikeCount()%></span>
 						</button>
 
 
-						<!-- チャットGPTからそのまま拝借 -->
-						<!-- 合っているかわからん -->
-						<%
-						// タイムスタンプからイベントIDを生成
-						java.util.Calendar cal = java.util.Calendar.getInstance();
-						int year = cal.get(java.util.Calendar.YEAR); // 現在の西暦年
-						int month = cal.get(java.util.Calendar.MONTH) + 1; // 現在の月 (0ベースなので+1)
-						String eventId = String.format("%04d%02d", year, month); // 西暦4桁+月2桁のイベントID
 
-						// 投稿IDの頭六桁とイベントIDを比較
-						String postIdPrefix = postId.substring(0, 6); // 投稿IDの頭六桁
+						<%
+						String postIdPrefix = postId.substring(0, 6);
+						System.out.print("postIdPrefix：" + postIdPrefix);
+						System.out.print("postIdPrefix：" + postIdPrefix);
+						System.out.print("noweventId：" + noweventId);
 						%>
 
+						<!-- 今のイベントIDとこの投稿のイベントIDが同じなら表示 -->
+						<%
+						if (postIdPrefix.equals(noweventId)) {
+						%>
+						<%
+						System.out.println("セッションできるよpostIdPrefix：" + postIdPrefix);
+						%>
 						<form action="P2SessionRecPostServlet" method="post">
-							<%
-							if (postIdPrefix.equals(eventId)) {
-							%>
-							<!-- 投稿IDの頭六桁とイベントIDが一致 -->
 							<input type="hidden" name="postId"
 								value="<%=postList.get(i).getPostId()%>" />
 							<button type="submit">
@@ -175,67 +214,25 @@ ArrayList<Post> postList = (ArrayList<Post>) request.getAttribute("postList");
 									</div>
 								</span>
 							</button>
-							<%
-							}
-							%>
 						</form>
-
-
-						<!-- css崩れた時用で残しとく -->
-						<!-- <button type="submit" >
-		                <span>
-		                  <a href="P2Recording.jsp">
-		                    <div class="nav_icon">
-		                      <i class="gg-duplicate"></i>
-		                    </div>
-		                  </a>
-		                </span>
-		              </button> -->
-
-						<!--  自分の投稿なら表示-->
-						<!--  今回は他人プロフィール画面なのでここはコメントアウトにしておきます。-->
-						<!-- User u = (User)ses.getAttribute("LOGIN"); 必要だよ-->
-						<%
-						if (up.getUserid() == u.getUserid()) {
-						%>
-
-						<button id="openDialog<%=postList.get(i).getPostId()%>"
-							onclick="test('trash<%=up.getUserid()%>')">
-							<span>
-								<div class="nav_icon trash">
-									<i class="gg-trash"></i>
-								</div>
-							</span>
-						</button>
-
-						<dialog id="myDialog<%=postList.get(i).getPostId()%>">
-						<p>この投稿を削除しますか？</p>
-						<div class="buttonContainer">
-							<button type="button" class="dialogButton"
-								id="yesButton<%=postList.get(i).getPostId()%>">はい</button>
-							<button type="button" class="dialogButton"
-								id="noButton<%=postList.get(i).getPostId()%>">いいえ</button>
-						</div>
-						</dialog>
-
-						<dialog id="confirmationDialog<%=postList.get(i).getPostId()%>">
-						<p>削除しました</p>
-						<button type="button" class="dialogButton"
-							id="closeConfirmationButton<%=postList.get(i).getPostId()%>">
-							閉じる</button>
-						</dialog>
 						<%
 						}
 						%>
 
+						<%
+						}
+						%>
 					</div>
 				</div>
 			</div>
 			<%
 			}
+			%>
+			<%
 			}
 			%>
-		</div>
+		</section>
+		
 		<button class="scroll-right" id="scroll-right-1">▶</button>
 	</div>
 
@@ -281,7 +278,7 @@ ArrayList<Post> postList = (ArrayList<Post>) request.getAttribute("postList");
 								style="width: 20px; height: 20px" /> <span><%=postList.get(i).getCommentCount()%></span>
 						</button>
 						<!-- いいねボタン -->
-						
+
 						<button class="heart"
 							onclick="changeImage('heartImageS<%=up.getUserid()%>')">
 							<img id="heartImageS<%=postList.get(i).getPostId()%>"
