@@ -25,10 +25,11 @@ User u = (User)ses.getAttribute("LOGIN");
 			<label for="fileInput">写真を選択</label> <input type="file" name="icon"
 				id="fileInput" accept="image/jpeg, image/png" onchange="showSaveButton()" />
 		</div>
+		<br/>
 		<div class="nakami">
 			<!-- ユーザー名 -->
 			<div class="profile-item">
-				<span id="username-display"><b>ユーザー名:</b><%=u.getName()%></span> <input
+				<span id="username-display"><b>ユーザー名: </b><%=u.getName()%></span> <input
 					type="text" class="textbox" id="username-input"
 					value=<%=u.getName()%> name="name" /> <span class="dli-create"
 					id="username-icon" onclick="enableEdit('username')"></span>
@@ -37,7 +38,7 @@ User u = (User)ses.getAttribute("LOGIN");
 			<!-- 性別 -->
 			<!-- DBから持ってきて性別選択されてる状態にしておく -->
 			<div class="profile-item">
-				<span id="sex-display"><b>性別:</b> <%
+				<span id="sex-display"><b>性別: </b> <%
  if (u.getSex().equals("0")) {
  %> 男 <%
  } else if (u.getSex().equals("1")) {

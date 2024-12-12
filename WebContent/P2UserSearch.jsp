@@ -29,11 +29,11 @@ ArrayList<User> searchU = (ArrayList<User>) ses.getAttribute("USERLIST");
 
 <body>
 
-	<form action="UserSearchServlet" method="GET">
+	<form action = "P2UserSearchServlet">
 
 		<div class="user-section">
 			<% if (searchU == null || searchU.isEmpty()) { %>
-			<p>検索結果が見つかりません</p>
+			<p class="no-results">検索結果が見つかりません</p>
 			<% } else { 
 				for (int i = 0; i < searchU.size(); i++) { %>
 			<div class="user-item">
@@ -47,6 +47,9 @@ ArrayList<User> searchU = (ArrayList<User>) ses.getAttribute("USERLIST");
 					<p class="username">
 						<%=searchU.get(i).getName()%>
 					</p>
+					<p class="user-subtext">
+						<%=searchU.get(i).getUserid()%>
+					</p>
 				</div>
 			</div>
 			<hr>
@@ -55,10 +58,10 @@ ArrayList<User> searchU = (ArrayList<User>) ses.getAttribute("USERLIST");
 
 
 		</div>
-
+	</form>
 		<jsp:include page="P2kensaku.jsp"></jsp:include>
 
 		<script src="https://unpkg.com/wavesurfer.js"></script>
-	</form>
+	
 </body>
 </html>
