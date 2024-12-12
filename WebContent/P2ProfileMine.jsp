@@ -125,7 +125,7 @@ window.onload = function(){
   <!-- 1行目のタイトルと左右ボタン -->
     <div class="section-header">
         <h3 class="section-title">セッション</h3>
-         <button class="show-all-button">すべて表示</button>
+        <!--  <button class="show-all-button">すべて表示</button> -->
       </div>
       <div class="scroll-container">
         <button class="scroll-left" id="scroll-left-1">◀</button>

@@ -60,6 +60,7 @@ public class P2heartServlet extends HttpServlet {
 	    	 
 	    	 // sql文実行
 	    	 ResultSet rs = dba.selectExe(sql);
+	    	 
 	    	 if(rs.next()) {
 	    		 // 既に存在していた場合デリートする
 	    		 String deleteSQL = "DELETE FROM いいね where 投稿ID = '" + heartId + "' and ユーザーID = '"+ u.getUserid() + "'"; 		        
@@ -78,7 +79,10 @@ public class P2heartServlet extends HttpServlet {
 				url = "P2TimelineServlet";
 				}else if(pageFlg.equals("mine")){
 					url = "P2ProfileServlet";
+				}else if(pageFlg.equals("stranger")) {
+					url = "P2UserSearchServlet";
 				}
+	    	 
 			System.out.println(url);
 			
 			// 画面遷移
