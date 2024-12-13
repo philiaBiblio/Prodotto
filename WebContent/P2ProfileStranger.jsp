@@ -25,7 +25,7 @@
 HttpSession ses = request.getSession();
 
 User u = (User) ses.getAttribute("LOGIN");
-User up = (User) request.getAttribute("PROF");
+User up = (User) ses.getAttribute("PROF");
 String userID = (String)ses.getAttribute("USERID");
 boolean isFollowing = (boolean) ses.getAttribute("isFollowing");
 int followCount = (int) ses.getAttribute("followCount");
@@ -33,7 +33,7 @@ int followerCount = (int) ses.getAttribute("followerCount");
 System.out.println("followCount："+followCount);
 System.out.println("followerCount："+followerCount);
 
-ArrayList<Post> postList = (ArrayList<Post>) request.getAttribute("postList");
+ArrayList<Post> postList = (ArrayList<Post>) ses.getAttribute("postList");
 ArrayList<Heart> heartList = (ArrayList) ses.getAttribute("HEARTLIST");
 %>
 
@@ -73,7 +73,7 @@ String noweventId = String.format("%04d%02d", year, month); // 西暦4桁+月2�
 			<form action="P2followServlet" method="post">
 				<button type="submit" class="notification-button toggle-notification"
 					id="notificationButton">
-				<input type="hidden" name="userID2" value="<%=up.getUserid()%>" />
+				<%-- <input type="hidden" name="userID2" value="<%=up.getUserid()%>" /> --%>
 					<i class="fas changeb"> <span class="dli-user-plus"> <span
 							class="user"></span>
 					</span>
@@ -88,7 +88,7 @@ String noweventId = String.format("%04d%02d", year, month); // 西暦4桁+月2�
 				</p>
 				</form>
 
-				<a href="P2DMServlet?yourId=<%=up.getUserid()%>"
+				<a href="P2DMNewServlet?ID=<%=up.getUserid() %>"
 					class="edit-profile-button"> <i class="fas fa-envelope changeb"></i>
 				</a>
 				<!--

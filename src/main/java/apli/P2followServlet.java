@@ -31,7 +31,7 @@ public class P2followServlet extends HttpServlet {
 		 
 		 // ログイン情報と相手の情報の取得
 	     User u = (User) ses.getAttribute("LOGIN");
-	     String userID = (String)ses.getAttribute("USERID");
+	     User up = (User) ses.getAttribute("PROF");
 	     
 	     // URLの生成
 	     String url = "";
@@ -41,17 +41,20 @@ public class P2followServlet extends HttpServlet {
 	     DBAcs dba2 = new DBAcs();
 	     
 	     try {
-	    	 // ユーザーIDの取得
-	        	if(userID == null) {
-	        		userID = request.getParameter("userID");
-	                ses.setAttribute("USERID", userID);
-	        	}
+//	    	 // ユーザーIDの取得
+//	    	 String userID2 = request.getParameter("userID2");
+//	    	 ses.setAttribute("USERID2", userID2);
+	    	 
+//	        	if(userID2 == null) {
+//	        		userID2 = request.getParameter("userID2");
+//	                ses.setAttribute("USERID2", userID2);
+//	        	}
 	        	
 	        	 System.out.println("51：" + u.getUserid());
-	      	     System.out.println("42：" + userID);
+	      	     System.out.println("42：" + up.getUserid());
 	        	
 	    	 // 既にフォローしてるかのチェック
-	    	 String sql = "select * from フォロー where フォロー = '" + u.getUserid() + "' and フォロワー = '" + userID + "'";
+	    	 String sql = "select * from フォロー where フォロー = '" + u.getUserid() + "' and フォロワー = '" + up.getUserid() + "'";
 	    	 
 	    	 // sql文実行
 	    	 ResultSet rs = dba.selectExe(sql);
@@ -59,20 +62,21 @@ public class P2followServlet extends HttpServlet {
 	    	 if(rs.next()) {
 	    		 System.out.println("フォローしていた場合");
 	    		 // 既に存在していた場合デリートする
-	    		 String deleteSQL = "DELETE FROM フォロー where フォロー = '" + u.getUserid() + "' and フォロワー = '"+ userID + "'"; 		        
+	    		 String deleteSQL = "DELETE FROM フォロー where フォロー = '" + u.getUserid() + "' and フォロワー = '"+ up.getUserid() + "'"; 		        
 	    		 // デリート文実行
 	    		 dba2.UpdateExe(deleteSQL);
 	    	 }else {
 	    		 System.out.println("フォローしてなかった場合");
 	    		// 存在してないのでインサートする
 	    		 String insertSQL = 
-		    			 "INSERT INTO フォロー values ('" + u.getUserid() + "','" + userID +"')";
+		    			 "INSERT INTO フォロー values ('" + u.getUserid() + "','" + up.getUserid() +"')";
 		    	 // インサート文実行
 			     dba2.UpdateExe(insertSQL);
 	    	 }
 	    	 
 	    	 url = "P2UserSearchServlet";
 	    	 System.out.println(url);
+	    	 System.out.println("79" + up.getUserid());
 	    	 
 	    	 // 画面遷移
 	    	 response.sendRedirect(url);

@@ -53,7 +53,7 @@
      <%if(dmList != null){ %>
       	<div class="chat-container">
         <!-- ヘッダーにはユーザネームを表示 -->
-        <div class="chat-header"><%=kazu.equals(0) ? "" : dmssList.get(kazu).getYourName() %>
+        <div class="chat-header"><%= dmssList.get(kazu).getYourName() %>
         </div>
         <!--もってきたトークを上から表示していく-->
         <div class="chat-messages">
@@ -78,6 +78,7 @@
         </form>
       </div>
       <%} %>
+      	<%ses.removeAttribute("DMLIST"); %>
 
      <jsp:include page="P2kensaku.jsp"></jsp:include>
     
