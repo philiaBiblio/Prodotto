@@ -129,21 +129,17 @@ document.addEventListener('DOMContentLoaded', (event) => {
 	<!-- 1行目のタイトルと左右ボタン -->
 	<div class="section-header">
 		<h3 class="section-title">セッション</h3>
-		<button class="show-all-button">すべて表示</button>
+	<!-- 	<button class="show-all-button">すべて表示</button> -->
 	</div>
 	<div class="scroll-container">
 		<button class="scroll-left" id="scroll-left-1">◀</button>
 		<section class="video-grid" id="video-grid-1">
 
 
-			<%
-			if (upList != null) {
-			%>
-			<%
+			<%if (upList != null) {
 			for (int i = 0; i < upList.size(); i++) {
-			%>
-			<%boolean flg = false; %>
-			<%
+			boolean flgin = false;
+			
 			String postId = upList.get(i).getToukouid();
 			System.out.println("postId:"+postId);
 			if (!postId.startsWith("000000")) {
@@ -197,18 +193,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
 								</span>
 							</button>
 						</form>
-
-<%-- 
-						<button class="heart"
-							onclick="changeImage('heartImage<%=postList.get(i)%>')">
-							<img id="heartImage<%=postList.get(i)%>"
-								src="image/Heart-512x512 test.png" alt="like icon"
-								style="width: 20px; height: 20px" /> <span><%=postList.get(i).getLikeCount()%></span>
-						</button>
-
- --%>
-						
-						
+												
 						<a href="P2heartServlet?hensuu=<%=i%>&heartId=<%= upList.get(i).getToukouid() %>&page=mine">
 						<button class="heart" onclick="changeImage('heartImage<%=postList.get(i)%>')">
 							<img id="heartImage<%=postList.get(i)%>"
@@ -297,38 +282,30 @@ document.addEventListener('DOMContentLoaded', (event) => {
 	<!-- 2行目のタイトルと左右ボタン -->
 	<div class="section-header">
 		<h3 class="section-title">自由投稿</h3>
-		<button class="show-all-button">すべて表示</button>
+		<!-- <button class="show-all-button">すべて表示</button> -->
 	</div>
 	<div class="scroll-container">
 		<button class="scroll-left" id="scroll-left-2">◀</button>
 		<div class="video-grid" id="video-grid-1">
-			<%
-			if (upList != null) {
-			%>
+			<%if (upList != null) {%>
 			<!-- セッションのビデオカード生成 -->
-			<%
-			for (int i = 0; i < postList.size(); i++) {
-			%>
+			<%for (int i = 0; i < postList.size(); i++) {%>
 			<!-- 投稿IDの頭六桁が000000だったら。-->
-			<%
-			String postId2 = upList.get(i).getToukouid();
-			%>
-			<%
-			if (postId2.startsWith("000000")) {
-			%>
+			<%String postId2 = upList.get(i).getToukouid();%>
+			<%if (postId2.startsWith("000000")) {%>
 			<div class="video-card">
 				<div class="thumbnail-placeholder">
-					<img src="<%=postList.get(i).getThumbnailPath()%>"
+					<img src="image/<%=upList.get(i).getThumbnail()%>"
 						alt="Video Thumbnail" class="thumbnail" />
 					<button class="play-button">▶️</button>
 					<!-- 音声再生ボタン -->
 					<audio class="audio-player"
-						src="<%=postList.get(i).getAudioPath()%>"></audio>
+						src="audio/<%=upList.get(i).getSound()%>"></audio>
 				</div>
 
 				<div class="video-info">
-					<a href="P1AdminProfile.jsp" class="profile-info"> <img
-						src="<%=u.getIconImage()%>" alt="profile icon"
+					<a href="P2ProfileServlet" class="profile-info"> <img
+						src="image/<%=u.getIconImage()%>" alt="profile icon"
 						class="profile-icon" />
 					</a>
 					<div class="like-comment">
@@ -395,9 +372,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
 		<button class="scroll-right" id="scroll-right-2">▶</button>
 	</div>
 
-
-
-
 	<main>
 		<!-- 音楽プレイヤー -->
 		<div class="music-player" style="display: none">
@@ -409,18 +383,8 @@ document.addEventListener('DOMContentLoaded', (event) => {
 						<img src="." alt="">
 					</div>
 					<div class="song-description">
-						<!-- このタイトルはいらないから一旦コメントアウト -->
-						<!-- 
-              <p class="title">
-                Watashitachi wa Sou Yatte Ikite Iku Jinshu na no
-              </p> 
-              -->
-
 						<p class="artist"><%=u.getName()%></p>
 					</div>
-				</div>
-				<div class="icons">
-					<i class="far fa-heart"></i> <i class="fas fa-compress"></i>
 				</div>
 			</div>
 			<div class="progress-controller">

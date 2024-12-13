@@ -142,8 +142,6 @@ window.onload = function(){
         				</button>
 					</form>
 					<%} %> 
-					
-					
 
 					<div class="like-comment">
 						<form action="P2CommentJusinServlet">
@@ -159,21 +157,21 @@ window.onload = function(){
 							<img id="heartImage<%=postList.get(i)%>"
 							
 							<%for(int j = 0; j < heartList.size(); j++){
-								//System.out.println("for文開始" + i);
+							//	System.out.println("for文開始" + i);
 								if(flg == false){
-									//System.out.println(toukouList.get(i).getToukouid()+":"+heartList.get(j).getPostId());
+							//		System.out.println(toukouList.get(i).getToukouid()+":"+heartList.get(j).getPostId());
 									if(toukouList.get(i).getToukouid().equals(heartList.get(j).getPostId())){
-										//System.out.println(u.getUserid()+":"+heartList.get(j).getUserId());	
+							//			System.out.println(u.getUserid()+":"+heartList.get(j).getUserId());	
 										if(u.getUserid().equals(heartList.get(j).getUserId())){
-											//System.out.println("152");
+							//				System.out.println("152");
 											flg = true;
 										}else{
-											//System.out.println("158");					
+							//				System.out.println("158");					
 										}
 									}else{
-										//System.out.println("162");
+							//			System.out.println("162");
 									}
-								//System.out.println("for文終わり" + i);
+							//	System.out.println("for文終わり" + i);
 								} 
 							}
 							

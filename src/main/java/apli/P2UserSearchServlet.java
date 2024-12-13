@@ -35,16 +35,22 @@ public class P2UserSearchServlet extends HttpServlet {
         
         // ログイン情報の取得
         User u = (User) ses.getAttribute("LOGIN");
+        String userID = (String)ses.getAttribute("USERID");
+        ArrayList<Heart> heartList = new ArrayList<Heart>();
         
         // URLの生成
         String url = "";
         
         // DBアクセス用部品の生成
         DBAcs dba = new DBAcs();
+        DBAcs dba2 = new DBAcs();
 
         try {
             // ユーザーIDの取得
-            String userID = request.getParameter("userID");
+        	if(userID == null) {
+        		userID = request.getParameter("userID");
+                ses.setAttribute("USERID", userID);
+        	}
             
             // ユーザー情報の取得
             ResultSet rsu = dba.selectExe("SELECT * FROM ユーザー WHERE ユーザーID = '" + userID + "'");
@@ -60,33 +66,37 @@ public class P2UserSearchServlet extends HttpServlet {
                 up.setIconImage(icon);
                 
                 // フォロー状態を確認
-                boolean isFollowing = checkIfFollowing(dba, userID, u.getUserid());
+                boolean isFollowing = checkIfFollowing(dba, u.getUserid(), userID);
                 ses.setAttribute("isFollowing", isFollowing);
                 
-                int followCount = 0;
-                int followerCount = 0;
-                ses.setAttribute("followCount", followCount);
-                ses.setAttribute("followerCount", followerCount);
+				/*  int followCount = 0;
+				int followerCount = 0;
+				ses.setAttribute("followCount", followCount);
+				ses.setAttribute("followerCount", followerCount);*/
                 
                 try (ResultSet rsFollow = dba.selectExe("SELECT COUNT(*) AS follow_count FROM フォロー WHERE フォロワー = '" + userID + "'")) {
                     if (rsFollow.next()) {
-                        followCount = rsFollow.getInt("follow_count"); // フォローしている数
+                        int followCount = rsFollow.getInt("follow_count"); // フォローしている数
                         System.out.println("followCount："+followCount);
+                        ses.setAttribute("followCount", followCount);
                     }
                 }
 
                 try (ResultSet rsFollower = dba.selectExe("SELECT COUNT(*) AS follower_count FROM フォロー WHERE フォロー = '" + userID + "'")) {
                     if (rsFollower.next()) {
-                        followerCount = rsFollower.getInt("follower_count"); // フォロワー数
+                        int followerCount = rsFollower.getInt("follower_count"); // フォロワー数
                         System.out.println("followerCount："+followerCount);
+                        ses.setAttribute("followerCount", followerCount);
                     }
                 }
+                int followCount = (int) ses.getAttribute("followCount");
+                int followerCount = (int) ses.getAttribute("followerCount");
+                System.out.println("94:followCount："+followCount);
+                System.out.println("95:followerCount："+followerCount);
                 
                 // リクエストスコープに保存
                 request.setAttribute("PROF", up);
                 request.setAttribute("isFollowing", isFollowing);
-                request.setAttribute("followCount", followCount);
-                request.setAttribute("followerCount", followerCount);
                 
                 // 投稿リストを取得してリクエストスコープに保存
                 ArrayList<Post> postList = getPostList(dba, userID);
@@ -96,7 +106,26 @@ public class P2UserSearchServlet extends HttpServlet {
                 // ユーザーが見つからない場合の処理
                 request.setAttribute("error", "ユーザーが見つかりませんでした。");
             }
-
+            
+            // 自分がいいねしたかの判別用のsql
+ 			String sql = "select * from いいね";
+ 			// sql文実行
+ 			ResultSet rs = dba2.selectExe(sql);
+ 			
+ 			while(rs.next()) {
+ 				String toukouId = rs.getString("投稿ID");
+ 				String userId = rs.getString("ユーザーID");
+ 				
+ 				// インスタンス生成
+ 				Heart heart = new Heart();
+ 				heart.setPostId(toukouId);
+ 				heart.setUserId(userId);
+ 				
+ 				// アレイリストに追加
+ 				heartList.add(heart);
+ 			}
+ 			ses.setAttribute("HEARTLIST", heartList);
+ 			
         } catch (Exception e) {
             e.printStackTrace();
             request.setAttribute("error", "エラーが発生しました。");
@@ -152,11 +181,11 @@ public class P2UserSearchServlet extends HttpServlet {
                 while (rsPosts.next()) {
                     // データを取得
                     String postId = rsPosts.getString("投稿ID");
-                    System.out.println("投稿ID："+postId);
+        //            System.out.println("投稿ID："+postId);
                     String thumbnailPath = rsPosts.getString("サムネイル");
-                    System.out.println("サムネイルパス："+thumbnailPath);
+        //            System.out.println("サムネイルパス："+thumbnailPath);
                     String audioPath = rsPosts.getString("作品");
-                    System.out.println("音声ファイルパス："+audioPath);
+        //            System.out.println("音声ファイルパス："+audioPath);
                     int commentCount = rsPosts.getInt("コメント数");
                     int likeCount = rsPosts.getInt("いいね数"); 
                     
