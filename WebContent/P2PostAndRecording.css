@@ -89,7 +89,7 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(145deg, #11dadd, #30d5c8); /* シアン系のグラデーション */
+    background: linear-gradient(145deg, rgb(34, 32, 32), rgb(65, 65, 65)); /* シアン系のグラデーション */
     opacity: 0;
     transition: opacity 0.3s ease;
     border-radius: 20px;
