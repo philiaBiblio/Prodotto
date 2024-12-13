@@ -359,14 +359,14 @@ String noweventId = String.format("%04d%02d", year, month); // 西暦4桁+月2�
 
       scrollLeftButton1.addEventListener("click", () => {
         videoGrid1.scrollBy({
-          left: -150, // スクロールする距離（左）
+          left: -350, // スクロールする距離（左）
           behavior: "smooth", // スムーズスクロール
         });
       });
 
       scrollRightButton1.addEventListener("click", () => {
         videoGrid1.scrollBy({
-          left: 150, // スクロールする距離（右）
+          left: 350, // スクロールする距離（右）
           behavior: "smooth", // スムーズスクロール
         });
       });
@@ -378,14 +378,14 @@ String noweventId = String.format("%04d%02d", year, month); // 西暦4桁+月2�
 
       scrollLeftButton2.addEventListener("click", () => {
         videoGrid2.scrollBy({
-          left: -150, // スクロールする距離（左）
+          left: -350, // スクロールする距離（左）
           behavior: "smooth", // スムーズスクロール
         });
       });
 
       scrollRightButton2.addEventListener("click", () => {
         videoGrid2.scrollBy({
-          left: 150, // スクロールする距離（右）
+          left: 350, // スクロールする距離（右）
           behavior: "smooth", // スムーズスクロール
         });
       });
