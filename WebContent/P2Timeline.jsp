@@ -111,7 +111,13 @@ window.onload = function(){
 
 					<img src="image/<%=toukouList.get(i).getThumbnail()%>"
 						alt="Video Thumbnail" class="thumbnail" />
-					<button class="play-button">▶️</button>
+						
+					<button class="play-button" 
+					onclick="sendData('<%= toukouList.get(i).getUserid() %>', 
+					'<%= toukouList.get(i).getToukouid() %>', 
+					'<%= u.getUserid() %>')">
+					▶️</button>
+					
 					<!-- 音声再生ボタン -->
 					<audio class="audio-player"
 						src="audio/<%=toukouList.get(i).getSound()%>"></audio>
@@ -279,7 +285,40 @@ window.onload = function(){
 			</div>
 		</div>
 	</main>
+	
+	
+	
+<script>
+//////////////再生回数カウント//////////////////
 
+function sendData(toukouUserid, toukouId, userId) {
+    // データを準備
+    const data = {
+        toukouUserid: toukouUserid,
+        toukouId: toukouId,
+        userId: userId
+    };
+
+    // AJAXリクエストを送信
+    fetch('P2SaiseiCountServlet', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data) // データをJSONに変換
+    })
+    .then(response => response.json()) // サーバーからのレスポンスをJSONとして処理
+    .then(result => {
+        console.log('Success:', result); // 結果をコンソールに表示
+    })
+    .catch(error => {
+        console.error('Error:', error); // エラーをコンソールに表示
+    });
+}
+</script>		
+	
+	
+	
 	<script src="https://unpkg.com/wavesurfer.js"></script>
 	<script>
 	function Saisei(){

@@ -22,7 +22,7 @@
             <div class="session-content"><%=ses.getAttribute("ODAI") %></div>
             <div class="button-group">
                 <a href="P2Recording.jsp" class="link-button start">セッションをはじめる</a>
-                <a href="P2DerivativesList.jsp" class="link-button party">セッションに参加</a>
+                <a href="P2DerivativesList.jsp" class="link-button party">セッションをさがす</a>
             </div>
         </section>
 

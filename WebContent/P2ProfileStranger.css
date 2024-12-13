@@ -1253,7 +1253,7 @@ a {
   color: inherit;
   width: 1em; /* 元のユーザーアイコン部分 */
   height: 1em;
-  position: absolute;
+  margin-bottom: 0.05em;
 }
 
 .dli-user-plus .user::before, .dli-user-plus .user::after {

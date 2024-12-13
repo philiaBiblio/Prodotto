@@ -38,7 +38,7 @@ public class P2PostAndRecordingServlet extends HttpServlet {
         LocalDate currentDate = LocalDate.now();
         String yearMonth = currentDate.format(DateTimeFormatter.ofPattern("yyyyMM"));
         
-        // レスポンスに出力
+        // 中身の確認
         response.setContentType("text/plain");
 		System.out.println("現在の年月: " + yearMonth);
         

@@ -286,7 +286,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
 	</div>
 	<div class="scroll-container">
 		<button class="scroll-left" id="scroll-left-2">◀</button>
-		<div class="video-grid" id="video-grid-1">
+		<div class="video-grid" id="video-grid-2">
 			<%if (upList != null) {%>
 			<!-- セッションのビデオカード生成 -->
 			<%for (int i = 0; i < postList.size(); i++) {%>

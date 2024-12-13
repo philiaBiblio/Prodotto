@@ -64,7 +64,7 @@
 							<div class="nav_icon nav_soroe">
 								<i class="gg-mail"></i>
 							</div> <span class="nav_name">DM</span>
-						</a> <a href="P2Ranking.jsp" class="nav_link navtop nav_soroe"
+						</a> <a href="P2RankingServlet" class="nav_link navtop nav_soroe"
 							id="P2Rankingid"> <!-- <i class="fa-brands fa-tiktok nav_icon"></i> -->
 							<div class="nav_icon nav_soroe">
 								<i class="gg-crown"></i>
