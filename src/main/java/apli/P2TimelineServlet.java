@@ -74,9 +74,9 @@ public class P2TimelineServlet extends HttpServlet {
 				    comm = rs.getInt("コメント数");
 				}
 				
-				
+	   	
 				int iine = rs.getInt("いいね数");
-//				System.out.println(toukouId.substring(0,6));
+                //System.out.println(toukouId.substring(0,6));
 				
 				// インスタンス生成
 				Toukou toukou = new Toukou();

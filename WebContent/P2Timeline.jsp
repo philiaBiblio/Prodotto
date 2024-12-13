@@ -287,9 +287,8 @@ window.onload = function(){
 	</main>
 	
 	
-	
 <script>
-//////////////再生回数カウント//////////////////
+//////////////再生回数カウント//////////////////	
 
 function sendData(toukouUserid, toukouId, userId) {
     // データを準備
