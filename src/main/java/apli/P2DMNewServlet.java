@@ -56,15 +56,15 @@ public class P2DMNewServlet extends HttpServlet {
 				if(dmssList.get(x).getYour().equals(up.getUserid())) {
 					System.out.println("重複してるので弾きたい");
 					flg = true;
+					// 重複してたのを消して一番前に追加
+					dmssList.remove(x);
+					dmssList.add(0,dm);
 					break;
 				}
 			}
 			if(flg == false) {
 				// アレイリストに追加
 				dmssList.add(0,dm);
-			}else {
-				// 必ず一番前に持ってくる
-				dmssList.
 			}
 			
 			ses.setAttribute("DMSSLIST", dmssList);
