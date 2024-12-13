@@ -35,7 +35,7 @@ public class P2UserSearchServlet extends HttpServlet {
         
         // ログイン情報の取得
         User u = (User) ses.getAttribute("LOGIN");
-        String userID = (String)ses.getAttribute("USERID");
+		/*  String userID = (String)ses.getAttribute("USERID");*/
         ArrayList<Heart> heartList = new ArrayList<Heart>();
         
         // URLの生成
@@ -47,10 +47,13 @@ public class P2UserSearchServlet extends HttpServlet {
 
         try {
             // ユーザーIDの取得
-        	if(userID == null) {
-        		userID = request.getParameter("userID");
-                ses.setAttribute("USERID", userID);
-        	}
+        	String userID = request.getParameter("userID");
+        	String userID2 = request.getParameter("userID2");
+        	
+//        	if(userID == null) {
+//        		userID = request.getParameter("userID");
+//                ses.setAttribute("USERID", userID);
+//        	}
             
             // ユーザー情報の取得
             ResultSet rsu = dba.selectExe("SELECT * FROM ユーザー WHERE ユーザーID = '" + userID + "'");

@@ -73,7 +73,7 @@ String noweventId = String.format("%04d%02d", year, month); // 西暦4桁+月2�
 			<form action="P2followServlet" method="post">
 				<button type="submit" class="notification-button toggle-notification"
 					id="notificationButton">
-				<input type="hidden" name="userID" value="<%=up.getUserid()%>" />
+				<input type="hidden" name="userID2" value="<%=up.getUserid()%>" />
 					<i class="fas changeb"> <span class="dli-user-plus"> <span
 							class="user"></span>
 					</span>
