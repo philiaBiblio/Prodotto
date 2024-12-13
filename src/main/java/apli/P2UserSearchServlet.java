@@ -35,7 +35,7 @@ public class P2UserSearchServlet extends HttpServlet {
         
         // ログイン情報の取得
         User u = (User) ses.getAttribute("LOGIN");
-		/*  String userID = (String)ses.getAttribute("USERID");*/
+	    User up = (User) ses.getAttribute("PROF");
         ArrayList<Heart> heartList = new ArrayList<Heart>();
         
         // URLの生成
@@ -45,31 +45,35 @@ public class P2UserSearchServlet extends HttpServlet {
         DBAcs dba = new DBAcs();
         DBAcs dba2 = new DBAcs();
 
+        String userID;
         try {
-            // ユーザーIDの取得
-        	String userID = request.getParameter("userID");
-        	String userID2 = request.getParameter("userID2");
+            // ユーザーIDの取得	
+        	userID = request.getParameter("userID");
+        	if(up == null) {
+        		up = new User();
+        		up.setUserid(userID);
+        	}
         	
-//        	if(userID == null) {
-//        		userID = request.getParameter("userID");
-//                ses.setAttribute("USERID", userID);
-//        	}
+        	if(!(up.getUserid().equals(userID)) && userID != null) {
+        		up = new User();
+        		up.setUserid(userID);
+        	}
             
             // ユーザー情報の取得
-            ResultSet rsu = dba.selectExe("SELECT * FROM ユーザー WHERE ユーザーID = '" + userID + "'");
+            ResultSet rsu = dba.selectExe("SELECT * FROM ユーザー WHERE ユーザーID = '" + up.getUserid() + "'");
             if (rsu.next()) {
                 String uid = rsu.getString("ユーザーID");
                 String name = rsu.getString("名前");
                 String icon = rsu.getString("アイコン");
                 
                 // ユーザー情報を設定
-                User up = new User();
+                up = new User();
                 up.setUserid(uid);
                 up.setName(name);
                 up.setIconImage(icon);
                 
                 // フォロー状態を確認
-                boolean isFollowing = checkIfFollowing(dba, u.getUserid(), userID);
+                boolean isFollowing = checkIfFollowing(dba, u.getUserid(), up.getUserid());
                 ses.setAttribute("isFollowing", isFollowing);
                 
 				/*  int followCount = 0;
@@ -77,7 +81,7 @@ public class P2UserSearchServlet extends HttpServlet {
 				ses.setAttribute("followCount", followCount);
 				ses.setAttribute("followerCount", followerCount);*/
                 
-                try (ResultSet rsFollow = dba.selectExe("SELECT COUNT(*) AS follow_count FROM フォロー WHERE フォロワー = '" + userID + "'")) {
+                try (ResultSet rsFollow = dba.selectExe("SELECT COUNT(*) AS follow_count FROM フォロー WHERE フォロワー = '" + up.getUserid() + "'")) {
                     if (rsFollow.next()) {
                         int followCount = rsFollow.getInt("follow_count"); // フォローしている数
                         System.out.println("followCount："+followCount);
@@ -85,7 +89,7 @@ public class P2UserSearchServlet extends HttpServlet {
                     }
                 }
 
-                try (ResultSet rsFollower = dba.selectExe("SELECT COUNT(*) AS follower_count FROM フォロー WHERE フォロー = '" + userID + "'")) {
+                try (ResultSet rsFollower = dba.selectExe("SELECT COUNT(*) AS follower_count FROM フォロー WHERE フォロー = '" + up.getUserid() + "'")) {
                     if (rsFollower.next()) {
                         int followerCount = rsFollower.getInt("follower_count"); // フォロワー数
                         System.out.println("followerCount："+followerCount);
@@ -98,16 +102,16 @@ public class P2UserSearchServlet extends HttpServlet {
                 System.out.println("95:followerCount："+followerCount);
                 
                 // リクエストスコープに保存
-                request.setAttribute("PROF", up);
-                request.setAttribute("isFollowing", isFollowing);
+                ses.setAttribute("PROF", up);
+                ses.setAttribute("isFollowing", isFollowing);
                 
                 // 投稿リストを取得してリクエストスコープに保存
-                ArrayList<Post> postList = getPostList(dba, userID);
-                request.setAttribute("postList", postList);
+                ArrayList<Post> postList = getPostList(dba, up.getUserid());
+                ses.setAttribute("postList", postList);
             
             } else {
                 // ユーザーが見つからない場合の処理
-                request.setAttribute("error", "ユーザーが見つかりませんでした。");
+                ses.setAttribute("error", "ユーザーが見つかりませんでした。");
             }
             
             // 自分がいいねしたかの判別用のsql
@@ -131,7 +135,7 @@ public class P2UserSearchServlet extends HttpServlet {
  			
         } catch (Exception e) {
             e.printStackTrace();
-            request.setAttribute("error", "エラーが発生しました。");
+            ses.setAttribute("error", "エラーが発生しました。");
         } finally {
             // データベースを閉じる
             dba.closeDB();
