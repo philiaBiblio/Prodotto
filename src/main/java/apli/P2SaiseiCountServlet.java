@@ -43,11 +43,8 @@ public class P2SaiseiCountServlet extends HttpServlet {
         // 中身の確認
         response.setContentType("text/plain");
 		System.out.println("現在の年月: " + yearMonth);
-    	
-    	
-    	
+		
         try {
-        	
         	// JSONデータを読み取る
             StringBuilder sb = new StringBuilder();
             BufferedReader reader = request.getReader();
@@ -97,18 +94,14 @@ public class P2SaiseiCountServlet extends HttpServlet {
             	}
             	
             }
-            
-            
             // ログアウト処理
 	    	dba.closeDB();
-            
         }
         catch (Exception e) {
 			// TODO: handle exception
         	e.printStackTrace();
 			// ログアウト処理
 			dba.closeDB();
-		}
-        
+		}   
     }
 }

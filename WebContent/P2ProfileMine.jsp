@@ -188,21 +188,21 @@ document.addEventListener('DOMContentLoaded', (event) => {
 								onclick="changeImage('heartImage<%=postList.get(i)%>')">
 								<img id="heartImage<%=postList.get(i)%>"
 								<%for (int j = 0; j < heartList.size(); j++) {
-									System.out.println("for文開始" + i);
+								//	System.out.println("for文開始" + i);
 									if (flgin == false) {
-										System.out.println(upList.get(i).getToukouid() + ":" + heartList.get(j).getPostId());
+								//		System.out.println(upList.get(i).getToukouid() + ":" + heartList.get(j).getPostId());
 										if (upList.get(i).getToukouid().equals(heartList.get(j).getPostId())) {
-											System.out.println(u.getUserid() + ":" + heartList.get(j).getUserId());
+								//			System.out.println(u.getUserid() + ":" + heartList.get(j).getUserId());
 											if (u.getUserid().equals(heartList.get(j).getUserId())) {
-												System.out.println("152");
+								//				System.out.println("152");
 												flgin = true;
 											} else {
-												System.out.println("158");
+								//				System.out.println("158");
 											}
 										} else {
-											System.out.println("162");
+								//			System.out.println("162");
 										}
-										System.out.println("for文終わり" + i);
+								//		System.out.println("for文終わり" + i);
 									}
 								}
 

@@ -28,23 +28,23 @@ AdminUser au = (AdminUser) ses.getAttribute("ADMINLOGIN");
 			</div>
 
 			<!-- ユーザーID -->
-			<div class="profile-item">
+			<%-- <div class="profile-item">
 				<span id="userid-display" name="userid"><b>管理者ID:</b><%=au.getAdminUserid()%></span>
 				<input type="text" class="textbox" id="userid-input"
 					value=<%=au.getAdminUserid()%> name="userid" /> <span class="dli-create"
 					id="userid-icon" onclick="enableEdit('userid')"></span>
-			</div>
+			</div> --%>
 
 			<!-- 性別 -->
 			<!-- DBから持ってきて性別選択されてる状態にしておく -->
 			<div class="profile-item">
 				<span id="sex-display"><b>性別:</b> <%
- if (au.getAdminSex().equals("0")) {
- %> 男 <%
- } else if (au.getAdminSex().equals("1")) {
- %> 女 <%
- }
- %> </span>
+ 				if (au.getAdminSex().equals("0")) {%>
+ 				男
+ 				<%} else if (au.getAdminSex().equals("1")) {%>
+ 				女
+ 				<%} %>
+ 				</span>
 				<div class="button" id="sex-input">
 					<input type="radio" id="otoko" name="sexy" value="0"
 						<%=au.getAdminSex().equals("0") ? "checked" : ""%>> <label

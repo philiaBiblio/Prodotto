@@ -87,6 +87,15 @@ window.onload = function(){
 	} 	
 	<%} %>
 	<%ses.removeAttribute("TRUEMESS"); %>
+
+	// コメント表示用
+	function openPopup() {
+	  window.open(
+	    "P2popup.jsp",
+	    "popupWindow",
+	    "width=500,height=300,scrollbars=yes"
+	  );
+	}
 </script>
 
 <body>
@@ -146,7 +155,7 @@ window.onload = function(){
 					<%} %> 
 
 					<div class="like-comment">
-						<!-- <form action="P2CommentJusinServlet"> -->
+						<form action="P2CommentJusinServlet">
 							<input type="hidden" name="toukouId" value="<%=i%>" />
 							<button class="submit comment" onclick="openPopup()">
 								<img src="image/こめんと1.png" alt="comment icon"
@@ -310,6 +319,10 @@ function sendData(toukouUserid, toukouId, userId) {
         console.error('Error:', error); // エラーをコンソールに表示
     });
 }
+
+// コメント欄非同期挑戦
+
+
 </script>		
 	
 	

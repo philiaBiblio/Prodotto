@@ -38,8 +38,26 @@ public class P2CommentJusinServlet extends HttpServlet {
 
 		// URLの生成
 		String url = "";
+		
 		try {
-
+//			// JSONデータを読み取る
+//            StringBuilder sb = new StringBuilder();
+//            BufferedReader reader = request.getReader();
+//            String line;
+//            while ((line = reader.readLine()) != null) {
+//                sb.append(line);
+//            }
+//            
+//            //.getする
+//            JSONObject json = new JSONObject(sb.toString());
+//            String toukouId = json.getString("toukouId");
+//            String x = json.getString("i");
+//            int i = Integer.parseInt(x);
+//
+//            // 中身の確認
+//            System.out.println("toukouId: " + toukouId);
+//            System.out.println("i: " + i);
+            
 			//どの投稿に対してか投稿IDを取得
 			String x = request.getParameter("toukouId");
 			int i = Integer.parseInt(x);
@@ -66,7 +84,7 @@ public class P2CommentJusinServlet extends HttpServlet {
 			System.out.println("1:");
 			
 			while (rs.next()) {
-				/*String icon = rs.getString("アイコン");*/
+				String icon = rs.getString("アイコン");
 				String csender = rs.getString("ユーザーID");
 				String ccontent = rs.getString("内容");
 				
@@ -75,7 +93,7 @@ public class P2CommentJusinServlet extends HttpServlet {
 				/*String time = rs.getString("タイムスタンプ");*/
 				//インスタンス
 				Comment CM = new Comment();
-				/*CM.setCicon(icon);*/
+				CM.setCicon(icon);
 				CM.setCsender(csender);
 				CM.setCcontent(ccontent);
 				

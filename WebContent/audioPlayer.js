@@ -189,12 +189,3 @@ document.addEventListener("DOMContentLoaded", () => {
         
     });
 });
-
-// コメント表示用
-function openPopup() {
-  window.open(
-    "P2popup.jsp",
-    "popupWindow",
-    "width=500,height=300,scrollbars=yes"
-  );
-}

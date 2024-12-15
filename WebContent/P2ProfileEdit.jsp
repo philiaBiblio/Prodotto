@@ -38,13 +38,13 @@ User u = (User)ses.getAttribute("LOGIN");
 			<!-- 性別 -->
 			<!-- DBから持ってきて性別選択されてる状態にしておく -->
 			<div class="profile-item">
-				<span id="sex-display"><b>性別: </b> <%
- if (u.getSex().equals("0")) {
- %> 男 <%
- } else if (u.getSex().equals("1")) {
- %> 女 <%
- }
- %> </span>
+				<span id="sex-display"><b>性別: </b>
+				<%if (u.getSex().equals("0")) {%>
+				男
+				<%} else if (u.getSex().equals("1")) {%>
+				女
+				<%}%> 
+				</span>
 				<div class="button" id="sex-input">
 					<input type="radio" id="otoko" name="sexy" value="0"
 						<%=u.getSex().equals("0") ? "checked" : ""%>> <label
