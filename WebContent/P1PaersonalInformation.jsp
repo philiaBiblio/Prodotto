@@ -58,9 +58,9 @@ AdminUser au = (AdminUser) ses.getAttribute("ADMINLOGIN");
 
 			<!-- 生年月日 -->
 			<div class="profile-item">
-				<span id="birth-display"><b>生年月日: </b><%=au.getAdminBirth()%></span> <input
+				<span id="birth-display"><b>生年月日: </b><%=au.getAdminBirth().substring(0,10)%></span> <input
 					type="date" class="textbox" id="birth-input"
-					value=<%=au.getAdminBirth()%> name="birth" /> <span class="dli-create"
+					value=<%=au.getAdminBirth().substring(0,10)%> name="birth" /> <span class="dli-create"
 					id="birth-icon" onclick="enableEdit('birth')"></span>
 			</div>
 

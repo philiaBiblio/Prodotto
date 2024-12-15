@@ -113,47 +113,48 @@ body {
       margin: 0 10px;
   }
   
-  .sexM,
-  .sexW {
-    width: 100px;
-    display: inline-block;
-    border: 1px solid #ffffff;
-    color: #ffffff;
-    background-color: #000000;
-    border-radius: 10px;
-    padding: 0.8em 0;
-    text-align: center;
-    box-sizing: border-box;
-  }
-  .sexM {
-    left: 0;
-    margin-right: 3px;
-    margin-right: 10px;
-  }
-  .sexW {
-    right: 0;
-    margin-left: 3px;
-  }
+  input[type="radio"] {
+	display: none;
+}
+
+.radio-label {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 100px;
+	border: 1px solid #fff;
+	border-radius: 10px;
+	cursor: pointer;
+	color: #fff;
+	background-color: #000;
+	padding: 10px;
+	margin: 0 5px;
+	font-weight: normal;
+}
+
+.radio-label:hover {
+	border-color: #ee2522;
+	color: #ee2522;
+}
+
+input[type="radio"]:checked + .radio-label {
+	border-color: #ee2522;
+	background-color: #da4946;
+	color: #000;
+	font-weight: bold;
+}
+
+.button {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
   
-  .right {
-    width: 50%;
-  }
-  
-  .left {
-    width: 50%;
-  }
-  
-  .hovered {
-    border-color: #ee2522;
-    color: #ee2522;
-  }
-  
-  .clicked {
-    background-color: #da4946;
-    border-color: #ee2522;
-    color: white;
-  }
-  
+
+div #sex-input{
+	display: none;
+}
+ 
   .textbox {
     width: 100%;
     padding: 10px;
