@@ -46,6 +46,17 @@ int month = cal.get(java.util.Calendar.MONTH) + 1; // 現在の月 (0ベース�
 String noweventId = String.format("%04d%02d", year, month); // 西暦4桁+月2桁のイベントID
 %>
 
+<script>
+	//コメント表示用
+	function openPopup(toukouId) {
+  		window.open(
+    	"P2CommentJusinServlet?toukouId=" + toukouId,
+    	"popupWindow",
+    	"width=500,height=300,scrollbars=yes"
+  		);
+	}
+</script>
+
 <body>
 	<header class="profile-header">
 
@@ -140,14 +151,13 @@ String noweventId = String.format("%04d%02d", year, month); // 西暦4桁+月2�
 					</form>
 					
 					<div class="like-comment">
-						<form action="P2CommentJusinServlet">
+						<!-- <form action="P2CommentJusinServlet"> -->
 							<input type="hidden" name="toukouId" value="<%=i%>" />
-							<button class="submit comment" onclick="openPopup()">
+							<button class="submit comment" onclick="openPopup('<%=postList.get(i).getPostId()%>')">
 								<img src="image/こめんと1.png" alt="comment icon"
-									style="width: 20px; height: 20px" /> 
-									<span><%=postList.get(i).getCommentCount()%></span>
+									style="width: 20px; height: 20px" /> <span><%=postList.get(i).getCommentCount()%></span>
 							</button>
-						</form>
+						<!-- </form> -->
 
 						 <a href="P2heartServlet?hensuu=<%=i%>&heartId=<%= postList.get(i).getPostId() %>&page=stranger">
 						<button class="heart" onclick="changeImage('heartImage<%=postList.get(i)%>')">
@@ -252,10 +262,13 @@ String noweventId = String.format("%04d%02d", year, month); // 西暦4桁+月2�
 
 					<div class="like-comment">
 						<!-- コメントボタン -->
-						<button class="comment" onclick="openPopup()">
-							<img src="image/こめんと1.png" alt="comment icon"
-								style="width: 20px; height: 20px" /> <span><%=postList.get(i).getCommentCount()%></span>
-						</button>
+						<!-- <form action="P2CommentJusinServlet"> -->
+							<input type="hidden" name="toukouId" value="<%=i%>" />
+							<button class="submit comment" onclick="openPopup('<%=postList.get(i).getPostId()%>')">
+								<img src="image/こめんと1.png" alt="comment icon"
+									style="width: 20px; height: 20px" /> <span><%=postList.get(i).getCommentCount()%></span>
+							</button>
+						<!-- </form> -->
 						
 						<!-- いいねボタン -->
 						<a href="P2heartServlet?hensuu=<%=i%>&heartId=<%= postList.get(i).getPostId() %>&page=stranger">

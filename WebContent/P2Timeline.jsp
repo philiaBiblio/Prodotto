@@ -93,6 +93,15 @@ window.onload = function(){
 	    "width=500,height=300,scrollbars=yes"
 	  );
 	}
+
+	// 再生バーの名前
+	function saiseiName(id){
+		const kazu = document.getElementById('' + id);
+		console.log("46" + kazu.value);
+		const artist = document.getElementById('artistName');
+		artist.innerText = kazu.value;
+		}
+	
 </script>
 
 <body>
@@ -116,10 +125,10 @@ window.onload = function(){
 				<div class="thumbnail-placeholder">
 
 					<img src="image/<%=toukouList.get(i).getThumbnail()%>"
-						alt="Video Thumbnail" class="thumbnail" />
+						alt="Video Thumbnail" class="thumbnail"/>
 						
 					<button class="play-button" 
-					onclick="sendData('<%= toukouList.get(i).getUserid() %>', 
+					onclick="saiseiName('<%= i%>');sendData('<%= toukouList.get(i).getUserid() %>', 
 					'<%= toukouList.get(i).getToukouid() %>', 
 					'<%= u.getUserid() %>')">
 					▶️</button>
@@ -316,7 +325,7 @@ function sendData(toukouUserid, toukouId, userId) {
         console.log('Success:', result); // 結果をコンソールに表示
     })
     .catch(error => {
-        console.error('Error:', error); // エラーをコンソールに表示
+        console.log('Error:', error); // エラーをコンソールに表示
     });
 }
 </script>		
@@ -324,14 +333,6 @@ function sendData(toukouUserid, toukouId, userId) {
 	
 	
 	<script src="https://unpkg.com/wavesurfer.js"></script>
-	<script>
-	function Saisei(){
-		var e1 = document.getElementById("num");
-		var e2 = document.getElementById("test");
-
-		e2.value = e1;"
-
-	</script>
 	
 	<dialog id="confirmationDialog">
 		<p>削除しました</p>
