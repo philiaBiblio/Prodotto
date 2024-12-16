@@ -56,6 +56,10 @@ document.addEventListener("DOMContentLoaded", () => {
 			const thumbnailImage = card.querySelector(".thumbnail").src;
 			const playerImageContainer = musicPlayer.querySelector(".image-container img");
 			playerImageContainer.src = thumbnailImage;
+			const kazu = document.getElementById('' + id);
+			console.log("46" + kazu.value);
+			const artist = document.getElementById('artistName');
+			artist.innerText = kazu.value;
 		}
 	});
 

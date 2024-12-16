@@ -31,7 +31,7 @@ User u = (User)ses.getAttribute("LOGIN");
 			<div class="profile-item">
 				<span id="username-display"><b>ユーザー名: </b><%=u.getName()%></span> <input
 					type="text" class="textbox" id="username-input"
-					value=<%=u.getName()%> name="name" /> <span class="dli-create"
+					value="<%=u.getName()%>" name="name" /> <span class="dli-create"
 					id="username-icon" onclick="enableEdit('username')"></span>
 			</div>
 

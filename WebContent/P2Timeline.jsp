@@ -25,8 +25,6 @@
 </head>
 
 <%
-	// 大域変数
-	int globalId;
 	// セッションの取得
 	HttpSession ses = request.getSession();
 	// ログイン情報の取得
@@ -60,7 +58,7 @@ function dialog(id){
               }
           });
       }
-	globalId = id;
+	
 }
 
 
@@ -77,7 +75,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
     // dialog関数を呼び出す
     dialog();
-    globalId = id;
 });
 
 <%if(trueMess != null ){ %>
@@ -127,6 +124,8 @@ window.onload = function(){
 					'<%= u.getUserid() %>')">
 					▶️</button>
 					
+					<input type="hidden" value="<%=userIconList.get(i).getName() %>" id="<%=i%>">
+					
 					<!-- 音声再生ボタン -->
 					<audio class="audio-player"
 						src="audio/<%=toukouList.get(i).getSound()%>"></audio>
@@ -136,7 +135,7 @@ window.onload = function(){
 					<!-- 他人なら他人プロフ。自分ならマイページへ -->
 					<%if (!toukouList.get(i).getUserid().equals(u.getUserid())) {%>
 					<form action="P2UserSearchServlet" method="get">
-    				<input type="hidden" name="userID" value="<%=toukouList.get(i).getUserid()%>" />
+    				<input type="hidden" name="userID" value="<%=toukouList.get(i).getUserid()%>"/>
     					<button type="submit" class="profile-info" style="all: unset; cursor: pointer;">
 	    					<a>
 	    						<img src="image/<%=userIconList.get(i).getIconImage()%>" alt="profile icon" class="profile-icon" />
@@ -257,7 +256,7 @@ window.onload = function(){
 						<img src="." alt="" />
 					</div>
 					<div class="song-description">
-						<p class="artist"><%-- <%=userIconList.get(globalId).getName() %> --%></p>
+						<p class="artist" id="artistName"></p>
 					</div>
 				</div>
 			</div>
