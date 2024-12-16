@@ -27,8 +27,6 @@
 </head>
 
 <%
-	// 大域変数
-	int globalId;
 	// セッションの取得
 	HttpSession ses = request.getSession();
 	// ログイン情報の取得
@@ -70,7 +68,6 @@ function dialog(id){
               }
           });
       }
-	globalId = id;
 }
 
 
@@ -87,7 +84,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
     // dialog関数を呼び出す
     dialog();
-    globalId = id;
 });
 
 <%if(trueMess != null ){ %>
@@ -97,9 +93,24 @@ window.onload = function(){
 	} 	
 	<%} %>
 	<%ses.removeAttribute("TRUEMESS"); %>
+
+	// コメント表示用
+	function openPopup(toukouId) {
+	  window.open(
+	    "P2CommentJusinServlet?toukouId=" + toukouId,
+	    "popupWindow",
+	    "width=500,height=300,scrollbars=yes"
+	  );
+	}
+
+	// 再生バーの名前
+	function saiseiName(id){
+		const kazu = document.getElementById('' + id);
+		console.log("46" + kazu.value);
+		const artist = document.getElementById('artistName');
+		artist.innerText = kazu.value;
+		}
 </script>
-
-
 
   <body>
   
@@ -120,24 +131,24 @@ window.onload = function(){
       <div class="scroll-container">
         <button class="scroll-left" id="scroll-left-3">◀</button>
         <div class="video-grid" id="video-grid-3">
-          
 
           <!-- 動画カードがここに配置される -->
-                    <!-- 動画カードがここに配置される -->
           <%if (toukouList3 != null) {%>
 			<%for (int i = 0; i < toukouList3.size(); i++) {%>
 			<%boolean flg = false; %>
 			<div class="video-card">
 				<div class="thumbnail-placeholder">
-
+				
 					<img src="image/<%=toukouList3.get(i).getThumbnail()%>"
 						alt="Video Thumbnail" class="thumbnail" />
 						
 					<button class="play-button" 
-					onclick="sendData('<%= toukouList3.get(i).getUserid() %>', 
+					onclick="saiseiName('<%= i%>');sendData('<%= toukouList3.get(i).getUserid() %>', 
 					'<%= toukouList3.get(i).getToukouid() %>', 
 					'<%= u.getUserid() %>')">
 					▶️</button>
+					
+					<input type="hidden" value="<%=userIconList3.get(i).getName() %>" id="<%=i%>">
 					
 					<!-- 音声再生ボタン -->
 					<audio class="audio-player"
@@ -146,8 +157,6 @@ window.onload = function(){
 
 
 				<div class="video-info">
-					
-					
 					<!-- 他人なら他人プロフ。自分ならマイページへ -->
 					<%if (!toukouList3.get(i).getUserid().equals(u.getUserid())) {%>
 					<form action="P2UserSearchServlet" method="get">
@@ -171,15 +180,15 @@ window.onload = function(){
 					<%} %> 
 
 					<div class="like-comment">
-						<form action="P2CommentJusinServlet">
+						<!-- <form action="P2CommentJusinServlet"> -->
 							<input type="hidden" name="toukouId" value="<%=i%>" />
-							<button class="submit comment" onclick="openPopup()">
+							<button class="submit comment" onclick="openPopup('<%=toukouList3.get(i).getToukouid()%>')">
 								<img src="image/こめんと1.png" alt="comment icon"
 									style="width: 20px; height: 20px" /> <span><%=postList3.get(i).getCommentCount()%></span>
 							</button>
-						</form>
+						<!-- </form> -->
 
-						<a href="P2heartServlet?hensuu=<%=i%>&heartId=<%= toukouList3.get(i).getToukouid() %>&page=TL">
+						<a href="P2heartServlet?hensuu=<%=i%>&heartId=<%= toukouList3.get(i).getToukouid() %>&page=Ranking">
 						<button class="heart" onclick="changeImage('heartImage<%=postList1.get(i)%>')">
 							<img id="heartImage<%=postList3.get(i)%>"
 							
@@ -280,15 +289,10 @@ window.onload = function(){
               <img src="." alt="" />
             </div>
             <div class="song-description">
-              <p class="title">
-                Watashitachi wa Sou Yatte Ikite Iku Jinshu na no
-              </p>
-              <p class="artist">Masaru Yokoyama</p>
+              <p class="artist" id="artistName"></p>
             </div>
           </div>
           <div class="icons">
-            <i class="far fa-heart"></i>
-            <i class="fas fa-compress"></i>
           </div>
         </div>
         <div class="progress-controller">
@@ -347,10 +351,12 @@ window.onload = function(){
 						alt="Video Thumbnail" class="thumbnail" />
 						
 					<button class="play-button" 
-					onclick="sendData('<%= toukouList1.get(i).getUserid() %>', 
+					onclick="saiseiName('<%= i%>');sendData('<%= toukouList1.get(i).getUserid() %>', 
 					'<%= toukouList1.get(i).getToukouid() %>', 
 					'<%= u.getUserid() %>')">
 					▶️</button>
+					
+					<input type="hidden" value="<%=userIconList1.get(i).getName() %>" id="<%=i%>">
 					
 					<!-- 音声再生ボタン -->
 					<audio class="audio-player"
@@ -359,8 +365,6 @@ window.onload = function(){
 
 
 				<div class="video-info">
-					
-					
 					<!-- 他人なら他人プロフ。自分ならマイページへ -->
 					<%if (!toukouList1.get(i).getUserid().equals(u.getUserid())) {%>
 					<form action="P2UserSearchServlet" method="get">
@@ -384,15 +388,16 @@ window.onload = function(){
 					<%} %> 
 
 					<div class="like-comment">
-						<form action="P2CommentJusinServlet">
+						<!-- <form action="P2CommentJusinServlet"> -->
 							<input type="hidden" name="toukouId" value="<%=i%>" />
-							<button class="submit comment" onclick="openPopup()">
+							<button class="submit comment" onclick="openPopup('<%=toukouList1.get(i).getToukouid()%>')">
 								<img src="image/こめんと1.png" alt="comment icon"
 									style="width: 20px; height: 20px" /> <span><%=postList1.get(i).getCommentCount()%></span>
 							</button>
+						<!-- </form> -->
 						</form>
 
-						<a href="P2heartServlet?hensuu=<%=i%>&heartId=<%= toukouList1.get(i).getToukouid() %>&page=TL">
+						<a href="P2heartServlet?hensuu=<%=i%>&heartId=<%= toukouList1.get(i).getToukouid() %>&page=Ranking">
 						<button class="heart" onclick="changeImage('heartImage<%=postList1.get(i)%>')">
 							<img id="heartImage<%=postList1.get(i)%>"
 							
@@ -505,10 +510,12 @@ window.onload = function(){
 						alt="Video Thumbnail" class="thumbnail" />
 						
 					<button class="play-button" 
-					onclick="sendData('<%= toukouList2.get(i).getUserid() %>', 
+					onclick="saiseiName('<%= i%>');sendData('<%= toukouList2.get(i).getUserid() %>', 
 					'<%= toukouList2.get(i).getToukouid() %>', 
 					'<%= u.getUserid() %>')">
 					▶️</button>
+					
+					<input type="hidden" value="<%=userIconList2.get(i).getName() %>" id="<%=i%>">
 					
 					<!-- 音声再生ボタン -->
 					<audio class="audio-player"
@@ -517,8 +524,6 @@ window.onload = function(){
 
 
 				<div class="video-info">
-					
-					
 					<!-- 他人なら他人プロフ。自分ならマイページへ -->
 					<%if (!toukouList2.get(i).getUserid().equals(u.getUserid())) {%>
 					<form action="P2UserSearchServlet" method="get">
@@ -542,15 +547,15 @@ window.onload = function(){
 					<%} %> 
 
 					<div class="like-comment">
-						<form action="P2CommentJusinServlet">
+						<!-- <form action="P2CommentJusinServlet"> -->
 							<input type="hidden" name="toukouId" value="<%=i%>" />
-							<button class="submit comment" onclick="openPopup()">
+							<button class="submit comment" onclick="openPopup('<%=toukouList2.get(i).getToukouid()%>')">
 								<img src="image/こめんと1.png" alt="comment icon"
 									style="width: 20px; height: 20px" /> <span><%=postList2.get(i).getCommentCount()%></span>
 							</button>
-						</form>
+						<!-- </form> -->
 
-						<a href="P2heartServlet?hensuu=<%=i%>&heartId=<%= toukouList2.get(i).getToukouid() %>&page=TL">
+						<a href="P2heartServlet?hensuu=<%=i%>&heartId=<%= toukouList2.get(i).getToukouid() %>&page=Ranking">
 						<button class="heart" onclick="changeImage('heartImage<%=postList2.get(i)%>')">
 							<img id="heartImage<%=postList2.get(i)%>"
 							
@@ -728,7 +733,6 @@ console.error('Error:', error); // エラーをコンソールに表示
 });
 }
 
-//コメント欄非同期挑戦
 </script>
     
   </body>

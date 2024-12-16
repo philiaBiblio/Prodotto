@@ -81,6 +81,8 @@ public class P2heartServlet extends HttpServlet {
 					url = "P2ProfileServlet";
 				}else if(pageFlg.equals("stranger")) {
 					url = "P2UserSearchServlet";
+				}else if(pageFlg.equals("Ranking")) {
+					url = "P2RankingServlet";
 				}
 	    	 
 			System.out.println(url);
