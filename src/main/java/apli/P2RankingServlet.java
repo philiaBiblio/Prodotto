@@ -60,7 +60,9 @@ public class P2RankingServlet extends HttpServlet {
 			// 投稿を再生回数順に並び替えるSQL
 			String sql = "SELECT p.投稿ID, p.ユーザーID, p.イベントID, p.派生ID, p.アップロード日, p.作品, p.サムネイル, p.タグID, "
 			           + "u.名前, u.アイコン, "
-			           + "COALESCE(r.再生回数, 0) AS 再生回数 "
+			           + "COALESCE(r.再生回数, 0) AS 再生回数, "
+			           + "(SELECT COUNT(*) FROM コメント WHERE コメント.投稿ID = p.投稿ID) AS コメント数, "
+			           + "(SELECT COUNT(*) FROM いいね WHERE いいね.投稿ID = p.投稿ID) AS いいね数 "
 			           + "FROM 投稿 p "
 			           + "JOIN ユーザー u ON p.ユーザーID = u.ユーザーID "
 			           + "LEFT JOIN ("
@@ -75,7 +77,7 @@ public class P2RankingServlet extends HttpServlet {
 
 			
 			while(rs.next()) {
-				System.out.println("//////////わいるぶんかいし///////////");
+				System.out.println("//////////再生数わいるぶんかいし///////////");
 				String toukouId = rs.getString("投稿ID");
 				String userId = rs.getString("ユーザーID");
 				String eventId = rs.getString("イベントID");
@@ -133,22 +135,24 @@ public class P2RankingServlet extends HttpServlet {
 			
 			// 投稿をイイね数順に並び替えるSQL
 			sql = "SELECT p.投稿ID, p.ユーザーID, p.イベントID, p.派生ID, p.アップロード日, p.作品, p.サムネイル, p.タグID, "
-				     + "u.名前, u.アイコン, "
-				     + "COALESCE(l.いいね回数, 0) AS いいね回数 "
-				     + "FROM 投稿 p "
-				     + "JOIN ユーザー u ON p.ユーザーID = u.ユーザーID "
-				     + "LEFT JOIN ("
-				     + "    SELECT 投稿ID, COUNT(*) AS いいね回数 "
-				     + "    FROM いいね "
-				     + "    GROUP BY 投稿ID "
-				     + ") l ON p.投稿ID = l.投稿ID "
-				     + "ORDER BY いいね回数 DESC";
+			    + "u.名前, u.アイコン, "
+			    + "COALESCE(l.いいね数, 0) AS いいね数, "
+			    + "(SELECT COUNT(*) FROM コメント WHERE コメント.投稿ID = p.投稿ID) AS コメント数 "
+			    + "FROM 投稿 p "
+			    + "JOIN ユーザー u ON p.ユーザーID = u.ユーザーID "
+			    + "LEFT JOIN ("
+			    + "    SELECT 投稿ID, COUNT(*) AS いいね数 "
+			    + "    FROM いいね "
+			    + "    GROUP BY 投稿ID "
+			    + ") l ON p.投稿ID = l.投稿ID "
+			    + "ORDER BY いいね数 DESC";
 
 			// SQL文実行
 			ResultSet rs2 = dba.selectExe(sql);
 
 			
-			while(rs.next()) {
+			while(rs2.next()) {
+				System.out.println("//////////イイね数わいるぶんかいし///////////");
 				String toukouId = rs2.getString("投稿ID");
 				String userId = rs2.getString("ユーザーID");
 				String eventId = rs2.getString("イベントID");
@@ -190,9 +194,9 @@ public class P2RankingServlet extends HttpServlet {
 				kazu.setLikeCount(iine);
 				
 				// アレイリストに追加
-				toukouList1.add(toukou);
-				userIconList1.add(up);
-				postList1.add(kazu);
+				toukouList2.add(toukou);
+				userIconList2.add(up);
+				postList2.add(kazu);
 			}
 			
 			//リストをセッションに保存
@@ -200,9 +204,84 @@ public class P2RankingServlet extends HttpServlet {
 			ses.setAttribute("ICONLIST2", userIconList2);
 			ses.setAttribute("POSTLIST2", postList2);
 			
-////////////////  ？？？？何順で並べますか？？？？？？  /////////////////////////////	
+////////////////  ここからイイね、再生の総合  /////////////////////////////	
 			
-			
+			// イイね、再生数順に並び替えるSQL
+			sql = "SELECT p.投稿ID, p.ユーザーID, p.イベントID, p.派生ID, p.アップロード日, p.作品, p.サムネイル, p.タグID, "
+			           + "u.名前, u.アイコン, "
+			           + "COALESCE(l.いいね数, 0) AS いいね数, "
+			           + "COALESCE(r.再生回数, 0) AS 再生回数, "
+			           + "(SELECT COUNT(*) FROM コメント WHERE コメント.投稿ID = p.投稿ID) AS コメント数 "
+			           + "FROM 投稿 p "
+			           + "JOIN ユーザー u ON p.ユーザーID = u.ユーザーID "
+			           + "LEFT JOIN ("
+			           + "    SELECT 投稿ID, COUNT(*) AS いいね数 "
+			           + "    FROM いいね "
+			           + "    GROUP BY 投稿ID "
+			           + ") l ON p.投稿ID = l.投稿ID "
+			           + "LEFT JOIN ("
+			           + "    SELECT 投稿ID, COUNT(*) AS 再生回数 "
+			           + "    FROM 再生 "
+			           + "    GROUP BY 投稿ID "
+			           + ") r ON p.投稿ID = r.投稿ID "
+			           + "ORDER BY 再生回数 DESC";
+
+						// SQL文実行
+						ResultSet rs3 = dba.selectExe(sql);
+
+						
+						while(rs3.next()) {
+							System.out.println("//////////イイね数わいるぶんかいし///////////");
+							String toukouId = rs3.getString("投稿ID");
+							String userId = rs3.getString("ユーザーID");
+							String eventId = rs3.getString("イベントID");
+							String haseiId = rs3.getString("派生ID");
+							String time = rs3.getString("アップロード日");
+							String audio = rs3.getString("作品");
+							String samune = rs3.getString("サムネイル");
+					        //System.out.println("サムネイル："+samune);
+							// タグID作るときはここに記入
+							String upName = rs3.getString("名前");
+							String toukouIcon = rs3.getString("アイコン");
+							
+							int comm; 
+							if (rs3.getInt("コメント数") > 0) {
+							    comm = rs3.getInt("コメント数") - 1;
+							} else {
+							    comm = rs3.getInt("コメント数");
+							}
+							
+							int iine = rs3.getInt("いいね数");
+			                //System.out.println(toukouId.substring(0,6));
+							
+							// インスタンス生成
+							Toukou toukou = new Toukou();
+							toukou.setToukouid(toukouId);
+							toukou.setUserid(userId);
+							toukou.setEventid(eventId);
+							toukou.setDeriveid(haseiId);
+							toukou.setUpday(time);
+							toukou.setSound(audio);
+							toukou.setThumbnail(samune);
+							
+							User up = new User();
+							up.setName(upName);
+							up.setIconImage(toukouIcon);
+							
+							Post kazu = new Post();
+							kazu.setCommentCount(comm);
+							kazu.setLikeCount(iine);
+							
+							// アレイリストに追加
+							toukouList3.add(toukou);
+							userIconList3.add(up);
+							postList3.add(kazu);
+						}
+						
+						//リストをセッションに保存
+						ses.setAttribute("TOUKOULIST3", toukouList3);
+						ses.setAttribute("ICONLIST3", userIconList3);
+						ses.setAttribute("POSTLIST3", postList3);
 			
 			
 			
@@ -215,7 +294,7 @@ public class P2RankingServlet extends HttpServlet {
 			// sql文実行
 			ResultSet rs4 = dba.selectExe(sql);
 						
-			while(rs4.next()) {
+			while(rs4.next()) {				
 				String toukouId = rs4.getString("投稿ID");
 				String userId = rs4.getString("ユーザーID");
 							
