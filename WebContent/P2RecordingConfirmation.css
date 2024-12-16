@@ -1,3 +1,8 @@
+::before,
+::after {
+  box-sizing: border-box;
+}
+
 body {
 	font-family: Arial, sans-serif;
 	margin: 0;
@@ -135,27 +140,104 @@ body {
 	background-color: #218838;
 }
 
-.scroll::-webkit-scrollbar {
-	width: 10px;
-	/* スクロールバーの幅 */
+img.thumbnail {
+  max-width: 100%;
+  height: auto;
+  object-fit: cover;/* 縦横比率保つやつ */
 }
 
-.scroll::-webkit-scrollbar-track {
-	background: #f50000;
-	/* スクロールバーの背景 */
+.video-card {
+  width: 250px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: white;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-.scroll::-webkit-scrollbar-thumb {
-	background: #888;
-	/* スクロールバーの色 */
+/* カード全体のデザイン */
+.video-card {
+  background-color:rgb(44, 44, 44);
+  padding: 15px;
+  border-radius: 10px;
+  /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
+  text-align: center;
+  position: relative;
+  position: relative; /* 他の位置を考慮する */
+  overflow: hidden; /* カード内の要素がはみ出さないようにする */
 }
 
-.scroll::-webkit-scrollbar-thumb:hover {
-	background: #555;
-	/* ホバー時の色 */
+/* サムネイル部分 */
+.thumbnail-placeholder {
+  width: 220px;
+  height: 120px;
+  background-color: rgb(44, 44, 44);
+  border-radius: 10px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden; /* はみ出しを防止 */
+  object-fit: cover; /* 画像がはみ出さないようにアスペクト比を維持 */
 }
 
-.scroll {
-	overflow: hidden;
-	/* スクロールバーを完全に非表示に */
+/* サムネイルの再生ボタン */
+.play-button {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 30px;
+  color: white;
+  background: none;
+  border: none;
+  cursor: pointer;
+  border-radius: 30%; /* 丸いボタンにする */
+}
+
+/* 動画情報部分 */
+.video-info {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 20px; /* プロフィールとボタンの間にスペースをあける */
+  width: 100%;
+  flex-wrap: wrap; /* 必要に応じて改行させる */
+  box-sizing: border-box; /* パディングや境界線を幅に含める */
+}
+
+
+/* プロフィールアイコンの修正 */
+.profile-icon {
+  align-items: center;
+  margin-top: 10px;
+  width: 25px;
+  height: 25px;
+  margin-right: 10px;
+  background-color: #bbb;
+  border-radius: 50%;
+  margin-right: 8px; /* アイコンとテキストの間隔を調整 */
+}
+
+/* いいね＆コメントのボタン */
+.like-comment {
+  display: flex;
+  gap: 10px;
+}
+
+.like-comment button {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 15px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+/* コメントボタンと数字の間隔 */
+.like-comment button span {
+  margin-left: 5px;
 }

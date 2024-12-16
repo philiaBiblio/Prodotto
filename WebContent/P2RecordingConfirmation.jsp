@@ -41,29 +41,62 @@
 					<span>サムネイル画像をアップロード (0MBまで)</span> <input type="file"
 						id="thumbnail-input" name="samune" accept="image/*">
 					<div class="thumbnail-preview">
-						<img id="thumbnail-image" src="image/<%= u.getIconImage() %>"
-							alt="サムネイル画像" />
 					</div>
 				</div>
-				
+
+				<!-- タイムライン動画カード -->
+				<div class="video-card">
+					<div class="thumbnail-placeholder">
+						<img id="timeline-thumbnail" src="image/<%= u.getIconImage() %>" alt="Video Thumbnail" class="thumbnail">
+						<button class="play-button">▶️</button>
+						<!-- 音声再生ボタン -->
+						<audio class="audio-player" src=""></audio>
+					</div>
+
+					<div class="video-info">
+						<!-- 他人なら他人プロフ。自分ならマイページへ -->
+						<form action="" method="get">
+							<input type="hidden" name="userID" value="tokunaga">
+							<button type="submit" class="profile-info" style="all: unset; cursor: pointer;">
+								<a>
+									<img src="image/<%= u.getIconImage() %>" alt="profile icon" class="profile-icon">
+								</a>
+							</button>
+						</form>
+
+						<div class="like-comment">
+							<form action="">
+								<input type="hidden" name="toukouId" value="13">
+								<button class="submit comment" onclick="">
+									<img src="image/こめんと1.png" alt="comment icon" style="width: 20px; height: 20px"> <span>0</span>
+								</button>
+							</form>
+
+							<button class="heart" onclick="">
+								<img id="heartImageapli.Post@3eca0099" src="image/Heart-512x512 test.png" alt="like icon" style="width: 20px; height: 20px"> <span>0</span>
+							</button>
+						</div>
+					</div>
+				</div>
+
 				<script>
 				// サムネイル画像の選択処理
 				const thumbnailInput = document.getElementById('thumbnail-input');
-				const thumbnailImage = document.getElementById('thumbnail-image');
+				const timelineThumbnail = document.getElementById('timeline-thumbnail');
 
 				// ファイル選択時のイベントリスナーを設定
 				thumbnailInput.addEventListener('change', (event) => {
 				  const file = event.target.files[0]; // 選択されたファイル
 				  if (file) {
-				    // FileReaderを使用して画像を読み込み、プレビュー表示
-				    const reader = new FileReader();
-				    reader.onload = function(e) {
-				      thumbnailImage.src = e.target.result; // プレビュー用画像を設定
-				    };
-				    reader.readAsDataURL(file);
+					// FileReaderを使用して画像を読み込み、プレビュー表示
+					const reader = new FileReader();
+					reader.onload = function(e) {
+					  timelineThumbnail.src = e.target.result; // タイムラインサムネイル用画像を設定
+					};
+					reader.readAsDataURL(file);
 				  } else {
-				    // ファイルが選択されなかった場合、デフォルト画像を設定
-				    thumbnailImage.src = 'default-thumbnail.jpg';
+					// ファイルが選択されなかった場合、デフォルト画像を設定
+					timelineThumbnail.src = 'image/<%= u.getIconImage() %>';
 				  }
 				});
 				</script>

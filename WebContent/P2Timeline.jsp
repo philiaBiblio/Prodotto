@@ -268,9 +268,10 @@ window.onload = function(){
 					<!-- 全体の音楽の時間 -->
 				</div>
 			</div>
+			<!-- 非表示ボタンを追加 -->
+        	<button class="hide-player-button">×</button>
 			<div class="other-features">
 				<i class="fas fa-list-ul"></i> <i class="fas fa-desktop"></i>
-
 				<!-- 音量コントロール -->
 				<div class="volume-bar">
 					<i class="fas fa-volume-down"></i>
