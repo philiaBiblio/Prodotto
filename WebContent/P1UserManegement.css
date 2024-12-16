@@ -128,10 +128,6 @@ tr:last-child td:last-child {
   border: 1px solid #ee2522;
 }
 
-/* ボタン間の余白 */
-.dialogButton + .dialogButton {
-  margin-left: 10px; /* 左側に余白を追加 */
-}
 
 
 Button {
@@ -181,6 +177,7 @@ dialog {
   justify-content: center;
   align-items: center;
   padding: 20px;
+  gap: 10px; /* ボタン間の隙間を設定 */
 }
 
 #closeConfirmationButton {

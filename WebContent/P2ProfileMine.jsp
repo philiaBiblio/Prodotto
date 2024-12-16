@@ -247,6 +247,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
 							type="button"
 							id="openDialogButton<%=upList.get(i).getToukouid()%>"
 							onclick="dialog('<%=i%>')"
+							class="trashButton"
 							/>
 							<span>
 								<div class="nav_icon trash">
@@ -403,7 +404,9 @@ document.addEventListener('DOMContentLoaded', (event) => {
 						<%-- <input type="hidden" name="toukouId" value="<%=i%>" /> --%>
 						<button type="button"
 							id="openDialogButton<%=upList.get(i).getToukouid()%>"
-							onclick="dialog('<%=i%>')">
+							onclick="dialog('<%=i%>')"
+							class="trashButton"
+							>
 							<span>
 								<div class="nav_icon trash">
 									<i class="gg-trash"></i>

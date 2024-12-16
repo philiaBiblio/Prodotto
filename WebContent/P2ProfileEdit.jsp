@@ -17,7 +17,7 @@ HttpSession ses = request.getSession();
 User u = (User)ses.getAttribute("LOGIN");
 %>
 <body>
-	<form action="P2ProfileEditServlet" method="post" enctype="multipart/form-data">
+	<form action="P2ProfileEditServlet" method="post" enctype="multipart/form-data" class="area">
 		<div class="icon">
 			<!--  srcのところを値に変更する？ -->
 			<img id="iconImage" src="image/<%=u.getIconImage() %>"  alt="icon"  />

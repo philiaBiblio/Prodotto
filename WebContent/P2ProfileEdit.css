@@ -12,7 +12,7 @@ body {
   height: 100vh;
 }
 
-form {
+.area {
   width: 400px;
   max-width: 500%;
   padding: 20px;
@@ -21,7 +21,7 @@ form {
   border: solid 1px #fff;
 }
 
-form:hover {
+.area:hover {
   border-color: #ffffff;
 }
 
