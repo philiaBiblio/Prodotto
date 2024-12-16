@@ -26,12 +26,12 @@ HttpSession ses = request.getSession();
 
 User u = (User) ses.getAttribute("LOGIN");
 User up = (User) ses.getAttribute("PROF");
-String userID = (String)ses.getAttribute("USERID");
+String userID = (String) ses.getAttribute("USERID");
 boolean isFollowing = (boolean) ses.getAttribute("isFollowing");
 int followCount = (int) ses.getAttribute("followCount");
 int followerCount = (int) ses.getAttribute("followerCount");
-System.out.println("followCount："+followCount);
-System.out.println("followerCount："+followerCount);
+System.out.println("followCount：" + followCount);
+System.out.println("followerCount：" + followerCount);
 
 ArrayList<Post> postList = (ArrayList<Post>) ses.getAttribute("postList");
 ArrayList<Heart> heartList = (ArrayList) ses.getAttribute("HEARTLIST");
@@ -70,25 +70,32 @@ String noweventId = String.format("%04d%02d", year, month); // 西暦4桁+月2�
 		<!-- isFollowingがfolseならフォローしていないのでフォローボタン表示 -->
 		<div class="rightheader">
 			<div class="button-group2">
-			<form action="P2followServlet" method="post">
-				<button type="submit" class="notification-button toggle-notification"
-					id="notificationButton">
-				<%-- <input type="hidden" name="userID2" value="<%=up.getUserid()%>" /> --%>
-					<i class="fas changeb"> <span class="dli-user-plus"> <span
-							class="user"></span>
-					</span>
-					</i>
-				</button>
-				<p class="follow">
-					<%if (isFollowing == true) {%>
+				<form action="P2followServlet" method="post">
+					<button type="submit"
+						class="notification-button toggle-notification"
+						id="notificationButton">
+						<%-- <input type="hidden" name="userID2" value="<%=up.getUserid()%>" /> --%>
+						<i class="fas changeb"> <span class="dli-user-plus"> <span
+								class="user"></span>
+						</span>
+						</i>
+					</button>
+					<p class="follow">
+						<%
+						if (isFollowing == true) {
+						%>
 						フォロー中
-					<%} else {%>
+						<%
+						} else {
+						%>
 						フォローする
-					<%}%>
-				</p>
+						<%
+						}
+						%>
+					</p>
 				</form>
 
-				<a href="P2DMNewServlet?ID=<%=up.getUserid() %>"
+				<a href="P2DMNewServlet?ID=<%=up.getUserid()%>"
 					class="edit-profile-button"> <i class="fas fa-envelope changeb"></i>
 				</a>
 				<!--
@@ -104,93 +111,97 @@ String noweventId = String.format("%04d%02d", year, month); // 西暦4桁+月2�
 	<!-- 1行目のタイトルと左右ボタン -->
 	<div class="section-header">
 		<h3 class="section-title">セッション</h3>
-	<!-- 	<button class="show-all-button">すべて表示</button> -->
+		<!-- 	<button class="show-all-button">すべて表示</button> -->
 	</div>
 	<div class="scroll-container">
 		<button class="scroll-left" id="scroll-left-1">◀</button>
 		<div class="video-grid" id="video-grid-1">
-		
-			<section class="video-grid" id="video-grid-1"> 
-			<%if (postList != null) {
-			for (int i = 0; i < postList.size(); i++) {
-			boolean flgin = false;
-			
-			String postId = postList.get(i).getPostId();
-			if (!postId.startsWith("000000")) {
-			%>
-			<div class="video-card">
-				<div class="thumbnail-placeholder">
-					<img src="image/<%=postList.get(i).getThumbnailPath()%>"
-						alt="Video Thumbnail" class="thumbnail" />
-					<button class="play-button">▶️</button>
-					<!-- 音声再生ボタン -->
-					<audio class="audio-player"
-						src="audio/<%=postList.get(i).getAudioPath()%>"></audio>
-				</div>
 
-				<div class="video-info">
-					<form action="P2UserSearchServlet" method="get">
-    				<input type="hidden" name="userID" value="<%=up.getUserid()%>" />
-    				
-    					<button type="submit" class="profile-info" style="all: unset; cursor: pointer;">
-	    					<a>
-	    						<img src="image/<%=up.getIconImage()%>" alt="profile icon" class="profile-icon" />
-	    					</a>
-        				</button>
-					</form>
-					
-					<div class="like-comment">
-						<form action="P2CommentJusinServlet">
-							<input type="hidden" name="toukouId" value="<%=i%>" />
-							<button class="submit comment" onclick="openPopup()">
-								<img src="image/こめんと1.png" alt="comment icon"
-									style="width: 20px; height: 20px" /> 
-									<span><%=postList.get(i).getCommentCount()%></span>
+			<section class="video-grid" id="video-grid-1">
+				<%
+				if (postList != null) {
+					for (int i = 0; i < postList.size(); i++) {
+						boolean flgin = false;
+
+						String postId = postList.get(i).getPostId();
+						if (!postId.startsWith("000000")) {
+				%>
+				<div class="video-card">
+					<div class="thumbnail-placeholder">
+						<img src="image/<%=postList.get(i).getThumbnailPath()%>"
+							alt="Video Thumbnail" class="thumbnail" />
+						<button class="play-button">▶️</button>
+						<!-- 音声再生ボタン -->
+						<audio class="audio-player"
+							src="audio/<%=postList.get(i).getAudioPath()%>"></audio>
+					</div>
+
+					<div class="video-info">
+						<form action="P2UserSearchServlet" method="get">
+							<input type="hidden" name="userID" value="<%=up.getUserid()%>" />
+
+							<button type="submit" class="profile-info"
+								style="all: unset; cursor: pointer;">
+								<a> <img src="image/<%=up.getIconImage()%>"
+									alt="profile icon" class="profile-icon" />
+								</a>
 							</button>
 						</form>
 
-						 <a href="P2heartServlet?hensuu=<%=i%>&heartId=<%= postList.get(i).getPostId() %>&page=stranger">
-						<button class="heart" onclick="changeImage('heartImage<%=postList.get(i)%>')">
-							<img id="heartImage<%=postList.get(i)%>"
-							
-							<%for(int j = 0; j < heartList.size(); j++){
-						//		System.out.println("for文開始" + i);
-								if(flgin == false){
-						//			System.out.println(postList.get(i).getPostId()+":"+heartList.get(j).getPostId());
-									if(postList.get(i).getPostId().equals(heartList.get(j).getPostId())){
-						//				System.out.println(u.getUserid()+":"+heartList.get(j).getUserId());	
-										if(u.getUserid().equals(heartList.get(j).getUserId())){
-						//					System.out.println("152");
-											flgin = true;
-										}else{
-						//					System.out.println("158");					
-										}
-									}else{
-						//				System.out.println("162");
-									}
-						//		System.out.println("for文終わり" + i);
-								} 
-							}
-							
-							if(flgin == true){ %>
-							src="image/Heart-512x512 test2.png"
-							<%}else{ %>
-							src="image/Heart-512x512 test.png"
-							<%} %>
-							alt="like icon" style="width: 20px; height: 20px" /> 
-							<span><%=postList.get(i).getLikeCount()%></span>
-						</button></a>
+						<div class="like-comment">
+							<form action="P2CommentJusinServlet">
+								<input type="hidden" name="toukouId" value="<%=i%>" />
+								<button class="submit comment" onclick="openPopup()">
+									<img src="image/こめんと1.png" alt="comment icon"
+										style="width: 20px; height: 20px" /> <span><%=postList.get(i).getCommentCount()%></span>
+								</button>
+							</form>
 
-						<%
-						String postIdPrefix = postId.substring(0, 6);
-					//	System.out.print("postIdPrefix："+postIdPrefix);
-					//	System.out.print("postIdPrefix："+postIdPrefix);
-					//	System.out.print("noweventId："+noweventId);
-						%>
+							<a
+								href="P2heartServlet?hensuu=<%=i%>&heartId=<%=postList.get(i).getPostId()%>&page=stranger">
+								<button class="heart"
+									onclick="changeImage('heartImage<%=postList.get(i)%>')">
+									<img id="heartImage<%=postList.get(i)%>"
+										<%for (int j = 0; j < heartList.size(); j++) {
+	//		System.out.println("for文開始" + i);
+	if (flgin == false) {
+		//			System.out.println(postList.get(i).getPostId()+":"+heartList.get(j).getPostId());
+		if (postList.get(i).getPostId().equals(heartList.get(j).getPostId())) {
+			//				System.out.println(u.getUserid()+":"+heartList.get(j).getUserId());	
+			if (u.getUserid().equals(heartList.get(j).getUserId())) {
+				//					System.out.println("152");
+				flgin = true;
+			} else {
+				//					System.out.println("158");					
+			}
+		} else {
+			//				System.out.println("162");
+		}
+		//		System.out.println("for文終わり" + i);
+	}
+}
 
-						<!-- 今のイベントIDとこの投稿のイベントIDが同じなら表示 -->
-						<%if(postIdPrefix.equals(noweventId)) { %>
-						<% System.out.println("セッションできるよpostIdPrefix："+postIdPrefix);%>
+if (flgin == true) {%>
+										src="image/Heart-512x512 test2.png" <%} else {%>
+										src="image/Heart-512x512 test.png" <%}%> alt="like icon"
+										style="width: 20px; height: 20px" /> <span><%=postList.get(i).getLikeCount()%></span>
+								</button>
+							</a>
+
+							<%
+							String postIdPrefix = postId.substring(0, 6);
+							//	System.out.print("postIdPrefix："+postIdPrefix);
+							//	System.out.print("postIdPrefix："+postIdPrefix);
+							//	System.out.print("noweventId："+noweventId);
+							%>
+
+							<!-- 今のイベントIDとこの投稿のイベントIDが同じなら表示 -->
+							<%
+							if (postIdPrefix.equals(noweventId)) {
+							%>
+							<%
+							System.out.println("セッションできるよpostIdPrefix：" + postIdPrefix);
+							%>
 							<form action="P2SessionRecPostServlet" method="post">
 								<input type="hidden" name="postId"
 									value="<%=postList.get(i).getPostId()%>" />
@@ -202,14 +213,22 @@ String noweventId = String.format("%04d%02d", year, month); // 西暦4桁+月2�
 									</span>
 								</button>
 							</form>
-						<%}%>
-						<%}%>
+							<%
+							}
+							%>
+							<%
+							}
+							%>
+						</div>
 					</div>
 				</div>
-			</div>
-			<%}%>
-			<%}%>
-		</section>
+				<%
+				}
+				%>
+				<%
+				}
+				%>
+			</section>
 		</div>
 		<button class="scroll-right" id="scroll-right-1">▶</button>
 	</div>
@@ -223,9 +242,12 @@ String noweventId = String.format("%04d%02d", year, month); // 西暦4桁+月2�
 		<button class="scroll-left" id="scroll-left-2">◀</button>
 		<div class="video-grid" id="video-grid-2">
 			<!-- セッションのビデオカード生成 -->
-			<%for (int i = 0; i < postList.size(); i++) {%>
+			<%
+			for (int i = 0; i < postList.size(); i++) {
+			%>
 			<!-- 投稿IDの頭六桁が000000だったら。-->
-			<%String postId2 = postList.get(i).getPostId();
+			<%
+			String postId2 = postList.get(i).getPostId();
 			boolean flg = false;
 			if (postId2.startsWith("000000")) {
 			%>
@@ -240,14 +262,15 @@ String noweventId = String.format("%04d%02d", year, month); // 西暦4桁+月2�
 				</div>
 
 				<div class="video-info">
-				<form action="P2UserSearchServlet" method="get">
-    				<input type="hidden" name="userID" value="<%=up.getUserid()%>" />
-    				
-    					<button type="submit" class="profile-info" style="all: unset; cursor: pointer;">
-	    					<a>
-	    						<img src="image/<%=up.getIconImage()%>" alt="profile icon" class="profile-icon" />
-	    					</a>
-        				</button>
+					<form action="P2UserSearchServlet" method="get">
+						<input type="hidden" name="userID" value="<%=up.getUserid()%>" />
+
+						<button type="submit" class="profile-info"
+							style="all: unset; cursor: pointer;">
+							<a> <img src="image/<%=up.getIconImage()%>"
+								alt="profile icon" class="profile-icon" />
+							</a>
+						</button>
 					</form>
 
 					<div class="like-comment">
@@ -256,48 +279,50 @@ String noweventId = String.format("%04d%02d", year, month); // 西暦4桁+月2�
 							<img src="image/こめんと1.png" alt="comment icon"
 								style="width: 20px; height: 20px" /> <span><%=postList.get(i).getCommentCount()%></span>
 						</button>
-						
+
 						<!-- いいねボタン -->
-						<a href="P2heartServlet?hensuu=<%=i%>&heartId=<%= postList.get(i).getPostId() %>&page=stranger">
-						<button class="heart" onclick="changeImage('heartImage<%=postList.get(i)%>')">
-							<img id="heartImage<%=postList.get(i)%>"
-							
-							<%for(int j = 0; j < heartList.size(); j++){
-						//		System.out.println("for文開始" + i);
-								if(flg == false){
-						//			System.out.println(postList.get(i).getPostId()+":"+heartList.get(j).getPostId());
-									if(postList.get(i).getPostId().equals(heartList.get(j).getPostId())){
-						//				System.out.println(u.getUserid()+":"+heartList.get(j).getUserId());	
-										if(u.getUserid().equals(heartList.get(j).getUserId())){
-											flg = true;
-						//					System.out.println("152" + flg);
-										}else{
-						//					System.out.println("158");					
-										}
-									}else{
-						//				System.out.println("162");
-									}
-						//		System.out.println("for文終わり" + i);
-								} 
-							}
-						//	System.out.println("324" + flg);
-							
-							if(flg == true){ 
-						//	System.out.println("trueの処理" + flg);%>
-								src="image/Heart-512x512 test2.png"
-							<%}else{ 
-						//	System.out.println("elseの処理" + flg);%>
-								src="image/Heart-512x512 test.png"
-							<%} %>
-							alt="like icon" style="width: 20px; height: 20px" /> 
-							<span><%=postList.get(i).getLikeCount()%></span>
-						</button></a>
-						
+						<a
+							href="P2heartServlet?hensuu=<%=i%>&heartId=<%=postList.get(i).getPostId()%>&page=stranger">
+							<button class="heart"
+								onclick="changeImage('heartImage<%=postList.get(i)%>')">
+								<img id="heartImage<%=postList.get(i)%>"
+									<%for (int j = 0; j < heartList.size(); j++) {
+	//		System.out.println("for文開始" + i);
+	if (flg == false) {
+		//			System.out.println(postList.get(i).getPostId()+":"+heartList.get(j).getPostId());
+		if (postList.get(i).getPostId().equals(heartList.get(j).getPostId())) {
+			//				System.out.println(u.getUserid()+":"+heartList.get(j).getUserId());	
+			if (u.getUserid().equals(heartList.get(j).getUserId())) {
+				flg = true;
+				//					System.out.println("152" + flg);
+			} else {
+				//					System.out.println("158");					
+			}
+		} else {
+			//				System.out.println("162");
+		}
+		//		System.out.println("for文終わり" + i);
+	}
+}
+//	System.out.println("324" + flg);
+
+if (flg == true) {
+	//	System.out.println("trueの処理" + flg);%>
+									src="image/Heart-512x512 test2.png"
+									<%} else {
+	//	System.out.println("elseの処理" + flg);%>
+									src="image/Heart-512x512 test.png" <%}%> alt="like icon"
+									style="width: 20px; height: 20px" /> <span><%=postList.get(i).getLikeCount()%></span>
+							</button>
+						</a>
+
 					</div>
 				</div>
 			</div>
-			<%}
-			}%>
+			<%
+			}
+			}
+			%>
 		</div>
 		<button class="scroll-right" id="scroll-right-2">▶</button>
 	</div>
@@ -351,7 +376,7 @@ String noweventId = String.format("%04d%02d", year, month); // 西暦4桁+月2�
 	</main>
 
 	<jsp:include page="P2kensaku.jsp"></jsp:include>
-	
+
 	<script>
       const scrollLeftButton1 = document.getElementById("scroll-left-1");
       const scrollRightButton1 = document.getElementById("scroll-right-1");
@@ -389,6 +414,36 @@ String noweventId = String.format("%04d%02d", year, month); // 西暦4桁+月2�
           behavior: "smooth", // スムーズスクロール
         });
       });
+
+
+//////////////再生回数カウント//////////////////	
+
+function sendData(toukouUserid, toukouId, userId) {
+// データを準備
+const data = {
+toukouUserid: toukouUserid,
+toukouId: toukouId,
+userId: userId
+};
+
+// AJAXリクエストを送信
+fetch('P2SaiseiCountServlet', {
+method: 'POST',
+headers: {
+    'Content-Type': 'application/json'
+},
+body: JSON.stringify(data) // データをJSONに変換
+})
+.then(response => response.json()) // サーバーからのレスポンスをJSONとして処理
+.then(result => {
+console.log('Success:', result); // 結果をコンソールに表示
+})
+.catch(error => {
+console.error('Error:', error); // エラーをコンソールに表示
+});
+}
+
+//コメント欄非同期挑戦
 
     </script>
 	<script src="https://unpkg.com/wavesurfer.js"></script>
