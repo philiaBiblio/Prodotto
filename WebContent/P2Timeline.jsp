@@ -87,6 +87,15 @@ window.onload = function(){
 	} 	
 	<%} %>
 	<%ses.removeAttribute("TRUEMESS"); %>
+
+	// コメント表示用
+	function openPopup() {
+	  window.open(
+	    "P2popup.jsp",
+	    "popupWindow",
+	    "width=500,height=300,scrollbars=yes"
+	  );
+	}
 </script>
 
 <body>
@@ -111,21 +120,23 @@ window.onload = function(){
 
 					<img src="image/<%=toukouList.get(i).getThumbnail()%>"
 						alt="Video Thumbnail" class="thumbnail" />
-					<button class="play-button">▶️</button>
+						
+					<button class="play-button" 
+					onclick="sendData('<%= toukouList.get(i).getUserid() %>', 
+					'<%= toukouList.get(i).getToukouid() %>', 
+					'<%= u.getUserid() %>')">
+					▶️</button>
+					
 					<!-- 音声再生ボタン -->
 					<audio class="audio-player"
 						src="audio/<%=toukouList.get(i).getSound()%>"></audio>
 				</div>
 
-
 				<div class="video-info">
-					
-					
 					<!-- 他人なら他人プロフ。自分ならマイページへ -->
 					<%if (!toukouList.get(i).getUserid().equals(u.getUserid())) {%>
 					<form action="P2UserSearchServlet" method="get">
     				<input type="hidden" name="userID" value="<%=toukouList.get(i).getUserid()%>" />
-    				
     					<button type="submit" class="profile-info" style="all: unset; cursor: pointer;">
 	    					<a>
 	    						<img src="image/<%=userIconList.get(i).getIconImage()%>" alt="profile icon" class="profile-icon" />
@@ -142,8 +153,6 @@ window.onload = function(){
         				</button>
 					</form>
 					<%} %> 
-					
-					
 
 					<div class="like-comment">
 						<form action="P2CommentJusinServlet">
@@ -159,21 +168,21 @@ window.onload = function(){
 							<img id="heartImage<%=postList.get(i)%>"
 							
 							<%for(int j = 0; j < heartList.size(); j++){
-								System.out.println("for文開始" + i);
+							//	System.out.println("for文開始" + i);
 								if(flg == false){
-									System.out.println(toukouList.get(i).getToukouid()+":"+heartList.get(j).getPostId());
+							//		System.out.println(toukouList.get(i).getToukouid()+":"+heartList.get(j).getPostId());
 									if(toukouList.get(i).getToukouid().equals(heartList.get(j).getPostId())){
-										System.out.println(u.getUserid()+":"+heartList.get(j).getUserId());	
+							//			System.out.println(u.getUserid()+":"+heartList.get(j).getUserId());	
 										if(u.getUserid().equals(heartList.get(j).getUserId())){
-											System.out.println("152");
+							//				System.out.println("152");
 											flg = true;
 										}else{
-											System.out.println("158");					
+							//				System.out.println("158");					
 										}
 									}else{
-										System.out.println("162");
+							//			System.out.println("162");
 									}
-								System.out.println("for文終わり" + i);
+							//	System.out.println("for文終わり" + i);
 								} 
 							}
 							
@@ -189,8 +198,8 @@ window.onload = function(){
 						<%
 						String postId = toukouList.get(i).getToukouid();
 						String postIdPrefix = postId.substring(0, 6);
-						System.out.println("postIdPrefix："+postIdPrefix+"i:"+i);
-						System.out.println("noweventId："+noweventId);
+						//System.out.println("postIdPrefix："+postIdPrefix+"i:"+i);
+						//System.out.println("noweventId："+noweventId);
 						
 						%>
 
@@ -282,7 +291,43 @@ window.onload = function(){
 			</div>
 		</div>
 	</main>
+	
+	
+<script>
+//////////////再生回数カウント//////////////////	
 
+function sendData(toukouUserid, toukouId, userId) {
+    // データを準備
+    const data = {
+        toukouUserid: toukouUserid,
+        toukouId: toukouId,
+        userId: userId
+    };
+
+    // AJAXリクエストを送信
+    fetch('P2SaiseiCountServlet', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data) // データをJSONに変換
+    })
+    .then(response => response.json()) // サーバーからのレスポンスをJSONとして処理
+    .then(result => {
+        console.log('Success:', result); // 結果をコンソールに表示
+    })
+    .catch(error => {
+        console.error('Error:', error); // エラーをコンソールに表示
+    });
+}
+
+// コメント欄非同期挑戦
+
+
+</script>		
+	
+	
+	
 	<script src="https://unpkg.com/wavesurfer.js"></script>
 	<script>
 	function Saisei(){

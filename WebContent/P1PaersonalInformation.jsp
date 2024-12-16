@@ -28,23 +28,23 @@ AdminUser au = (AdminUser) ses.getAttribute("ADMINLOGIN");
 			</div>
 
 			<!-- ユーザーID -->
-			<div class="profile-item">
+			<%-- <div class="profile-item">
 				<span id="userid-display" name="userid"><b>管理者ID:</b><%=au.getAdminUserid()%></span>
 				<input type="text" class="textbox" id="userid-input"
 					value=<%=au.getAdminUserid()%> name="userid" /> <span class="dli-create"
 					id="userid-icon" onclick="enableEdit('userid')"></span>
-			</div>
+			</div> --%>
 
 			<!-- 性別 -->
 			<!-- DBから持ってきて性別選択されてる状態にしておく -->
 			<div class="profile-item">
 				<span id="sex-display"><b>性別:</b> <%
- if (au.getAdminSex().equals("0")) {
- %> 男 <%
- } else if (au.getAdminSex().equals("1")) {
- %> 女 <%
- }
- %> </span>
+ 				if (au.getAdminSex().equals("0")) {%>
+ 				男
+ 				<%} else if (au.getAdminSex().equals("1")) {%>
+ 				女
+ 				<%} %>
+ 				</span>
 				<div class="button" id="sex-input">
 					<input type="radio" id="otoko" name="sexy" value="0"
 						<%=au.getAdminSex().equals("0") ? "checked" : ""%>> <label
@@ -58,9 +58,9 @@ AdminUser au = (AdminUser) ses.getAttribute("ADMINLOGIN");
 
 			<!-- 生年月日 -->
 			<div class="profile-item">
-				<span id="birth-display"><b>生年月日: </b><%=au.getAdminBirth()%></span> <input
+				<span id="birth-display"><b>生年月日: </b><%=au.getAdminBirth().substring(0,10)%></span> <input
 					type="date" class="textbox" id="birth-input"
-					value=<%=au.getAdminBirth()%> name="birth" /> <span class="dli-create"
+					value=<%=au.getAdminBirth().substring(0,10)%> name="birth" /> <span class="dli-create"
 					id="birth-icon" onclick="enableEdit('birth')"></span>
 			</div>
 

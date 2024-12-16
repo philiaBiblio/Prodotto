@@ -35,71 +35,107 @@ public class P2UserSearchServlet extends HttpServlet {
         
         // ログイン情報の取得
         User u = (User) ses.getAttribute("LOGIN");
+	    User up = (User) ses.getAttribute("PROF");
+        ArrayList<Heart> heartList = new ArrayList<Heart>();
         
         // URLの生成
         String url = "";
         
         // DBアクセス用部品の生成
         DBAcs dba = new DBAcs();
+        DBAcs dba2 = new DBAcs();
 
+        String userID;
         try {
-            // ユーザーIDの取得
-            String userID = request.getParameter("userID");
+            // ユーザーIDの取得	
+        	userID = request.getParameter("userID");
+        	if(up == null) {
+        		up = new User();
+        		up.setUserid(userID);
+        	}
+        	
+        	if(!(up.getUserid().equals(userID)) && userID != null) {
+        		up = new User();
+        		up.setUserid(userID);
+        	}
             
             // ユーザー情報の取得
-            ResultSet rsu = dba.selectExe("SELECT * FROM ユーザー WHERE ユーザーID = '" + userID + "'");
+            ResultSet rsu = dba.selectExe("SELECT * FROM ユーザー WHERE ユーザーID = '" + up.getUserid() + "'");
             if (rsu.next()) {
                 String uid = rsu.getString("ユーザーID");
                 String name = rsu.getString("名前");
                 String icon = rsu.getString("アイコン");
                 
                 // ユーザー情報を設定
-                User up = new User();
+                up = new User();
                 up.setUserid(uid);
                 up.setName(name);
                 up.setIconImage(icon);
                 
                 // フォロー状態を確認
-                boolean isFollowing = checkIfFollowing(dba, userID, u.getUserid());
+                boolean isFollowing = checkIfFollowing(dba, u.getUserid(), up.getUserid());
                 ses.setAttribute("isFollowing", isFollowing);
                 
-                int followCount = 0;
-                int followerCount = 0;
-                ses.setAttribute("followCount", followCount);
-                ses.setAttribute("followerCount", followerCount);
+				/*  int followCount = 0;
+				int followerCount = 0;
+				ses.setAttribute("followCount", followCount);
+				ses.setAttribute("followerCount", followerCount);*/
                 
-                try (ResultSet rsFollow = dba.selectExe("SELECT COUNT(*) AS follow_count FROM フォロー WHERE フォロワー = '" + userID + "'")) {
+                try (ResultSet rsFollow = dba.selectExe("SELECT COUNT(*) AS follow_count FROM フォロー WHERE フォロワー = '" + up.getUserid() + "'")) {
                     if (rsFollow.next()) {
-                        followCount = rsFollow.getInt("follow_count"); // フォローしている数
+                        int followCount = rsFollow.getInt("follow_count"); // フォローしている数
                         System.out.println("followCount："+followCount);
+                        ses.setAttribute("followCount", followCount);
                     }
                 }
 
-                try (ResultSet rsFollower = dba.selectExe("SELECT COUNT(*) AS follower_count FROM フォロー WHERE フォロー = '" + userID + "'")) {
+                try (ResultSet rsFollower = dba.selectExe("SELECT COUNT(*) AS follower_count FROM フォロー WHERE フォロー = '" + up.getUserid() + "'")) {
                     if (rsFollower.next()) {
-                        followerCount = rsFollower.getInt("follower_count"); // フォロワー数
+                        int followerCount = rsFollower.getInt("follower_count"); // フォロワー数
                         System.out.println("followerCount："+followerCount);
+                        ses.setAttribute("followerCount", followerCount);
                     }
                 }
+                int followCount = (int) ses.getAttribute("followCount");
+                int followerCount = (int) ses.getAttribute("followerCount");
+                System.out.println("94:followCount："+followCount);
+                System.out.println("95:followerCount："+followerCount);
                 
                 // リクエストスコープに保存
-                request.setAttribute("PROF", up);
-                request.setAttribute("isFollowing", isFollowing);
-                request.setAttribute("followCount", followCount);
-                request.setAttribute("followerCount", followerCount);
+                ses.setAttribute("PROF", up);
+                ses.setAttribute("isFollowing", isFollowing);
                 
                 // 投稿リストを取得してリクエストスコープに保存
-                ArrayList<Post> postList = getPostList(dba, userID);
-                request.setAttribute("postList", postList);
+                ArrayList<Post> postList = getPostList(dba, up.getUserid());
+                ses.setAttribute("postList", postList);
             
             } else {
                 // ユーザーが見つからない場合の処理
-                request.setAttribute("error", "ユーザーが見つかりませんでした。");
+                ses.setAttribute("error", "ユーザーが見つかりませんでした。");
             }
-
+            
+            // 自分がいいねしたかの判別用のsql
+ 			String sql = "select * from いいね";
+ 			// sql文実行
+ 			ResultSet rs = dba2.selectExe(sql);
+ 			
+ 			while(rs.next()) {
+ 				String toukouId = rs.getString("投稿ID");
+ 				String userId = rs.getString("ユーザーID");
+ 				
+ 				// インスタンス生成
+ 				Heart heart = new Heart();
+ 				heart.setPostId(toukouId);
+ 				heart.setUserId(userId);
+ 				
+ 				// アレイリストに追加
+ 				heartList.add(heart);
+ 			}
+ 			ses.setAttribute("HEARTLIST", heartList);
+ 			
         } catch (Exception e) {
             e.printStackTrace();
-            request.setAttribute("error", "エラーが発生しました。");
+            ses.setAttribute("error", "エラーが発生しました。");
         } finally {
             // データベースを閉じる
             dba.closeDB();
@@ -152,11 +188,11 @@ public class P2UserSearchServlet extends HttpServlet {
                 while (rsPosts.next()) {
                     // データを取得
                     String postId = rsPosts.getString("投稿ID");
-                    System.out.println("投稿ID："+postId);
+        //            System.out.println("投稿ID："+postId);
                     String thumbnailPath = rsPosts.getString("サムネイル");
-                    System.out.println("サムネイルパス："+thumbnailPath);
+        //            System.out.println("サムネイルパス："+thumbnailPath);
                     String audioPath = rsPosts.getString("作品");
-                    System.out.println("音声ファイルパス："+audioPath);
+        //            System.out.println("音声ファイルパス："+audioPath);
                     int commentCount = rsPosts.getInt("コメント数");
                     int likeCount = rsPosts.getInt("いいね数"); 
                     

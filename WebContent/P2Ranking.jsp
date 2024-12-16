@@ -1,519 +1,277 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@page import="apli.Heart"%>
+<%@page import="org.eclipse.jdt.internal.compiler.env.IUpdatableModule.UpdateKind"%>
+<%@page import="apli.Post"%>
+<%@page import="apli.Toukou"%>
+<%@page import="apli.DM"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="apli.User"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"pageEncoding="UTF-8"%>
+
+
 <!DOCTYPE html>
 <html lang="ja">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link type="images/png" rel="icon" href="images/icons8-youtube.png" />
-    <link
-      rel="stylesheet"
-      href="https://use.fontawesome.com/releases/v6.0.0/css/all.css"
-      integrity="sha384-3B6NwesSXE7YJlcLI9RpRqGf2p/EgVH8BgoKTaUrmKNDkHPStTQ3EyoYjCGXaOTS"
-      crossorigin="anonymous"
-    />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=settings"
-    />
-      <jsp:include page="P2kensaku.jsp"></jsp:include>
-    <link rel="stylesheet" href="P2Ranking.css" />
-    <title>ProDotto</title>
-  </head>
+
+
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="stylesheet"
+	href="https://use.fontawesome.com/releases/v6.0.0/css/all.css"
+	integrity="sha384-3B6NwesSXE7YJlcLI9RpRqGf2p/EgVH8BgoKTaUrmKNDkHPStTQ3EyoYjCGXaOTS"
+	crossorigin="anonymous" />
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=settings" />
+<link rel="stylesheet" href="P2Timeline.css" />
+
+<title>ProDotto</title>
+</head>
+
+<%
+	// 大域変数
+	int globalId;
+	// セッションの取得
+	HttpSession ses = request.getSession();
+	// ログイン情報の取得
+	User u = (User) ses.getAttribute("LOGIN");
+	// 音声情報の取得
+	ArrayList<Toukou> toukouList1 = (ArrayList) ses.getAttribute("TOUKOULIST1");
+	ArrayList<Toukou> toukouList2 = (ArrayList) ses.getAttribute("TOUKOULIST2");
+	ArrayList<Toukou> toukouList3 = (ArrayList) ses.getAttribute("TOUKOULIST3");
+	ArrayList<User> userIconList1 = (ArrayList) ses.getAttribute("ICONLIST1");
+	ArrayList<User> userIconList2 = (ArrayList) ses.getAttribute("ICONLIST2");
+	ArrayList<User> userIconList3 = (ArrayList) ses.getAttribute("ICONLIST3");
+	ArrayList<Post> postList1 = (ArrayList) ses.getAttribute("POSTLIST1");
+	ArrayList<Post> postList2 = (ArrayList) ses.getAttribute("POSTLIST2");
+	ArrayList<Post> postList3 = (ArrayList) ses.getAttribute("POSTLIST3");
+	ArrayList<Heart> heartList = (ArrayList) ses.getAttribute("HEARTLIST");
+	String trueMess = (String)ses.getAttribute("TRUEMESS");
+%>
+
+<jsp:include page="P2kensaku.jsp"></jsp:include>
+<script src="https://unpkg.com/wavesurfer.js"></script>
+
+<script>
+//ダイアログのスクリプト
+function dialog(id){
+	console.log("id:" + id);
+	const openDialogButton = document.getElementById('openDialogButton');
+	const yesButton = document.getElementById('yesButton' + id);
+	const noButton = document.getElementById('noButton' + id);
+	const myDialog = document.getElementById('myDialog' + id);
+	const confirmationDialog = document.getElementById('confirmationDialog');
+	const closeConfirmationButton = document.getElementById('closeConfirmationButton');
+	myDialog.showModal();
+	console.log("no" + noButton)
+	  if (noButton) {
+          noButton.addEventListener('click', () => {
+              if (myDialog) {
+                  console.log("80")
+                  myDialog.close();
+              }
+          });
+      }
+	globalId = id;
+}
+
+
+document.addEventListener('DOMContentLoaded', (event) => {
+    function dialog(id) {
+        const openDialogButton = document.getElementById('openDialogButton');
+        const yesButton = document.getElementById('yesButton' + id);
+        const noButton = document.getElementById('noButton' + id);
+        console.log("no" + noButton)
+        const myDialog = document.getElementById('myDialog' + id);
+        const confirmationDialog = document.getElementById('confirmationDialog');
+        const closeConfirmationButton = document.getElementById('closeConfirmationButton');
+    }
+
+    // dialog関数を呼び出す
+    dialog();
+    globalId = id;
+});
+
+<%if(trueMess != null ){ %>
+window.onload = function(){
+	const dialog = document.querySelector("#confirmationDialog");
+	dialog.showModal();
+	} 	
+	<%} %>
+	<%ses.removeAttribute("TRUEMESS"); %>
+</script>
+
+
 
   <body>
-    
-
-
-        <!-- 1行目のタイトルと左右ボタン -->
+  
+  	<%
+		// タイムスタンプからイベントIDを生成
+		java.util.Calendar cal = java.util.Calendar.getInstance();
+		int year = cal.get(java.util.Calendar.YEAR); // 現在の西暦年
+		int month = cal.get(java.util.Calendar.MONTH) + 1; // 現在の月 (0ベースなので+1)
+		String noweventId = String.format("%04d%02d", year, month); // 西暦4桁+月2桁のイベントID
+	%>
+  
+  
+  
+    <!-- ************************１***************************** -->
     <div class="section-header">
-        <h3 class="section-title">急上昇ランキング</h3>
+        <h3 class="section-title">再生数ランキング</h3>
         
       </div>
       <div class="scroll-container">
         <button class="scroll-left" id="scroll-left-1">◀</button>
         <div class="video-grid" id="video-grid-1">
 
-          <div class="video-card">
-            <div class="thumbnail-placeholder">
-              <img
-                src="image/サムネジャマイカ.jpg"
-                alt="Video Thumbnail"
-                class="thumbnail"
-              />
-              <button class="play-button">▶️</button>
-              <!-- 音声再生ボタン -->
-              <audio class="audio-player" src="ジャマイカテスト.mp3"></audio>
-            </div>
-  
-            <div class="video-info">
-              <a href="P2ProfileStranger.jsp" class="profile-info">
-                <img
-                  src="image/ききゅう.jpg"
-                  alt="profile icon"
-                  class="profile-icon"
-                />
-              </a>
-              <div class="like-comment">
-                <button class="comment" onclick="openPopup()">
-                  <img
-                    src="image/こめんと1.png"
-                    alt="comment icon"
-                    style="width: 20px; height: 20px"
-                  />
-                  <span>5</span>
-                </button>
-  
-                <button class="heart" onclick="changeImage('heartImage2')">
-                  <img
-                    id="heartImage2"
-                    src="image/Heart-512x512 test.png"
-                    alt="like icon"
-                    style="width: 20px; height: 20px"
-                  />
-                  <span>10</span>
-                </button>
-              </div>
-            </div>
-          </div>
-
-
-          <div class="video-card">
-            <div class="thumbnail-placeholder">
-              <img
-                src="image/heartfield.jpg"
-                alt="Video Thumbnail"
-                class="thumbnail"
-              />
-              <button class="play-button">▶️</button>
-              <!-- 音声再生ボタン -->
-              <audio class="audio-player" src="KICK OUT (1).mp3"></audio>
-            </div>
-  
-            <div class="video-info">
-              <a href="P2ProfileStranger.jsp" class="profile-info">
-                <img
-                  src="image/ききゅう.jpg"
-                  alt="profile icon"
-                  class="profile-icon"
-                />
-              </a>
-              <div class="like-comment">
-                <button class="comment" onclick="openPopup()">
-                  <img
-                    src="image/こめんと1.png"
-                    alt="comment icon"
-                    style="width: 20px; height: 20px"
-                  />
-                  <span>5</span>
-                </button>
-  
-                <button class="heart" onclick="changeImage('heartImage3')">
-                  <img
-                    id="heartImage3"
-                    src="image/Heart-512x512 test.png"
-                    alt="like icon"
-                    style="width: 20px; height: 20px"
-                  />
-                  <span>10</span>
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <div class="video-card">
-            <div class="thumbnail-placeholder">
-              <img
-                src="image/サムネジャマイカ.jpg"
-                alt="Video Thumbnail"
-                class="thumbnail"
-              />
-              <button class="play-button">▶️</button>
-              <!-- 音声再生ボタン -->
-              <audio class="audio-player" src="ジャマイカテスト.mp3"></audio>
-            </div>
-  
-            <div class="video-info">
-              <a href="P2ProfileStranger.jsp" class="profile-info">
-                <img
-                  src="image/ききゅう.jpg"
-                  alt="profile icon"
-                  class="profile-icon"
-                />
-              </a>
-              <div class="like-comment">
-                <button class="comment" onclick="openPopup()">
-                  <img
-                    src="image/こめんと1.png"
-                    alt="comment icon"
-                    style="width: 20px; height: 20px"
-                  />
-                  <span>5</span>
-                </button>
-  
-                <button class="heart" onclick="changeImage('heartImage4')">
-                  <img
-                    id="heartImage4"
-                    src="image/Heart-512x512 test.png"
-                    alt="like icon"
-                    style="width: 20px; height: 20px"
-                  />
-                  <span>10</span>
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <div class="video-card">
-            <div class="thumbnail-placeholder">
-              <img
-                src="image/サムネジャマイカ.jpg"
-                alt="Video Thumbnail"
-                class="thumbnail"
-              />
-              <button class="play-button">▶️</button>
-              <!-- 音声再生ボタン -->
-              <audio class="audio-player" src="ジャマイカテスト.mp3"></audio>
-            </div>
-  
-            <div class="video-info">
-              <a href="P2ProfileStranger.jsp" class="profile-info">
-                <img
-                  src="image/ききゅう.jpg"
-                  alt="profile icon"
-                  class="profile-icon"
-                />
-              </a>
-              <div class="like-comment">
-                <button class="comment" onclick="openPopup()">
-                  <img
-                    src="image/こめんと1.png"
-                    alt="comment icon"
-                    style="width: 20px; height: 20px"
-                  />
-                  <span>5</span>
-                </button>
-  
-                <button class="heart" onclick="changeImage('heartImage5')">
-                  <img
-                    id="heartImage5"
-                    src="image/Heart-512x512 test.png"
-                    alt="like icon"
-                    style="width: 20px; height: 20px"
-                  />
-                  <span>10</span>
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <div class="video-card">
-            <div class="thumbnail-placeholder">
-              <img
-                src="image/サムネジャマイカ.jpg"
-                alt="Video Thumbnail"
-                class="thumbnail"
-              />
-              <button class="play-button">▶️</button>
-              <!-- 音声再生ボタン -->
-              <audio class="audio-player" src="ジャマイカテスト.mp3"></audio>
-            </div>
-  
-            <div class="video-info">
-              <a href="P2ProfileStranger.jsp" class="profile-info">
-                <img
-                  src="image/ききゅう.jpg"
-                  alt="profile icon"
-                  class="profile-icon"
-                />
-              </a>
-              <div class="like-comment">
-                <button class="comment" onclick="openPopup()">
-                  <img
-                    src="image/こめんと1.png"
-                    alt="comment icon"
-                    style="width: 20px; height: 20px"
-                  />
-                  <span>5</span>
-                </button>
-  
-                <button class="heart" onclick="changeImage('heartImage6')">
-                  <img
-                    id="heartImage6"
-                    src="image/Heart-512x512 test.png"
-                    alt="like icon"
-                    style="width: 20px; height: 20px"
-                  />
-                  <span>10</span>
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <div class="video-card">
-            <div class="thumbnail-placeholder">
-              <img
-                src="image/サムネジャマイカ.jpg"
-                alt="Video Thumbnail"
-                class="thumbnail"
-              />
-              <button class="play-button">▶️</button>
-              <!-- 音声再生ボタン -->
-              <audio class="audio-player" src="ジャマイカテスト.mp3"></audio>
-            </div>
-  
-            <div class="video-info">
-              <a href="P2ProfileStranger.jsp" class="profile-info">
-                <img
-                  src="image/ききゅう.jpg"
-                  alt="profile icon"
-                  class="profile-icon"
-                />
-              </a>
-              <div class="like-comment">
-                <button class="comment" onclick="openPopup()">
-                  <img
-                    src="image/こめんと1.png"
-                    alt="comment icon"
-                    style="width: 20px; height: 20px"
-                  />
-                  <span>5</span>
-                </button>
-  
-                <button class="heart" onclick="changeImage('heartImage7')">
-                  <img
-                    id="heartImage7"
-                    src="image/Heart-512x512 test.png"
-                    alt="like icon"
-                    style="width: 20px; height: 20px"
-                  />
-                  <span>10</span>
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <div class="video-card">
-            <div class="thumbnail-placeholder">
-              <img
-                src="image/サムネジャマイカ.jpg"
-                alt="Video Thumbnail"
-                class="thumbnail"
-              />
-              <button class="play-button">▶️</button>
-              <!-- 音声再生ボタン -->
-              <audio class="audio-player" src="ジャマイカテスト.mp3"></audio>
-            </div>
-  
-            <div class="video-info">
-              <a href="P2ProfileStranger.jsp" class="profile-info">
-                <img
-                  src="image/ききゅう.jpg"
-                  alt="profile icon"
-                  class="profile-icon"
-                />
-              </a>
-              <div class="like-comment">
-                <button class="comment" onclick="openPopup()">
-                  <img
-                    src="image/こめんと1.png"
-                    alt="comment icon"
-                    style="width: 20px; height: 20px"
-                  />
-                  <span>5</span>
-                </button>
-  
-                <button class="heart" onclick="changeImage('heartImage8')">
-                  <img
-                    id="heartImage8"
-                    src="image/Heart-512x512 test.png"
-                    alt="like icon"
-                    style="width: 20px; height: 20px"
-                  />
-                  <span>10</span>
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <div class="video-card">
-            <div class="thumbnail-placeholder">
-              <img
-                src="image/サムネジャマイカ.jpg"
-                alt="Video Thumbnail"
-                class="thumbnail"
-              />
-              <button class="play-button">▶️</button>
-              <!-- 音声再生ボタン -->
-              <audio class="audio-player" src="ジャマイカテスト.mp3"></audio>
-            </div>
-  
-            <div class="video-info">
-              <a href="P2ProfileStranger.jsp" class="profile-info">
-                <img
-                  src="image/ききゅう.jpg"
-                  alt="profile icon"
-                  class="profile-icon"
-                />
-              </a>
-              <div class="like-comment">
-                <button class="comment" onclick="openPopup()">
-                  <img
-                    src="image/こめんと1.png"
-                    alt="comment icon"
-                    style="width: 20px; height: 20px"
-                  />
-                  <span>5</span>
-                </button>
-  
-                <button class="heart" onclick="changeImage('heartImage9')">
-                  <img
-                    id="heartImage9"
-                    src="image/Heart-512x512 test.png"
-                    alt="like icon"
-                    style="width: 20px; height: 20px"
-                  />
-                  <span>10</span>
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <div class="video-card">
-            <div class="thumbnail-placeholder">
-              <img
-                src="image/サムネジャマイカ.jpg"
-                alt="Video Thumbnail"
-                class="thumbnail"
-              />
-              <button class="play-button">▶️</button>
-              <!-- 音声再生ボタン -->
-              <audio class="audio-player" src="ジャマイカテスト.mp3"></audio>
-            </div>
-  
-            <div class="video-info">
-              <a href="P2ProfileStranger.jsp" class="profile-info">
-                <img
-                  src="image/ききゅう.jpg"
-                  alt="profile icon"
-                  class="profile-icon"
-                />
-              </a>
-              <div class="like-comment">
-                <button class="comment" onclick="openPopup()">
-                  <img
-                    src="image/こめんと1.png"
-                    alt="comment icon"
-                    style="width: 20px; height: 20px"
-                  />
-                  <span>5</span>
-                </button>
-  
-                <button class="heart" onclick="changeImage('heartImage10')">
-                  <img
-                    id="heartImage10"
-                    src="image/Heart-512x512 test.png"
-                    alt="like icon"
-                    style="width: 20px; height: 20px"
-                  />
-                  <span>10</span>
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <div class="video-card">
-            <div class="thumbnail-placeholder">
-              <img
-                src="image/サムネジャマイカ.jpg"
-                alt="Video Thumbnail"
-                class="thumbnail"
-              />
-              <button class="play-button">▶️</button>
-              <!-- 音声再生ボタン -->
-              <audio class="audio-player" src="ジャマイカテスト.mp3"></audio>
-            </div>
-  
-            <div class="video-info">
-              <a href="P2ProfileStranger.jsp" class="profile-info">
-                <img
-                  src="image/ききゅう.jpg"
-                  alt="profile icon"
-                  class="profile-icon"
-                />
-              </a>
-              <div class="like-comment">
-                <button class="comment" onclick="openPopup()">
-                  <img
-                    src="image/こめんと1.png"
-                    alt="comment icon"
-                    style="width: 20px; height: 20px"
-                  />
-                  <span>5</span>
-                </button>
-  
-                <button class="heart" onclick="changeImage('heartImage11')">
-                  <img
-                    id="heartImage11"
-                    src="image/Heart-512x512 test.png"
-                    alt="like icon"
-                    style="width: 20px; height: 20px"
-                  />
-                  <span>10</span>
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <div class="video-card">
-            <div class="thumbnail-placeholder">
-              <img
-                src="image/サムネジャマイカ.jpg"
-                alt="Video Thumbnail"
-                class="thumbnail"
-              />
-              <button class="play-button">▶️</button>
-              <!-- 音声再生ボタン -->
-              <audio class="audio-player" src="ジャマイカテスト.mp3"></audio>
-            </div>
-  
-            <div class="video-info">
-              <a href="P2ProfileStranger.jsp" class="profile-info">
-                <img
-                  src="image/ききゅう.jpg"
-                  alt="profile icon"
-                  class="profile-icon"
-                />
-              </a>
-              <div class="like-comment">
-                <button class="comment" onclick="openPopup()">
-                  <img
-                    src="image/こめんと1.png"
-                    alt="comment icon"
-                    style="width: 20px; height: 20px"
-                  />
-                  <span>5</span>
-                </button>
-  
-                <button class="heart" onclick="changeImage('heartImage12')">
-                  <img
-                    id="heartImage12"
-                    src="image/Heart-512x512 test.png"
-                    alt="like icon"
-                    style="width: 20px; height: 20px"
-                  />
-                  <span>10</span>
-                </button>
-              </div>
-            </div>
-          </div>
 
           <!-- 動画カードがここに配置される -->
+          <%if (toukouList1 != null) {%>
+			<%for (int i = 0; i < toukouList1.size(); i++) {%>
+			<%boolean flg = false; %>
+			<div class="video-card">
+				<div class="thumbnail-placeholder">
+
+					<img src="image/<%=toukouList1.get(i).getThumbnail()%>"
+						alt="Video Thumbnail" class="thumbnail" />
+						
+					<button class="play-button" 
+					onclick="sendData('<%= toukouList1.get(i).getUserid() %>', 
+					'<%= toukouList1.get(i).getToukouid() %>', 
+					'<%= u.getUserid() %>')">
+					▶️</button>
+					
+					<!-- 音声再生ボタン -->
+					<audio class="audio-player"
+						src="audio/<%=toukouList1.get(i).getSound()%>"></audio>
+				</div>
+
+
+				<div class="video-info">
+					
+					
+					<!-- 他人なら他人プロフ。自分ならマイページへ -->
+					<%if (!toukouList1.get(i).getUserid().equals(u.getUserid())) {%>
+					<form action="P2UserSearchServlet" method="get">
+    				<input type="hidden" name="userID" value="<%=toukouList1.get(i).getUserid()%>" />
+    				
+    					<button type="submit" class="profile-info" style="all: unset; cursor: pointer;">
+	    					<a>
+	    						<img src="image/<%=userIconList1.get(i).getIconImage()%>" alt="profile icon" class="profile-icon" />
+	    					</a>
+        				</button>
+					</form>
+					<%}else{%>
+						<form action="P2ProfileServlet" method="get">
+    					<input type="hidden" name="userID" value="" />
+    					<button type="submit" class="profile-info" style="all: unset; cursor: pointer;">
+	    					<a>
+	    						<img src="image/<%=userIconList1.get(i).getIconImage()%>" alt="profile icon" class="profile-icon" />
+	    					</a>
+        				</button>
+					</form>
+					<%} %> 
+
+					<div class="like-comment">
+						<form action="P2CommentJusinServlet">
+							<input type="hidden" name="toukouId" value="<%=i%>" />
+							<button class="submit comment" onclick="openPopup()">
+								<img src="image/こめんと1.png" alt="comment icon"
+									style="width: 20px; height: 20px" /> <span><%=postList1.get(i).getCommentCount()%></span>
+							</button>
+						</form>
+
+						<a href="P2heartServlet?hensuu=<%=i%>&heartId=<%= toukouList1.get(i).getToukouid() %>&page=TL">
+						<button class="heart" onclick="changeImage('heartImage<%=postList1.get(i)%>')">
+							<img id="heartImage<%=postList1.get(i)%>"
+							
+							<%for(int j = 0; j < heartList.size(); j++){
+							//	System.out.println("for文開始" + i);
+								if(flg == false){
+							//		System.out.println(toukouList.get(i).getToukouid()+":"+heartList.get(j).getPostId());
+									if(toukouList1.get(i).getToukouid().equals(heartList.get(j).getPostId())){
+							//			System.out.println(u.getUserid()+":"+heartList.get(j).getUserId());	
+										if(u.getUserid().equals(heartList.get(j).getUserId())){
+							//				System.out.println("152");
+											flg = true;
+										}else{
+							//				System.out.println("158");					
+										}
+									}else{
+							//			System.out.println("162");
+									}
+							//	System.out.println("for文終わり" + i);
+								} 
+							}
+							
+							if(flg == true){ %>
+							src="image/Heart-512x512 test2.png"
+							<%}else{ %>
+							src="image/Heart-512x512 test.png"
+							<%} %>
+							alt="like icon" style="width: 20px; height: 20px" /> 
+							<span><%=postList1.get(i).getLikeCount()%></span>
+						</button></a>
+
+						<%
+						String postId = toukouList1.get(i).getToukouid();
+						String postIdPrefix = postId.substring(0, 6);
+						//System.out.println("postIdPrefix："+postIdPrefix+"i:"+i);
+						//System.out.println("noweventId："+noweventId);
+						
+						%>
+
+						<%if(postIdPrefix.equals(noweventId)) {%>
+						<button>
+							<span> <a href="P2SessionParticipation?audioFile=<%= toukouList1.get(i).getSound() %>">
+									<div class="nav_icon">
+										<i class="gg-duplicate"></i>
+									</div>
+							</a>
+							</span>
+						</button>
+						<%}%>
+
+						<!-- 削除ボタンイフ --> 
+						<%if (toukouList1.get(i).getUserid().equals(u.getUserid())) {%>
+						<script>
+							console.log("i:" + "<%= i %>");
+    						console.log("toukouList.get(i).getUserid()：" + "<%= toukouList1.get(i).getUserid() %>");
+    						console.log("u.getUserid()：" + "<%= u.getUserid() %>");
+						</script>
+						<!-- <form action="P2PostDeliteServlet" method="post"> -->
+						<%-- <input type="hidden" name="toukouId" value="<%=i%>" /> --%>
+						<button type="button" id="openDialogButton<%=toukouList1.get(i).getToukouid() %>"
+						 onclick="dialog('<%=i%>')">
+							<span>
+								<div class="nav_icon trash">
+									<i class="gg-trash"></i>
+								</div>
+							</span>
+						</button> 
+						 <dialog id="myDialog<%= i %>">
+            				<p>この投稿を削除しますか？</p>
+            			<div class="buttonContainer">
+            			<a href="P2PostDeliteServlet?hensuu=<%=i%>&sakuzyoId=<%= toukouList1.get(i).getToukouid() %>">
+                			<button type="button" class="dialogButton" id="yesButton<%= i%>">はい</button></a>
+                			<button type="button" class="dialogButton" id="noButton<%= i %>">いいえ</button>
+            			</div>
+        				</dialog>
+
+						<%}%>
+					</div>
+				</div>
+			</div>
+			<%}%>
+			<%}%>
+          
+          
         </div>
         <button class="scroll-right" id="scroll-right-1">▶</button>
       </div>
   
-      <!-- 2行目のタイトルと左右ボタン -->
+  
+  
+  
+      <!-- ************************２***************************** -->
       <div class="section-header">
         <h3 class="section-title">イイね数ランキング</h3>
         
@@ -521,486 +279,157 @@
       <div class="scroll-container">
         <button class="scroll-left" id="scroll-left-2">◀</button>
         <div class="video-grid" id="video-grid-2">
-
-          <div class="video-card">
-            <div class="thumbnail-placeholder">
-              <img
-                src="image/サムネジャマイカ.jpg"
-                alt="Video Thumbnail"
-                class="thumbnail"
-              />
-              <button class="play-button">▶️</button>
-              <!-- 音声再生ボタン -->
-              <audio class="audio-player" src="ジャマイカテスト.mp3"></audio>
-            </div>
-  
-            <div class="video-info">
-              <a href="P2ProfileStranger.jsp" class="profile-info">
-                <img
-                  src="image/ききゅう.jpg"
-                  alt="profile icon"
-                  class="profile-icon"
-                />
-              </a>
-              <div class="like-comment">
-                <button class="comment" onclick="openPopup()">
-                  <img
-                    src="image/こめんと1.png"
-                    alt="comment icon"
-                    style="width: 20px; height: 20px"
-                  />
-                  <span>5</span>
-                </button>
-  
-                <button class="heart" onclick="changeImage('heartImage13')">
-                  <img
-                    id="heartImage13"
-                    src="image/Heart-512x512 test.png"
-                    alt="like icon"
-                    style="width: 20px; height: 20px"
-                  />
-                  <span>10</span>
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <div class="video-card">
-            <div class="thumbnail-placeholder">
-              <img
-                src="image/サムネジャマイカ.jpg"
-                alt="Video Thumbnail"
-                class="thumbnail"
-              />
-              <button class="play-button">▶️</button>
-              <!-- 音声再生ボタン -->
-              <audio class="audio-player" src="ジャマイカテスト.mp3"></audio>
-            </div>
-  
-            <div class="video-info">
-              <a href="P2ProfileStranger.jsp" class="profile-info">
-                <img
-                  src="image/ききゅう.jpg"
-                  alt="profile icon"
-                  class="profile-icon"
-                />
-              </a>
-              <div class="like-comment">
-                <button class="comment" onclick="openPopup()">
-                  <img
-                    src="image/こめんと1.png"
-                    alt="comment icon"
-                    style="width: 20px; height: 20px"
-                  />
-                  <span>5</span>
-                </button>
-  
-                <button class="heart" onclick="changeImage('heartImage14')">
-                  <img
-                    id="heartImage14"
-                    src="image/Heart-512x512 test.png"
-                    alt="like icon"
-                    style="width: 20px; height: 20px"
-                  />
-                  <span>10</span>
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <div class="video-card">
-            <div class="thumbnail-placeholder">
-              <img
-                src="image/サムネジャマイカ.jpg"
-                alt="Video Thumbnail"
-                class="thumbnail"
-              />
-              <button class="play-button">▶️</button>
-              <!-- 音声再生ボタン -->
-              <audio class="audio-player" src="ジャマイカテスト.mp3"></audio>
-            </div>
-  
-            <div class="video-info">
-              <a href="P2ProfileStranger.jsp" class="profile-info">
-                <img
-                  src="image/ききゅう.jpg"
-                  alt="profile icon"
-                  class="profile-icon"
-                />
-              </a>
-              <div class="like-comment">
-                <button class="comment" onclick="openPopup()">
-                  <img
-                    src="image/こめんと1.png"
-                    alt="comment icon"
-                    style="width: 20px; height: 20px"
-                  />
-                  <span>5</span>
-                </button>
-  
-                <button class="heart" onclick="changeImage('heartImage15')">
-                  <img
-                    id="heartImage15"
-                    src="image/Heart-512x512 test.png"
-                    alt="like icon"
-                    style="width: 20px; height: 20px"
-                  />
-                  <span>10</span>
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <div class="video-card">
-            <div class="thumbnail-placeholder">
-              <img
-                src="image/サムネジャマイカ.jpg"
-                alt="Video Thumbnail"
-                class="thumbnail"
-              />
-              <button class="play-button">▶️</button>
-              <!-- 音声再生ボタン -->
-              <audio class="audio-player" src="ジャマイカテスト.mp3"></audio>
-            </div>
-  
-            <div class="video-info">
-              <a href="P2ProfileStranger.jsp" class="profile-info">
-                <img
-                  src="image/ききゅう.jpg"
-                  alt="profile icon"
-                  class="profile-icon"
-                />
-              </a>
-              <div class="like-comment">
-                <button class="comment" onclick="openPopup()">
-                  <img
-                    src="image/こめんと1.png"
-                    alt="comment icon"
-                    style="width: 20px; height: 20px"
-                  />
-                  <span>5</span>
-                </button>
-  
-                <button class="heart" onclick="changeImage('heartImage16')">
-                  <img
-                    id="heartImage16"
-                    src="image/Heart-512x512 test.png"
-                    alt="like icon"
-                    style="width: 20px; height: 20px"
-                  />
-                  <span>10</span>
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <div class="video-card">
-            <div class="thumbnail-placeholder">
-              <img
-                src="image/サムネジャマイカ.jpg"
-                alt="Video Thumbnail"
-                class="thumbnail"
-              />
-              <button class="play-button">▶️</button>
-              <!-- 音声再生ボタン -->
-              <audio class="audio-player" src="ジャマイカテスト.mp3"></audio>
-            </div>
-  
-            <div class="video-info">
-              <a href="P2ProfileStranger.jsp" class="profile-info">
-                <img
-                  src="image/ききゅう.jpg"
-                  alt="profile icon"
-                  class="profile-icon"
-                />
-              </a>
-              <div class="like-comment">
-                <button class="comment" onclick="openPopup()">
-                  <img
-                    src="image/こめんと1.png"
-                    alt="comment icon"
-                    style="width: 20px; height: 20px"
-                  />
-                  <span>5</span>
-                </button>
-  
-                <button class="heart" onclick="changeImage('heartImage17')">
-                  <img
-                    id="heartImage17"
-                    src="image/Heart-512x512 test.png"
-                    alt="like icon"
-                    style="width: 20px; height: 20px"
-                  />
-                  <span>10</span>
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <div class="video-card">
-            <div class="thumbnail-placeholder">
-              <img
-                src="image/サムネジャマイカ.jpg"
-                alt="Video Thumbnail"
-                class="thumbnail"
-              />
-              <button class="play-button">▶️</button>
-              <!-- 音声再生ボタン -->
-              <audio class="audio-player" src="ジャマイカテスト.mp3"></audio>
-            </div>
-  
-            <div class="video-info">
-              <a href="P2ProfileStranger.jsp" class="profile-info">
-                <img
-                  src="image/ききゅう.jpg"
-                  alt="profile icon"
-                  class="profile-icon"
-                />
-              </a>
-              <div class="like-comment">
-                <button class="comment" onclick="openPopup()">
-                  <img
-                    src="image/こめんと1.png"
-                    alt="comment icon"
-                    style="width: 20px; height: 20px"
-                  />
-                  <span>5</span>
-                </button>
-  
-                <button class="heart" onclick="changeImage('heartImage18')">
-                  <img
-                    id="heartImage18"
-                    src="image/Heart-512x512 test.png"
-                    alt="like icon"
-                    style="width: 20px; height: 20px"
-                  />
-                  <span>10</span>
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <div class="video-card">
-            <div class="thumbnail-placeholder">
-              <img
-                src="image/サムネジャマイカ.jpg"
-                alt="Video Thumbnail"
-                class="thumbnail"
-              />
-              <button class="play-button">▶️</button>
-              <!-- 音声再生ボタン -->
-              <audio class="audio-player" src="ジャマイカテスト.mp3"></audio>
-            </div>
-  
-            <div class="video-info">
-              <a href="P2ProfileStranger.jsp" class="profile-info">
-                <img
-                  src="image/ききゅう.jpg"
-                  alt="profile icon"
-                  class="profile-icon"
-                />
-              </a>
-              <div class="like-comment">
-                <button class="comment" onclick="openPopup()">
-                  <img
-                    src="image/こめんと1.png"
-                    alt="comment icon"
-                    style="width: 20px; height: 20px"
-                  />
-                  <span>5</span>
-                </button>
-  
-                <button class="heart" onclick="changeImage('heartImage19')">
-                  <img
-                    id="heartImage19"
-                    src="image/Heart-512x512 test.png"
-                    alt="like icon"
-                    style="width: 20px; height: 20px"
-                  />
-                  <span>10</span>
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <div class="video-card">
-            <div class="thumbnail-placeholder">
-              <img
-                src="image/サムネジャマイカ.jpg"
-                alt="Video Thumbnail"
-                class="thumbnail"
-              />
-              <button class="play-button">▶️</button>
-              <!-- 音声再生ボタン -->
-              <audio class="audio-player" src="ジャマイカテスト.mp3"></audio>
-            </div>
-  
-            <div class="video-info">
-              <a href="P2ProfileStranger.jsp" class="profile-info">
-                <img
-                  src="image/ききゅう.jpg"
-                  alt="profile icon"
-                  class="profile-icon"
-                />
-              </a>
-              <div class="like-comment">
-                <button class="comment" onclick="openPopup()">
-                  <img
-                    src="image/こめんと1.png"
-                    alt="comment icon"
-                    style="width: 20px; height: 20px"
-                  />
-                  <span>5</span>
-                </button>
-  
-                <button class="heart" onclick="changeImage('heartImage20')">
-                  <img
-                    id="heartImage20"
-                    src="image/Heart-512x512 test.png"
-                    alt="like icon"
-                    style="width: 20px; height: 20px"
-                  />
-                  <span>10</span>
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <div class="video-card">
-            <div class="thumbnail-placeholder">
-              <img
-                src="image/サムネジャマイカ.jpg"
-                alt="Video Thumbnail"
-                class="thumbnail"
-              />
-              <button class="play-button">▶️</button>
-              <!-- 音声再生ボタン -->
-              <audio class="audio-player" src="ジャマイカテスト.mp3"></audio>
-            </div>
-  
-            <div class="video-info">
-              <a href="P2ProfileStranger.jsp" class="profile-info">
-                <img
-                  src="image/ききゅう.jpg"
-                  alt="profile icon"
-                  class="profile-icon"
-                />
-              </a>
-              <div class="like-comment">
-                <button class="comment" onclick="openPopup()">
-                  <img
-                    src="image/こめんと1.png"
-                    alt="comment icon"
-                    style="width: 20px; height: 20px"
-                  />
-                  <span>5</span>
-                </button>
-  
-                <button class="heart" onclick="changeImage('heartImage21')">
-                  <img
-                    id="heartImage21"
-                    src="image/Heart-512x512 test.png"
-                    alt="like icon"
-                    style="width: 20px; height: 20px"
-                  />
-                  <span>10</span>
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <div class="video-card">
-            <div class="thumbnail-placeholder">
-              <img
-                src="image/サムネジャマイカ.jpg"
-                alt="Video Thumbnail"
-                class="thumbnail"
-              />
-              <button class="play-button">▶️</button>
-              <!-- 音声再生ボタン -->
-              <audio class="audio-player" src="ジャマイカテスト.mp3"></audio>
-            </div>
-  
-            <div class="video-info">
-              <a href="P2ProfileStranger.jsp" class="profile-info">
-                <img
-                  src="image/ききゅう.jpg"
-                  alt="profile icon"
-                  class="profile-icon"
-                />
-              </a>
-              <div class="like-comment">
-                <button class="comment" onclick="openPopup()">
-                  <img
-                    src="image/こめんと1.png"
-                    alt="comment icon"
-                    style="width: 20px; height: 20px"
-                  />
-                  <span>5</span>
-                </button>
-  
-                <button class="heart" onclick="changeImage('heartImage22')">
-                  <img
-                    id="heartImage22"
-                    src="image/Heart-512x512 test.png"
-                    alt="like icon"
-                    style="width: 20px; height: 20px"
-                  />
-                  <span>10</span>
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <div class="video-card">
-            <div class="thumbnail-placeholder">
-              <img
-                src="image/サムネジャマイカ.jpg"
-                alt="Video Thumbnail"
-                class="thumbnail"
-              />
-              <button class="play-button">▶️</button>
-              <!-- 音声再生ボタン -->
-              <audio class="audio-player" src="ジャマイカテスト.mp3"></audio>
-            </div>
-  
-            <div class="video-info">
-              <a href="P2ProfileStranger.jsp" class="profile-info">
-                <img
-                  src="image/ききゅう.jpg"
-                  alt="profile icon"
-                  class="profile-icon"
-                />
-              </a>
-              <div class="like-comment">
-                <button class="comment" onclick="openPopup()">
-                  <img
-                    src="image/こめんと1.png"
-                    alt="comment icon"
-                    style="width: 20px; height: 20px"
-                  />
-                  <span>5</span>
-                </button>
-  
-                <button class="heart" onclick="changeImage('heartImage23')">
-                  <img
-                    id="heartImage23"
-                    src="image/Heart-512x512 test.png"
-                    alt="like icon"
-                    style="width: 20px; height: 20px"
-                  />
-                  <span>10</span>
-                </button>
-              </div>
-            </div>
-          </div>
+          
 
           <!-- 動画カードがここに配置される -->
+          <%if (toukouList2 != null) {%>
+			<%for (int i = 0; i < toukouList2.size(); i++) {%>
+			<%boolean flg = false; %>
+			<div class="video-card">
+				<div class="thumbnail-placeholder">
+
+					<img src="image/<%=toukouList2.get(i).getThumbnail()%>"
+						alt="Video Thumbnail" class="thumbnail" />
+						
+					<button class="play-button" 
+					onclick="sendData('<%= toukouList2.get(i).getUserid() %>', 
+					'<%= toukouList2.get(i).getToukouid() %>', 
+					'<%= u.getUserid() %>')">
+					▶️</button>
+					
+					<!-- 音声再生ボタン -->
+					<audio class="audio-player"
+						src="audio/<%=toukouList2.get(i).getSound()%>"></audio>
+				</div>
+
+
+				<div class="video-info">
+					
+					
+					<!-- 他人なら他人プロフ。自分ならマイページへ -->
+					<%if (!toukouList2.get(i).getUserid().equals(u.getUserid())) {%>
+					<form action="P2UserSearchServlet" method="get">
+    				<input type="hidden" name="userID" value="<%=toukouList2.get(i).getUserid()%>" />
+    				
+    					<button type="submit" class="profile-info" style="all: unset; cursor: pointer;">
+	    					<a>
+	    						<img src="image/<%=userIconList2.get(i).getIconImage()%>" alt="profile icon" class="profile-icon" />
+	    					</a>
+        				</button>
+					</form>
+					<%}else{%>
+						<form action="P2ProfileServlet" method="get">
+    					<input type="hidden" name="userID" value="" />
+    					<button type="submit" class="profile-info" style="all: unset; cursor: pointer;">
+	    					<a>
+	    						<img src="image/<%=userIconList2.get(i).getIconImage()%>" alt="profile icon" class="profile-icon" />
+	    					</a>
+        				</button>
+					</form>
+					<%} %> 
+
+					<div class="like-comment">
+						<form action="P2CommentJusinServlet">
+							<input type="hidden" name="toukouId" value="<%=i%>" />
+							<button class="submit comment" onclick="openPopup()">
+								<img src="image/こめんと1.png" alt="comment icon"
+									style="width: 20px; height: 20px" /> <span><%=postList2.get(i).getCommentCount()%></span>
+							</button>
+						</form>
+
+						<a href="P2heartServlet?hensuu=<%=i%>&heartId=<%= toukouList2.get(i).getToukouid() %>&page=TL">
+						<button class="heart" onclick="changeImage('heartImage<%=postList2.get(i)%>')">
+							<img id="heartImage<%=postList2.get(i)%>"
+							
+							<%for(int j = 0; j < heartList.size(); j++){
+							//	System.out.println("for文開始" + i);
+								if(flg == false){
+							//		System.out.println(toukouList.get(i).getToukouid()+":"+heartList.get(j).getPostId());
+									if(toukouList2.get(i).getToukouid().equals(heartList.get(j).getPostId())){
+							//			System.out.println(u.getUserid()+":"+heartList.get(j).getUserId());	
+										if(u.getUserid().equals(heartList.get(j).getUserId())){
+							//				System.out.println("152");
+											flg = true;
+										}else{
+							//				System.out.println("158");					
+										}
+									}else{
+							//			System.out.println("162");
+									}
+							//	System.out.println("for文終わり" + i);
+								} 
+							}
+							
+							if(flg == true){ %>
+							src="image/Heart-512x512 test2.png"
+							<%}else{ %>
+							src="image/Heart-512x512 test.png"
+							<%} %>
+							alt="like icon" style="width: 20px; height: 20px" /> 
+							<span><%=postList2.get(i).getLikeCount()%></span>
+						</button></a>
+
+						<%
+						String postId = toukouList2.get(i).getToukouid();
+						String postIdPrefix = postId.substring(0, 6);
+						//System.out.println("postIdPrefix："+postIdPrefix+"i:"+i);
+						//System.out.println("noweventId："+noweventId);
+						
+						%>
+
+						<%if(postIdPrefix.equals(noweventId)) {%>
+						<button>
+							<span> <a href="P2SessionParticipation?audioFile=<%= toukouList2.get(i).getSound() %>">
+									<div class="nav_icon">
+										<i class="gg-duplicate"></i>
+									</div>
+							</a>
+							</span>
+						</button>
+						<%}%>
+
+						<!-- 削除ボタンイフ --> 
+						<%if (toukouList2.get(i).getUserid().equals(u.getUserid())) {%>
+						<script>
+							console.log("i:" + "<%= i %>");
+    						console.log("toukouList.get(i).getUserid()：" + "<%= toukouList2.get(i).getUserid() %>");
+    						console.log("u.getUserid()：" + "<%= u.getUserid() %>");
+						</script>
+						<!-- <form action="P2PostDeliteServlet" method="post"> -->
+						<%-- <input type="hidden" name="toukouId" value="<%=i%>" /> --%>
+						<button type="button" id="openDialogButton<%=toukouList2.get(i).getToukouid() %>"
+						 onclick="dialog('<%=i%>')">
+							<span>
+								<div class="nav_icon trash">
+									<i class="gg-trash"></i>
+								</div>
+							</span>
+						</button> 
+						 <dialog id="myDialog<%= i %>">
+            				<p>この投稿を削除しますか？</p>
+            			<div class="buttonContainer">
+            			<a href="P2PostDeliteServlet?hensuu=<%=i%>&sakuzyoId=<%= toukouList2.get(i).getToukouid() %>">
+                			<button type="button" class="dialogButton" id="yesButton<%= i%>">はい</button></a>
+                			<button type="button" class="dialogButton" id="noButton<%= i %>">いいえ</button>
+            			</div>
+        				</dialog>
+
+						<%}%>
+					</div>
+				</div>
+			</div>
+			<%}%>
+			<%}%>
+          
+          
         </div>
         <button class="scroll-right" id="scroll-right-2">▶</button>
       </div>
 
-      <!-- 3行目のタイトルと左右ボタン -->
+
+
+
+      <!-- ************************３***************************** -->
       <div class="section-header">
         <h3 class="section-title">殿堂</h3>
         
@@ -1008,481 +437,11 @@
       <div class="scroll-container">
         <button class="scroll-left" id="scroll-left-3">◀</button>
         <div class="video-grid" id="video-grid-3">
-
-          <div class="video-card">
-            <div class="thumbnail-placeholder">
-              <img
-                src="image/サムネジャマイカ.jpg"
-                alt="Video Thumbnail"
-                class="thumbnail"
-              />
-              <button class="play-button">▶️</button>
-              <!-- 音声再生ボタン -->
-              <audio class="audio-player" src="ジャマイカテスト.mp3"></audio>
-            </div>
-  
-            <div class="video-info">
-              <a href="P2ProfileStranger.jsp" class="profile-info">
-                <img
-                  src="image/ききゅう.jpg"
-                  alt="profile icon"
-                  class="profile-icon"
-                />
-              </a>
-              <div class="like-comment">
-                <button class="comment" onclick="openPopup()">
-                  <img
-                    src="image/こめんと1.png"
-                    alt="comment icon"
-                    style="width: 20px; height: 20px"
-                  />
-                  <span>5</span>
-                </button>
-  
-                <button class="heart" onclick="changeImage('heartImage24')">
-                  <img
-                    id="heartImage24"
-                    src="image/Heart-512x512 test.png"
-                    alt="like icon"
-                    style="width: 20px; height: 20px"
-                  />
-                  <span>10</span>
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <div class="video-card">
-            <div class="thumbnail-placeholder">
-              <img
-                src="image/サムネジャマイカ.jpg"
-                alt="Video Thumbnail"
-                class="thumbnail"
-              />
-              <button class="play-button">▶️</button>
-              <!-- 音声再生ボタン -->
-              <audio class="audio-player" src="ジャマイカテスト.mp3"></audio>
-            </div>
-  
-            <div class="video-info">
-              <a href="P2ProfileStranger.jsp" class="profile-info">
-                <img
-                  src="image/ききゅう.jpg"
-                  alt="profile icon"
-                  class="profile-icon"
-                />
-              </a>
-              <div class="like-comment">
-                <button class="comment" onclick="openPopup()">
-                  <img
-                    src="image/こめんと1.png"
-                    alt="comment icon"
-                    style="width: 20px; height: 20px"
-                  />
-                  <span>5</span>
-                </button>
-  
-                <button class="heart" onclick="changeImage('heartImage25')">
-                  <img
-                    id="heartImage25"
-                    src="image/Heart-512x512 test.png"
-                    alt="like icon"
-                    style="width: 20px; height: 20px"
-                  />
-                  <span>10</span>
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <div class="video-card">
-            <div class="thumbnail-placeholder">
-              <img
-                src="image/サムネジャマイカ.jpg"
-                alt="Video Thumbnail"
-                class="thumbnail"
-              />
-              <button class="play-button">▶️</button>
-              <!-- 音声再生ボタン -->
-              <audio class="audio-player" src="ジャマイカテスト.mp3"></audio>
-            </div>
-  
-            <div class="video-info">
-              <a href="P2ProfileStranger.jsp" class="profile-info">
-                <img
-                  src="image/ききゅう.jpg"
-                  alt="profile icon"
-                  class="profile-icon"
-                />
-              </a>
-              <div class="like-comment">
-                <button class="comment" onclick="openPopup()">
-                  <img
-                    src="image/こめんと1.png"
-                    alt="comment icon"
-                    style="width: 20px; height: 20px"
-                  />
-                  <span>5</span>
-                </button>
-  
-                <button class="heart" onclick="changeImage('heartImage26')">
-                  <img
-                    id="heartImage26"
-                    src="image/Heart-512x512 test.png"
-                    alt="like icon"
-                    style="width: 20px; height: 20px"
-                  />
-                  <span>10</span>
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <div class="video-card">
-            <div class="thumbnail-placeholder">
-              <img
-                src="image/サムネジャマイカ.jpg"
-                alt="Video Thumbnail"
-                class="thumbnail"
-              />
-              <button class="play-button">▶️</button>
-              <!-- 音声再生ボタン -->
-              <audio class="audio-player" src="ジャマイカテスト.mp3"></audio>
-            </div>
-  
-            <div class="video-info">
-              <a href="P2ProfileStranger.jsp" class="profile-info">
-                <img
-                  src="image/ききゅう.jpg"
-                  alt="profile icon"
-                  class="profile-icon"
-                />
-              </a>
-              <div class="like-comment">
-                <button class="comment" onclick="openPopup()">
-                  <img
-                    src="image/こめんと1.png"
-                    alt="comment icon"
-                    style="width: 20px; height: 20px"
-                  />
-                  <span>5</span>
-                </button>
-  
-                <button class="heart" onclick="changeImage('heartImage27')">
-                  <img
-                    id="heartImage27"
-                    src="image/Heart-512x512 test.png"
-                    alt="like icon"
-                    style="width: 20px; height: 20px"
-                  />
-                  <span>10</span>
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <div class="video-card">
-            <div class="thumbnail-placeholder">
-              <img
-                src="image/サムネジャマイカ.jpg"
-                alt="Video Thumbnail"
-                class="thumbnail"
-              />
-              <button class="play-button">▶️</button>
-              <!-- 音声再生ボタン -->
-              <audio class="audio-player" src="ジャマイカテスト.mp3"></audio>
-            </div>
-  
-            <div class="video-info">
-              <a href="P2ProfileStranger.jsp" class="profile-info">
-                <img
-                  src="image/ききゅう.jpg"
-                  alt="profile icon"
-                  class="profile-icon"
-                />
-              </a>
-              <div class="like-comment">
-                <button class="comment" onclick="openPopup()">
-                  <img
-                    src="image/こめんと1.png"
-                    alt="comment icon"
-                    style="width: 20px; height: 20px"
-                  />
-                  <span>5</span>
-                </button>
-  
-                <button class="heart" onclick="changeImage('heartImage28')">
-                  <img
-                    id="heartImage28"
-                    src="image/Heart-512x512 test.png"
-                    alt="like icon"
-                    style="width: 20px; height: 20px"
-                  />
-                  <span>10</span>
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <div class="video-card">
-            <div class="thumbnail-placeholder">
-              <img
-                src="image/サムネジャマイカ.jpg"
-                alt="Video Thumbnail"
-                class="thumbnail"
-              />
-              <button class="play-button">▶️</button>
-              <!-- 音声再生ボタン -->
-              <audio class="audio-player" src="ジャマイカテスト.mp3"></audio>
-            </div>
-  
-            <div class="video-info">
-              <a href="P2ProfileStranger.jsp" class="profile-info">
-                <img
-                  src="image/ききゅう.jpg"
-                  alt="profile icon"
-                  class="profile-icon"
-                />
-              </a>
-              <div class="like-comment">
-                <button class="comment" onclick="openPopup()">
-                  <img
-                    src="image/こめんと1.png"
-                    alt="comment icon"
-                    style="width: 20px; height: 20px"
-                  />
-                  <span>5</span>
-                </button>
-  
-                <button class="heart" onclick="changeImage('heartImage29')">
-                  <img
-                    id="heartImage29"
-                    src="image/Heart-512x512 test.png"
-                    alt="like icon"
-                    style="width: 20px; height: 20px"
-                  />
-                  <span>10</span>
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <div class="video-card">
-            <div class="thumbnail-placeholder">
-              <img
-                src="image/サムネジャマイカ.jpg"
-                alt="Video Thumbnail"
-                class="thumbnail"
-              />
-              <button class="play-button">▶️</button>
-              <!-- 音声再生ボタン -->
-              <audio class="audio-player" src="ジャマイカテスト.mp3"></audio>
-            </div>
-  
-            <div class="video-info">
-              <a href="P2ProfileStranger.jsp" class="profile-info">
-                <img
-                  src="image/ききゅう.jpg"
-                  alt="profile icon"
-                  class="profile-icon"
-                />
-              </a>
-              <div class="like-comment">
-                <button class="comment" onclick="openPopup()">
-                  <img
-                    src="image/こめんと1.png"
-                    alt="comment icon"
-                    style="width: 20px; height: 20px"
-                  />
-                  <span>5</span>
-                </button>
-  
-                <button class="heart" onclick="changeImage('heartImage30')">
-                  <img
-                    id="heartImage30"
-                    src="image/Heart-512x512 test.png"
-                    alt="like icon"
-                    style="width: 20px; height: 20px"
-                  />
-                  <span>10</span>
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <div class="video-card">
-            <div class="thumbnail-placeholder">
-              <img
-                src="image/サムネジャマイカ.jpg"
-                alt="Video Thumbnail"
-                class="thumbnail"
-              />
-              <button class="play-button">▶️</button>
-              <!-- 音声再生ボタン -->
-              <audio class="audio-player" src="ジャマイカテスト.mp3"></audio>
-            </div>
-  
-            <div class="video-info">
-              <a href="P2ProfileStranger.jsp" class="profile-info">
-                <img
-                  src="image/ききゅう.jpg"
-                  alt="profile icon"
-                  class="profile-icon"
-                />
-              </a>
-              <div class="like-comment">
-                <button class="comment" onclick="openPopup()">
-                  <img
-                    src="image/こめんと1.png"
-                    alt="comment icon"
-                    style="width: 20px; height: 20px"
-                  />
-                  <span>5</span>
-                </button>
-  
-                <button class="heart" onclick="changeImage('heartImage31')">
-                  <img
-                    id="heartImage31"
-                    src="image/Heart-512x512 test.png"
-                    alt="like icon"
-                    style="width: 20px; height: 20px"
-                  />
-                  <span>10</span>
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <div class="video-card">
-            <div class="thumbnail-placeholder">
-              <img
-                src="image/サムネジャマイカ.jpg"
-                alt="Video Thumbnail"
-                class="thumbnail"
-              />
-              <button class="play-button">▶️</button>
-              <!-- 音声再生ボタン -->
-              <audio class="audio-player" src="ジャマイカテスト.mp3"></audio>
-            </div>
-  
-            <div class="video-info">
-              <a href="P2ProfileStranger.jsp" class="profile-info">
-                <img
-                  src="image/ききゅう.jpg"
-                  alt="profile icon"
-                  class="profile-icon"
-                />
-              </a>
-              <div class="like-comment">
-                <button class="comment" onclick="openPopup()">
-                  <img
-                    src="image/こめんと1.png"
-                    alt="comment icon"
-                    style="width: 20px; height: 20px"
-                  />
-                  <span>5</span>
-                </button>
-  
-                <button class="heart" onclick="changeImage('heartImage32')">
-                  <img
-                    id="heartImage32"
-                    src="image/Heart-512x512 test.png"
-                    alt="like icon"
-                    style="width: 20px; height: 20px"
-                  />
-                  <span>10</span>
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <div class="video-card">
-            <div class="thumbnail-placeholder">
-              <img
-                src="image/サムネジャマイカ.jpg"
-                alt="Video Thumbnail"
-                class="thumbnail"
-              />
-              <button class="play-button">▶️</button>
-              <!-- 音声再生ボタン -->
-              <audio class="audio-player" src="ジャマイカテスト.mp3"></audio>
-            </div>
-  
-            <div class="video-info">
-              <a href="P2ProfileStranger.jsp" class="profile-info">
-                <img
-                  src="image/ききゅう.jpg"
-                  alt="profile icon"
-                  class="profile-icon"
-                />
-              </a>
-              <div class="like-comment">
-                <button class="comment" onclick="openPopup()">
-                  <img
-                    src="image/こめんと1.png"
-                    alt="comment icon"
-                    style="width: 20px; height: 20px"
-                  />
-                  <span>5</span>
-                </button>
-  
-                <button class="heart" onclick="changeImage('heartImage33')">
-                  <img
-                    id="heartImage33"
-                    src="image/Heart-512x512 test.png"
-                    alt="like icon"
-                    style="width: 20px; height: 20px"
-                  />
-                  <span>10</span>
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <div class="video-card">
-            <div class="thumbnail-placeholder">
-              <img
-                src="image/サムネジャマイカ.jpg"
-                alt="Video Thumbnail"
-                class="thumbnail"
-              />
-              <button class="play-button">▶️</button>
-              <!-- 音声再生ボタン -->
-              <audio class="audio-player" src="ジャマイカテスト.mp3"></audio>
-            </div>
-  
-            <div class="video-info">
-              <a href="P2ProfileStranger.jsp" class="profile-info">
-                <img
-                  src="image/ききゅう.jpg"
-                  alt="profile icon"
-                  class="profile-icon"
-                />
-              </a>
-              <div class="like-comment">
-                <button class="comment" onclick="openPopup()">
-                  <img
-                    src="image/こめんと1.png"
-                    alt="comment icon"
-                    style="width: 20px; height: 20px"
-                  />
-                  <span>5</span>
-                </button>
-  
-                <button class="heart" onclick="changeImage('heartImage34')">
-                  <img
-                    id="heartImage34"
-                    src="image/Heart-512x512 test.png"
-                    alt="like icon"
-                    style="width: 20px; height: 20px"
-                  />
-                  <span>10</span>
-                </button>
-              </div>
-            </div>
-          </div>
+          
 
           <!-- 動画カードがここに配置される -->
+          
+          
         </div>
         <button class="scroll-right" id="scroll-right-3">▶</button>
       </div>
@@ -1544,7 +503,6 @@
     
 
      
-    <script src="audioPlayer.js"></script>
     <script>
         const scrollLeftButton1 = document.getElementById("scroll-left-1");
       const scrollRightButton1 = document.getElementById("scroll-right-1");
@@ -1604,9 +562,6 @@
 		  });
 
     </script>
-    <script src="https://unpkg.com/wavesurfer.js"></script>
-    
-   
     
   </body>
 </html>

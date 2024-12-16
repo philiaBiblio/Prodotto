@@ -48,9 +48,10 @@ public class P2ProfileEditServlet extends HttpServlet {
 			// 変更された情報の取得
 			String inIconImage = request.getParameter("iconImage");
 			String inName = request.getParameter("name");
-			String inUserid = request.getParameter("userid");
+		//	String inUserid = request.getParameter("userid");
 			String inSex = request.getParameter("sexy");
 			String inBirth = request.getParameter("birth");
+			System.out.println(inName);
 			System.out.println(inSex);
 			
 			// 画像の受け取り
@@ -84,7 +85,7 @@ public class P2ProfileEditServlet extends HttpServlet {
 		        String updateSQL = 
 		        		"UPDATE ユーザー SET アイコン = '" + inIconImage +
 		        		"', 名前 = '" + inName +
-		        		"', ユーザーID = '" + inUserid +
+		        	//	"', ユーザーID = '" + inUserid +
 		        		"', 性別 = '" + inSex +
 		        		"', 生年月日 = '" + inBirth +
 		        		"'WHERE ユーザーID = '" + u.getUserid() + "'";
@@ -96,7 +97,7 @@ public class P2ProfileEditServlet extends HttpServlet {
 		        System.out.println(u.getIconImage());
 		        u.setIconImage(inIconImage);
 		        u.setName(inName);
-		        u.setUserid(inUserid);
+		      //  u.setUserid(inUserid);
 		        u.setSex(inSex);
 		        u.setBirth(inBirth.substring(0,10));
 		        

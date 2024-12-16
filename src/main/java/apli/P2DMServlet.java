@@ -33,6 +33,8 @@ public class P2DMServlet extends HttpServlet {
 		// ログイン情報の取得
 		User u = (User)ses.getAttribute("LOGIN");
 		ArrayList<DM> dmssList = (ArrayList)ses.getAttribute("DMSSLIST");
+//		Integer i = (Integer)ses.getAttribute("I");
+//		System.out.println(i);
 				
 		// URLの生成
 		String url = "";

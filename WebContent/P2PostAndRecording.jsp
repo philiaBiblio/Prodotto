@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>投稿・録音画面</title>
     <link rel="stylesheet" href="P2PostAndRecording.css">
+    
 </head>
 
 <%
@@ -18,20 +19,18 @@
     <div class="container">
         <!-- セッションセクション -->
         <section class="section session">
-            <h1>セッション</h1>
             <div class="session-content"><%=ses.getAttribute("ODAI") %></div>
             <div class="button-group">
                 <a href="P2Recording.jsp" class="link-button start">セッションをはじめる</a>
-                <a href="P2DerivativesList.jsp" class="link-button party">セッションに参加</a>
+                <a href="P2DerivativesList.jsp" class="link-button party">セッションをさがす</a>
             </div>
         </section>
 
         <!-- ひとりでセクション -->
         <section class="section free">
-            <h1>ひとりで！</h1>
             <div class="button-group">
-                <a href="P2Recording.jsp" class="link-button recording">今すぐ録音</a>
-                <a class="link-button upload" id="file-select-link">ファイルをアップロード</a>
+                <a href="P2Recording.jsp" class="link-button recording">ひとりでセッション</a>
+                <a class="link-button upload" id="file-select-link">作品をシェア</a>
                 <form id="file-upload-form" action="P2FileUploadServlet" method="post" enctype="multipart/form-data" style="display: none;">
   		  		<input type="file" id="file-input" name="file" accept="audio/*">
             	</form>

@@ -18,8 +18,9 @@
 
   
   
-
+ 
 <body>
+<form action = "P2SearchServlet">
 	<header class="header">
 		<div class="header_container">
 			<div class="none"></div>
@@ -63,7 +64,7 @@
 							<div class="nav_icon nav_soroe">
 								<i class="gg-mail"></i>
 							</div> <span class="nav_name">DM</span>
-						</a> <a href="P2Ranking.jsp" class="nav_link navtop nav_soroe"
+						</a> <a href="P2RankingServlet" class="nav_link navtop nav_soroe"
 							id="P2Rankingid"> <!-- <i class="fa-brands fa-tiktok nav_icon"></i> -->
 							<div class="nav_icon nav_soroe">
 								<i class="gg-crown"></i>
@@ -135,14 +136,22 @@
   	    	}
   	    }
 
-  	     // フィルターボタンの変更を検知
-    	document.getElementById('filter').addEventListener('change', function() {
-        const selectedUrl = this.value; // 選択された値（URL）を取得
-        if (selectedUrl) {
-            window.location.href = selectedUrl; // 指定されたURLに遷移
-       		 }
-    	});
-	</script>
+  	// 現在のURLからクエリパラメータを取得
+  		const params = new URLSearchParams(window.location.search);
+  		const selectedUrl = params.get('url');
 
+  		// 選択状態を反映
+  		if (selectedUrl) {
+  		    const filterElement = document.getElementById('filter');
+  		    filterElement.value = selectedUrl;
+  		}
+
+        		
+
+
+
+        
+	</script>
+</form>
 </body>
 </html>

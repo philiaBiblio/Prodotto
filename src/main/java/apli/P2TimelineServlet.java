@@ -62,7 +62,7 @@ public class P2TimelineServlet extends HttpServlet {
 				String time = rs.getString("アップロード日");
 				String audio = rs.getString("作品");
 				String samune = rs.getString("サムネイル");
-		//		System.out.println("サムネイル："+samune);
+		        //System.out.println("サムネイル："+samune);
 				// タグID作るときはここに記入
 				String upName = rs.getString("名前");
 				String toukouIcon = rs.getString("アイコン");
@@ -74,9 +74,9 @@ public class P2TimelineServlet extends HttpServlet {
 				    comm = rs.getInt("コメント数");
 				}
 				
-				
+	   	
 				int iine = rs.getInt("いいね数");
-//				System.out.println(toukouId.substring(0,6));
+                //System.out.println(toukouId.substring(0,6));
 				
 				// インスタンス生成
 				Toukou toukou = new Toukou();

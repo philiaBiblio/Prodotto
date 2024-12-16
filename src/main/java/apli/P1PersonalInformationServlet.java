@@ -21,7 +21,7 @@ public class P1PersonalInformationServlet extends HttpServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
 		
 		// TODO Auto-generated method stub
 		System.out.println("P2ProfileEditServlet実行");
@@ -41,28 +41,28 @@ public class P1PersonalInformationServlet extends HttpServlet {
 		try {
 			// 変更された情報の取得
 			String inName = request.getParameter("name");
-			String inUserid = request.getParameter("userid");
+		//	String inUserid = request.getParameter("userid");
 			String inSex = request.getParameter("sexy");
 			String inBirth = request.getParameter("birth");
 			System.out.println(inSex);
 
 			// ユーザーの検索のsql文実行
-			ResultSet rs = dba.selectExe("select * from 管理者ユーザー where 管理者ID = '" + au.getAdminUserid() + "'");
+			ResultSet rs = dba.selectExe("select * from 管理者 where 管理者ID = '" + au.getAdminUserid() + "'");
 
 			if (rs.next()) {
 				// データベースの情報をアップデート
-				String updateSQL = "UPDATE 管理者ユーザー SET " + 
-						"', 名前 = '" + inName +
-						"', 管理者ID = '" + inUserid +
+				String updateSQL = "UPDATE 管理者 SET " + 
+						"名前 = '" + inName +
+					//	"', 管理者ID = '" + inUserid +
 						"', 性別 = '" + inSex +
 						"', 生年月日 = '" + inBirth +
-						"' WHERE ユーザーID = '" + au.getAdminUserid() + "'";
+						"' WHERE 管理者ID = '" + au.getAdminUserid() + "'";
 				// アップデート文実行
 				dba.UpdateExe(updateSQL);
 
 				// 取得した情報を保存
 				au.setAdminName(inName);
-				au.setAdminUserid(inUserid);
+			//	au.setAdminUserid(inUserid);
 				au.setAdminSex(inSex);
 				au.setAdminBirth(inBirth.substring(0, 10));
 
@@ -70,7 +70,7 @@ public class P1PersonalInformationServlet extends HttpServlet {
 				ses.setAttribute("ADMINLOGIN", au);
 
 				// プロフィール編集画面へ
-				url = "P1PaersonalInformation..jsp";
+				url = "P1PaersonalInformation.jsp";
 				System.out.println(url);
 				// 画面遷移
 				RequestDispatcher rd = request.getRequestDispatcher(url);
