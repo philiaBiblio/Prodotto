@@ -47,6 +47,8 @@
                   Onchange="disp1()"
                 />
                 <input type="text" class="showText" id="pass1" name="pw" Onchange="disp2()"/>
+ 
+ 
                 <label for="checkPassword" class="fa fa-eye"></label>
                 <label for="checkPassword" class="fa fa-eye-slash"></label>
               </div>
