@@ -701,7 +701,35 @@ window.onload = function(){
 			  });
 		  });
 
-    </script>
+//////////////再生回数カウント//////////////////	
+
+function sendData(toukouUserid, toukouId, userId) {
+// データを準備
+const data = {
+toukouUserid: toukouUserid,
+toukouId: toukouId,
+userId: userId
+};
+
+// AJAXリクエストを送信
+fetch('P2SaiseiCountServlet', {
+method: 'POST',
+headers: {
+    'Content-Type': 'application/json'
+},
+body: JSON.stringify(data) // データをJSONに変換
+})
+.then(response => response.json()) // サーバーからのレスポンスをJSONとして処理
+.then(result => {
+console.log('Success:', result); // 結果をコンソールに表示
+})
+.catch(error => {
+console.error('Error:', error); // エラーをコンソールに表示
+});
+}
+
+//コメント欄非同期挑戦
+</script>
     
   </body>
 </html>

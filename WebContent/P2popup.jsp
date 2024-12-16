@@ -39,7 +39,6 @@
 				<p class="username"><%=cmList.get(i).getcName()%></p>
 				<p class="comment"><%=cmList.get(i).getCcontent()%></p>
 			</div>
-			}
 		</div>
 		<% } %>
 		<%-- <%} %> --%>

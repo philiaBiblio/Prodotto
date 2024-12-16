@@ -28,7 +28,7 @@
 				
 					<!-- フィルターボタン -->
 					<select id="filter" class="filter-button" name="url">
-					          <option selected value="P2Search.jsp">動画タイトル</option>
+					          <option selected value="P2Search.jsp">タグ</option>
 					          <option value="P2UserSearch.jsp">アカウント名</option> 
 					</select>
 
