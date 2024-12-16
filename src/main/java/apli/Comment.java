@@ -10,6 +10,7 @@ public class Comment {
 	private String ccontent;
 	private String timestamp;
 	private String cicon;
+	private String cName;
 	
 	//Getter&Setter
 	public String getCommentId() {
@@ -49,9 +50,15 @@ public class Comment {
 		this.timestamp = timestamp;
 	}
 	public String getCicon() {
-		return timestamp;
+		return cicon;
 	}
 	public void setCicon(String cicon) {
 		this.cicon = cicon;
+	}
+	public String getcName() {
+		return cName;
+	}
+	public void setcName(String cName) {
+		this.cName = cName;
 	}
 }

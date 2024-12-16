@@ -86,9 +86,9 @@ window.onload = function(){
 	<%ses.removeAttribute("TRUEMESS"); %>
 
 	// コメント表示用
-	function openPopup() {
+	function openPopup(toukouId) {
 	  window.open(
-	    "P2popup.jsp",
+	    "P2CommentJusinServlet?toukouId=" + toukouId,
 	    "popupWindow",
 	    "width=500,height=300,scrollbars=yes"
 	  );
@@ -154,13 +154,13 @@ window.onload = function(){
 					<%} %> 
 
 					<div class="like-comment">
-						<form action="P2CommentJusinServlet">
+						<!-- <form action="P2CommentJusinServlet"> -->
 							<input type="hidden" name="toukouId" value="<%=i%>" />
-							<button class="submit comment" onclick="openPopup()">
+							<button class="submit comment" onclick="openPopup('<%=toukouList.get(i).getToukouid()%>')">
 								<img src="image/こめんと1.png" alt="comment icon"
 									style="width: 20px; height: 20px" /> <span><%=postList.get(i).getCommentCount()%></span>
 							</button>
-						</form>
+						<!-- </form> -->
 
 						<a href="P2heartServlet?hensuu=<%=i%>&heartId=<%= toukouList.get(i).getToukouid() %>&page=TL">
 						<button class="heart" onclick="changeImage('heartImage<%=postList.get(i)%>')">
@@ -319,10 +319,6 @@ function sendData(toukouUserid, toukouId, userId) {
         console.error('Error:', error); // エラーをコンソールに表示
     });
 }
-
-// コメント欄非同期挑戦
-
-
 </script>		
 	
 	
