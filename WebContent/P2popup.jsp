@@ -32,8 +32,9 @@
 		<%-- <%if(cnt!=null){ %> --%>
 		<% for (int i = 0; i < cmList.size(); i++) { %>
 		<div class="comment-item">
-			<a href="P2UserSearchServlet"><img src="image/<%=cmList.get(i).getCicon() %>"
-				alt="アイコン" class="icon"></a>
+			<!-- <a href="P2UserSearchServlet"> -->
+			<img src="image/<%=cmList.get(i).getCicon() %>" alt="アイコン" class="icon">
+			<!-- </a> -->
 			<div class="comment-content">
 				<p class="username"><%=cmList.get(i).getcName()%></p>
 				<p class="comment"><%=cmList.get(i).getCcontent()%></p>
