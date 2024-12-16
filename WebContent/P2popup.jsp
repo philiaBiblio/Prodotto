@@ -30,12 +30,12 @@
 		%>
 
 		<%-- <%if(cnt!=null){ %> --%>
-		<% for (int i = 1; i < cmList.size(); i++) { %>
+		<% for (int i = 0; i < cmList.size(); i++) { %>
 		<div class="comment-item">
-			<a href="P2ProfileStranger.jsp"><img src="image/ききゅう.jpg"
+			<a href="P2UserSearchServlet"><img src="image/<%=cmList.get(i).getCicon() %>"
 				alt="アイコン" class="icon"></a>
 			<div class="comment-content">
-				<p class="username"><%=cmList.get(i).getCsender()%></p>
+				<p class="username"><%=cmList.get(i).getcName()%></p>
 				<p class="comment"><%=cmList.get(i).getCcontent()%></p>
 			</div>
 			}
@@ -45,11 +45,11 @@
 	</div>
 
 	<!-- 入力ボックスをDM画面から持ってくる -->
-	<form action="" method="post" class="chat-form">
+	<form action="P2CommentSousinServlet" method="post" class="chat-form">
 		<div class="chat-input">
 			<input type="text" name="comment" id="comment" required
-				placeholder="コメントを入力"> <input type="submit" name="submit"
-				id="submit" value="送信">
+				placeholder="コメントを入力"> 
+				<input type="submit" name="submit" id="submit" value="送信">
 		</div>
 	</form>
 
