@@ -257,7 +257,7 @@ window.onload = function(){
 						<img src="." alt="" />
 					</div>
 					<div class="song-description">
-						<p class="artist"><%-- <%=userIconList.get(globalId).getName() %> --%></p>
+						<p class="artist">葉加瀬太郎</p>
 					</div>
 				</div>
 			</div>
