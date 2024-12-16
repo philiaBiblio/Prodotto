@@ -210,7 +210,7 @@ window.onload = function(){
 						//System.out.println("noweventId："+noweventId);
 						
 						%>
-
+							
 						<%if(postIdPrefix.equals(noweventId)) {%>
 						<button>
 							<span> <a href="P2SessionParticipation?audioFile=<%= toukouList.get(i).getSound() %>">

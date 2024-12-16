@@ -15,7 +15,11 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/P2SessionParticipation")
 public class P2SessionParticipation extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String audioFile = request.getParameter("audioFile");  // URLパラメータから音声ファイル名を取得
+        
+    	
+    	
+    	
+    	String audioFile = request.getParameter("audioFile");  // URLパラメータから音声ファイル名を取得
         System.out.println(audioFile);
         // ここで音声ファイルを録音画面に渡す処理を実行
         request.setAttribute("audioFile", audioFile);
