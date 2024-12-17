@@ -70,7 +70,7 @@ public class P2heartServlet extends HttpServlet {
 	    		 // 存在してないのでインサートする
 	    		 String insertSQL = 
 		    			 "INSERT INTO いいね values ('" + heartId + "','" + u.getUserid() +
-		    			 "',to_char(systimestamp,'YYYY-MM-DD HH24:MI:SS'))";
+		    			 "',to_char(systimestamp,'YYYY-MM-DD HH24:MI:SS'),'0')";
 		    	 // インサート文実行
 			     dba2.UpdateExe(insertSQL);
 	    	 }

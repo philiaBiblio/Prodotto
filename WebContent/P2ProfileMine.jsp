@@ -122,12 +122,13 @@ function openPopup(toukouId) {
 		<!-- 通知画面に飛ぶのでサーブレットありますが一旦無視 -->
 		<div class="rightheader">
 			<div class="button-group2">
-				<a href="P2Notifications.jsp">
-					<button class="notification-button toggle-notification"
+			<form action="P2NotificationsServlet" method="post">
+					<button type="submit"
+					class="notification-button toggle-notification"
 						id="notificationButton">
-						<i class="fas fa-bell  changeb"></i>
-					</button>
-				</a> <a href="P2ProfileEdit.jsp" class="edit-profile-button"> <i
+						<i class="fas fa-bell  changeb"></i></button>
+			</form>
+				<a href="P2ProfileEdit.jsp" class="edit-profile-button"> <i
 					class="fas fa-pen changeb"></i>
 				</a>
 			</div>

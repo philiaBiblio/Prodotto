@@ -43,7 +43,7 @@ public class P2CommentSousinServlet extends HttpServlet {
 			System.out.println(comment);
 
 			String sql = "insert into コメント values ('" + comID + "-' || LPAD(連番.nextval,10),'"
-					+ comID + "','" + u.getUserid() + "','" + comment + "', to_char(systimestamp,'yyyy-mm-dd HH24:MI:SS'))";
+					+ comID + "','" + u.getUserid() + "','" + comment + "', to_char(systimestamp,'yyyy-mm-dd HH24:MI:SS'),'0')";
 			
 			ResultSet rs = send.selectExe(sql);
 

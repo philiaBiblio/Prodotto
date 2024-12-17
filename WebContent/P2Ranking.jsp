@@ -106,6 +106,7 @@ window.onload = function(){
 	// 再生バーの名前
 	function saiseiName(id){
 		const kazu = document.getElementById('' + id);
+		console.log("45：" + id);
 		console.log("46" + kazu.value);
 		const artist = document.getElementById('artistName');
 		artist.innerText = kazu.value;

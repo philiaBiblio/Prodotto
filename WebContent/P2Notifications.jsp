@@ -1,3 +1,6 @@
+<%@page import="apli.Tuchi"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="apli.User"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -8,31 +11,56 @@
     <title>通知画面</title>
     <link rel="stylesheet" href="P2Notifications.css" />
   </head>
-  <body>
-    
+  
+<%
+	HttpSession ses = request.getSession();
+
+	User u = (User) ses.getAttribute("LOGIN");
+	ArrayList<Tuchi> tuchiList = (ArrayList) ses.getAttribute("TUCHILIST");
+%>
+  
+  <body>  
+  <div class="notifications">
+  		<%if(tuchiList != null){
+  			for(int i = 0; i < tuchiList.size(); i++){ 
+  				// いいねの場合
+  				if(tuchiList.get(i).getSyurui().equals("いいね")){ %>
+  				 <div class="notification">
+            		<img src="image/<%=tuchiList.get(i).getYourIcon() %>" class="icon">
+            		<p><%=tuchiList.get(i).getYourName() %>があなたの投稿にイイネをしました。</p>
+            	</div>
+  				<% } 
+  				// フォローの場合
+  				else if(tuchiList.get(i).getSyurui().equals("フォロー")){%>
+  				<div class="notification">
+            		<img src="image/<%=tuchiList.get(i).getYourIcon() %>" class="icon">
+            		<p><%=tuchiList.get(i).getYourName() %>があなたをフォローしました。</p>
+            		<button class="follow-button">フォローバックする</button>
+          		</div>
+  				<% }
+  				// コメントの場合
+  				else if(tuchiList.get(i).getSyurui().equals("コメント")){%>
+  				<div class="notification">
+            		<img src="image/<%=tuchiList.get(i).getYourIcon() %>" class="icon">
+            		<p><%= tuchiList.get(i).getYourName()%>があなたの投稿にコメントしました。「<%=tuchiList.get(i).getNaiyou() %>」</p>
+          		</div>
+  				<% } 
+  				// DMの場合
+  				else if(tuchiList.get(i).getSyurui().equals("DM")){%>
+  				<div class="notification">
+            		<img src="image/<%=tuchiList.get(i).getYourIcon() %>" class="icon">
+            		<p><%= tuchiList.get(i).getYourName()%>があなたにDMしました。「<%=tuchiList.get(i).getNaiyou() %>」</p>
+          		</div>
+  				<% }%>
+  			<% }%>
+  		<% }%>
         <!-- 通知リスト -->
-        <div class="notifications">
-          <div class="notification">
-            <div class="icon"></div>
-            <p>さしみがあなたの投稿にイイネをしました。</p>
-          </div>
-          <div class="notification">
-            <div class="icon"></div>
-            <p>さしみがあなたをフォローしました。</p>
-            <button class="follow-button">フォローバックする</button>
-          </div>
-          <div class="notification">
-            <div class="icon"></div>
-            <p>おばあモモモチくんがあなたをフォローしました。</p>
-            <button class="follow-button">フォローバックする</button>
-          </div>
-          <div class="notification">
-            <div class="icon"></div>
-            <p>
-              おばあモモモチくんがあなたの投稿にコメントしました。「これはすごいね。フォローしますね。」
-            </p>
-          </div>
-        </div>
+        
+        
+          
+          
+          
+   </div>
         
          <jsp:include page="P2kensaku.jsp"></jsp:include>
         

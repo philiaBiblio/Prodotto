@@ -69,7 +69,7 @@ public class P2followServlet extends HttpServlet {
 	    		 System.out.println("フォローしてなかった場合");
 	    		// 存在してないのでインサートする
 	    		 String insertSQL = 
-		    			 "INSERT INTO フォロー values ('" + u.getUserid() + "','" + up.getUserid() +"')";
+		    			 "INSERT INTO フォロー values ('" + u.getUserid() + "','" + up.getUserid() + "','0')";
 		    	 // インサート文実行
 			     dba2.UpdateExe(insertSQL);
 	    	 }
