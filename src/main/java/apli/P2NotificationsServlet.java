@@ -22,7 +22,7 @@ public class P2NotificationsServlet extends HttpServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		System.out.println("P2NotificationsServlet実行開始");
 		
@@ -36,8 +36,10 @@ public class P2NotificationsServlet extends HttpServlet {
 		String url = "";
 		// DBアクセス用部品の生成
 		DBAcs dba = new DBAcs();
+		DBAcs dba2 = new DBAcs();
 		// アレイリストの生成
 		ArrayList<Tuchi> tuchiList = new ArrayList<Tuchi>();
+		ArrayList<Follow> followList = new ArrayList<Follow>();
 		
 		try {
 			String sql = "select 種類,投稿ID,通知.ユーザーID,タイムスタンプ,通知,内容,フォローされた人,受信元,名前,アイコン from "
@@ -84,6 +86,27 @@ public class P2NotificationsServlet extends HttpServlet {
 	    	 
 	    	 ses.setAttribute("TUCHILIST", tuchiList);
 	    	 
+	    	// 既にフォローしてるかのチェック
+	    	 String sqlFollow = "select * from フォロー where フォロー = '" + u.getUserid() + "'";
+	    	 
+	    	// sql文実行
+	    	 ResultSet rs1 = dba2.selectExe(sqlFollow);
+	    	 
+	    	 // 全件抜き出し
+	    	 while(rs1.next()) {
+	    		 String follower = rs1.getString("フォロワー");
+	    		 
+	    		 // インスタンス生成
+	    		 Follow f = new Follow();
+	    		 f.setFollower(follower);
+	    		 
+	    		 // アレイリストに追加
+	    		 followList.add(f);
+	    	 }
+	    	 
+	    	 ses.setAttribute("followList", followList);
+	    	 
+	    	 
 	    	 // 通知画面へ戻る
 	    	 url = "P2Notifications.jsp";
 	    	 System.out.println(url);
@@ -94,11 +117,13 @@ public class P2NotificationsServlet extends HttpServlet {
 	    	 
 	    	 // ログアウト処理
 	    	 dba.closeDB();
+	    	 dba2.closeDB();
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
 			// ログアウト処理
 			dba.closeDB();
+			dba2.closeDB();
 		}
 	}
 }

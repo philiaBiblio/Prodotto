@@ -8,6 +8,8 @@ body {
   font-family: "Arial", sans-serif;
   background-color: #000000;
   padding-left: 95px;
+  margin-top: 80px;
+  margin-bottom: 20px;
 }
 
 /* 全体レイアウト */
@@ -87,6 +89,7 @@ body {
   color: rgb(255, 255, 255);
   background-color: #000000;
   padding: 10px;
+  margin-right:20px;
   border-radius: 10px;
   border: 2px solid #ffffff;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
