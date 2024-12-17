@@ -23,9 +23,9 @@ body {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   background-color:rgb(44, 44, 44);
   padding: 15px;
+  padding-bottom: 0; /* 下部のpaddingを0に設定 */
   display: flex;
   flex-direction: column;
-  align-items: center;
   text-align: center;
   position: relative; /* 他の位置を考慮する */
   overflow: hidden; /* カード内の要素がはみ出さないようにする */
@@ -68,7 +68,7 @@ img.thumbnail {
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  gap: 20px; /* 現代的な方法 */
+  gap: 10px; /* 現代的な方法 */
   margin-bottom: 10px; /* 必要に応じて追加 */
 }
 
@@ -103,6 +103,7 @@ img.thumbnail {
   display: inline-block; /* サイズ指定を適用するためにブロック要素として扱う */
   text-align: center; /* テキストを中央揃え */
   line-height: 40px; /* 縦中央揃え（高さと同じ値に） */
+  border: none;
 }
 
 /* セッションボタン */
@@ -733,7 +734,7 @@ a,a:visited{
     auto-fill,
     minmax(200px, 1fr)
   ); /* 最小200pxのカードを横に並べる */
-  gap: 60px; /* カードの間のスペースを広げる */
+  gap: 50px; /* カードの間のスペースを広げる */
 }
 
 /* サムネイルの停止ボタン */
