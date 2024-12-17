@@ -66,9 +66,9 @@ public class P2RankingServlet extends HttpServlet {
 			           + "FROM 投稿 p "
 			           + "JOIN ユーザー u ON p.ユーザーID = u.ユーザーID "
 			           + "LEFT JOIN ("
-			           + "    SELECT 投稿ID, COUNT(*) AS 再生回数 "
-			           + "    FROM 再生 "
-			           + "    GROUP BY 投稿ID "
+			           + " SELECT 投稿ID, COUNT(*) AS 再生回数 "
+			           + " FROM 再生 "
+			           + " GROUP BY 投稿ID "
 			           + ") r ON p.投稿ID = r.投稿ID "
 			           + "ORDER BY 再生回数 DESC";
 
@@ -90,13 +90,7 @@ public class P2RankingServlet extends HttpServlet {
 				String upName = rs.getString("名前");
 				String toukouIcon = rs.getString("アイコン");
 				
-				int comm; 
-				if (rs.getInt("コメント数") > 0) {
-				    comm = rs.getInt("コメント数") - 1;
-				} else {
-				    comm = rs.getInt("コメント数");
-				}
-				
+				int comｍ = rs.getInt("コメント数");
 				int iine = rs.getInt("いいね数");
                 //System.out.println(toukouId.substring(0,6));
 				
@@ -115,7 +109,7 @@ public class P2RankingServlet extends HttpServlet {
 				up.setIconImage(toukouIcon);
 				
 				Post kazu = new Post();
-				kazu.setCommentCount(comm);
+				kazu.setCommentCount(comｍ);
 				kazu.setLikeCount(iine);
 				
 				// アレイリストに追加
@@ -165,13 +159,7 @@ public class P2RankingServlet extends HttpServlet {
 				String upName = rs2.getString("名前");
 				String toukouIcon = rs2.getString("アイコン");
 				
-				int comm; 
-				if (rs2.getInt("コメント数") > 0) {
-				    comm = rs2.getInt("コメント数") - 1;
-				} else {
-				    comm = rs2.getInt("コメント数");
-				}
-				
+				int comｍ = rs2.getInt("コメント数");
 				int iine = rs2.getInt("いいね数");
                 //System.out.println(toukouId.substring(0,6));
 				
@@ -190,7 +178,7 @@ public class P2RankingServlet extends HttpServlet {
 				up.setIconImage(toukouIcon);
 				
 				Post kazu = new Post();
-				kazu.setCommentCount(comm);
+				kazu.setCommentCount(comｍ);
 				kazu.setLikeCount(iine);
 				
 				// アレイリストに追加
@@ -244,13 +232,7 @@ public class P2RankingServlet extends HttpServlet {
 							String upName = rs3.getString("名前");
 							String toukouIcon = rs3.getString("アイコン");
 							
-							int comm; 
-							if (rs3.getInt("コメント数") > 0) {
-							    comm = rs3.getInt("コメント数") - 1;
-							} else {
-							    comm = rs3.getInt("コメント数");
-							}
-							
+							int comｍ = rs3.getInt("コメント数");
 							int iine = rs3.getInt("いいね数");
 			                //System.out.println(toukouId.substring(0,6));
 							
@@ -269,7 +251,7 @@ public class P2RankingServlet extends HttpServlet {
 							up.setIconImage(toukouIcon);
 							
 							Post kazu = new Post();
-							kazu.setCommentCount(comm);
+							kazu.setCommentCount(comｍ);
 							kazu.setLikeCount(iine);
 							
 							// アレイリストに追加

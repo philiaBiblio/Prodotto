@@ -21,7 +21,7 @@ body {
   --secondary-color: #e0dddd;
   --green-color: #11dadd;
   --padding: 1em;
-  background-color: #302f2f;
+  background-color: rgb(0, 0, 0);
   display: none;
   justify-content: center;
   align-items: center;
@@ -33,6 +33,18 @@ body {
   padding: var(--padding);
   color: #11dadd;
   z-index: 999; /* 上に表示するための設定 */
+}
+
+/* 音楽プレイヤー非表示ボタン */
+.hide-player-button {
+    position: absolute;
+    top: 10px; /* 上からの距離 */
+    right: 10px; /* 右からの距離 */
+    background-color: transparent; /* 背景色を透明に */
+    border: none; /* ボーダーをなしに */
+    font-size: 20px; /* フォントサイズを調整 */
+    cursor: pointer; /* カーソルをポインターに */
+    color: #fff; /* ボタンの色を白に */
 }
 
 i {
@@ -173,6 +185,7 @@ i:hover {
 .other-features {
   position: absolute;
   right: var(--padding);
+  top: 50%;
   display: flex;
   flex-direction: row;
   gap: 1em;

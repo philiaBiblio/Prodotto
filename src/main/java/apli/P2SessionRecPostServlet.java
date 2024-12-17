@@ -18,10 +18,19 @@ public class P2SessionRecPostServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         System.out.println("P2SessionRecPostServlet実行");
 
+        
+        
+        
+        /////////////  使ってなさそうだから、後で消すかも  //////////////////////
+        
+        
+        
+        
+        
         // 文字化け防止
         request.setCharacterEncoding("UTF-8");
         // セッションの生成
@@ -68,14 +77,15 @@ public class P2SessionRecPostServlet extends HttpServlet {
 
                         // セッションに保存
                         ses.setAttribute("SESSION", event);
-                    } else {
+                      } 
+                      else {
                         // 結果がない場合の処理
                         System.out.println("データが見つかりませんでした");
                         ses.setAttribute("ERROR_MESSAGE", "指定された投稿は見つかりませんでした");
-                    }
+                      }
                 }
-            }
-
+            }            
+            
             // 画面遷移
             url="P2Recording.jsp";
             RequestDispatcher rd = request.getRequestDispatcher(url);

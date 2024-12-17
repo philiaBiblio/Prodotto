@@ -15,13 +15,171 @@ body {
   background: #121212;
 }
 
+/* 動画カード */
+/* 全体のカードスタイル */
+.video-card {
+  width: 250px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color:rgb(44, 44, 44);
+  padding: 15px;
+  padding-bottom: 0; /* 下部のpaddingを0に設定 */
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  position: relative; /* 他の位置を考慮する */
+  overflow: hidden; /* カード内の要素がはみ出さないようにする */
+}
+
+/* サムネイル部分 */
+.thumbnail-placeholder {
+  width: 100%;
+  height: 120px;
+  background-color: rgb(44, 44, 44);
+  border-radius: 10px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  overflow: hidden; /* はみ出しを防止 */
+}
+
+img.thumbnail {
+  max-width: 100%;
+  height: auto;
+  object-fit: cover;/* 縦横比率保つやつ */
+}
+
+/* サムネイルの再生ボタン */
+.play-button {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 30px;
+  color: white;
+  background: none;
+  border: none;
+  cursor: pointer;
+  border-radius: 30%; /* 丸いボタンにする */
+}
+
+/* 動画情報部分 */
+.video-info {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 10px; /* 現代的な方法 */
+  margin-bottom: 10px; /* 必要に応じて追加 */
+}
+
+/* プロフィールアイコン、ボタンを一列に並べる */
+.video-info > div {
+    display: flex;
+    justify-content: flex-start; /* 左から順に並べる */
+    align-items: center; /* アイコンとボタンを縦方向で中央揃え */
+    gap: 10px; /* ボタン同士の間隔 */
+}
+
+/* プロフィールアイコンの修正 */
+.profile-icon {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+  width: 25px;
+  height: 25px;
+  margin-right: 10px;
+  background-color: #bbb;
+  border-radius: 50%;
+}
+
+.icons {
+  display: flex;
+  gap: 1em;
+}
+
+.session-btn {
+  width: 15px; /* 横幅を指定 */
+  height: 40px; /* 高さを指定 */
+  display: inline-block; /* サイズ指定を適用するためにブロック要素として扱う */
+  text-align: center; /* テキストを中央揃え */
+  line-height: 40px; /* 縦中央揃え（高さと同じ値に） */
+  border: none;
+}
+
+/* セッションボタン */
+.gg-duplicate::after,
+.gg-duplicate::before {
+  content: "";
+  display: block;
+  box-sizing: border-box;
+  position: absolute;
+}
+.gg-duplicate::before {
+  background: currentColor;
+  left: 2px;
+  bottom: -2px;
+  width: 2px;
+  height: 6px;
+}
+.gg-duplicate::after {
+  width: 14px;
+  height: 14px;
+  border-right: 2px solid;
+  border-top: 2px solid;
+  right: -8px;
+  top: -8px;
+}
+
+/* ゴミ箱 */
+.gg-trash {
+    box-sizing: border-box;
+    position: relative;
+    display: block;
+    transform: scale(var(--ggs, 1));
+    width: 10px;
+    height: 12px;
+    border: 2px solid transparent;
+    box-shadow:
+      0 0 0 2px,
+      inset -2px 0 0,
+      inset 2px 0 0;
+    border-bottom-left-radius: 1px;
+    border-bottom-right-radius: 1px;
+    margin-top: 4px;
+  }
+.gg-trash::after,
+.gg-trash::before {
+    content: "";
+    display: block;
+    box-sizing: border-box;
+    position: absolute;
+}
+.gg-trash::after {
+    background: currentColor;
+    border-radius: 3px;
+    width: 16px;
+    height: 2px;
+    top: -4px;
+    left: -5px;
+}
+.gg-trash::before {
+    width: 10px;
+    height: 4px;
+    border: 2px solid;
+    border-bottom: transparent;
+    border-top-left-radius: 2px;
+    border-top-right-radius: 2px;
+    top: -7px;
+    left: -2px;
+}
+
 /* 音楽プレイヤーのスタイル */
 .music-player {
   --primary-color: #ddd;
   --secondary-color: #e0dddd;
   --green-color: #11dadd;
   --padding: 1em;
-  background-color: #302f2f;
+  background-color: rgb(0, 0, 0);
   display: none;
   justify-content: center;
   align-items: center;
@@ -107,11 +265,6 @@ i:hover {
   color: var(--secondary-color);
 }
 
-.icons {
-  display: flex;
-  gap: 1em;
-}
-
 .progress-controller {
   width: 100%;
   display: flex;
@@ -155,6 +308,18 @@ i:hover {
   border-radius: 10px;
   width: 30%;
   background-color: #ccc4;
+}
+
+/* シークバーのクリック領域を広げるためのレイヤー */
+.progress-bar::before {
+    content: "";
+    position: absolute;
+    top: 88px; /* シークバー上方向にクリック可能領域を広げる */
+    bottom: 14px; /* シークバー下方向にクリック可能領域を広げる */
+    left: 263px; /* シークバー左方向の当たり判定を広げる */
+    right: 263px; /* シークバー右方向の当たり判定を広げる */
+    z-index: 1; /* 視覚的には見えないがクリック可能に */
+    background-color: transparent; /* 見えない状態にする（クリック範囲のみ機能） */
 }
 
 .progress {
@@ -214,12 +379,6 @@ h3 {
 
 a {
   text-decoration: none;
-}
-
-img.thumbnail {
-  max-width: 100%;
-  height: auto;
-  object-fit: cover;/* 縦横比率保つやつ */
 }
 
 span,
@@ -301,17 +460,6 @@ header .toggle {
 
 /*-------------------header------------*/
 /*--------------nav------------*/
-/* 全体のカードスタイル */
-.video-card {
-  width: 250px;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  background-color: white;
-  padding: 10px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
 
 /* いいね＆コメントのスタイル */
 .like-comment {
@@ -586,47 +734,7 @@ a,a:visited{
     auto-fill,
     minmax(200px, 1fr)
   ); /* 最小200pxのカードを横に並べる */
-  gap: 60px; /* カードの間のスペースを広げる */
-}
-
-/* カード全体のデザイン */
-.video-card {
-  background-color:rgb(44, 44, 44);
-  padding: 15px;
-  border-radius: 10px;
-  /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
-  text-align: center;
-  position: relative;
-  position: relative; /* 他の位置を考慮する */
-  overflow: hidden; /* カード内の要素がはみ出さないようにする */
-}
-
-/* サムネイル部分 */
-.thumbnail-placeholder {
-  width: 100%;
-  height: 120px;
-  background-color: rgb(44, 44, 44);
-  border-radius: 10px;
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow: hidden; /* はみ出しを防止 */
-  object-fit: cover; /* 画像がはみ出さないようにアスペクト比を維持 */
-}
-
-/* サムネイルの再生ボタン */
-.play-button {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-size: 30px;
-  color: white;
-  background: none;
-  border: none;
-  cursor: pointer;
-  border-radius: 30%; /* 丸いボタンにする */
+  gap: 50px; /* カードの間のスペースを広げる */
 }
 
 /* サムネイルの停止ボタン */
@@ -642,38 +750,13 @@ a,a:visited{
 }
 
 
-/* 動画情報部分 */
-.video-info {
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  gap: 20px; /* プロフィールとボタンの間にスペースをあける */
-  width: 100%;
-  
-  
-  flex-wrap: wrap; /* 必要に応じて改行させる */
-  box-sizing: border-box; /* パディングや境界線を幅に含める */
 
-
-}
 
 /* プロフィール情報を横並びにする */
 .profile-info {
   display: flex;
   align-items: center;
   margin-right: auto; /* プロフィールアイコンを左に固定 */
-}
-
-/* プロフィールアイコンの修正 */
-.profile-icon {
-  align-items: center;
-  margin-top: 10px;
-  width: 25px;
-  height: 25px;
-  margin-right: 10px;
-  background-color: #bbb;
-  border-radius: 50%;
-  margin-right: 8px; /* アイコンとテキストの間隔を調整 */
 }
 
 /* いいね＆コメントのボタン */
@@ -716,71 +799,6 @@ a,a:visited{
     inset 0 -2px 0 0;
   margin-left: -4px;
   margin-top: 4px;
-}
-.gg-duplicate::after,
-.gg-duplicate::before {
-  content: "";
-  display: block;
-  box-sizing: border-box;
-  position: absolute;
-}
-.gg-duplicate::before {
-  background: currentColor;
-  left: 2px;
-  bottom: -2px;
-  width: 2px;
-  height: 6px;
-}
-.gg-duplicate::after {
-  width: 14px;
-  height: 14px;
-  border-right: 2px solid;
-  border-top: 2px solid;
-  right: -8px;
-  top: -8px;
-}
-
-/* ゴミ箱 */
-.gg-trash {
-    box-sizing: border-box;
-    position: relative;
-    display: block;
-    transform: scale(var(--ggs, 1));
-    width: 10px;
-    height: 12px;
-    border: 2px solid transparent;
-    box-shadow:
-      0 0 0 2px,
-      inset -2px 0 0,
-      inset 2px 0 0;
-    border-bottom-left-radius: 1px;
-    border-bottom-right-radius: 1px;
-    margin-top: 4px;
-  }
-.gg-trash::after,
-.gg-trash::before {
-    content: "";
-    display: block;
-    box-sizing: border-box;
-    position: absolute;
-}
-.gg-trash::after {
-    background: currentColor;
-    border-radius: 3px;
-    width: 16px;
-    height: 2px;
-    top: -4px;
-    left: -5px;
-}
-.gg-trash::before {
-    width: 10px;
-    height: 4px;
-    border: 2px solid;
-    border-bottom: transparent;
-    border-top-left-radius: 2px;
-    border-top-right-radius: 2px;
-    top: -7px;
-    left: -2px;
 }
 
 /*
@@ -914,7 +932,7 @@ a,a:visited{
   display: inline-block; /* 幅を固定するために inline-block を使用 */
 }
 
-dialog {
+.like-comment button.dialog {
   text-align: center;
   border-radius: 10px;
   background-color: #000000;
@@ -922,7 +940,7 @@ dialog {
   color: white;
 }
 
-#yesButton,
+.like-comment button.dialog #yesButton,
 #noButton {
   width: 90px;
   height: 50px;
