@@ -122,7 +122,7 @@ function openPopup(toukouId) {
 		<!-- 通知画面に飛ぶのでサーブレットありますが一旦無視 -->
 		<div class="rightheader">
 			<div class="button-group2">
-			<form action="P2NotificationsServlet" method="post">
+			<form action="P2NotificationsServlet">
 					<button type="submit"
 					class="notification-button toggle-notification"
 						id="notificationButton">
