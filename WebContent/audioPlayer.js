@@ -1,169 +1,287 @@
 document.addEventListener("DOMContentLoaded", () => {
 	const container = document.body;
-	let currentAudioPlayer = null; // 現在再生中のaudioを追跡
-	let currentPlayButton = null; // 現在再生中のvideo-cardの再生ボタンを追跡
+	let currentAudioPlayer = null;
+	let currentPlayButton = null;
 
-	container.addEventListener("click", (event) => {
-		if (event.target.classList.contains("play-button")) {
-			const card = event.target.closest(".video-card");
-			const audioPlayer = card.querySelector(".audio-player");
-			const musicPlayer = document.querySelector(".music-player");
-			const playPauseButton = musicPlayer.querySelector(".play-pause"); // プレイヤー内の再生ボタン
-
-			// 音声ファイルが設定されていない場合の処理
-			if (!audioPlayer || !audioPlayer.src) {
-				alert("音声ファイルがありません。");
-				return;
-			}
-
-			// 他の音声を停止＆再生ボタンをリセット
-			if (currentAudioPlayer && currentAudioPlayer !== audioPlayer) {
-				currentAudioPlayer.pause();
-				currentAudioPlayer.currentTime = 0;
-				if (currentPlayButton) currentPlayButton.textContent = "▶️";
-			}
-
-			// 再生/停止の切り替え
-			if (audioPlayer.paused) {
-				audioPlayer.play().catch(() => {
-					alert("音声ファイルの再生に失敗しました。");
-				});
-				event.target.textContent = "⏸️"; // 再生中は一時停止アイコンに変更
-				playPauseButton.classList.remove("fa-play");
-				playPauseButton.classList.add("fa-pause");
-				currentAudioPlayer = audioPlayer; // 現在のaudioを記録
-				currentPlayButton = event.target; // 現在のボタンを記録
-			} else {
-				audioPlayer.pause();
-				event.target.textContent = "▶️"; // 停止中は再生アイコンに戻す
-				playPauseButton.classList.remove("fa-pause");
-				playPauseButton.classList.add("fa-play");
-			}
-
-			// 再生終了時の処理
-			audioPlayer.addEventListener("ended", () => {
-				event.target.textContent = "▶️";
-				playPauseButton.classList.remove("fa-pause");
-				playPauseButton.classList.add("fa-play");
-				currentAudioPlayer = null;
-				currentPlayButton = null;
-			});
-
-			// 音楽プレイヤーの表示
-			musicPlayer.style.display = "block";
-
-			// サムネイル画像を取得して再生プレイヤーに設定
-			const thumbnailImage = card.querySelector(".thumbnail").src;
-			const playerImageContainer = musicPlayer.querySelector(".image-container img");
-			playerImageContainer.src = thumbnailImage;
-		}
-	});
-
-	// 再生プレイヤー内の再生/停止ボタンの動作
+	// 再生プレイヤー関連の要素
 	const musicPlayer = document.querySelector(".music-player");
 	const playPauseButton = musicPlayer.querySelector(".play-pause");
 	const progressBar = musicPlayer.querySelector(".progress-bar");
 	const progress = progressBar.querySelector(".progress");
 	const currentTimeDisplay = musicPlayer.querySelector(".current-time");
 	const durationDisplay = musicPlayer.querySelector(".duration");
+	const volumeBar = musicPlayer.querySelector(".volume-bar .progress-bar");
+	const volumeProgress = volumeBar.querySelector(".progress");
+	const hidePlayerButton = musicPlayer.querySelector(".hide-player-button");
+	const repeatButton = musicPlayer.querySelector(".fa-undo-alt"); // リピートボタン
+	const prevButton = document.querySelector(".fa-step-backward"); // 戻るボタン（例: プレイヤー内に配置）
 
-	let isDragging = false;
+	const nextButton = document.querySelector(".fa-step-forward");
 
-	// 再生中の音声に合わせてシークバーを更新
+	// 戻るボタンの動作
+	prevButton.addEventListener("click", () => {
+		if (!currentAudioPlayer) {
+			alert("再生中の音声がありません。");
+			return;
+		}
+
+		// 音声の再生時間が0:00の場合、前の音楽に戻る
+		if (currentAudioPlayer.currentTime < 1) {
+			const currentCard = currentAudioPlayer.closest(".video-card");
+			let prevCard = currentCard.previousElementSibling;
+
+			// 前のカードが見つかるまでループ
+			while (prevCard && !prevCard.classList.contains("video-card")) {
+				prevCard = prevCard.previousElementSibling; // 前のノードに移動
+			}
+
+			if (!prevCard) {
+				alert("これ以上前の音声がありません。");
+				return;
+			}
+
+			const prevAudioPlayer = prevCard.querySelector(".audio-player");
+			const prevPlayButton = prevCard.querySelector(".play-button");
+
+			if (!prevAudioPlayer || !prevAudioPlayer.src) {
+				alert("前の音声ファイルが見つかりません。");
+				return;
+			}
+
+			// 現在の音声を停止
+			currentAudioPlayer.pause();
+			currentAudioPlayer.currentTime = 0;
+			if (currentPlayButton) currentPlayButton.textContent = "▶️";
+
+			// 前の音声を再生
+			currentAudioPlayer = prevAudioPlayer;
+			currentPlayButton = prevPlayButton;
+
+			currentAudioPlayer.play().catch(() => {
+				alert("前の音声ファイルの再生に失敗しました。");
+			});
+			currentPlayButton.textContent = "⏸️";
+
+			// プレイヤーのUIを更新
+			const prevThumbnailImage = prevCard.querySelector(".thumbnail").src;
+			const playerImageContainer = musicPlayer.querySelector(".image-container img");
+			playerImageContainer.src = prevThumbnailImage;
+
+			const prevArtistName = prevCard.getAttribute("data-artist-name") || "Unknown Artist";
+			const artist = document.getElementById("artistName");
+			artist.innerText = prevArtistName;
+
+		} else {
+			// 再生時間が0:00でない場合、現在の音楽を最初から再生
+			currentAudioPlayer.currentTime = 0;
+			currentAudioPlayer.play().catch(() => {
+				alert("音声ファイルの再生に失敗しました。");
+			});
+			if (currentPlayButton) currentPlayButton.textContent = "⏸️";
+		}
+	});
+
+	// 次へボタンの動作
+	nextButton.addEventListener("click", () => {
+		if (!currentAudioPlayer) {
+			alert("再生中の音声がありません。");
+			return;
+		}
+
+		const currentCard = currentAudioPlayer.closest(".video-card");
+		const nextCard = currentCard.nextElementSibling;
+
+		if (nextCard && nextCard.classList.contains("video-card")) {
+			const nextAudioPlayer = nextCard.querySelector(".audio-player");
+			const nextPlayButton = nextCard.querySelector(".play-button");
+
+			if (!nextAudioPlayer || !nextAudioPlayer.src) {
+				alert("次の音声ファイルが見つかりません。");
+				return;
+			}
+
+			// 現在の音声を停止
+			currentAudioPlayer.pause();
+			currentAudioPlayer.currentTime = 0;
+			if (currentPlayButton) currentPlayButton.textContent = "▶️";
+
+			// 次の音声を再生
+			currentAudioPlayer = nextAudioPlayer;
+			currentPlayButton = nextPlayButton;
+
+			currentAudioPlayer.play().catch(() => {
+				alert("次の音声ファイルの再生に失敗しました。");
+			});
+			currentPlayButton.textContent = "⏸️";
+
+			// プレイヤーのUIを更新
+			const nextThumbnailImage = nextCard.querySelector(".thumbnail").src;
+			const playerImageContainer = musicPlayer.querySelector(".image-container img");
+			playerImageContainer.src = nextThumbnailImage;
+
+			const nextArtistName = nextCard.getAttribute("data-artist-name") || "Unknown Artist";
+			const artist = document.getElementById("artistName");
+			artist.innerText = nextArtistName;
+		} else {
+			alert("これ以上次の音声がありません。");
+		}
+	});
+
+	// リピートモード管理フラグ
+	let isRepeatMode = false;
+
+	// 再生/停止の切り替え
+	container.addEventListener("click", (event) => {
+		if (event.target.classList.contains("play-button")) {
+			const card = event.target.closest(".video-card");
+			const audioPlayer = card.querySelector(".audio-player");
+
+			if (!audioPlayer || !audioPlayer.src) {
+				alert("音声ファイルがありません。");
+				return;
+			}
+
+			if (currentAudioPlayer && currentAudioPlayer !== audioPlayer) {
+				currentAudioPlayer.pause();
+				currentAudioPlayer.currentTime = 0;
+				if (currentPlayButton) currentPlayButton.textContent = "▶️";
+			}
+
+			if (audioPlayer.paused) {
+				audioPlayer.play().catch(() => {
+					alert("音声ファイルの再生に失敗しました。");
+				});
+				event.target.textContent = "⏸️";
+				playPauseButton.classList.remove("fa-play");
+				playPauseButton.classList.add("fa-pause");
+				currentAudioPlayer = audioPlayer;
+				currentPlayButton = event.target;
+			} else {
+				audioPlayer.pause();
+				event.target.textContent = "▶️";
+				playPauseButton.classList.remove("fa-pause");
+				playPauseButton.classList.add("fa-play");
+			}
+
+			musicPlayer.style.display = "block";
+
+			const thumbnailImage = card.querySelector(".thumbnail").src;
+			const playerImageContainer = musicPlayer.querySelector(".image-container img");
+			playerImageContainer.src = thumbnailImage;
+
+			const artistName = card.getAttribute("data-artist-name") || "Unknown Artist";
+			const artist = document.getElementById("artistName");
+			artist.innerText = artistName;
+
+			// リピートモードの再生終了処理
+			audioPlayer.addEventListener("ended", () => {
+				if (isRepeatMode) {
+					audioPlayer.currentTime = 0; // 再生位置を先頭に戻す
+					audioPlayer.play(); // 再度再生
+				} else {
+					resetPlayer();
+				}
+			});
+		}
+	});
+
+	// リピートボタンの動作
+	repeatButton.addEventListener("click", () => {
+		isRepeatMode = !isRepeatMode; // リピートモードのトグル
+		repeatButton.classList.toggle("active", isRepeatMode); // 見た目を切り替える
+	});
+
+	function resetPlayer() {
+		if (currentAudioPlayer) {
+			currentAudioPlayer.pause();
+			currentAudioPlayer.currentTime = 0;
+		}
+		if (currentPlayButton) {
+			currentPlayButton.textContent = "▶️";
+		}
+		playPauseButton.classList.remove("fa-pause");
+		playPauseButton.classList.add("fa-play");
+		currentAudioPlayer = null;
+		currentPlayButton = null;
+	}
+
 	function updateProgress() {
 		if (!currentAudioPlayer) return;
 
 		const currentTime = currentAudioPlayer.currentTime;
 		const duration = currentAudioPlayer.duration;
 
-		// 現在の再生位置と全体の長さをパーセンテージで計算
 		const progressPercent = (currentTime / duration) * 100;
 		progress.style.width = `${progressPercent}%`;
 
-		// 時間表示を更新
 		currentTimeDisplay.textContent = formatTime(currentTime);
 		durationDisplay.textContent = isNaN(duration) ? "0:00" : formatTime(duration);
 	}
 
-	// 時間を mm:ss 形式にフォーマットする関数
 	function formatTime(seconds) {
 		const minutes = Math.floor(seconds / 60);
 		const remainingSeconds = Math.floor(seconds % 60);
 		return `${minutes}:${remainingSeconds.toString().padStart(2, "0")}`;
 	}
 
-	// シークバーのクリックで再生位置を変更
-	progressBar.addEventListener("click", (event) => {
-		if (!currentAudioPlayer) return;
-
-		const rect = progressBar.getBoundingClientRect();
+	function calculateProgress(event, barElement) {
+		const rect = barElement.getBoundingClientRect();
 		const clickX = event.clientX - rect.left;
-		const newTime = (clickX / rect.width) * currentAudioPlayer.duration;
+		return Math.min(Math.max(clickX / rect.width, 0), 1);
+	}
 
-		currentAudioPlayer.currentTime = newTime;
+	function setupBarInteraction(barElement, callback) {
+		let isDragging = false;
 
-	});
+		barElement.addEventListener("click", (event) => {
+			const progress = calculateProgress(event, barElement);
+			callback(progress);
+		});
 
-	// 再生中の更新を監視
-	setInterval(updateProgress, 500);
+		barElement.addEventListener("mousedown", () => {
+			isDragging = true;
+		});
 
-	// 再生終了時にシークバーをリセット
-	if (currentAudioPlayer) {
-		currentAudioPlayer.addEventListener("ended", () => {
-			progress.style.width = "0%";
-			currentTimeDisplay.textContent = "0:00";
+		document.addEventListener("mousemove", (event) => {
+			if (isDragging) {
+				const progress = calculateProgress(event, barElement);
+				callback(progress);
+			}
+		});
+
+		document.addEventListener("mouseup", () => {
+			isDragging = false;
+		});
+
+		barElement.addEventListener("touchstart", () => {
+			isDragging = true;
+		});
+
+		document.addEventListener("touchmove", (event) => {
+			if (isDragging) {
+				const touch = event.touches[0];
+				const progress = calculateProgress(touch, barElement);
+				callback(progress);
+			}
+		});
+
+		document.addEventListener("touchend", () => {
+			isDragging = false;
 		});
 	}
 
-	// シークバーをクリックまたはドラッグで再生位置を変更
-	function setProgress(event) {
+	setupBarInteraction(progressBar, (progress) => {
 		if (!currentAudioPlayer) return;
 
-		const rect = progressBar.getBoundingClientRect();
-		const clickX = event.clientX - rect.left;
-		const newTime = (clickX / rect.width) * currentAudioPlayer.duration;
-
-		currentAudioPlayer.currentTime = newTime;
-	}
-
-	// ドラッグ開始時の処理
-	progressBar.addEventListener("mousedown", (event) => {
-		isDragging = true;
-		setProgress(event); // クリック位置を即座に反映
+		currentAudioPlayer.currentTime = progress * currentAudioPlayer.duration;
+		updateProgress();
 	});
 
-	// マウス移動時の処理 (ドラッグ中のみ)
-	document.addEventListener("mousemove", (event) => {
-		if (isDragging) {
-			setProgress(event);
-		}
-	});
+	setupBarInteraction(volumeBar, (progress) => {
+		if (!currentAudioPlayer) return;
 
-	// ドラッグ終了時の処理
-	document.addEventListener("mouseup", () => {
-		if (isDragging) {
-			isDragging = false;
-		}
-	});
-
-	// タッチ操作にも対応
-	progressBar.addEventListener("touchstart", (event) => {
-		isDragging = true;
-		const touch = event.touches[0];
-		setProgress(touch);
-	});
-
-	document.addEventListener("touchmove", (event) => {
-		if (isDragging) {
-			const touch = event.touches[0];
-			setProgress(touch);
-		}
-	});
-
-	document.addEventListener("touchend", () => {
-		if (isDragging) {
-			isDragging = false;
-		}
+		currentAudioPlayer.volume = progress;
+		volumeProgress.style.width = `${progress * 100}%`;
 	});
 
 	playPauseButton.addEventListener("click", () => {
@@ -172,7 +290,6 @@ document.addEventListener("DOMContentLoaded", () => {
 			return;
 		}
 
-		// 再生/停止の切り替え
 		if (currentAudioPlayer.paused) {
 			currentAudioPlayer.play().catch(() => {
 				alert("音声ファイルの再生に失敗しました。");
@@ -186,22 +303,12 @@ document.addEventListener("DOMContentLoaded", () => {
 			playPauseButton.classList.add("fa-play");
 			if (currentPlayButton) currentPlayButton.textContent = "▶️";
 		}
-		});
-
-		// 非表示ボタンの動作を追加
-		const hidePlayerButton = musicPlayer.querySelector(".hide-player-button");
-		hidePlayerButton.addEventListener("click", () => {
-			musicPlayer.style.display = "none";
-			if (currentAudioPlayer) {
-				currentAudioPlayer.pause();
-				currentAudioPlayer.currentTime = 0;
-				if (currentPlayButton) currentPlayButton.textContent = "▶️";
-				playPauseButton.classList.remove("fa-pause");
-				playPauseButton.classList.add("fa-play");
-				currentAudioPlayer = null;
-				currentPlayButton = null;
-			}
-		});
-
 	});
 
+	hidePlayerButton.addEventListener("click", () => {
+		musicPlayer.style.display = "none";
+		resetPlayer();
+	});
+
+	setInterval(updateProgress, 500);
+});
