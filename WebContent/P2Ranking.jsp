@@ -106,6 +106,7 @@ window.onload = function(){
 	// 再生バーの名前
 	function saiseiName(id){
 		const kazu = document.getElementById('' + id);
+		console.log("45：" + id);
 		console.log("46" + kazu.value);
 		const artist = document.getElementById('artistName');
 		artist.innerText = kazu.value;
@@ -280,52 +281,48 @@ window.onload = function(){
 
 
       <main>
-      <!-- 音楽プレイヤー -->
-      <div class="music-player" style="display: none">
-        <!-- 初期表示を非表示に -->
-        <div class="song-bar">
-          <div class="song-infos">
-            <div class="image-container">
-              <img src="." alt="" />
-            </div>
-            <div class="song-description">
-              <p class="artist" id="artistName"></p>
-            </div>
-          </div>
-          <div class="icons">
-          </div>
-        </div>
-        <div class="progress-controller">
-          <div class="control-buttons">
-            <i class="fas fa-random"></i>
-            <i class="fas fa-step-backward"></i>
-            <i class="play-pause fas fa-play"></i>
-            <i class="fas fa-step-forward"></i>
-            <i class="fas fa-undo-alt"></i>
-          </div>
-          <div class="progress-container">
-            <span class="current-time">0:00</span>
-            <!-- 現在の再生時間 -->
-            <div class="progress-bar">
-              <div class="progress"></div>
-            </div>
-            <span class="duration">3:15</span>
-            <!-- 全体の音楽の時間 -->
-          </div>
-        </div>
-        <div class="other-features">
-          <i class="fas fa-list-ul"></i>
-          <i class="fas fa-desktop"></i>
-
-          <!-- 音量コントロール -->
-          <div class="volume-bar">
-            <i class="fas fa-volume-down"></i>
-            <div class="progress-bar">
-              <div class="progress"></div>
-            </div>
-          </div>
-        </div>
-      </div>
+		<!-- 音楽プレイヤー -->
+		<div class="music-player" style="display: none">
+			<!-- 初期表示を非表示に -->
+			<div class="song-bar">
+				<div class="song-infos">
+					<div class="image-container">
+						<img src="." alt="" />
+					</div>
+					<div class="song-description">
+						<p class="artist" id="artistName"></p>
+					</div>
+				</div>
+			</div>
+			<div class="progress-controller">
+				<div class="control-buttons">
+					<i class="fas fa-random"></i> <i class="fas fa-step-backward"></i>
+					<i class="play-pause fas fa-play"></i> <i
+						class="fas fa-step-forward"></i> <i class="fas fa-undo-alt"></i>
+				</div>
+				<div class="progress-container">
+					<span class="current-time">0:00</span>
+					<!-- 現在の再生時間 -->
+					<div class="progress-bar">
+						<div class="progress"></div>
+					</div>
+					<span class="duration">3:15</span>
+					<!-- 全体の音楽の時間 -->
+				</div>
+			</div>
+			<!-- 非表示ボタンを追加 -->
+        	<button class="hide-player-button">×</button>
+			<div class="other-features">
+				<i class="fas fa-list-ul"></i> <i class="fas fa-desktop"></i>
+				<!-- 音量コントロール -->
+				<div class="volume-bar">
+					<i class="fas fa-volume-down"></i>
+					<div class="progress-bar">
+						<div class="progress"></div>
+					</div>
+				</div>
+			</div>
+		</div>
     </main>
   
   

@@ -219,6 +219,7 @@ window.onload = function(){
 						<%if(postIdPrefix.equals(noweventId)) {%>
 						<button>
 							<span> <a href="P2SessionParticipation?audioFile=<%= toukouList.get(i).getSound() %>&ID=<%=toukouList.get(i).getToukouid()%>&hitoride=2">
+
 									<div class="nav_icon">
 										<i class="gg-duplicate"></i>
 									</div>

@@ -11,18 +11,18 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
- * Servlet implementation class P2followServlet
+ * Servlet implementation class P2followbackServlet
  */
-@WebServlet("/P2followServlet")
-public class P2followServlet extends HttpServlet {
+@WebServlet("/P2followbackServlet")
+public class P2followbackServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		System.out.println("P2followServlet実行");
+		System.out.println("P2followbackServlet実行");
 		 
 		 // 文字化け防止
 		 request.setCharacterEncoding("UTF-8");
@@ -31,7 +31,6 @@ public class P2followServlet extends HttpServlet {
 		 
 		 // ログイン情報と相手の情報の取得
 	     User u = (User) ses.getAttribute("LOGIN");
-	     User up = (User) ses.getAttribute("PROF");
 	     
 	     // URLの生成
 	     String url = "";
@@ -42,19 +41,13 @@ public class P2followServlet extends HttpServlet {
 	     
 	     try {
 //	    	 // ユーザーIDの取得
-//	    	 String userID2 = request.getParameter("userID2");
-//	    	 ses.setAttribute("USERID2", userID2);
+	    	 String userID = request.getParameter("followback");
 	    	 
-//	        	if(userID2 == null) {
-//	        		userID2 = request.getParameter("userID2");
-//	                ses.setAttribute("USERID2", userID2);
-//	        	}
-	        	
-	        	 System.out.println("51：" + u.getUserid());
-	      	     System.out.println("42：" + up.getUserid());
+	    	 System.out.println("47：" + u.getUserid());
+	    	 System.out.println("48：" + userID);
 	        	
 	    	 // 既にフォローしてるかのチェック
-	    	 String sql = "select * from フォロー where フォロー = '" + u.getUserid() + "' and フォロワー = '" + up.getUserid() + "'";
+	    	 String sql = "select * from フォロー where フォロー = '" + u.getUserid() + "' and フォロワー = '" + userID + "'";
 	    	 
 	    	 // sql文実行
 	    	 ResultSet rs = dba.selectExe(sql);
@@ -62,25 +55,32 @@ public class P2followServlet extends HttpServlet {
 	    	 if(rs.next()) {
 	    		 System.out.println("フォローしていた場合");
 	    		 // 既に存在していた場合デリートする
-	    		 String deleteSQL = "DELETE FROM フォロー where フォロー = '" + u.getUserid() + "' and フォロワー = '"+ up.getUserid() + "'"; 		        
+	    		 String deleteSQL = "DELETE FROM フォロー where フォロー = '" + u.getUserid() + "' and フォロワー = '"+ userID + "'"; 		        
 	    		 // デリート文実行
 	    		 dba2.UpdateExe(deleteSQL);
+	    		 
+	    		 String follower = "フォローを外しました";
+		    	 ses.setAttribute("followNo", follower);
 	    	 }else {
 	    		 System.out.println("フォローしてなかった場合");
 	    		// 存在してないのでインサートする
 	    		 String insertSQL = 
-		    			 "INSERT INTO フォロー values ('" + u.getUserid() + "','" + up.getUserid() + "',to_char(systimestamp,'YYYY-MM-DD HH24:MI:SS'),'0')";
+		    			 "INSERT INTO フォロー values ('" + u.getUserid() + "','" + userID + "',to_char(systimestamp,'YYYY-MM-DD HH24:MI:SS'),'0')";
 	    		 
 		    	 // インサート文実行
 			     dba2.UpdateExe(insertSQL);
+			     
+			     String follow = "フォロー出来ました";
+		    	 ses.setAttribute("followOK", follow);
 	    	 }
 	    	 
-	    	 url = "P2UserSearchServlet";
+	    	 url = "P2NotificationsServlet";
 	    	 System.out.println(url);
-	    	 System.out.println("79" + up.getUserid());
-	    	 
+	    
 	    	 // 画面遷移
 	    	 response.sendRedirect(url);
+//	    	 RequestDispatcher rd = request.getRequestDispatcher(url);
+//	    	 rd.forward(request, response);
 	    	 
 	    	 // ログアウト処理
 	    	 dba.closeDB();
@@ -93,7 +93,5 @@ public class P2followServlet extends HttpServlet {
 			dba.closeDB();
 			dba2.closeDB();
 		}
-	     
 	}
-
 }

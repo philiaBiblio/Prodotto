@@ -134,7 +134,9 @@ String noweventId = String.format("%04d%02d", year, month); // 西暦4桁+月2�
 					<div class="thumbnail-placeholder">
 						<img src="image/<%=postList.get(i).getThumbnailPath()%>"
 							alt="Video Thumbnail" class="thumbnail" />
-						<button class="play-button">▶️</button>
+						<button class="play-button" onclick="sendData('<%= up.getUserid() %>', 
+					'<%= postList.get(i).getPostId() %>', 
+					'<%= u.getUserid() %>')">▶️</button>
 						<!-- 音声再生ボタン -->
 						<audio class="audio-player"
 							src="audio/<%=postList.get(i).getAudioPath()%>"></audio>
@@ -247,7 +249,9 @@ String noweventId = String.format("%04d%02d", year, month); // 西暦4桁+月2�
 				<div class="thumbnail-placeholder">
 					<img src="image/<%=postList.get(i).getThumbnailPath()%>"
 						alt="Video Thumbnail" class="thumbnail" />
-					<button class="play-button">▶️</button>
+					<button class="play-button" onclick="sendData('<%= up.getUserid() %>', 
+					'<%= postList.get(i).getPostId() %>', 
+					'<%= u.getUserid() %>')">▶️</button>
 					<!-- 音声再生ボタン -->
 					<audio class="audio-player"
 						src="<%=postList.get(i).getAudioPath()%>"></audio>

@@ -1,3 +1,7 @@
+<%@page import="apli.Follow"%>
+<%@page import="apli.Tuchi"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="apli.User"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -8,31 +12,91 @@
     <title>通知画面</title>
     <link rel="stylesheet" href="P2Notifications.css" />
   </head>
+  
+<%
+	HttpSession ses = request.getSession();
+
+	User u = (User) ses.getAttribute("LOGIN");
+	ArrayList<Tuchi> tuchiList = (ArrayList) ses.getAttribute("TUCHILIST");
+	ArrayList<Follow> followList = (ArrayList) ses.getAttribute("followList");
+	String followOK = (String)ses.getAttribute("followOK");
+%>
+  
   <body>
-    
-        <!-- 通知リスト -->
-        <div class="notifications">
-          <div class="notification">
-            <div class="icon"></div>
-            <p>さしみがあなたの投稿にイイネをしました。</p>
-          </div>
-          <div class="notification">
-            <div class="icon"></div>
-            <p>さしみがあなたをフォローしました。</p>
-            <button class="follow-button">フォローバックする</button>
-          </div>
-          <div class="notification">
-            <div class="icon"></div>
-            <p>おばあモモモチくんがあなたをフォローしました。</p>
-            <button class="follow-button">フォローバックする</button>
-          </div>
-          <div class="notification">
-            <div class="icon"></div>
-            <p>
-              おばあモモモチくんがあなたの投稿にコメントしました。「これはすごいね。フォローしますね。」
-            </p>
-          </div>
-        </div>
+  <!-- 通知リスト --> 
+  <div class="notifications">
+  		<%if(tuchiList != null){
+  			for(int i = 0; i < tuchiList.size(); i++){ 
+  				// いいねの場合
+  				if(tuchiList.get(i).getSyurui().equals("いいね")){ %>
+  				 <div class="notification">
+  				 <a href="P2UserSearchServlet?userID=<%=tuchiList.get(i).getUserId()%>">
+            		<img src="image/<%=tuchiList.get(i).getYourIcon() %>" class="icon"></a>
+            		<p><%=tuchiList.get(i).getYourName() %>があなたの投稿にイイネをしました。</p>
+            	</div>
+  				<% } 
+  				// フォローの場合
+  				else if(tuchiList.get(i).getSyurui().equals("フォロー")){%>
+  				<div class="notification">
+  				<a href="P2UserSearchServlet?userID=<%=tuchiList.get(i).getUserId()%>">
+            		<img src="image/<%=tuchiList.get(i).getYourIcon() %>" class="icon"></a>
+            		<p><%=tuchiList.get(i).getYourName() %>があなたをフォローしました。</p>
+            		<form action="P2followbackServlet">
+            			<input type="hidden" name="followback" value="<%= tuchiList.get(i).getUserId()%>">
+            			<button type="submit" class="follow-button">
+            			<%
+            				boolean flg = false;
+            				for(int j = 0; j < followList.size(); j++){
+            					if(tuchiList.get(i).getUserId().equals(followList.get(j).getFollower())){%>
+            						<% flg = true;
+            					}%>
+            				<%}
+            				if(flg == true){%>
+            				フォローしました
+            				<%}else{%>
+            				フォローバックする
+            				<%}
+            				flg = false;
+            				%>
+            	<%-- 		<%if(followOK == null){
+            					for(int j = 0; j < followList.size(); j++){
+            						if(tuchiList.get(i).getUserId().equals(followList.get(j).getFollower())){%>
+            						フォローしました
+            						<% }else{%>
+            						フォローバックする
+            						<% }
+            					}
+            			}%>
+
+            			<%if(followOK != null){ %>
+            				フォローしました
+            			<% }else{%>
+            				フォローバックする
+            			<% }%>
+            			<%ses.removeAttribute("followOK"); %> --%>
+            			</button>
+            		</form>
+          		</div>
+  				<% }
+  				// コメントの場合
+  				else if(tuchiList.get(i).getSyurui().equals("コメント")){%>
+  				<div class="notification">
+  				<a href="P2UserSearchServlet?userID=<%=tuchiList.get(i).getUserId()%>">
+            		<img src="image/<%=tuchiList.get(i).getYourIcon() %>" class="icon"></a>
+            		<p><%= tuchiList.get(i).getYourName()%>があなたの投稿にコメントしました。「<%=tuchiList.get(i).getNaiyou() %>」</p>
+          		</div>
+  				<% } 
+  				// DMの場合
+  				else if(tuchiList.get(i).getSyurui().equals("DM")){%>
+  				<div class="notification">
+  				<a href="P2UserSearchServlet?userID=<%=tuchiList.get(i).getUserId()%>">
+            		<img src="image/<%=tuchiList.get(i).getYourIcon() %>" class="icon"></a>
+            		<p><%= tuchiList.get(i).getYourName()%>があなたにDMしました。「<%=tuchiList.get(i).getNaiyou() %>」</p>
+          		</div>
+  				<% }%>
+  			<% }%>
+  		<% }%> 
+   </div>
         
          <jsp:include page="P2kensaku.jsp"></jsp:include>
         

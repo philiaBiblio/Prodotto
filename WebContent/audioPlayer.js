@@ -3,63 +3,7 @@ document.addEventListener("DOMContentLoaded", () => {
 	let currentAudioPlayer = null;
 	let currentPlayButton = null;
 
-	container.addEventListener("click", (event) => {
-		if (event.target.classList.contains("play-button")) {
-			const card = event.target.closest(".video-card");
-			const audioPlayer = card.querySelector(".audio-player");
-			const musicPlayer = document.querySelector(".music-player");
-			const playPauseButton = musicPlayer.querySelector(".play-pause"); // プレイヤー内の再生ボタン
-
-			// 音声ファイルが設定されていない場合の処理
-			if (!audioPlayer || !audioPlayer.src) {
-				alert("音声ファイルがありません。");
-				return;
-			}
-
-			// 他の音声を停止＆再生ボタンをリセット
-			if (currentAudioPlayer && currentAudioPlayer !== audioPlayer) {
-				currentAudioPlayer.pause();
-				currentAudioPlayer.currentTime = 0;
-				if (currentPlayButton) currentPlayButton.textContent = "▶️";
-			}
-
-			// 再生/停止の切り替え
-			if (audioPlayer.paused) {
-				audioPlayer.play().catch(() => {
-					alert("音声ファイルの再生に失敗しました。");
-				});
-				event.target.textContent = "⏸️"; // 再生中は一時停止アイコンに変更
-				playPauseButton.classList.remove("fa-play");
-				playPauseButton.classList.add("fa-pause");
-				currentAudioPlayer = audioPlayer; // 現在のaudioを記録
-				currentPlayButton = event.target; // 現在のボタンを記録
-			} else {
-				audioPlayer.pause();
-				event.target.textContent = "▶️"; // 停止中は再生アイコンに戻す
-				playPauseButton.classList.remove("fa-pause");
-				playPauseButton.classList.add("fa-play");
-			}
-
-			// 再生終了時の処理
-			audioPlayer.addEventListener("ended", () => {
-				event.target.textContent = "▶️";
-				playPauseButton.classList.remove("fa-pause");
-				playPauseButton.classList.add("fa-play");
-				currentAudioPlayer = null;
-				currentPlayButton = null;
-			});
-
-			// 音楽プレイヤーの表示
-			musicPlayer.style.display = "block";
-
-			// サムネイル画像を取得して再生プレイヤーに設定
-			const thumbnailImage = card.querySelector(".thumbnail").src;
-			const playerImageContainer = musicPlayer.querySelector(".image-container img");
-			playerImageContainer.src = thumbnailImage;
-		}
-	});
-
-	// 再生プレイヤー内の再生/停止ボタンの動作
+	// 再生プレイヤー関連の要素
 	const musicPlayer = document.querySelector(".music-player");
 	const playPauseButton = musicPlayer.querySelector(".play-pause");
 	const progressBar = musicPlayer.querySelector(".progress-bar");
@@ -82,7 +26,7 @@ document.addEventListener("DOMContentLoaded", () => {
 		}
 
 		// 音声の再生時間が0:00の場合、前の音楽に戻る
-		if (currentAudioPlayer.currentTime < 2) {
+		if (currentAudioPlayer.currentTime < 1) {
 			const currentCard = currentAudioPlayer.closest(".video-card");
 			let prevCard = currentCard.previousElementSibling;
 
