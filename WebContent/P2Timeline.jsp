@@ -24,6 +24,7 @@
 <title>ProDotto</title>
 </head>
 
+
 <%
 	// セッションの取得
 	HttpSession ses = request.getSession();
@@ -36,6 +37,7 @@
 	ArrayList<Heart> heartList = (ArrayList) ses.getAttribute("HEARTLIST");
 	String trueMess = (String)ses.getAttribute("TRUEMESS");
 %>
+
 
 <jsp:include page="P2kensaku.jsp"></jsp:include>
 <script>
@@ -210,10 +212,14 @@ window.onload = function(){
 						//System.out.println("noweventId："+noweventId);
 						
 						%>
-							
+						
+						
+						
+						<!-- セッションボタンイフ -->				
 						<%if(postIdPrefix.equals(noweventId)) {%>
-						<button class = session-btn>
-							<span> <a href="P2SessionParticipation?audioFile=<%= toukouList.get(i).getSound() %>">
+						<button>
+							<span> <a href="P2SessionParticipation?audioFile=<%= toukouList.get(i).getSound() %>&ID=<%=toukouList.get(i).getToukouid()%>&hitoride=2">
+
 									<div class="nav_icon">
 										<i class="gg-duplicate"></i>
 									</div>
