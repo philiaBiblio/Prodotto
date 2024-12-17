@@ -28,6 +28,15 @@
 	HttpSession ses = request.getSession();
  %>
 
+<%if("1".equals(request.getParameter("hitoride"))){ %>
+	<% ses.setAttribute("ODAI", null); %>
+	<% ses.setAttribute("ID", null); %>
+<%}%>
+
+<%if("0".equals(request.getParameter("hitoride"))){ %>
+	<% ses.setAttribute("ID", null); %>
+<%}%>
+
 <body>
 	<!-- メインコンテンツ部分 -->
 	<main class="container" title="demo">
@@ -120,8 +129,14 @@
 								<i class="fas fa-download" aria-hidden="true"></i>
 							</button>
 						</div>
+						
 						<!-- メッセージ表示エリア -->
-						<div id="message-area"><%=ses.getAttribute("ODAI") %></div>
+						<% if (ses.getAttribute("ODAI") != null) { %>
+						<div id="message-area">
+    						<%= ses.getAttribute("ODAI") %>
+    						</div>
+						<% } %>
+						
 					</div>
 				</div>
 

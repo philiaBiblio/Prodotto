@@ -1,6 +1,7 @@
 package apli;
 
 import java.io.IOException;
+import java.sql.ResultSet;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -34,18 +35,28 @@ public class P2TLuploadServlet extends HttpServlet {
 		
 		// 文字化け防止
 		request.setCharacterEncoding("UTF-8");
-		// セッションの生成
-		HttpSession ses = request.getSession();
-	    String filename = (String) ses.getAttribute("audioPath");
-		User u = (User)ses.getAttribute("LOGIN");
 		
+		// セッションの取得
+		HttpSession ses = request.getSession();
+		
+		//音声ファイルのパスを取得
+	    String filename = (String)ses.getAttribute("audioPath");
+	    System.out.println("///////////////"+filename+"//////////////");
+		
+		//投稿IDの取得
+        String toukouID = (String)ses.getAttribute("ID");		
+        System.out.println("///////////////"+toukouID+"//////////////");      
+        
+        //ユーザー情報を取得
+      	User u = (User)ses.getAttribute("LOGIN");       
+        
 		// URLの生成
 		String url = "";
 		// DBアクセス用部品の生成
 		DBAcs dba = new DBAcs();
 		
+		
 		try {
-			
 			
 			// 画像の受け取り
 			Part part = request.getPart("samune");
@@ -55,26 +66,85 @@ public class P2TLuploadServlet extends HttpServlet {
 			System.out.println("fileName："+name);
 			
 			//音声ファイルの取得
-		    String adpath = (String) ses.getAttribute("audioPath");
-		    adpath=adpath.substring(6);
+		    String audiopath = (String) ses.getAttribute("audioPath");
+		    audiopath = audiopath.substring(6);
 			
 		    
-		    
-		    
-		    //IF文で分岐して、IDの付け方を分ける
-		    
-			// このデータをDBにインサートする
-			String insertSQL = 
-				    "INSERT INTO 投稿 VALUES (" +
-				    "to_char(systimestamp,'yyyymm') || '-a' || LPAD(連番1.nextval, 4, '0') || '-' || LPAD(連番2.nextval, 8, '0'),'" +
-				    u.getUserid() + "', '000000', 'a0000', " +
-				    "to_char(systimestamp,'yyyy-mm-dd HH24:MI:SS'), " +
-				    "'" + adpath + "', '" + name + "', NULL)";
-			
-			
-			
-			
-			
+		    if(toukouID == null) {
+			    //////////// 「ひとりでセッション」から投稿 //////////////
+		    	if(ses.getAttribute("ODAI") == null){
+		    		System.out.println("*************** 「ひとりでセッション」から投稿 ****************");
+				 	String insertSQL = 
+			    		    "INSERT INTO 投稿 VALUES (" +
+			    		        "'000000' || '-a0000' || '-' || LPAD(連番2.nextval, 8, '0'), " +
+			    		        "'" + u.getUserid() + "', " +
+			    		        "'000000', " +
+			    		        "'a0000', " +
+			    		        "to_char(systimestamp, 'yyyy-mm-dd HH24:MI:SS'), " +
+			    		        "'" + audiopath + "', " +
+			    		        "'" + name + "', " +
+			    		        "NULL" +
+			    		    ")";
+			    	
+				 	// インサート文実行
+				 	dba.UpdateExe(insertSQL);
+		    	}
+			    //////////// 「セッションを始める」から投稿 //////////////		    	
+		    	else {
+		    		System.out.println("*************** 「セッションを始める」から投稿 ****************");
+		    		// シーケンスの連番を1回だけ取得
+		    		ResultSet rs = dba.selectExe("SELECT 連番1.nextval AS seq_val FROM dual");
+		    		rs.next(); // カーソルを1行目に進める
+		    		String seq_val = rs.getString("seq_val"); // 取得したシーケンス値
+
+		    		// SQL文の作成
+		    		String insertSQL = 
+		    		    "INSERT INTO 投稿 VALUES (" +
+		    		        "to_char(systimestamp, 'yyyymm') || '-a' || LPAD(" + seq_val + ", 4, '0') || '-' || LPAD(連番2.nextval, 8, '0'), " +
+		    		        "'" + u.getUserid() + "', " +
+		    		        "to_char(systimestamp, 'yyyymm'), " +  
+		    		        "'a' ||LPAD(" + seq_val + ", 4, '0'), " +    
+		    		        "to_char(systimestamp, 'yyyy-mm-dd HH24:MI:SS'), " +
+		    		        "'" + audiopath + "', " +
+		    		        "'" + name + "', " +
+		    		        "NULL" +
+		    		    ")";			    	
+				 	// インサート文実行
+				 	dba.UpdateExe(insertSQL);
+		    	}
+		    	
+		    }
+		    //////////// 「セッションに参加」から投稿 //////////////		    
+		    else {
+		    	System.out.println("*************** 「セッションに参加」から投稿 ****************");
+		    	//投稿IDからイベントIDと派生IDを取得するSQL
+			    System.out.println("///////////////"+audiopath+"////////////////");
+			    String sql = "SELECT * FROM 投稿 WHERE 投稿ID = '"+toukouID+"'";
+			    
+			    
+			    // SQL文実行
+			 	ResultSet rs = dba.selectExe(sql);
+			 	// カーソルを1行目に進める
+			 	rs.next();
+			 	
+			 	String eventID = rs.getString("イベントID");
+			 	String haseiID = rs.getString("派生ID");
+
+			 	// 取得したシーケンス値を使ってSQL文を作成
+			 	String insertSQL = 
+			 	    "INSERT INTO 投稿 VALUES (" +
+			 	        eventID +"||'-' || '" + haseiID + "' || '-' || LPAD(連番2.nextval, 8, '0'), " +
+			 	        "'" + u.getUserid() + "', " +
+			 	        "'" + eventID + "','" +
+			 	        haseiID + "', " + 
+			 	        "to_char(systimestamp, 'yyyy-mm-dd HH24:MI:SS'), " +
+			 	        "'" + audiopath + "', " +
+			 	        "'" + name + "', " +
+			 	        "NULL" +
+			 	    ")";		    	
+			 	// インサート文実行
+			 	dba.UpdateExe(insertSQL);
+		    }    
 			
 			
 	        //WebContent内のimgフォルダまでのパスを取得
@@ -85,8 +155,6 @@ public class P2TLuploadServlet extends HttpServlet {
 	        //画像ファイルのアップロードを実行
 	        part.write(pathfilename);
 			
-	        // インサート文実行
-	        dba.UpdateExe(insertSQL);
 	        
 	        // タイムライン画面へ
 	        url = "P2TimelineServlet";

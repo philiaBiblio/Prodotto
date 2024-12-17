@@ -21,7 +21,7 @@
         <section class="section session">
             <div class="session-content"><%=ses.getAttribute("ODAI") %></div>
             <div class="button-group">
-                <a href="P2Recording.jsp" class="link-button start">セッションをはじめる</a>
+                <a href="P2Recording.jsp?hitoride=0" class="link-button start">セッションをはじめる</a>
                 <a href="P2DerivativesListServlet" class="link-button party">セッションをさがす</a>
             </div>
         </section>
@@ -29,7 +29,7 @@
         <!-- ひとりでセクション -->
         <section class="section free">
             <div class="button-group">
-                <a href="P2Recording.jsp" class="link-button recording">ひとりでセッション</a>
+                <a href="P2Recording.jsp?hitoride=1" class="link-button recording">ひとりでセッション</a>
                 <a class="link-button upload" id="file-select-link">作品をシェア</a>
                 <form id="file-upload-form" action="P2FileUploadServlet" method="post" enctype="multipart/form-data" style="display: none;">
   		  		<input type="file" id="file-input" name="file" accept="audio/*">

@@ -19,6 +19,7 @@
 		// サーブレットから渡された音声ファイルのパスを取得
 		String filename = (String) ses.getAttribute("audioPath");
 		System.out.println("15 " + filename);
+
 		%>
 
 		<div class="container">
