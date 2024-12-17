@@ -86,13 +86,22 @@ window.onload = function(){
 	<%ses.removeAttribute("TRUEMESS"); %>
 
 	// コメント表示用
-	function openPopup() {
+	function openPopup(toukouId) {
 	  window.open(
-	    "P2popup.jsp",
+	    "P2CommentJusinServlet?toukouId=" + toukouId,
 	    "popupWindow",
 	    "width=500,height=300,scrollbars=yes"
 	  );
 	}
+
+	// 再生バーの名前
+	function saiseiName(id){
+		const kazu = document.getElementById('' + id);
+		console.log("46" + kazu.value);
+		const artist = document.getElementById('artistName');
+		artist.innerText = kazu.value;
+		}
+	
 </script>
 
 <body>
@@ -116,10 +125,10 @@ window.onload = function(){
 				<div class="thumbnail-placeholder">
 
 					<img src="image/<%=toukouList.get(i).getThumbnail()%>"
-						alt="Video Thumbnail" class="thumbnail" />
+						alt="Video Thumbnail" class="thumbnail"/>
 						
 					<button class="play-button" 
-					onclick="sendData('<%= toukouList.get(i).getUserid() %>', 
+					onclick="saiseiName('<%= i%>');sendData('<%= toukouList.get(i).getUserid() %>', 
 					'<%= toukouList.get(i).getToukouid() %>', 
 					'<%= u.getUserid() %>')">
 					▶️</button>
@@ -154,13 +163,13 @@ window.onload = function(){
 					<%} %> 
 
 					<div class="like-comment">
-						<form action="P2CommentJusinServlet">
+						<!-- <form action="P2CommentJusinServlet"> -->
 							<input type="hidden" name="toukouId" value="<%=i%>" />
-							<button class="submit comment" onclick="openPopup()">
+							<button class="submit comment" onclick="openPopup('<%=toukouList.get(i).getToukouid()%>')">
 								<img src="image/こめんと1.png" alt="comment icon"
 									style="width: 20px; height: 20px" /> <span><%=postList.get(i).getCommentCount()%></span>
 							</button>
-						</form>
+						<!-- </form> -->
 
 						<a href="P2heartServlet?hensuu=<%=i%>&heartId=<%= toukouList.get(i).getToukouid() %>&page=TL">
 						<button class="heart" onclick="changeImage('heartImage<%=postList.get(i)%>')">
@@ -201,7 +210,7 @@ window.onload = function(){
 						//System.out.println("noweventId："+noweventId);
 						
 						%>
-
+							
 						<%if(postIdPrefix.equals(noweventId)) {%>
 						<button>
 							<span> <a href="P2SessionParticipation?audioFile=<%= toukouList.get(i).getSound() %>">
@@ -316,26 +325,14 @@ function sendData(toukouUserid, toukouId, userId) {
         console.log('Success:', result); // 結果をコンソールに表示
     })
     .catch(error => {
-        console.error('Error:', error); // エラーをコンソールに表示
+        console.log('Error:', error); // エラーをコンソールに表示
     });
 }
-
-// コメント欄非同期挑戦
-
-
 </script>		
 	
 	
 	
 	<script src="https://unpkg.com/wavesurfer.js"></script>
-	<script>
-	function Saisei(){
-		var e1 = document.getElementById("num");
-		var e2 = document.getElementById("test");
-
-		e2.value = e1;"
-
-	</script>
 	
 	<dialog id="confirmationDialog">
 		<p>削除しました</p>

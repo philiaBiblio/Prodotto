@@ -67,14 +67,7 @@ public class P2TimelineServlet extends HttpServlet {
 				String upName = rs.getString("名前");
 				String toukouIcon = rs.getString("アイコン");
 				
-				int comm; 
-				if (rs.getInt("コメント数") > 0) {
-				    comm = rs.getInt("コメント数") - 1;
-				} else {
-				    comm = rs.getInt("コメント数");
-				}
-				
-	   	
+				int 	comm = rs.getInt("コメント数");
 				int iine = rs.getInt("いいね数");
                 //System.out.println(toukouId.substring(0,6));
 				

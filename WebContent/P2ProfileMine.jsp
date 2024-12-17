@@ -88,6 +88,15 @@ document.addEventListener('DOMContentLoaded', (event) => {
 	} 	
 <%}%>
 <%ses.removeAttribute("TRUEMESS");%>
+
+// コメント表示用
+function openPopup(toukouId) {
+  window.open(
+    "P2CommentJusinServlet?toukouId=" + toukouId,
+    "popupWindow",
+    "width=500,height=300,scrollbars=yes"
+  );
+}
 </script>
 
 
@@ -170,18 +179,14 @@ document.addEventListener('DOMContentLoaded', (event) => {
 						</button>
 					</form>
 
-
-
 					<div class="like-comment">
-
-						<form action="P2CommentJusinServlet">
+						<!-- <form action="P2CommentJusinServlet"> -->
 							<input type="hidden" name="toukouId" value="<%=i%>" />
-							<button class="submit comment" onclick="openPopup()">
+							<button class="submit comment" onclick="openPopup('<%=upList.get(i).getToukouid()%>')">
 								<img src="image/こめんと1.png" alt="comment icon"
-									style="width: 20px; height: 20px" /> <span> <%=postList.get(i).getCommentCount()%>
-								</span>
+									style="width: 20px; height: 20px" /> <span><%=postList.get(i).getCommentCount()%></span>
 							</button>
-						</form>
+						<!-- </form> -->
 
 						<a href="P2heartServlet?hensuu=<%=i%>&heartId=<%=upList.get(i).getToukouid()%>&page=mine">
 							<button class="heart"
@@ -247,6 +252,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
 							type="button"
 							id="openDialogButton<%=upList.get(i).getToukouid()%>"
 							onclick="dialog('<%=i%>')"
+							class="trashButton"
 							/>
 							<span>
 								<div class="nav_icon trash">
@@ -325,18 +331,14 @@ document.addEventListener('DOMContentLoaded', (event) => {
 						</button>
 					</form>
 
-
-
 					<div class="like-comment">
-
-						<form action="P2CommentJusinServlet">
+						<!-- <form action="P2CommentJusinServlet"> -->
 							<input type="hidden" name="toukouId" value="<%=i%>" />
-							<button class="submit comment" onclick="openPopup()">
+							<button class="submit comment" onclick="openPopup('<%=upList.get(i).getToukouid()%>')">
 								<img src="image/こめんと1.png" alt="comment icon"
-									style="width: 20px; height: 20px" /> <span> <%=postList.get(i).getCommentCount()%>
-								</span>
+									style="width: 20px; height: 20px" /> <span><%=postList.get(i).getCommentCount()%></span>
 							</button>
-						</form>
+						<!-- </form> -->
 
 						<a
 							href="P2heartServlet?hensuu=<%=i%>&heartId=<%=upList.get(i).getToukouid()%>&page=mine">
@@ -344,21 +346,21 @@ document.addEventListener('DOMContentLoaded', (event) => {
 								onclick="changeImage('heartImage<%=postList.get(i)%>')">
 								<img id="heartImage<%=postList.get(i)%>"
 									<%for (int j = 0; j < heartList.size(); j++) {
-											System.out.println("for文開始" + i);
+										//	System.out.println("for文開始" + i);
 											if (flgin == false) {
-												System.out.println(upList.get(i).getToukouid() + ":" + heartList.get(j).getPostId());
+										//		System.out.println(upList.get(i).getToukouid() + ":" + heartList.get(j).getPostId());
 												if (upList.get(i).getToukouid().equals(heartList.get(j).getPostId())) {
-													System.out.println(u.getUserid() + ":" + heartList.get(j).getUserId());
+										//			System.out.println(u.getUserid() + ":" + heartList.get(j).getUserId());
 													if (u.getUserid().equals(heartList.get(j).getUserId())) {
-														System.out.println("152");
+										//				System.out.println("152");
 														flgin = true;
 													} else {
-														System.out.println("158");
+										//				System.out.println("158");
 													}
 												} else {
-													System.out.println("162");
+										//			System.out.println("162");
 												}
-												System.out.println("for文終わり" + i);
+										//		System.out.println("for文終わり" + i);
 											}
 										}
 										
@@ -403,7 +405,9 @@ document.addEventListener('DOMContentLoaded', (event) => {
 						<%-- <input type="hidden" name="toukouId" value="<%=i%>" /> --%>
 						<button type="button"
 							id="openDialogButton<%=upList.get(i).getToukouid()%>"
-							onclick="dialog('<%=i%>')">
+							onclick="dialog('<%=i%>')"
+							class="trashButton"
+							>
 							<span>
 								<div class="nav_icon trash">
 									<i class="gg-trash"></i>
@@ -485,7 +489,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
 
 	<script src="audioPlayer.js"></script>
-	<script>
+	<script>	
       const scrollLeftButton1 = document.getElementById("scroll-left-1");
       const scrollRightButton1 = document.getElementById("scroll-right-1");
       const videoGrid1 = document.getElementById("video-grid-1");

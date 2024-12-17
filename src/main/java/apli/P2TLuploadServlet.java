@@ -45,6 +45,8 @@ public class P2TLuploadServlet extends HttpServlet {
 		DBAcs dba = new DBAcs();
 		
 		try {
+			
+			
 			// 画像の受け取り
 			Part part = request.getPart("samune");
 			
@@ -56,6 +58,11 @@ public class P2TLuploadServlet extends HttpServlet {
 		    String adpath = (String) ses.getAttribute("audioPath");
 		    adpath=adpath.substring(6);
 			
+		    
+		    
+		    
+		    //IF文で分岐して、IDの付け方を分ける
+		    
 			// このデータをDBにインサートする
 			String insertSQL = 
 				    "INSERT INTO 投稿 VALUES (" +
@@ -63,6 +70,11 @@ public class P2TLuploadServlet extends HttpServlet {
 				    u.getUserid() + "', '000000', 'a0000', " +
 				    "to_char(systimestamp,'yyyy-mm-dd HH24:MI:SS'), " +
 				    "'" + adpath + "', '" + name + "', NULL)";
+			
+			
+			
+			
+			
 			
 			
 	        //WebContent内のimgフォルダまでのパスを取得
