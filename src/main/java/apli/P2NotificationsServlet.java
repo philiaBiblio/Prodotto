@@ -54,7 +54,7 @@ public class P2NotificationsServlet extends HttpServlet {
 					+ "union "
 					+ "select 'DM' as 種類,'',送信元 as ユーザーID,タイムスタンプ,既読未読 as 通知,内容,'',受信元 from DM "
 					+ "where 受信元 = '" + u.getUserid() + "') 通知 "
-					+ "join ユーザー on 通知.ユーザーID = ユーザー.ユーザーID order by タイムスタンプ";
+					+ "join ユーザー on 通知.ユーザーID = ユーザー.ユーザーID order by タイムスタンプ desc";
 			
 	    	 // sql文実行
 	    	 ResultSet rs = dba.selectExe(sql);

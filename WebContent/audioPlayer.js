@@ -119,9 +119,9 @@ document.addEventListener("DOMContentLoaded", () => {
 			const playerImageContainer = musicPlayer.querySelector(".image-container img");
 			playerImageContainer.src = nextThumbnailImage;
 
-			const nextArtistName = nextCard.getAttribute("data-artist-name") || "Unknown Artist";
-			const artist = document.getElementById("artistName");
-			artist.innerText = nextArtistName;
+//			const nextArtistName = nextCard.getAttribute("data-artist-name") || "Unknown Artist";
+//			const artist = document.getElementById("artistName");
+//			artist.innerText = nextArtistName;
 		} else {
 			alert("これ以上次の音声がありません。");
 		}
@@ -169,9 +169,9 @@ document.addEventListener("DOMContentLoaded", () => {
 			const playerImageContainer = musicPlayer.querySelector(".image-container img");
 			playerImageContainer.src = thumbnailImage;
 
-			const artistName = card.getAttribute("data-artist-name") || "Unknown Artist";
+			/*const artistName = card.getAttribute("data-artist-name") || "Unknown Artist";
 			const artist = document.getElementById("artistName");
-			artist.innerText = artistName;
+			artist.innerText = artistName;*/
 
 			// リピートモードの再生終了処理
 			audioPlayer.addEventListener("ended", () => {

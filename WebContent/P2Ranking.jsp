@@ -23,7 +23,7 @@
 	href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=settings" />
 <link rel="stylesheet" href="P2Ranking.css" />
 
-<title>ProDotto</title>
+<title>ランキング画面</title>
 </head>
 
 <%
@@ -144,12 +144,12 @@ window.onload = function(){
 						alt="Video Thumbnail" class="thumbnail" />
 						
 					<button class="play-button" 
-					onclick="saiseiName('<%= i%>');sendData('<%= toukouList3.get(i).getUserid() %>', 
+					onclick="saiseiName('1<%= i%>');sendData('<%= toukouList3.get(i).getUserid() %>', 
 					'<%= toukouList3.get(i).getToukouid() %>', 
 					'<%= u.getUserid() %>')">
 					▶️</button>
 					
-					<input type="hidden" value="<%=userIconList3.get(i).getName() %>" id="<%=i%>">
+					<input type="hidden" value="<%=userIconList3.get(i).getName() %>" id="1<%=i%>">
 					
 					<!-- 音声再生ボタン -->
 					<audio class="audio-player"
@@ -352,12 +352,12 @@ window.onload = function(){
 						alt="Video Thumbnail" class="thumbnail" />
 						
 					<button class="play-button" 
-					onclick="saiseiName('<%= i%>');sendData('<%= toukouList1.get(i).getUserid() %>', 
+					onclick="saiseiName('2<%= i%>');sendData('<%= toukouList1.get(i).getUserid() %>', 
 					'<%= toukouList1.get(i).getToukouid() %>', 
 					'<%= u.getUserid() %>')">
 					▶️</button>
 					
-					<input type="hidden" value="<%=userIconList1.get(i).getName() %>" id="<%=i%>">
+					<input type="hidden" value="<%=userIconList1.get(i).getName() %>" id="2<%=i%>">
 					
 					<!-- 音声再生ボタン -->
 					<audio class="audio-player"
@@ -511,12 +511,12 @@ window.onload = function(){
 						alt="Video Thumbnail" class="thumbnail" />
 						
 					<button class="play-button" 
-					onclick="saiseiName('<%= i%>');sendData('<%= toukouList2.get(i).getUserid() %>', 
+					onclick="saiseiName('3<%= i%>');sendData('<%= toukouList2.get(i).getUserid() %>', 
 					'<%= toukouList2.get(i).getToukouid() %>', 
 					'<%= u.getUserid() %>')">
 					▶️</button>
 					
-					<input type="hidden" value="<%=userIconList2.get(i).getName() %>" id="<%=i%>">
+					<input type="hidden" value="<%=userIconList2.get(i).getName() %>" id="3<%=i%>">
 					
 					<!-- 音声再生ボタン -->
 					<audio class="audio-player"
