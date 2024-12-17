@@ -46,11 +46,6 @@ public class P2DerivativesListServlet extends HttpServlet {
 		DBAcs dba = new DBAcs();
 
 		try {
-			// ログイン情報の取得
-			User user = (User)ses.getAttribute("LOGIN");
-			ArrayList<Toukou> TList = (ArrayList)ses.getAttribute("TLIST");
-			//			Integer i = (Integer)ses.getAttribute("I");
-			//			System.out.println(i);
 			
 			//お題を取得
 	        System.out.println("Year: " + year + "Month: " + month);
@@ -59,7 +54,7 @@ public class P2DerivativesListServlet extends HttpServlet {
 	        String odai = Year+Month;
 	        
 			//投稿を取得(お題が今のと同じものを持ってくる)
-			String sql1 = "select * from 投稿 where 投稿ID="+odai+"*" ;
+			String sql1 = "select * from 投稿 where 投稿ID like '"+odai+"%'" ;
 			System.out.println(sql1);
 			
 			ResultSet rs = dba.selectExe(sql1);
@@ -70,7 +65,11 @@ public class P2DerivativesListServlet extends HttpServlet {
 			url = "P2DerivativesList.jsp";
 			System.out.println(url);
 			
-			//画面遷移を行う
+			// 情報を保存
+	        ses.setAttribute("TLsit", rs);
+			
+	        //画面遷移を行う
+	        
 			RequestDispatcher rd = request.getRequestDispatcher(url);
 			rd.forward(request, response);
 			
