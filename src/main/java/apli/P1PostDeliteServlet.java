@@ -79,7 +79,7 @@ public class P1PostDeliteServlet extends HttpServlet {
 	    	 toukouList.remove(i);
 	    	 
 		     String trueMess = "変更できました。";
-		     ses.setAttribute("TRUEMESS", trueMess);
+		     ses.setAttribute("DELEAT", trueMess);
 		        	        
 		     // 画面へ遷移
 		     if(pageflg.equals("prf")) {

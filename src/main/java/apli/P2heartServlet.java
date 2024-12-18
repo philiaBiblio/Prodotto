@@ -83,6 +83,8 @@ public class P2heartServlet extends HttpServlet {
 					url = "P2UserSearchServlet";
 				}else if(pageFlg.equals("Ranking")) {
 					url = "P2RankingServlet";
+				}else if(pageFlg.equals("Deri")){
+					url = "P2DerivativesListServlet";
 				}
 	    	 
 			System.out.println(url);
