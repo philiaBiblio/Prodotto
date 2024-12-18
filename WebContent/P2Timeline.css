@@ -36,7 +36,7 @@ body {
 .thumbnail-placeholder {
   width: 220px;
   height: 120px;
-  background-color: rgb(44, 44, 44);
+  background-color: #11dadd;
   border-radius: 10px;
   position: relative;
   display: flex;

@@ -25,18 +25,14 @@ body {
 	display: none;
 	justify-content: center;
 	align-items: center;
-	position: fixed;
-	/* 変更: 固定位置に設定 */
-	bottom: 0;
-	/* 変更: 画面下部に固定 */
+	position: fixed;/* 変更: 固定位置に設定 */
+	bottom: 0;/* 変更: 画面下部に固定 */
 	left: 0;
-	width: 100%;
-	/* 変更: 画面幅に合わせる */
+	width: 100%;/* 変更: 画面幅に合わせる */
 	height: 7rem;
 	padding: var(--padding);
 	color: #11dadd;
-	z-index: 999;
-	/* 上に表示するための設定 */
+	z-index: 999;/* 上に表示するための設定 */
 }
 
 /* 音楽プレイヤー非表示ボタン */
@@ -116,6 +112,16 @@ i:hover {
 
 .artist {
 	color: var(--secondary-color);
+}
+
+.progress-controller {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5em;
+  color: var(--secondary-color);
 }
 
 .icons {
@@ -254,6 +260,11 @@ a {
 	border-radius: 50%;
 }
 
+.play-pause:hover {
+  transform: scale(1.1);
+  color: #111;
+}
+
 /* 再生プレイヤー */
 .progress-container {
 	width: 100%;
@@ -284,6 +295,18 @@ a {
 	background-color: var(--secondary-color);
 }
 
+/* シークバーのクリック領域を広げるためのレイヤー */
+.progress-bar::before {
+    content: "";
+    position: absolute;
+    top: 88px; /* シークバー上方向にクリック可能領域を広げる */
+    bottom: 14px; /* シークバー下方向にクリック可能領域を広げる */
+    left: 263px; /* シークバー左方向の当たり判定を広げる */
+    right: 263px; /* シークバー右方向の当たり判定を広げる */
+    z-index: 1; /* 視覚的には見えないがクリック可能に */
+    background-color: transparent; /* 見えない状態にする（クリック範囲のみ機能） */
+}
+
 /* シークバーの色 */
 .progress-bar:hover .progress {
 	background-color: var(--green-color);
@@ -303,12 +326,15 @@ a {
 }
 
 .other-features {
-	position: absolute;
-	right: var(--padding);
-	top: 50%;
-	display: flex;
-	flex-direction: row;
-	gap: 1em;
+    position: absolute;
+    right: var(--padding);
+    display: flex;
+    flex-direction: row;
+    gap: 1em;
+    top: 50%; /* 親要素の中央に配置 */
+    transform: translateY(-50%); /* 中央に配置するための調整 */
+    height: 10px; /* progress-containerと同じ高さに設定 */
+    align-items: center; /* 垂直方向に中央揃え */
 }
 
 .volume-bar {
@@ -400,7 +426,7 @@ img {
 .thumbnail-placeholder {
 	width: 100%;
 	height: 120px;
-	background-color: rgb(44, 44, 44);
+    background-color: #11dadd;
 	border-radius: 10px;
 	position: relative;
 	display: flex;
