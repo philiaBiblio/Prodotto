@@ -178,7 +178,7 @@ img.thumbnail {
 .music-player {
   --primary-color: #ddd;
   --secondary-color: #e0dddd;
-  --green-color: ;
+  --green-color: #11dadd;
   --padding: 1em;
   background-color: rgb(0, 0, 0);
   display: none;

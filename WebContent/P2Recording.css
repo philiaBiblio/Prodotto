@@ -105,11 +105,11 @@ body {
   border-bottom: 2px solid #ff0000; /* 下線の太さ、スタイル、色 */
 }
 
-.playlist-overlay {
+/*.playlist-overlay  {
   margin-left: 0px;
-  height: 120px; /* 修正: `height120px` を正しい形式に */
-  border-bottom: 1px solid #ffffff; /* 下線の太さ、スタイル、色 */
-}
+  height: 120px;  修正: `height120px` を正しい形式に 
+  border-bottom: 1px solid #ffffff;  下線の太さ、スタイル、色 
+}*/
 
 
 
