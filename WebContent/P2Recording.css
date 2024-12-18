@@ -3,6 +3,7 @@ body {
   color: #ffffff; /* 文字 */
   font-family: Arial, sans-serif;
   padding: 20px;
+      text-align: left;
 }
 
 .btn{
@@ -53,6 +54,7 @@ body {
 
 .playlist-tracks{
   max-height: 480px;
+  max-weight: 1200px;
   position: relative; /* 子要素の位置決めに影響を与える */
   overflow: auto; /* スクロール領域を確保 */
 
