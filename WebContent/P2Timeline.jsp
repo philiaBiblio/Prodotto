@@ -217,7 +217,7 @@ window.onload = function(){
 						
 						<!-- セッションボタンイフ -->				
 						<%if(postIdPrefix.equals(noweventId)) {%>
-						<button>
+						<button class = session-btn>
 							<span> <a href="P2SessionParticipation?audioFile=<%= toukouList.get(i).getSound() %>&ID=<%=toukouList.get(i).getToukouid()%>&hitoride=2">
 
 									<div class="nav_icon">
@@ -340,7 +340,7 @@ function sendData(toukouUserid, toukouId, userId) {
 	
 	<script src="https://unpkg.com/wavesurfer.js"></script>
 	
-	<dialog id="confirmationDialog">
+	<dialog id="confirmationDialog" class="confirmationDialog">
 		<p>削除しました</p>
 		<button type="button" class="dialogButton" id="closeConfirmationButton" onclick="confirmationDialog.close();">閉じる</button>
 	</dialog>

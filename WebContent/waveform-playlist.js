@@ -6467,7 +6467,7 @@ var WaveformPlaylist;
 											soloed: t.soloedTracks.indexOf(e) > -1,
 											muted: t.mutedTracks.indexOf(e) > -1,
 											collapsed: n,
-											height: n ? t.collapsedWaveHeight : t.waveHeight+20, //トラックの高さの調節できるところろろろろろろろろ
+											height: n ? t.collapsedWaveHeight : t.waveHeight+70, //トラックの高さの調節できるところろろろろろろろろ
 											barGap: t.barGap,
 											barWidth: t.barWidth,
 										})

@@ -1,6 +1,7 @@
 package apli;
 
 import java.io.IOException;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
@@ -13,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
- * Servlet implementation class UserSearchServlet
+ * Servlet implementation class P1UserSearchServlet
  */
 @WebServlet("/P1UserSearchServlet")
 public class P1UserSearchServlet extends HttpServlet {
@@ -25,90 +26,191 @@ public class P1UserSearchServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		System.out.println("P1UserSearchServlet実行");
-				
-		// 文字化け防止
-		request.setCharacterEncoding("UTF-8");
-		// セッションの生成
-		HttpSession ses = request.getSession();
-		// ログイン情報の取得
-		User u = (User)ses.getAttribute("LOGIN");
-		// URLの生成
-		String url = "";
-		// DBアクセス用部品の生成
-		DBAcs dba = new DBAcs();
 		
-		//ユーザーリストの生成
-		// セッションからUSERLISTを取得
-		ArrayList<User> UList = (ArrayList<User>) ses.getAttribute("USERLIST");
-		if (UList == null) {
-		    UList = new ArrayList<>(); // 初回のみ新規作成
-		} else {
-		    UList.clear(); // 既存データをクリア
-		}
+		 // 文字化け防止
+        request.setCharacterEncoding("UTF-8");
+        
+        // セッションの生成
+        HttpSession ses = request.getSession();
+        
+        // ログイン情報の取得
+        AdminUser au = (AdminUser) ses.getAttribute("ADMINLOGIN");
+	    User up = (User) ses.getAttribute("PROF");
+        ArrayList<Heart> heartList = new ArrayList<Heart>();
+        
+        // URLの生成
+        String url = "";
+        
+        // DBアクセス用部品の生成
+        DBAcs dba = new DBAcs();
+        DBAcs dba2 = new DBAcs();
 
-		
-		try {
-			// 検索キーワードの取得
-			String username = request.getParameter("usersearch");
-			System.out.println(username);
+        String userID;
+        try {
+            // ユーザーIDの取得	
+        	userID = request.getParameter("userID");
+        	if(up == null) {
+        		up = new User();
+        		up.setUserid(userID);
+        	}
+        	
+        	if(!(up.getUserid().equals(userID)) && userID != null) {
+        		up = new User();
+        		up.setUserid(userID);
+        	}
+            
+            // ユーザー情報の取得
+            ResultSet rsu = dba.selectExe("SELECT * FROM ユーザー WHERE ユーザーID = '" + up.getUserid() + "'");
+            if (rsu.next()) {
+                String uid = rsu.getString("ユーザーID");
+                String name = rsu.getString("名前");
+                String icon = rsu.getString("アイコン");
+                
+                // ユーザー情報を設定
+                up = new User();
+                up.setUserid(uid);
+                up.setName(name);
+                up.setIconImage(icon);
+                
+                // フォロー状態を確認
+//                boolean isFollowing = checkIfFollowing(dba, au.getAdminUserid(), up.getUserid());
+//                ses.setAttribute("isFollowing", isFollowing);
+                
+				/*  int followCount = 0;
+				int followerCount = 0;
+				ses.setAttribute("followCount", followCount);
+				ses.setAttribute("followerCount", followerCount);*/
+                
+//                try (ResultSet rsFollow = dba.selectExe("SELECT COUNT(*) AS follow_count FROM フォロー WHERE フォロワー = '" + up.getUserid() + "'")) {
+//                    if (rsFollow.next()) {
+//                        int followCount = rsFollow.getInt("follow_count"); // フォローしている数
+//                        System.out.println("followCount："+followCount);
+//                        ses.setAttribute("followCount", followCount);
+//                    }
+//                }
+//
+//                try (ResultSet rsFollower = dba.selectExe("SELECT COUNT(*) AS follower_count FROM フォロー WHERE フォロー = '" + up.getUserid() + "'")) {
+//                    if (rsFollower.next()) {
+//                        int followerCount = rsFollower.getInt("follower_count"); // フォロワー数
+//                        System.out.println("followerCount："+followerCount);
+//                        ses.setAttribute("followerCount", followerCount);
+//                    }
+//                }
+//                int followCount = (int) ses.getAttribute("followCount");
+//                int followerCount = (int) ses.getAttribute("followerCount");
+//                System.out.println("94:followCount："+followCount);
+//                System.out.println("95:followerCount："+followerCount);
+                
+                // リクエストスコープに保存
+                ses.setAttribute("PROF", up);
+  //              ses.setAttribute("isFollowing", isFollowing);
+                
+                // 投稿リストを取得してリクエストスコープに保存
+                ArrayList<Post> postList = getPostList(dba, up.getUserid());
+                ses.setAttribute("postList", postList);
+            
+            } else {
+                // ユーザーが見つからない場合の処理
+                ses.setAttribute("error", "ユーザーが見つかりませんでした。");
+            }
+            
+//            // 自分がいいねしたかの判別用のsql
+// 			String sql = "select * from いいね";
+// 			// sql文実行
+// 			ResultSet rs = dba2.selectExe(sql);
+// 			
+// 			while(rs.next()) {
+// 				String toukouId = rs.getString("投稿ID");
+// 				String userId = rs.getString("ユーザーID");
+// 				
+// 				// インスタンス生成
+// 				Heart heart = new Heart();
+// 				heart.setPostId(toukouId);
+// 				heart.setUserId(userId);
+// 				
+// 				// アレイリストに追加
+// 				heartList.add(heart);
+// 			}
+// 			ses.setAttribute("HEARTLIST", heartList);
+ 			
+        } catch (Exception e) {
+            e.printStackTrace();
+            ses.setAttribute("error", "エラーが発生しました。");
+        } finally {
+            // データベースを閉じる
+            dba.closeDB();
+        }
 
-			// 検索キーワードが空の場合の処理
-			if (username == null || username.trim().isEmpty()) {
-				System.out.println("検索キーワードが空です。");
-				// USERLIST をクリア
-				UList.clear();
-				ses.setAttribute("USERLIST", UList);
+        // JSPへ遷移
+        url = "P1AdminProfile.jsp";
+        RequestDispatcher rd = request.getRequestDispatcher(url);
+        rd.forward(request, response);
+    }
 
-				// 検索結果がない状態で画面遷移
-				url = "P2UserSearch.jsp";
-				RequestDispatcher rd = request.getRequestDispatcher(url);
-				rd.forward(request, response);
-				return; // 処理終了
-			}
+//    private boolean checkIfFollowing(DBAcs dba, String followUserID, String followerUserID) {
+//        boolean result = false;
+//        System.out.println("result："+result);
+//        String query = "SELECT * FROM フォロー WHERE フォロー = ? AND フォロワー = ?";
+//        System.out.println("query："+query);
+//        try (PreparedStatement pstmt = dba.getConnection().prepareStatement(query)) {
+//            pstmt.setString(1, followUserID);
+//            System.out.println("followUserID："+followUserID);
+//            pstmt.setString(2, followerUserID);
+//            System.out.println("followerUserID："+followerUserID);
+//            try (ResultSet rs = pstmt.executeQuery()) {
+//                result = rs.next(); 
+//            }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        System.out.println("return result："+result);
+//        return result;
+//        
+//    }
 
-			// SELECT文ユーザー情報を取得
-			ResultSet rs = dba.selectExe("SELECT * FROM ユーザー WHERE 名前 LIKE '%" + username + "%'");
+    private ArrayList<Post> getPostList(DBAcs dba, String userID) throws Exception {
+        	ArrayList<Post> postList = new ArrayList<>();
 
-			// カーソルを１行ずらす。flgに結果を保存。
-			boolean flg = rs.next();
+        String query = "SELECT 投稿.投稿ID, 投稿.サムネイル, 投稿.作品," +
+        		"(SELECT COUNT(*) FROM コメント WHERE コメント.投稿ID = 投稿.投稿ID) AS コメント数, " +
+        		"(SELECT COUNT(*) FROM いいね WHERE いいね.投稿ID = 投稿.投稿ID) AS いいね数 " +
+        		"FROM 投稿 " +
+        		"WHERE 投稿.ユーザーID = ? " +
+        		"ORDER BY 投稿.アップロード日 DESC";
+        System.out.println("クエリ："+query);
 
-			// 検索結果の数分繰り返す。
-			while (flg) {
-				// ユーザー情報を変数に保存する
-				String uid = rs.getString("ユーザーID");
-				String name = rs.getString("名前");
-				String icon = rs.getString("アイコン");
+        try (PreparedStatement pstmt = dba.getConnection().prepareStatement(query)) {
+            pstmt.setString(1, userID); 
+            System.out.println("誰かな："+userID);
 
-				// ユーザーインスタンスの生成
-				User uu = new User();
-				uu.setUserid(uid);
-				uu.setName(name);
-				uu.setIconImage(icon);
+            try (ResultSet rsPosts = pstmt.executeQuery()) {
+            	System.out.println("投稿リスト："+rsPosts);
+                while (rsPosts.next()) {
+                    // データを取得
+                    String postId = rsPosts.getString("投稿ID");
+        //            System.out.println("投稿ID："+postId);
+                    String thumbnailPath = rsPosts.getString("サムネイル");
+        //            System.out.println("サムネイルパス："+thumbnailPath);
+                    String audioPath = rsPosts.getString("作品");
+        //            System.out.println("音声ファイルパス："+audioPath);
+                    int commentCount = rsPosts.getInt("コメント数");
+                    int likeCount = rsPosts.getInt("いいね数"); 
+                    
 
-				// ユーザーリストにユーザー情報を保存する
-				UList.add(uu);
+                    // Postオブジェクトを作成
+                    Post post = new Post();
+                    post.setPostId(postId);
+                    post.setThumbnailPath(thumbnailPath);
+                    post.setAudioPath(audioPath);
+                    post.setCommentCount(commentCount);
+                    post.setLikeCount(likeCount); 
 
-				// カーソルを一行ずらす
-				flg = rs.next();
-			}
-
-			// 会員の一覧を保存
-			ses.setAttribute("USERLIST", UList);
-
-			// 画面遷移
-			url = "P1UserSearch.jsp";
-			RequestDispatcher rd = request.getRequestDispatcher(url);
-			rd.forward(request, response);
-
-			// ログアウト処理
-			dba.closeDB();
-		} 
-			catch (Exception e) {
-				// TODO: handle exception
-				e.printStackTrace();
-				// ログアウト処理
-				dba.closeDB();
-			}
+                    // リストに追加
+                    postList.add(post);
+                }
+            }
+        }
+        return postList;
 	}
 
 }

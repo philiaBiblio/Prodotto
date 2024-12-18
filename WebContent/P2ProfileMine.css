@@ -233,6 +233,7 @@ img {
 /* 全体のカードスタイル */
 .video-card {
 	width: 250px;
+	height: 186px;
 	border-radius: 10px;
 	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 	background-color: rgb(44, 44, 44);
@@ -597,20 +598,20 @@ img.thumbnail {
 
 /* ゴミ箱 */
 .gg-trash {
-    box-sizing: border-box;
-    position: relative;
-    display: block;
-    transform: scale(var(--ggs, 1));
-    width: 10px;
-    height: 12px;
-    border: 2px solid transparent;
-    box-shadow:
-      0 0 0 2px,
-      inset -2px 0 0,
-      inset 2px 0 0;
-    border-bottom-left-radius: 1px;
-    border-bottom-right-radius: 1px;
-    margin-top: 4px;
+	box-sizing: border-box;
+	position: relative;
+	display: block;
+	transform: scale(var(--ggs, 1));
+	width: 10px;
+	height: 12px;
+	border: 2px solid transparent;
+	box-shadow:
+		0 0 0 2px,
+		inset -2px 0 0,
+		inset 2px 0 0;
+	border-bottom-left-radius: 1px;
+	border-bottom-right-radius: 1px;
+	margin-top: 4px;
 }
 
 .gg-trash::after,
@@ -810,12 +811,17 @@ p.follow {
 }
 
 .session-btn {
-  width: 15px; /* 横幅を指定 */
-  height: 40px; /* 高さを指定 */
-  display: inline-block; /* サイズ指定を適用するためにブロック要素として扱う */
-  text-align: center; /* テキストを中央揃え */
-  line-height: 40px; /* 縦中央揃え（高さと同じ値に） */
-  border: none;
+	width: 15px;
+	/* 横幅を指定 */
+	height: 40px;
+	/* 高さを指定 */
+	display: inline-block;
+	/* サイズ指定を適用するためにブロック要素として扱う */
+	text-align: center;
+	/* テキストを中央揃え */
+	line-height: 40px;
+	/* 縦中央揃え（高さと同じ値に） */
+	border: none;
 }
 
 .gg-duplicate::after,

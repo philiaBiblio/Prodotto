@@ -14,8 +14,8 @@ import javax.servlet.http.HttpSession;
 /**
  * Servlet implementation class P2PostDeliteServlet
  */
-@WebServlet("/P2PostDeliteServlet")
-public class P2PostDeliteServlet extends HttpServlet {
+@WebServlet("/P1PostDeliteServlet")
+public class P1PostDeliteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -23,7 +23,7 @@ public class P2PostDeliteServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		System.out.println("P2PostDeliteServlet実行");
+		System.out.println("P1PostDeliteServlet実行");
 		 
 		 // 文字化け防止
 		 request.setCharacterEncoding("UTF-8");
@@ -34,7 +34,6 @@ public class P2PostDeliteServlet extends HttpServlet {
 	     User u = (User) ses.getAttribute("LOGIN");
 	     // アレイリストの取得
 	     ArrayList<Toukou> toukouList = (ArrayList) ses.getAttribute("TOUKOULIST");
-	     ArrayList<Post> postList = (ArrayList<Post>) ses.getAttribute("postList");
 	     
 	     // URLの生成
 	     String url = "";   
@@ -74,19 +73,13 @@ public class P2PostDeliteServlet extends HttpServlet {
 	    	 }
 	    	 
 	    	 //リストから削除する
-	    	 if(toukouList != null) {
-	    		 toukouList.remove(i);
-	    		 ses.setAttribute("TOUKOULIST", toukouList);
-	    	 }else if(postList != null) {
-	    		 postList.remove(i);
-	    		 ses.setAttribute("postList", postList);
-	    	 }
+	    	 toukouList.remove(i);
 	    	 
 		     String trueMess = "変更できました。";
 		     ses.setAttribute("TRUEMESS", trueMess);
 		        	        
 		     // 画面へ遷移
-		     url = "P2TimelineServlet";
+		     url = "TLManagementServlet";
 		     response.sendRedirect(url);
 	    	 
 		     // ログアウト処理

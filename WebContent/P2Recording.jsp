@@ -132,7 +132,7 @@
 						
 						<!-- メッセージ表示エリア -->
 						<% if (ses.getAttribute("ODAI") != null) { %>
-						<div id="message-area">
+						<div id="message-area" class="odaitext">
     						<%= ses.getAttribute("ODAI") %>
     						</div>
 						<% } %>

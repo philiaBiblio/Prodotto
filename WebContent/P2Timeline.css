@@ -19,6 +19,7 @@ body {
 /* 全体のカードスタイル */
 .video-card {
   width: 250px;
+  height: 186px;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   background-color:rgb(44, 44, 44);
@@ -33,7 +34,7 @@ body {
 
 /* サムネイル部分 */
 .thumbnail-placeholder {
-  width: 100%;
+  width: 220px;
   height: 120px;
   background-color: rgb(44, 44, 44);
   border-radius: 10px;
@@ -467,6 +468,7 @@ header .toggle {
   justify-content: flex-start;
   width: 100%;
   margin-top: 10px;
+  gap: 10px;
 }
 
 /* 左メニュー */
@@ -759,12 +761,6 @@ a,a:visited{
   margin-right: auto; /* プロフィールアイコンを左に固定 */
 }
 
-/* いいね＆コメントのボタン */
-.like-comment {
-  display: flex;
-  gap: 10px;
-}
-
 .like-comment button {
   background: none;
   border: none;
@@ -932,7 +928,14 @@ a,a:visited{
   display: inline-block; /* 幅を固定するために inline-block を使用 */
 }
 
-.like-comment button.dialog {
+/*dialog {*/
+/*    border-radius: 10px;*/
+/*    background-color: #000000;*/
+/*    border: solid 3px #11dadd;*/
+/*    color: white;*/
+/*}*/
+
+.like-comment dialog {
   text-align: center;
   border-radius: 10px;
   background-color: #000000;
@@ -940,8 +943,7 @@ a,a:visited{
   color: white;
 }
 
-.like-comment button.dialog #yesButton,
-#noButton {
+.like-comment .dialogButton {
   width: 90px;
   height: 50px;
   color: rgb(255, 255, 255);
@@ -950,14 +952,12 @@ a,a:visited{
   border-radius: 10px;
   cursor: pointer;
   margin: 0 15px;
-  /* フレックスボックスでテキストを中央揃え */
   display: flex;
-  justify-content: center; /* 水平方向の中央揃え */
-  align-items: center; /* 垂直方向の中央揃え */
+  justify-content: center; 
+  align-items: center; 
 }
 
-#yesButton:hover,
-#noButton:hover {
+.like-comment .dialogButton:hover {
   color: #11dadd;
   border-color: #11dadd;
 }
@@ -967,6 +967,14 @@ a,a:visited{
   justify-content: center;
   align-items: center;
   padding: 20px;
+}
+
+.confirmationDialog {
+  text-align: center;
+  border-radius: 10px;
+  background-color: #000000;
+  border: solid 3px #11dadd;
+  color: white;
 }
 
 #closeConfirmationButton {

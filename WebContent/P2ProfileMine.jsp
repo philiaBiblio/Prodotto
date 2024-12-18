@@ -162,12 +162,12 @@ function openPopup(toukouId) {
 			<div class="video-card">
 				<div class="thumbnail-placeholder">
 
-					<img src="image/<%=toukouList.get(i).getThumbnail()%>"
+					<img src="image/<%=upList.get(i).getThumbnail()%>"
 						alt="Video Thumbnail" class="thumbnail"/>
 						
 					<button class="play-button" 
-					onclick="saiseiName('<%= i%>');sendData('<%= toukouList.get(i).getUserid() %>', 
-					'<%= toukouList.get(i).getToukouid() %>', 
+					onclick="saiseiName('<%= i%>');sendData('<%= upList.get(i).getUserid() %>', 
+					'<%= upList.get(i).getToukouid() %>', 
 					'<%= u.getUserid() %>')">
 					▶️</button>
 					
@@ -175,49 +175,38 @@ function openPopup(toukouId) {
 					
 					<!-- 音声再生ボタン -->
 					<audio class="audio-player"
-						src="audio/<%=toukouList.get(i).getSound()%>"></audio>
+						src="audio/<%=upList.get(i).getSound()%>"></audio>
 				</div>
 
 				<div class="video-info">
-					<!-- 他人なら他人プロフ。自分ならマイページへ -->
-					<%if (!toukouList.get(i).getUserid().equals(u.getUserid())) {%>
-					<form action="P2UserSearchServlet" method="get">
-    				<input type="hidden" name="userID" value="<%=toukouList.get(i).getUserid()%>"/>
-    					<button type="submit" class="profile-info" style="all: unset; cursor: pointer;">
-	    					<a>
-	    						<img src="image/<%=userIconList.get(i).getIconImage()%>" alt="profile icon" class="profile-icon" />
-	    					</a>
-        				</button>
-					</form>
-					<%}else{%>
+				
 						<form action="P2ProfileServlet" method="get">
     					<input type="hidden" name="userID" value="" />
     					<button type="submit" class="profile-info" style="all: unset; cursor: pointer;">
 	    					<a>
-	    						<img src="image/<%=userIconList.get(i).getIconImage()%>" alt="profile icon" class="profile-icon" />
+	    						<img src="image/<%=u.getIconImage()%>" alt="profile icon" class="profile-icon" />
 	    					</a>
         				</button>
-					</form>
-					<%} %> 
+					</form> 
 
 					<div class="like-comment">
 						<!-- <form action="P2CommentJusinServlet"> -->
 							<input type="hidden" name="toukouId" value="<%=i%>" />
-							<button class="submit comment" onclick="openPopup('<%=toukouList.get(i).getToukouid()%>')">
+							<button class="submit comment" onclick="openPopup('<%=upList.get(i).getToukouid()%>')">
 								<img src="image/こめんと1.png" alt="comment icon"
 									style="width: 20px; height: 20px" /> <span><%=postList.get(i).getCommentCount()%></span>
 							</button>
 						<!-- </form> -->
 
-						<a href="P2heartServlet?hensuu=<%=i%>&heartId=<%= toukouList.get(i).getToukouid() %>&page=TL">
-						<button class="heart" onclick="changeImage('heartImage<%=postList.get(i)%>')">
-							<img id="heartImage<%=postList.get(i)%>"
+						<a href="P2heartServlet?hensuu=<%=i%>&heartId=<%= upList.get(i).getToukouid() %>&page=mine">
+						<button class="heart" onclick="changeImage('heartImage<%=upList.get(i)%>')">
+							<img id="heartImage<%=upList.get(i)%>"
 							
 							<%for(int j = 0; j < heartList.size(); j++){
 							//	System.out.println("for文開始" + i);
 								if(flg == false){
 							//		System.out.println(toukouList.get(i).getToukouid()+":"+heartList.get(j).getPostId());
-									if(toukouList.get(i).getToukouid().equals(heartList.get(j).getPostId())){
+									if(upList.get(i).getToukouid().equals(heartList.get(j).getPostId())){
 							//			System.out.println(u.getUserid()+":"+heartList.get(j).getUserId());	
 										if(u.getUserid().equals(heartList.get(j).getUserId())){
 							//				System.out.println("152");
@@ -243,14 +232,11 @@ function openPopup(toukouId) {
 
 						<%
 						String postIdPrefix = postId.substring(0, 6);
-						//System.out.println("postIdPrefix："+postIdPrefix+"i:"+i);
-						//System.out.println("noweventId："+noweventId);
-						
 						%>
 							
 						<%if(postIdPrefix.equals(noweventId)) {%>
 						<button class = session-btn>
-							<span> <a href="P2SessionParticipation?audioFile=<%= toukouList.get(i).getSound() %>">
+							<span> <a href="P2SessionParticipation?audioFile=<%= upList.get(i).getSound() %>">
 									<div class="nav_icon">
 										<i class="gg-duplicate"></i>
 									</div>
@@ -259,16 +245,14 @@ function openPopup(toukouId) {
 						</button>
 						<%}%>
 
-						<!-- 削除ボタンイフ --> 
-						<%if (toukouList.get(i).getUserid().equals(u.getUserid())) {%>
+						
 						<script>
 							console.log("i:" + "<%= i %>");
-    						console.log("toukouList.get(i).getUserid()：" + "<%= toukouList.get(i).getUserid() %>");
+    						console.log("upList.get(i).getUserid()：" + "<%= upList.get(i).getUserid() %>");
     						console.log("u.getUserid()：" + "<%= u.getUserid() %>");
 						</script>
-						<!-- <form action="P2PostDeliteServlet" method="post"> -->
-						<%-- <input type="hidden" name="toukouId" value="<%=i%>" /> --%>
-						<button type="button" class="trashbutton" id="openDialogButton<%=toukouList.get(i).getToukouid() %>"
+						
+						<button type="button" class="trashbutton" id="openDialogButton<%=upList.get(i).getToukouid() %>"
 						 onclick="dialog('<%=i%>')">
 							<span>
 								<div class="nav_icon trash">
@@ -279,25 +263,17 @@ function openPopup(toukouId) {
 						 <dialog id="myDialog<%= i %>">
             				<p>この投稿を削除しますか？</p>
             			<div class="buttonContainer">
-            			<a href="P2PostDeliteServlet?hensuu=<%=i%>&sakuzyoId=<%= toukouList.get(i).getToukouid() %>">
+            			<a href="P2PostDeliteServlet?hensuu=<%=i%>&sakuzyoId=<%= upList.get(i).getToukouid() %>">
                 			<button type="button" class="dialogButton" id="yesButton<%= i%>">はい</button></a>
                 			<button type="button" class="dialogButton" id="noButton<%= i %>">いいえ</button>
             			</div>
         				</dialog>
-
-						<%}%>
 					</div>
 				</div>
 			</div>
-			<%
-			}
-			%>
-			<%
-			}
-			%>
-			<%
-			}
-			%>
+			<% } %>
+			<% } %>
+			<% } %>
 		</section>
 
 		<button class="scroll-right" id="scroll-right-1">▶</button>
@@ -353,7 +329,8 @@ function openPopup(toukouId) {
 							<input type="hidden" name="toukouId" value="<%=i%>" />
 							<button class="submit comment" onclick="openPopup('<%=upList.get(i).getToukouid()%>')">
 								<img src="image/こめんと1.png" alt="comment icon"
-									style="width: 20px; height: 20px" /> <span><%=postList.get(i).getCommentCount()%></span>
+									style="width: 20px; height: 20px" /> 
+									<span><%=postList.get(i).getCommentCount()%></span>
 							</button>
 						<!-- </form> -->
 
@@ -406,7 +383,7 @@ function openPopup(toukouId) {
 						%>
 						<button>
 							<span> <a
-								href="P2SessionParticipation?audioFile=<%=postList.get(i).getAudioPath()%>">
+								href="P2SessionParticipation?audioFile=<%=upList.get(i).getSound()%>">
 									<div class="nav_icon">
 										<i class="gg-duplicate"></i>
 									</div>
@@ -443,15 +420,10 @@ function openPopup(toukouId) {
 					</div>
 				</div>
 			</div>
-			<%
-			}
-			%>
-			<%
-			}
-			%>
-			<%
-			}
-			%>
+			<% } %>
+			<% } %>
+			<% } %>
+			
 		</section>
 
 		<button class="scroll-right" id="scroll-right-2">▶</button>

@@ -9,7 +9,15 @@ body {
     justify-content: center;
     margin-top: 60px;
 }
-  
+
+.no-results {
+    font-size: 24px;  /* フォントサイズを大きく */
+    font-weight: bold; /* 太文字 */
+    text-align: center; /* 中央揃え */
+    margin-top: 20px; /* 上部に余白を追加 */
+}
+
+/* ユーザーセクション */
 .user-section {
     flex: 1;
     overflow-y: auto;
@@ -23,43 +31,68 @@ body {
     align-items: center;
 }
 
+/* ユーザーアイテム（カードスタイル） */
 .user-item {
-    display: flex; 
-    align-items: center;  
-    margin-top: 15px;
-    width: 80%;
+    display: flex;
+    align-items: center;
+    margin-top: 20px;
+    width: 60%; /* 横幅を少し短く */
+    background: #1f1f1f; /* 背景色を追加 */
+    border-radius: 20px; /* 丸みを強調 */
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15); /* 少し強い影を追加 */
+    padding: 25px; /* パディングを増やして余白を確保 */
+    transition: transform 0.2s, box-shadow 0.2s; /* ホバー時のアニメーション */
+    margin-left: auto; /* 左寄りを調整 */
+    margin-right: auto; /* 右寄りを調整 */
 }
 
-hr{
-    width: 99%;
-    border-bottom: 1px solid #ccc; /* 線の色と太さを指定 */
+.user-item:hover {
+    transform: scale(1.05); /* ホバー時に拡大 */
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2); /* ホバー時に影を強調 */
 }
 
-/* .soroe{
-   text-align: left;
-} */
-  
-  /* アイコン */
+/* アイコン */
 .user-item .icon {
-    width: 50px; 
-    height: 50px;
-    border-radius: 50%; 
-    margin-right: 10px; 
-    margin-top: 10px;
-    object-fit: cover;
+    width: 100px; /* サイズを大きく */
+    height: 100px; /* サイズを大きく */
+    border-radius: 50%; /* 円形にする */
+    object-fit: cover; /* 画像が枠内に収まり、アスペクト比を保つ */
+    border: 3px solid #2a2a2a; /* 外枠を少し太く */
+    background-color: #ccc; /* 画像が表示されない場合の背景色 */
+    margin-right: 30px; /* 名前との間のスペースを確保 */
+    display: block;
 }
-  
-  /* コメントコンテンツ */
-  .user-content {
-    border-radius: 10px;
-    max-width: 80%;
-  }
-  
-  /* ユーザーネーム */
-  .username {
+
+.icon-button{
+	background-color: #1f1f1f;
+	border: none;
+}
+
+
+/* ユーザーコンテンツ */
+.user-content {
+    flex: 1; /* 残りスペースを使用 */
+    display: flex;
+    flex-direction: column; /* 縦方向に整列 */
+    justify-content: center; /* 縦中央寄せ */
+}
+
+/* ユーザーネーム */
+.username {
     font-weight: bold;
-    margin-bottom: 5px;
+    font-size: 22px; /* フォントサイズを少し大きく */
     color: #ffffff;
-    margin-left: 50px;
-  }
-  
+    margin-bottom: 8px; /* サブテキストとの間の余白 */
+}
+
+/* サブテキスト */
+.user-subtext {
+    font-size: 16px; /* フォントサイズを大きめに */
+    color: #a8a8a8; /* サブテキスト用の控えめな色 */
+    line-height: 1.4; /* 行間を少し広げる */
+}
+
+/* 区切り線を削除 */
+hr {
+    display: none; /* 区切り線を非表示にする */
+}

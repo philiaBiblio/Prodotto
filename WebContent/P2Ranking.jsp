@@ -135,7 +135,7 @@ window.onload = function(){
 
           <!-- 動画カードがここに配置される -->
           <%if (toukouList3 != null) {%>
-			<%for (int i = 0; i < toukouList3.size(); i++) {%>
+			<%for (int i = 0; i < postList3.size(); i++) {%>
 			<%boolean flg = false; %>
 			<div class="video-card">
 				<div class="thumbnail-placeholder">
@@ -230,7 +230,7 @@ window.onload = function(){
 						%>
 
 						<%if(postIdPrefix.equals(noweventId)) {%>
-						<button>
+						<button class = session-btn>
 							<span> <a href="P2SessionParticipation?audioFile=<%= toukouList3.get(i).getSound() %>">
 									<div class="nav_icon">
 										<i class="gg-duplicate"></i>
@@ -339,7 +339,7 @@ window.onload = function(){
 
           <!-- 動画カードがここに配置される -->
           <%if (toukouList1 != null) {%>
-			<%for (int i = 0; i < toukouList1.size(); i++) {%>
+			<%for (int i = 0; i < postList1.size(); i++) {%>
 			<%boolean flg = false; %>
 			<div class="video-card">
 				<div class="thumbnail-placeholder">
@@ -392,7 +392,6 @@ window.onload = function(){
 									style="width: 20px; height: 20px" /> <span><%=postList1.get(i).getCommentCount()%></span>
 							</button>
 						<!-- </form> -->
-						</form>
 
 						<a href="P2heartServlet?hensuu=<%=i%>&heartId=<%= toukouList1.get(i).getToukouid() %>&page=Ranking">
 						<button class="heart" onclick="changeImage('heartImage<%=postList1.get(i)%>')">
@@ -435,7 +434,7 @@ window.onload = function(){
 						%>
 
 						<%if(postIdPrefix.equals(noweventId)) {%>
-						<button>
+						<button class = session-btn>
 							<span> <a href="P2SessionParticipation?audioFile=<%= toukouList1.get(i).getSound() %>">
 									<div class="nav_icon">
 										<i class="gg-duplicate"></i>
@@ -498,7 +497,7 @@ window.onload = function(){
 
           <!-- 動画カードがここに配置される -->
           <%if (toukouList2 != null) {%>
-			<%for (int i = 0; i < toukouList2.size(); i++) {%>
+			<%for (int i = 0; i < postList2.size(); i++) {%>
 			<%boolean flg = false; %>
 			<div class="video-card">
 				<div class="thumbnail-placeholder">
@@ -593,7 +592,7 @@ window.onload = function(){
 						%>
 
 						<%if(postIdPrefix.equals(noweventId)) {%>
-						<button>
+						<button class = session-btn>
 							<span> <a href="P2SessionParticipation?audioFile=<%= toukouList2.get(i).getSound() %>">
 									<div class="nav_icon">
 										<i class="gg-duplicate"></i>

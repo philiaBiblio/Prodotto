@@ -92,11 +92,15 @@ String noweventId = String.format("%04d%02d", year, month); // 西暦4桁+月2�
 						</i>
 					</button>
 					<p class="follow">
-						<%if (isFollowing == true) {%>
+						<%
+						if (isFollowing == true) {
+						%>
 						フォロー中
-						<%} else {%>
+						<%
+						} else {
+						%>
 						フォローする
-						<%}%>
+						<% } %>
 					</p>
 				</form>
 
@@ -121,9 +125,10 @@ String noweventId = String.format("%04d%02d", year, month); // 西暦4桁+月2�
 	<div class="scroll-container">
 		<button class="scroll-left" id="scroll-left-1">◀</button>
 		<div class="video-grid" id="video-grid-1">
-		
-		<section class="video-grid" id="video-grid-1">
-				<%if (postList != null) {
+
+			<section class="video-grid" id="video-grid-1">
+				<%
+				if (postList != null) {
 					for (int i = 0; i < postList.size(); i++) {
 						boolean flgin = false;
 
@@ -134,56 +139,60 @@ String noweventId = String.format("%04d%02d", year, month); // 西暦4桁+月2�
 					<div class="thumbnail-placeholder">
 						<img src="image/<%=postList.get(i).getThumbnailPath()%>"
 							alt="Video Thumbnail" class="thumbnail" />
-						<button class="play-button" onclick="sendData('<%= up.getUserid() %>', 
-					'<%= postList.get(i).getPostId() %>', 
-					'<%= u.getUserid() %>')">▶️</button>
+						<button class="play-button"
+							onclick="sendData('<%=up.getUserid()%>', 
+					'<%=postList.get(i).getPostId()%>', 
+					'<%=u.getUserid()%>')">▶️</button>
 						<!-- 音声再生ボタン -->
 						<audio class="audio-player"
 							src="audio/<%=postList.get(i).getAudioPath()%>"></audio>
 					</div>
-					
-				<div class="video-info">
-					<form action="P2UserSearchServlet" method="get">
-    				<input type="hidden" name="userID" value="<%=up.getUserid()%>" />
-    					<button type="submit" class="profile-info" style="all: unset; cursor: pointer;">
-	    					<a>
-	    						<img src="image/<%=up.getIconImage()%>" alt="profile icon" class="profile-icon" />
-	    					</a>
-        				</button>
-					</form>
-					
-					<div class="like-comment">
-						<!-- <form action="P2CommentJusinServlet"> -->
+
+					<div class="video-info">
+						<form action="P2UserSearchServlet" method="get">
+							<input type="hidden" name="userID" value="<%=up.getUserid()%>" />
+							<button type="submit" class="profile-info"
+								style="all: unset; cursor: pointer;">
+								<a> <img src="image/<%=up.getIconImage()%>"
+									alt="profile icon" class="profile-icon" />
+								</a>
+							</button>
+						</form>
+
+						<div class="like-comment">
+							<!-- <form action="P2CommentJusinServlet"> -->
 							<input type="hidden" name="toukouId" value="<%=i%>" />
-							<button class="submit comment" onclick="openPopup('<%=postList.get(i).getPostId()%>')">
+							<button class="submit comment"
+								onclick="openPopup('<%=postList.get(i).getPostId()%>')">
 								<img src="image/こめんと1.png" alt="comment icon"
 									style="width: 20px; height: 20px" /> <span><%=postList.get(i).getCommentCount()%></span>
 							</button>
-						<!-- </form> -->
+							<!-- </form> -->
 
-							<a href="P2heartServlet?hensuu=<%=i%>&heartId=<%=postList.get(i).getPostId()%>&page=stranger">
+							<a
+								href="P2heartServlet?hensuu=<%=i%>&heartId=<%=postList.get(i).getPostId()%>&page=stranger">
 								<button class="heart"
 									onclick="changeImage('heartImage<%=postList.get(i)%>')">
 									<img id="heartImage<%=postList.get(i)%>"
 										<%for (int j = 0; j < heartList.size(); j++) {
-									//	System.out.println("for文開始" + i);
-									if (flgin == false) {
-										//	System.out.println(postList.get(i).getPostId()+":"+heartList.get(j).getPostId());
-										if (postList.get(i).getPostId().equals(heartList.get(j).getPostId())) {
-											// System.out.println(u.getUserid()+":"+heartList.get(j).getUserId());	
-											if (u.getUserid().equals(heartList.get(j).getUserId())) {
-												//	System.out.println("152");
-												flgin = true;
-												} else {
-												//	System.out.println("158");					
+											//	System.out.println("for文開始" + i);
+											if (flgin == false) {
+												//	System.out.println(postList.get(i).getPostId()+":"+heartList.get(j).getPostId());
+												if (postList.get(i).getPostId().equals(heartList.get(j).getPostId())) {
+													// System.out.println(u.getUserid()+":"+heartList.get(j).getUserId());	
+													if (u.getUserid().equals(heartList.get(j).getUserId())) {
+														//	System.out.println("152");
+														flgin = true;
+													} else {
+														//	System.out.println("158");					
 													}
-											} else {
-												//	System.out.println("162");
+												} else {
+													//	System.out.println("162");
 												}
-										//	System.out.println("for文終わり" + i);
+												//	System.out.println("for文終わり" + i);
+											}
 										}
-									}
-									if (flgin == true) {%>
+										if (flgin == true) {%>
 										src="image/Heart-512x512 test2.png" <%} else {%>
 										src="image/Heart-512x512 test.png" <%}%> alt="like icon"
 										style="width: 20px; height: 20px" /> <span><%=postList.get(i).getLikeCount()%></span>
@@ -201,9 +210,9 @@ String noweventId = String.format("%04d%02d", year, month); // 西暦4桁+月2�
 							<%
 							if (postIdPrefix.equals(noweventId)) {
 							%>
-							<%
-							System.out.println("セッションできるよpostIdPrefix：" + postIdPrefix);
-							%>
+
+
+							<%-- 
 							<form action="P2SessionRecPostServlet" method="post">
 								<input type="hidden" name="postId"
 									value="<%=postList.get(i).getPostId()%>" />
@@ -214,14 +223,27 @@ String noweventId = String.format("%04d%02d", year, month); // 西暦4桁+月2�
 										</div>
 									</span>
 								</button>
-							</form>
-							<%}%>
-							<%}%>
+							</form> 
+							
+							 --%>
+
+
+							<button type="session-btn">
+								<span> <a
+									href="P2SessionParticipation?audioFile=<%=postList.get(i).getAudioPath()%>&ID=<%=postList.get(i).getPostId()%>&hitoride=2">
+										<div class="nav_icon">
+											<i class="gg-duplicate"></i>
+										</div>
+								</a>
+								</span>
+							</button>
+							<% } %>
 						</div>
 					</div>
 				</div>
-				<%}%>
-				<%}%>
+				<% } %>
+				<% } %>
+				<% } %>
 			</section>
 		</div>
 		<button class="scroll-right" id="scroll-right-1">▶</button>
@@ -249,9 +271,10 @@ String noweventId = String.format("%04d%02d", year, month); // 西暦4桁+月2�
 				<div class="thumbnail-placeholder">
 					<img src="image/<%=postList.get(i).getThumbnailPath()%>"
 						alt="Video Thumbnail" class="thumbnail" />
-					<button class="play-button" onclick="sendData('<%= up.getUserid() %>', 
-					'<%= postList.get(i).getPostId() %>', 
-					'<%= u.getUserid() %>')">▶️</button>
+					<button class="play-button"
+						onclick="sendData('<%=up.getUserid()%>', 
+					'<%=postList.get(i).getPostId()%>', 
+					'<%=u.getUserid()%>')">▶️</button>
 					<!-- 音声再生ボタン -->
 					<audio class="audio-player"
 						src="<%=postList.get(i).getAudioPath()%>"></audio>
@@ -272,13 +295,14 @@ String noweventId = String.format("%04d%02d", year, month); // 西暦4桁+月2�
 					<div class="like-comment">
 						<!-- コメントボタン -->
 						<!-- <form action="P2CommentJusinServlet"> -->
-							<input type="hidden" name="toukouId" value="<%=i%>" />
-							<button class="submit comment" onclick="openPopup('<%=postList.get(i).getPostId()%>')">
-								<img src="image/こめんと1.png" alt="comment icon"
-									style="width: 20px; height: 20px" /> <span><%=postList.get(i).getCommentCount()%></span>
-							</button>
+						<input type="hidden" name="toukouId" value="<%=i%>" />
+						<button class="submit comment"
+							onclick="openPopup('<%=postList.get(i).getPostId()%>')">
+							<img src="image/こめんと1.png" alt="comment icon"
+								style="width: 20px; height: 20px" /> <span><%=postList.get(i).getCommentCount()%></span>
+						</button>
 						<!-- </form> -->
-						
+
 						<!-- いいねボタン -->
 						<a
 							href="P2heartServlet?hensuu=<%=i%>&heartId=<%=postList.get(i).getPostId()%>&page=stranger">
@@ -286,30 +310,30 @@ String noweventId = String.format("%04d%02d", year, month); // 西暦4桁+月2�
 								onclick="changeImage('heartImage<%=postList.get(i)%>')">
 								<img id="heartImage<%=postList.get(i)%>"
 									<%for (int j = 0; j < heartList.size(); j++) {
-								//		System.out.println("for文開始" + i);
-									if (flg == false) {
-									//	System.out.println(postList.get(i).getPostId()+":"+heartList.get(j).getPostId());
-									if (postList.get(i).getPostId().equals(heartList.get(j).getPostId())) {
-									// System.out.println(u.getUserid()+":"+heartList.get(j).getUserId());	
-									if (u.getUserid().equals(heartList.get(j).getUserId())) {
-										flg = true;
-									// System.out.println("152" + flg);
-									} else {
-									// System.out.println("158");					
-									}
-									} else {
-										// System.out.println("162");
+										//		System.out.println("for文開始" + i);
+										if (flg == false) {
+											//	System.out.println(postList.get(i).getPostId()+":"+heartList.get(j).getPostId());
+											if (postList.get(i).getPostId().equals(heartList.get(j).getPostId())) {
+												// System.out.println(u.getUserid()+":"+heartList.get(j).getUserId());	
+												if (u.getUserid().equals(heartList.get(j).getUserId())) {
+													flg = true;
+													// System.out.println("152" + flg);
+												} else {
+													// System.out.println("158");					
+												}
+											} else {
+												// System.out.println("162");
+											}
+											// System.out.println("for文終わり" + i);
 										}
-										// System.out.println("for文終わり" + i);
-										}
 									}
-								//	System.out.println("324" + flg);
-								
-								if (flg == true) {
-									//	System.out.println("trueの処理" + flg);%>
+									//	System.out.println("324" + flg);
+									
+									if (flg == true) {
+										//	System.out.println("trueの処理" + flg);%>
 									src="image/Heart-512x512 test2.png"
 									<%} else {
-										//	System.out.println("elseの処理" + flg);%>
+									//	System.out.println("elseの処理" + flg);%>
 									src="image/Heart-512x512 test.png" <%}%> alt="like icon"
 									style="width: 20px; height: 20px" /> <span><%=postList.get(i).getLikeCount()%></span>
 							</button>
@@ -318,7 +342,8 @@ String noweventId = String.format("%04d%02d", year, month); // 西暦4桁+月2�
 					</div>
 				</div>
 			</div>
-			<%}}%>
+			<% } %>
+			<% } %>
 		</div>
 		<button class="scroll-right" id="scroll-right-2">▶</button>
 	</div>
@@ -330,16 +355,12 @@ String noweventId = String.format("%04d%02d", year, month); // 西暦4桁+月2�
 			<div class="song-bar">
 				<div class="song-infos">
 					<div class="image-container">
-						<!-- ここうまく切り替わらん場合はセッション入れればいいにょ -->
-						<img src="." alt="">
+						<img src="." alt="" />
 					</div>
 					<div class="song-description">
-						<p class="artist"><%=up.getName()%></p>
+						<p class="artist" id="artistName"></p>
 					</div>
 				</div>
-				<!-- <div class="icons">
-					<i class="far fa-heart"></i> <i class="fas fa-compress"></i>
-				</div> -->
 			</div>
 			<div class="progress-controller">
 				<div class="control-buttons">
@@ -357,9 +378,10 @@ String noweventId = String.format("%04d%02d", year, month); // 西暦4桁+月2�
 					<!-- 全体の音楽の時間 -->
 				</div>
 			</div>
+			<!-- 非表示ボタンを追加 -->
+        	<button class="hide-player-button">×</button>
 			<div class="other-features">
 				<i class="fas fa-list-ul"></i> <i class="fas fa-desktop"></i>
-
 				<!-- 音量コントロール -->
 				<div class="volume-bar">
 					<i class="fas fa-volume-down"></i>

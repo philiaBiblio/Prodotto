@@ -16,9 +16,6 @@
 <title>ProDotto</title>
 </head>
 
-  
-  
- 
 <body>
 <form action = "P2SearchServlet">
 	<header class="header">
@@ -28,10 +25,9 @@
 				
 					<!-- フィルターボタン -->
 					<select id="filter" class="filter-button" name="url">
-					          <option selected value="P2Search.jsp">タグ</option>
+					          <option selected value="">タグ</option>
 					          <option value="P2UserSearch.jsp">アカウント名</option> 
 					</select>
-
 
 				<!-- 検索バー -->
 				<input type="text" name="search" id="search" placeholder="Search" value="">
@@ -39,7 +35,6 @@
 					<i class="fa-solid fa-magnifying-glass"></i>
 				</button>
 			</div>
-
 		</div>
 	</header>
 
