@@ -340,7 +340,7 @@ function sendData(toukouUserid, toukouId, userId) {
 	
 	<script src="https://unpkg.com/wavesurfer.js"></script>
 	
-	<dialog id="confirmationDialog">
+	<dialog id="confirmationDialog" class="confirmationDialog">
 		<p>削除しました</p>
 		<button type="button" class="dialogButton" id="closeConfirmationButton" onclick="confirmationDialog.close();">閉じる</button>
 	</dialog>

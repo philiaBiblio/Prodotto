@@ -8,627 +8,6 @@
 
 body {
   font-family: "Poppins", sans-serif;
-  margin: 50px 0 56px -5px;
-  padding-left: 20px;
-  font-size: 16px;
-  color: #ffffff;
-  background: #000000;
-}
-
-/* 音楽プレイヤーのスタイル */
-.music-player {
-  --primary-color: #ddd;
-  --secondary-color: #e0dddd;
-  --green-color: #11dadd;
-  --padding: 1em;
-  background-color: #302f2f;
-  display: none;
-  justify-content: center;
-  align-items: center;
-  position: fixed; /* 変更: 固定位置に設定 */
-  bottom: 0; /* 変更: 画面下部に固定 */
-  left: 0;
-  width: 100%; /* 変更: 画面幅に合わせる */
-  height: 7rem;
-  padding: var(--padding);
-  color: #11dadd;
-  z-index: 999; /* 上に表示するための設定 */
-}
-
-i {
-  color: var(--secondary-color);
-}
-
-i:hover {
-  color: var(--primary-color);
-  color: #11dadd;
-}
-
-
-
-.song-bar {
-  position: absolute;
-  left: var(--padding);
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: flex-start;
-  gap: 1.5rem;
-  width: 25%;
-}
-
-.song-infos {
-  display: flex;
-  align-items: center;
-  gap: 1em;
-}
-
-.image-container {
-  --size: 4.5em;
-  flex-shrink: 0;
-  width: var(--size);
-  height: var(--size);
-}
-
-.image-container img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.song-description p {
-  margin: 0.2em;
-}
-
-.title,
-.artist {
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 1;
-  overflow: hidden;
-}
-
-.title:hover,
-.artist:hover {
-  text-decoration: underline;
-}
-
-.artist {
-  color: var(--secondary-color);
-}
-
-.icons {
-  display: flex;
-  gap: 1em;
-}
-
-.progress-controller {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  align-items: center;
-  gap: 1.5em;
-  color: var(--secondary-color);
-}
-
-.control-buttons {
-  display: flex;
-  align-items: center;
-  gap: 2em;
-}
-
-.play-pause {
-  display: inline-block;
-  padding: 1em;
-  background-color: var(--primary-color);
-  color: #111;
-  border-radius: 50%;
-}
-
-/* 再生プレイヤー */
-.progress-container {
-  width: 100%;
-  height: 10px; /* 高さを調整 */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 1em;
-}
-
-/* シークバー */
-.progress-bar {
-  height: 4px;
-  border-radius: 10px;
-  width: 30%;
-  background-color: #ccc4;
-}
-
-/* シークバー */
-.progress {
-  position: relative;
-  height: 100%;
-  width: 30%;
-  border-radius: 10px;
-  background-color: #76c7c0; /* 進行状況の色 */
-  background-color: var(--secondary-color);
-}
-
-/* シークバーの色 */
-.progress-bar:hover .progress {
-  background-color: var(--green-color);
-}
-
-/* シークバーのたまたま */
-.progress-bar:hover .progress::after {
-  content: "";
-  position: absolute;
-  --size: 1em;
-  width: var(--size);
-  height: var(--size);
-  right: 0;
-  border-radius: 50%;
-  background-color: var(--primary-color);
-  transform: translate(50%, calc(2px - 50%));
-}
-
-.other-features {
-  position: absolute;
-  right: var(--padding);
-  display: flex;
-  flex-direction: row;
-  gap: 1em;
-}
-
-.volume-bar {
-  display: flex;
-  align-items: center;
-  gap: 0.7em;
-}
-
-.volume-bar .progress-bar {
-  width: 6em;
-}
-
-.volume-bar .progress-bar:hover .progress::after {
-  --size: 0.8em;
-}
-
-/* サムネ画像比率 */
-img {
-  max-width: 100%;
-  height: auto;
-  object-fit: cover; /* 縦横比率保つやつ */
-}
-
-/*-------------------header------------*/
-
-/*-------------------header------------*/
-/*--------------nav------------*/
-/* 全体のカードスタイル */
-.video-card {
-  width: 250px;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  background-color: white;
-  padding: 10px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-/* いいね＆コメントのスタイル */
-.like-comment {
-  display: flex;
-  justify-content: flex-start;
-  width: 100%;
-  margin-top: 10px;
-}
-
-/*----------nav_dropdown   */
-/*--------------nav------------*/
-/*--------------video_items------------*/
-/* 動画グリッド */
-.video-grid {
-  display: flex; /* 動画カードを横に並べる */
-  overflow-x: auto; /* 横スクロールを可能にする */
-  gap: 20px; /* カード間のスペースを調整 */
-  white-space: nowrap; /* 行内で折り返さない */
-  scroll-behavior: smooth; /* スクロールをスムーズに */
-}
-
-/* カード全体のデザイン */
-.video-card {
-  width: 250px; /* カードの幅を固定 */
-  min-width: 250px; /* 最小幅を設定 */
-  max-width: 250px; /* 最大幅を設定 */
-  border-radius: 10px;
-  background-color: rgb(44, 44, 44); /* 背景色の調整 */
-  padding: 10px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* シャドウを追加 */
-}
-
-/* スクロールバーを非表示にするスタイル */
-.video-grid::-webkit-scrollbar {
-  display: none; /* WebKitブラウザ用（Chrome, Safari） */
-}
-
-.video-grid {
-  -ms-overflow-style: none; /* IEとEdge用 */
-  scrollbar-width: none; /* Firefox用 */
-}
-
-/* サムネイル部分 */
-.thumbnail-placeholder {
-  width: 100%;
-  height: 120px;
-  background-color: rgb(44, 44, 44);
-  border-radius: 10px;
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow: hidden; /* はみ出しを防止 */
-  object-fit: cover; /* 画像がはみ出さないようにアスペクト比を維持 */
-}
-
-/* サムネイルの再生ボタン */
-.play-button {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-size: 30px;
-  color: white;
-  background: none;
-  border: none;
-  cursor: pointer;
-  border-radius: 30%; /* 丸いボタンにする */
-}
-
-/* サムネイルの停止ボタン */
-.gg-play-pause {
-  box-sizing: border-box;
-  position: relative;
-  display: block;
-  transform: scale(var(--ggs, 1));
-  width: 8px;
-  height: 10px;
-  border-left: 3px solid;
-  border-right: 3px solid;
-}
-
-/* 動画情報部分 */
-.video-info {
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  gap: 20px; /* プロフィールとボタンの間にスペースをあける */
-  width: 100%;
-}
-
-/* プロフィール情報を横並びにする */
-.profile-info {
-  display: flex;
-  align-items: center;
-  margin-right: auto; /* プロフィールアイコンを左に固定 */
-}
-
-/* プロフィールアイコンの修正 */
-.profile-icon {
-  align-items: center;
-  margin-top: 10px;
-  width: 25px;
-  height: 25px;
-  margin-right: 10px;
-  background-color: #bbb;
-  border-radius: 50%;
-  margin-right: 8px; /* アイコンとテキストの間隔を調整 */
-}
-
-/* いいね＆コメントのボタン */
-.like-comment {
-  display: flex;
-  gap: 10px;
-}
-
-.like-comment button {
-  background: none;
-  border: none;
-  color: white;
-  font-size: 15px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-}
-
-/* いいね＆コメントボタンのカーソル時の色 */
-.like-comment button:hover {
-  color: #11dadd;
-}
-
-/* コメントボタンと数字の間隔 */
-.like-comment button span {
-  margin-left: 5px;
-}
-
-.current-time,
-.duration {
-  width: 50px; /* 必要に応じて幅を調整してください */
-  text-align: center; /* 数字を中央揃え */
-  display: inline-block; /* 幅を固定するために inline-block を使用 */
-}
-
-/* セクションのタイトル */
-.section-title {
-  font-size: 18px;
-  font-weight: bold;
-  color: #ffffff;
-  margin: 20px 0 10px; /* 上下の余白を調整 */
-}
-
-/* スクロールボタン付きコンテナ */
-.scroll-container {
-  display: flex;
-  align-items: center;
-  justify-content: center; /* ボタンとカードを中央寄せ */
-  width: 100%; /* スクロールエリアの幅を100%に */
-  overflow-x: hidden; /* 横スクロールを隠す */
-  margin-bottom: 20px; /* 画面下との余白を設定 */
-  position: relative; /* ボタンの位置を調整 */
-}
-
-/* 左右スクロールボタン */
-.scroll-left,
-.scroll-right {
-  background-color: #000000; /* 背景を透明に */
-  color: #ffffff; /* ボタンの色 */
-  border: none; /* 枠を取り除く */
-  padding: 5px 10px; /* パディングを調整 */
-  cursor: pointer;
-  font-size: 30px; /* フォントサイズを調整して三角を大きくする */
-  border: solid 3px #fff;
-  border-radius: 10px; /* 角を丸くする（必要に応じて） */
-  margin: 30px; /* ボタンとカードの間のスペース */
-}
-
-.scroll-left:hover,
-.scroll-right:hover {
-  background-color: #000000; /* ホバー時の色を追加 */
-  border: solid 3px #11dadd;
-}
-
-/* プロフィールセクション用のアイコン */
-.profile-header-icon {
-  width: 120px; /* アイコンの幅を100pxに設定 */
-  height: 120px; /* アイコンの高さを100pxに設定 */
-  border-radius: 50%; /* アイコンを丸くする */
-  margin-right: 60px; /* アイコンとテキストの間隔を設定 */
-  margin-left: 15px;
-  margin-top: 25px;
-  object-fit: cover;
-}
-
-.profile-header {
-  display: flex; /* ヘッダー全体をフレックスボックスにする */
-  justify-content: flex-start; /* 左寄せにする */
-  align-items: flex-start; /* 縦方向の上揃え */
-  background-color: #000000; /* 背景色を設定 */
-  border-bottom: 1px solid #ddd; /* 下線を追加 */
-  height: 200px; /* ヘッダーの高さを設定 */
-  margin-bottom: 70px;
-}
-
-.button-group,.button-group2 {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  margin-left: 40px; /* フォロワー情報との間隔を設定 */
-  align-self: flex-start; /* 自身を左寄せに */
-  margin-top: 56px; /* ボタンの位置を下げるためのマージンを追加 */
-}
-
-.notification-button,
-.edit-profile-button {
-  padding: 10px 15px; /* パディングはそのまま */
-  border: none; /* 枠を取り除く */
-  background-color: transparent; /* 背景色を透明に */
-  color: #fff3f3; /* 文字色を青に */
-  cursor: pointer; /* カーソルをポインターに */
-  border-radius: 50%; /* ボタンを丸くする（必要に応じて） */
-  display: flex; /* フレックスボックスを使用 */
-  align-items: center; /* 中央揃え */
-  gap: 8px; /* アイコンとテキストの間隔 */
-  outline: none; /* フォーカス時のアウトラインを取り除く */
-  text-decoration: none; /* 下線を取り除く */
-}
-
-.notification-button i,
-.edit-profile-button i {
-  font-size: 20px;
-}
-
-.notification-button:hover,
-.edit-profile-button:hover {
-  background-color: rgba(0, 0, 0, 0.1); /* ホバー時の透明な青背景 */
-}
-
-.show-all-button {
-  background-color: transparent; /* 背景を透明に */
-  color: #11dadd; /* 文字の色を青に */
-  border: none; /* ボーダーなし */
-  padding: 5px 10px; /* パディングを調整 */
-  font-size: 14px; /* フォントサイズ */
-  cursor: pointer; /* カーソルをポインタに */
-  border-radius: 3px; /* 角を丸くする */
-  text-align: center;
-  white-space: nowrap; /* テキストを一行にする */
-  margin-top: 10px; /* ボタンの上部に余白を追加して下げる */
-}
-
-.show-all-button:hover {
-  color: #089fa2; /* ホバー時の文字色を濃い青に */
-}
-
-.section-header {
-  display: flex;
-  align-items: center; /* 垂直方向の中央揃え */
-  justify-content: space-between; /* 要素を左右に分ける */
-}
-
-.show-all-button {
-  margin-right: 30px;
-}
-
-/* ゴミ箱 */
-.gg-trash {
-  box-sizing: border-box;
-  position: relative;
-  display: block;
-  transform: scale(var(--ggs, 1));
-  width: 10px;
-  height: 12px;
-  border: 2px solid transparent;
-  box-shadow: 0 0 0 2px, inset -2px 0 0, inset 2px 0 0;
-  border-bottom-left-radius: 1px;
-  border-bottom-right-radius: 1px;
-  margin-top: 4px;
-}
-.gg-trash::after,
-.gg-trash::before {
-  content: "";
-  display: block;
-  box-sizing: border-box;
-  position: absolute;
-}
-.gg-trash::after {
-  background: currentColor;
-  border-radius: 3px;
-  width: 16px;
-  height: 2px;
-  top: -4px;
-  left: -5px;
-}
-.gg-trash::before {
-  width: 10px;
-  height: 4px;
-  border: 2px solid;
-  border-bottom: transparent;
-  border-top-left-radius: 2px;
-  border-top-right-radius: 2px;
-  top: -7px;
-  left: -2px;
-}
-
-.trash {
-  padding-left: 20px;
-}
-
-/*ゴミ箱ダイアログ*/
-dialog {
-  text-align: center;
-  border-radius: 10px;
-  background-color: #000000;
-  border: solid 3px #11dadd;
-  color: white;
-}
-
-#yesButton,
-#noButton {
-  width: 90px;
-  height: 50px;
-  color: rgb(255, 255, 255);
-  background-color: #000000;
-  border: 1px solid #ffffff;
-  border-radius: 10px;
-  cursor: pointer;
-  margin: 0 15px;
-  /* フレックスボックスでテキストを中央揃え */
-  display: flex;
-  justify-content: center; /* 水平方向の中央揃え */
-  align-items: center; /* 垂直方向の中央揃え */
-}
-
-#yesButton:hover,
-#noButton:hover {
-  color: #11dadd;
-  border-color: #11dadd;
-}
-
-.buttonContainer {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 20px;
-}
-
-#closeConfirmationButton {
-  width: 90px;
-  display: inline-block;
-  padding: 10px;
-  margin: auto 30px;
-  color: rgb(255, 255, 255);
-  background-color: #000000;
-  border: 1px solid #ffffff;
-  border-radius: 10px;
-  cursor: pointer;
-  text-align: center;
-}
-
-#closeConfirmationButton:hover {
-  color: #11dadd;
-  border-color: #11dadd;
-}
-
-.button-group2 {
-  /* border: solid 1px #fff; */
-  margin: 0;
-  margin-right: 20px;
-  justify-content: center;
-}
-
-.profile-header {
-  justify-content: space-between;
-}
-.leftheader {
-  display: flex;
-}
-.changeb {
-  border: solid 1px #fff;
-  padding: 10px;
-  margin: 0;
-}
-.edit-profile-button {
-  border: none;
-}
-.rightheader{
-  padding: 0;
-}
-a {
-  color: inherit; 
-  text-decoration: none; 
-}
-
-
-
-
-
-
-
-
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap");
-
-*,
-::before,
-::after {
-  box-sizing: border-box;
-}
-
-body {
-  font-family: "Poppins", sans-serif;
   margin: 70px 0 56px 75px;
   padding-left: 20px;
   font-size: 16px;
@@ -636,24 +15,64 @@ body {
   background: #000000;
 }
 
+.video-card {
+	width: 250px;
+	border-radius: 10px;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+	background-color: rgb(44, 44, 44);
+	padding: 15px;
+	padding-bottom: 0;
+	/* 下部のpaddingを0に設定 */
+	display: flex;
+	flex-direction: column;
+	text-align: center;
+	position: relative;
+	/* 他の位置を考慮する */
+	overflow: hidden;
+	/* カード内の要素がはみ出さないようにする */
+}
+
 /* 音楽プレイヤーのスタイル */
 .music-player {
-  --primary-color: #ddd;
-  --secondary-color: #e0dddd;
-  --green-color: #11dadd;
-  --padding: 1em;
-  background-color: #302f2f;
-  display: none;
-  justify-content: center;
-  align-items: center;
-  position: fixed; /* 変更: 固定位置に設定 */
-  bottom: 0; /* 変更: 画面下部に固定 */
-  left: 0;
-  width: 100%; /* 変更: 画面幅に合わせる */
-  height: 7rem;
-  padding: var(--padding);
-  color: #11dadd;
-  z-index: 999; /* 上に表示するための設定 */
+	--primary-color: #ddd;
+	--secondary-color: #e0dddd;
+	--green-color: #11dadd;
+	--padding: 1em;
+	background-color: rgb(0, 0, 0);
+	display: none;
+	justify-content: center;
+	align-items: center;
+	position: fixed;
+	/* 変更: 固定位置に設定 */
+	bottom: 0;
+	/* 変更: 画面下部に固定 */
+	left: 0;
+	width: 100%;
+	/* 変更: 画面幅に合わせる */
+	height: 7rem;
+	padding: var(--padding);
+	color: #11dadd;
+	z-index: 999;
+	/* 上に表示するための設定 */
+}
+
+/* 音楽プレイヤー非表示ボタン */
+.hide-player-button {
+	position: absolute;
+	top: 10px;
+	/* 上からの距離 */
+	right: 10px;
+	/* 右からの距離 */
+	background-color: transparent;
+	/* 背景色を透明に */
+	border: none;
+	/* ボーダーをなしに */
+	font-size: 20px;
+	/* フォントサイズを調整 */
+	cursor: pointer;
+	/* カーソルをポインターに */
+	color: #fff;
+	/* ボタンの色を白に */
 }
 
 i {
@@ -795,6 +214,7 @@ i:hover {
   position: absolute;
   right: var(--padding);
   display: flex;
+  top: 50%;
   flex-direction: row;
   gap: 1em;
 }
@@ -824,17 +244,6 @@ img {
 
 /*-------------------header------------*/
 /*--------------nav------------*/
-/* 全体のカードスタイル */
-.video-card {
-  width: 250px;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  background-color: white;
-  padding: 10px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
 
 /* いいね＆コメントのスタイル */
 .like-comment {
@@ -854,20 +263,6 @@ img {
   gap: 20px; /* カード間のスペースを調整 */
   white-space: nowrap; /* 行内で折り返さない */
   scroll-behavior: smooth; /* スクロールをスムーズに */
-}
-
-/* カード全体のデザイン */
-.video-card {
-  width: 250px; /* カードの幅を固定 */
-  min-width: 250px; /* 最小幅を設定 */
-  max-width: 250px; /* 最大幅を設定 */
-  border-radius: 10px;
-  background-color: rgb(44, 44, 44); /* 背景色の調整 */
-  padding: 10px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* シャドウを追加 */
 }
 
 /* スクロールバーを非表示にするスタイル */
@@ -891,7 +286,13 @@ img {
   justify-content: center;
   align-items: center;
   overflow: hidden; /* はみ出しを防止 */
-  object-fit: cover; /* 画像がはみ出さないようにアスペクト比を維持 */
+}
+
+img.thumbnail {
+	max-width: 100%;
+	height: auto;
+	object-fit: cover;
+	/* 縦横比率保つやつ */
 }
 
 /* サムネイルの再生ボタン */
@@ -922,14 +323,24 @@ img {
 
 /* 動画情報部分 */
 .video-info {
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  gap: 20px; /* プロフィールとボタンの間にスペースをあける */
-  
-  width: 100%;
-  flex-wrap: wrap; /* 必要に応じて改行させる */
-  box-sizing: border-box; /* パディングや境界線を幅に含める */
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+	gap: 10px;
+	/* 現代的な方法 */
+	margin-bottom: 10px;
+	/* 必要に応じて追加 */
+}
+
+/* プロフィールアイコン、ボタンを一列に並べる */
+.video-info>div {
+	display: flex;
+	justify-content: flex-start;
+	/* 左から順に並べる */
+	align-items: center;
+	/* アイコンとボタンを縦方向で中央揃え */
+	gap: 10px;
+	/* ボタン同士の間隔 */
 }
 
 /* プロフィール情報を横並びにする */
@@ -1323,6 +734,14 @@ p.follow{
   border-top: 2px solid;
   right: -8px;
   top: -8px;
+}
+.session-btn {
+  width: 15px; /* 横幅を指定 */
+  height: 40px; /* 高さを指定 */
+  display: inline-block; /* サイズ指定を適用するためにブロック要素として扱う */
+  text-align: center; /* テキストを中央揃え */
+  line-height: 40px; /* 縦中央揃え（高さと同じ値に） */
+  border: none;
 }
 
 
