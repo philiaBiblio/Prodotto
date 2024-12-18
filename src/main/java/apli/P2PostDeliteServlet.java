@@ -92,9 +92,11 @@ public class P2PostDeliteServlet extends HttpServlet {
 	    	 
 		     if(pageFlg.equals("deri")) {
 				url = "P2DerivativesListServlet";
-			}else{
+		     }else if(pageFlg.equals("tl")){
 				url = "P2TimelineServlet";
-			}
+		     }else if(pageFlg.equals("mine")){
+					url = "P2ProfileServlet";
+			 }
 		     
 		     
 		     response.sendRedirect(url);
