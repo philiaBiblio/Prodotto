@@ -68,18 +68,7 @@ body {
   position: relative;
 }
 
-#message-area {
-  background-color: #ffffff; /* 背景色を白に設定 */
-  color: #555; /* 文字色 */
-  font-size: 16px; /* 文字サイズ */
-  padding: 0.5rem 1rem; /* 内側余白 */
-  border: 1px solid #ddd; /* 枠線 */
-  border-radius: 5px; /* 角を丸める */
-  white-space: nowrap; /* メッセージを1行で表示 */
-  width: 200px;  /* 幅 */
-  height: 50px; /* 高さ */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 軽い影を追加 */
-}
+
 .playlist-toolbar {
   display: flex; /* 横並び配置 */
   align-items: center; /* ボタン群とメッセージエリアの垂直方向中央揃え */
@@ -121,3 +110,17 @@ body {
   height: 120px; /* 修正: `height120px` を正しい形式に */
   border-bottom: 1px solid #ffffff; /* 下線の太さ、スタイル、色 */
 }
+
+/***************** おだいのところの見た目 *****************/
+
+.odaitext{
+  background-color: rgb(0, 0, 0); /* 背景色を白に設定 */
+  color: rgb(255, 255, 255); /* 文字色 */
+  font-size: 16px; /* 文字サイズ */
+  white-space: nowrap; /* メッセージを1行で表示 */
+  width: 200px;  /* 幅 */
+  height: 50px; /* 高さ */
+  border: none;
+}
+
+
