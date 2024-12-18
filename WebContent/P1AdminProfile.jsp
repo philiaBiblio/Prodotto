@@ -27,14 +27,13 @@
 	String userID = (String) ses.getAttribute("USERID");
 	String trueMess = (String)ses.getAttribute("TRUEMESS");
 	
-/* 	boolean isFollowing = (boolean) ses.getAttribute("isFollowing");
+// 	boolean isFollowing = (boolean) ses.getAttribute("isFollowing");
 	int followCount = (int) ses.getAttribute("followCount");
 	int followerCount = (int) ses.getAttribute("followerCount");
 	System.out.println("followCount：" + followCount);
-	System.out.println("followerCount：" + followerCount); */
+	System.out.println("followerCount：" + followerCount);
 	
 	ArrayList<Post> postList = (ArrayList<Post>) ses.getAttribute("postList");
-	/* ArrayList<Heart> heartList = (ArrayList) ses.getAttribute("HEARTLIST"); */
 %>
 
 <%
@@ -219,7 +218,7 @@ window.onload = function(){
 						 <dialog id="myDialog<%= i %>">
             				<p>この投稿を削除しますか？</p>
             			<div class="buttonContainer">
-            			<a href="P2PostDeliteServlet?hensuu=<%=i%>&sakuzyoId=<%= postList.get(i).getPostId() %>">
+            			<a href="P1PostDeliteServlet?hensuu=<%=i%>&sakuzyoId=<%= postList.get(i).getPostId() %>&page=prf">
                 			<button type="button" class="dialogButton" id="yesButton<%= i%>">はい</button></a>
                 			<button type="button" class="dialogButton" id="noButton<%= i %>">いいえ</button>
             			</div>
@@ -297,7 +296,7 @@ window.onload = function(){
 						 <dialog id="myDialog<%= i %>">
             				<p>この投稿を削除しますか？</p>
             			<div class="buttonContainer">
-            			<a href="P2PostDeliteServlet?hensuu=<%=i%>&sakuzyoId=<%= postList.get(i).getPostId() %>">
+            			<a href="P1PostDeliteServlet?hensuu=<%=i%>&sakuzyoId=<%= postList.get(i).getPostId() %>&page=prf">
                 			<button type="button" class="dialogButton" id="yesButton<%= i%>">はい</button></a>
                 			<button type="button" class="dialogButton" id="noButton<%= i %>">いいえ</button>
             			</div>

@@ -81,25 +81,25 @@ public class P1UserSearchServlet extends HttpServlet {
 				ses.setAttribute("followCount", followCount);
 				ses.setAttribute("followerCount", followerCount);*/
                 
-//                try (ResultSet rsFollow = dba.selectExe("SELECT COUNT(*) AS follow_count FROM フォロー WHERE フォロワー = '" + up.getUserid() + "'")) {
-//                    if (rsFollow.next()) {
-//                        int followCount = rsFollow.getInt("follow_count"); // フォローしている数
-//                        System.out.println("followCount："+followCount);
-//                        ses.setAttribute("followCount", followCount);
-//                    }
-//                }
-//
-//                try (ResultSet rsFollower = dba.selectExe("SELECT COUNT(*) AS follower_count FROM フォロー WHERE フォロー = '" + up.getUserid() + "'")) {
-//                    if (rsFollower.next()) {
-//                        int followerCount = rsFollower.getInt("follower_count"); // フォロワー数
-//                        System.out.println("followerCount："+followerCount);
-//                        ses.setAttribute("followerCount", followerCount);
-//                    }
-//                }
-//                int followCount = (int) ses.getAttribute("followCount");
-//                int followerCount = (int) ses.getAttribute("followerCount");
-//                System.out.println("94:followCount："+followCount);
-//                System.out.println("95:followerCount："+followerCount);
+                try (ResultSet rsFollow = dba.selectExe("SELECT COUNT(*) AS follow_count FROM フォロー WHERE フォロワー = '" + up.getUserid() + "'")) {
+                    if (rsFollow.next()) {
+                        int followCount = rsFollow.getInt("follow_count"); // フォローしている数
+                        System.out.println("followCount："+followCount);
+                        ses.setAttribute("followCount", followCount);
+                    }
+                }
+
+                try (ResultSet rsFollower = dba.selectExe("SELECT COUNT(*) AS follower_count FROM フォロー WHERE フォロー = '" + up.getUserid() + "'")) {
+                    if (rsFollower.next()) {
+                        int followerCount = rsFollower.getInt("follower_count"); // フォロワー数
+                        System.out.println("followerCount："+followerCount);
+                        ses.setAttribute("followerCount", followerCount);
+                    }
+                }
+                int followCount = (int) ses.getAttribute("followCount");
+                int followerCount = (int) ses.getAttribute("followerCount");
+                System.out.println("94:followCount："+followCount);
+                System.out.println("95:followerCount："+followerCount);
                 
                 // リクエストスコープに保存
                 ses.setAttribute("PROF", up);
