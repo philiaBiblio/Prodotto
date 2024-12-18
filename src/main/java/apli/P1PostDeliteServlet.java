@@ -49,6 +49,9 @@ public class P1PostDeliteServlet extends HttpServlet {
 	    	 String sakuzyoId = request.getParameter("sakuzyoId");
 	    	 System.out.println("51：" + sakuzyoId);
 	    	 
+	    	 String pageflg = request.getParameter("page");
+	    	 System.out.println("53：" + pageflg);
+	    	 
 	    	 // 投稿ID検索のsql文実行
 	    	 ResultSet rs = dba.selectExe("select * from 投稿 where 投稿ID = '" + sakuzyoId + "'");
 	    	 
@@ -79,7 +82,12 @@ public class P1PostDeliteServlet extends HttpServlet {
 		     ses.setAttribute("TRUEMESS", trueMess);
 		        	        
 		     // 画面へ遷移
-		     url = "TLManagementServlet";
+		     if(pageflg.equals("prf")) {
+		    	 url = "P1UserSearchServlet";
+		     }else {
+		    	 url = "TLManagementServlet";
+		     }
+		     
 		     response.sendRedirect(url);
 	    	 
 		     // ログアウト処理
