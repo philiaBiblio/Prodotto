@@ -35,7 +35,7 @@
 	ArrayList<User> userIconList = (ArrayList) ses.getAttribute("ICONLIST");
 	ArrayList<Post> postList = (ArrayList) ses.getAttribute("POSTLIST");
 	ArrayList<Heart> heartList = (ArrayList) ses.getAttribute("HEARTLIST");
-	String trueMess = (String)ses.getAttribute("TRUEMESS");
+	String DELEAT = (String)ses.getAttribute("DDDDELET");
 %>
 
 
@@ -79,7 +79,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     dialog();
 });
 
-<%if(trueMess != null ){ %>
+<%if(DELEAT != null ){ %>
 window.onload = function(){
 	const dialog = document.querySelector("#confirmationDialog");
 	dialog.showModal();

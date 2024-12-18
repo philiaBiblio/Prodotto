@@ -36,7 +36,7 @@
 	ArrayList<User> userIconList = (ArrayList) ses.getAttribute("ICONLIST");
 	ArrayList<Post> postList = (ArrayList) ses.getAttribute("POSTLIST");
 	ArrayList<Heart> heartList = (ArrayList) ses.getAttribute("HEARTLIST");
-	String trueMess = (String)ses.getAttribute("TRUEMESS");
+	String DELEAT = (String)ses.getAttribute("DDDDELET");
 %>
 
 
@@ -80,7 +80,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     dialog();
 });
 
-<%if(trueMess != null ){ %>
+<%if(DELEAT != null ){ %>
 window.onload = function(){
 	const dialog = document.querySelector("#confirmationDialog");
 	dialog.showModal();
@@ -146,7 +146,7 @@ window.onload = function(){
 				<div class="video-info">
 					<!-- 他人なら他人プロフ。自分ならマイページへ -->
 					<%if (!toukouList.get(i).getUserid().equals(au.getAdminUserid())) {%>
-					<form action="P2UserSearchServlet" method="get">
+					<form action="P1UserSearchServlet" method="get">
     				<input type="hidden" name="userID" value="<%=toukouList.get(i).getUserid()%>"/>
     					<button type="submit" class="profile-info" style="all: unset; cursor: pointer;">
 	    					<a>
