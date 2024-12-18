@@ -19,7 +19,7 @@ body {
 /* 全体のカードスタイル */
 .video-card {
   width: 250px;
-    height: 186px;
+  height: 186px;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   background-color:rgb(44, 44, 44);

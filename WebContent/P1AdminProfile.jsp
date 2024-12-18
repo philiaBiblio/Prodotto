@@ -318,16 +318,12 @@ window.onload = function(){
 			<div class="song-bar">
 				<div class="song-infos">
 					<div class="image-container">
-						<!-- ここうまく切り替わらん場合はセッション入れればいいにょ -->
-						<img src="." alt="">
+						<img src="." alt="" />
 					</div>
 					<div class="song-description">
-						<p class="artist"><%=up.getName()%></p>
+						<p class="artist" id="artistName"></p>
 					</div>
 				</div>
-				<!-- <div class="icons">
-					<i class="far fa-heart"></i> <i class="fas fa-compress"></i>
-				</div> -->
 			</div>
 			<div class="progress-controller">
 				<div class="control-buttons">
@@ -345,9 +341,10 @@ window.onload = function(){
 					<!-- 全体の音楽の時間 -->
 				</div>
 			</div>
+			<!-- 非表示ボタンを追加 -->
+        	<button class="hide-player-button">×</button>
 			<div class="other-features">
 				<i class="fas fa-list-ul"></i> <i class="fas fa-desktop"></i>
-
 				<!-- 音量コントロール -->
 				<div class="volume-bar">
 					<i class="fas fa-volume-down"></i>
