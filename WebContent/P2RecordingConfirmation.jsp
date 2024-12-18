@@ -97,7 +97,7 @@
 					reader.readAsDataURL(file);
 				  } else {
 					// ファイルが選択されなかった場合、デフォルト画像を設定
-					timelineThumbnail.src = 'image/<%= u.getIconImage() %>';
+					timelineThumbnail.src = 'image/';
 				  }
 				});
 				</script>
