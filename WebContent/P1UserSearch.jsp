@@ -26,7 +26,6 @@ ArrayList<User> u = (ArrayList<User>) ses.getAttribute("USERLIST");
 %>
 
 <body>
-	<form action="P1UserSearchServlet">
 		<div class="user-section">
 			<%if (u == null) {%>
 			<p class="no-results">検索キーワードを入力してください</p>
@@ -36,6 +35,7 @@ ArrayList<User> u = (ArrayList<User>) ses.getAttribute("USERLIST");
 			for (int i = 0; i < u.size(); i++) {%>
 			<div class="user-item">
 				<div class="soroe">
+				<form action="P1UserSearchServlet">
 				<input type="hidden" name="userID" value="<%= u.get(i).getUserid() %>">
 					<button type="submit" class="icon-button">
 						<img src="image/<%= u.get(i).getIconImage()%>" alt="アイコン" class="icon">
@@ -48,14 +48,15 @@ ArrayList<User> u = (ArrayList<User>) ses.getAttribute("USERLIST");
 					<p class="user-subtext">
 						<%=u.get(i).getUserid()%>
 					</p>
+					</form>
 				</div>
 			</div>
 			<hr>
 			<%}}
 			ses.removeAttribute("USERLIST");
+			
 			%>
 		</div>
-	</form>
 	
 	<jsp:include page="P1kensaku.jsp"></jsp:include>
 	<script src="https://unpkg.com/wavesurfer.js"></script>
