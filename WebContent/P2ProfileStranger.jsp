@@ -356,7 +356,7 @@ String noweventId = String.format("%04d%02d", year, month); // 西暦4桁+月2�
 				<div class="song-infos">
 					<div class="image-container">
 						<!-- ここうまく切り替わらん場合はセッション入れればいいにょ -->
-						<img src="." alt="">
+						<img src="." alt="" />
 					</div>
 					<div class="song-description">
 						<p class="artist"><%=up.getName()%></p>

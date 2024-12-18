@@ -146,7 +146,13 @@ public class P2TLuploadServlet extends HttpServlet {
 			 	dba.UpdateExe(insertSQL);
 		    }    
 			
-			
+			System.out.println("///////////////// "+name+" //////////////////");
+		    
+		    //サムネイル画像未設定の場合
+		    if(name.equals("")) {
+		    	name = u.getIconImage();
+		    }
+		    
 	        //WebContent内のimgフォルダまでのパスを取得
 	        String pathfilename = getServletContext().getRealPath("\\image");
 	        //imgフォルダまでのパスとアップロードしたい画像ファイルを文字連結する
