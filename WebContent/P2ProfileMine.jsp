@@ -263,7 +263,7 @@ function openPopup(toukouId) {
 						 <dialog id="myDialog<%= i %>">
             				<p>この投稿を削除しますか？</p>
             			<div class="buttonContainer">
-            			<a href="P2PostDeliteServlet?hensuu=<%=i%>&sakuzyoId=<%= upList.get(i).getToukouid() %>">
+            			<a href="P2PostDeliteServlet?hensuu=<%=i%>&sakuzyoId=<%= upList.get(i).getToukouid() %>&page=mine">
                 			<button type="button" class="dialogButton" id="yesButton<%= i%>">はい</button></a>
                 			<button type="button" class="dialogButton" id="noButton<%= i %>">いいえ</button>
             			</div>
