@@ -82,10 +82,10 @@ public class P1PostDeliteServlet extends HttpServlet {
 		     ses.setAttribute("DELEAT", trueMess);
 		        	        
 		     // 画面へ遷移
-		     if(pageflg.equals("prf")) {
-		    	 url = "P1UserSearchServlet";
-		     }else {
+		     if(pageflg == null) {
 		    	 url = "TLManagementServlet";
+		     }else {
+		    	 url = "P1UserSearchServlet";
 		     }
 		     
 		     response.sendRedirect(url);
