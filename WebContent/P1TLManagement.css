@@ -15,516 +15,18 @@ body {
   background: #121212;
 }
 
-/* 音楽プレイヤーのスタイル */
-.music-player {
-  --primary-color: #ddd;
-  --secondary-color: #e0dddd;
-  --green-color: #ee2522;
-  --padding: 1em;
-  background-color: #302f2f;
-  display: none;
-  justify-content: center;
-  align-items: center;
-  position: fixed; /* 変更: 固定位置に設定 */
-  bottom: 0; /* 変更: 画面下部に固定 */
-  left: 0;
-  width: 100%; /* 変更: 画面幅に合わせる */
-  height: 7rem;
-  padding: var(--padding);
-  color: #ee2522;
-  z-index: 999; /* 上に表示するための設定 */
-}
-
-i {
-  color: var(--secondary-color);
-}
-
-i:hover {
-  color: var(--primary-color);
-  color: #ee2522;
-}
-
-.song-bar {
-  position: absolute;
-  left: var(--padding);
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: flex-start;
-  gap: 1.5rem;
-  width: 25%;
-}
-
-.song-infos {
-  display: flex;
-  align-items: center;
-  gap: 1em;
-}
-
-.image-container {
-  --size: 4.5em;
-  flex-shrink: 0;
-  width: var(--size);
-  height: var(--size);
-}
-
-.image-container img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.song-description p {
-  margin: 0.2em;
-}
-
-.title,
-.artist {
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 1;
-  overflow: hidden;
-}
-
-.title:hover,
-.artist:hover {
-  text-decoration: underline;
-}
-
-.artist {
-  color: var(--secondary-color);
-}
-
-.icons {
-  display: flex;
-  gap: 1em;
-}
-
-.progress-controller {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  align-items: center;
-  gap: 1.5em;
-  color: var(--secondary-color);
-}
-
-.control-buttons {
-  display: flex;
-  align-items: center;
-  gap: 2em;
-}
-
-.play-pause {
-  display: inline-block;
-  padding: 1em;
-  background-color: var(--primary-color);
-  color: #111;
-  border-radius: 50%;
-}
-
-.play-pause:hover {
-  transform: scale(1.1);
-  color: #111;
-}
-
-.progress-container {
-  width: 100%;
-  height: 10px; /* 高さを調整 */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 1em;
-}
-
-.progress-bar {
-  height: 4px;
-  border-radius: 10px;
-  width: 30%;
-  background-color: #ccc4;
-}
-
-.progress {
-  position: relative;
-  height: 100%;
-  width: 30%;
-  border-radius: 10px;
-  background-color: #ee3131; /* 進行状況の色 */
-  background-color: var(--secondary-color);
-}
-
-.progress-bar:hover .progress {
-  background-color: var(--green-color);
-}
-
-.progress-bar:hover .progress::after {
-  content: "";
-  position: absolute;
-  --size: 1em;
-  width: var(--size);
-  height: var(--size);
-  right: 0;
-  border-radius: 50%;
-  background-color: var(--primary-color);
-  transform: translate(50%, calc(2px - 50%));
-}
-
-.other-features {
-  position: absolute;
-  right: var(--padding);
-  display: flex;
-  flex-direction: row;
-  gap: 1em;
-}
-
-.volume-bar {
-  display: flex;
-  align-items: center;
-  gap: 0.7em;
-}
-
-.volume-bar .progress-bar {
-  width: 6em;
-}
-
-.volume-bar .progress-bar:hover .progress::after {
-  --size: 0.8em;
-}
-
-h3 {
-  margin: 0;
-}
-
-a {
-  text-decoration: none;
-}
-
-img {
-  max-width: 100%;
-  height: auto;
-  object-fit: cover;/* 縦横比率保つやつ */
-}
-
-span,
-i {
-  transition: 0.5s;
-}
-
-/*-------------------header------------*/
-.header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  background-color: #232323;
-  box-shadow: 0 1px 0 rgba(22, 8, 43, 0.1);
-  display: flex;
-  justify-content: center; 
-}
-
-header .header_container {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  height: 56px;
-}
-
-/* 検索バー */
-header .search {
-  display: flex;
-  align-items: center;
-  padding: 7px 12px;
-  background-color: #121212;
-  border-radius: 4px;
-  width: 700px;
-}
-
-/* 検索バー内 */
-header input {
-  width: 100%;
-  border: none;
-  outline: none;
-  background-color: #121212;
-  color: white;
-}
-
-/* 検索バー内の文字 */
-header input::placeholder {
-  color: #79777c;
-}
-
-.fa-solid {
-  color: white;
-}
-
-/* 上部アイコン位置
-header .user {
-  display: flex;
-  align-items: center;
-}
-
-/* 上アイコンプロフィール画像 */
-/*header .user img {
-  width: 35px;
-  height: 35px;
-  object-fit: contain;
-}
-
-header .user i {
-  margin-right: 40px;
-}
-
-header i,
-header .toggle {
-  font-size: 19px;
-  color: #fff;
-  cursor: pointer;
-} 
-
-/*-------------------header------------*/
-/*--------------nav------------*/
+/* 動画カード */
 /* 全体のカードスタイル */
 .video-card {
   width: 250px;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  background-color: white;
-  padding: 10px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-/* いいね＆コメントのスタイル */
-.like-comment {
-  display: flex;
-  justify-content: flex-start;
-  width: 100%;
-  margin-top: 10px;
-}
-
-/* 左メニュー */
-.nav {
-  position: fixed;
-  top: 0;
-  left: -100%;
-  height: 100vh;
-  padding: 16px 16px 0;
-  background: #1c1c1c;
-  box-shadow: 1px 0 0 rgba(22, 8, 43, 0.1);
-  z-index: 100;
-  transition: 0.5s;
-}
-
-.nav_container {
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  padding-bottom: 48px;
-  overflow: auto;
-  scrollbar-width: none;
-}
-
-.nav_container::-webkit-scrollbar {
-  display: none;
-}
-
-/* 左メニューアイコン */
-.nav_logo {
-  font-weight: 600;
-  margin: 0;
-  margin-top: 0;
-  margin-bottom: 20px;
-}
-
-.logo_name {
-  display: flex;
-}
-
-/* 左メニューロゴ */
-.logo_name i {
-  font-size: 25px;
-  margin-right: 10px;
-  color: #ee2522;
-}
-
-/* ユーザー管理アイコン */
-.gg-profile,
-.gg-profile::after,
-.gg-profile::before {
-  display: block;
-  box-sizing: border-box;
-  border: 2px solid;
-  border-radius: 100px;
-}
-.gg-profile {
-  overflow: hidden;
-  transform: scale(var(--ggs, 1));
-  width: 22px;
-  height: 22px;
-  position: relative;
-}
-.gg-profile::after,
-.gg-profile::before {
-  content: "";
-  position: absolute;
-  top: 2px;
-  left: 5px;
-  width: 8px;
-  height: 8px;
-}
-.gg-profile::after {
-  border-radius: 200px;
-  top: 11px;
-  left: 0px;
-  width: 18px;
-  height: 18px;
-}
-
-
-/* イベント管理アイコン */
-.gg-flag-alt {
-    box-sizing: border-box;
-    position: relative;
-    display: block;
-    transform: scale(var(--ggs, 1));
-    width: 14px;
-    height: 20px;
-    border-left: 2px solid;
-  }
-  .gg-flag-alt::after,
-  .gg-flag-alt::before {
-    content: "";
-    display: block;
-    box-sizing: border-box;
-    position: absolute;
-    border-bottom: 2px solid;
-  }
-  .gg-flag-alt::before {
-    width: 12px;
-    height: 10px;
-    border-top: 2px solid;
-    border-right: 2px solid transparent;
-  }
-  .gg-flag-alt::after {
-    width: 8px;
-    height: 8px;
-    border-left: 2px solid;
-    border-top-left-radius: 2px;
-    border-bottom-right-radius: 2px;
-    transform: rotate(45deg);
-    top: 1px;
-    left: 6px;
-  }
-
-.nav_list,
-.nav_items {
-  display: grid;
-}
-
-/* 画面縮小時のメニュー書式 */
-.nav_list {
-  row-gap: 40px;
-}
-
-/* 画面縮小時のメニュー書式(アイコン) */
-.nav_items {
-  row-gap: 24px;
-}
-
-.nav_link {
-  display: flex;
-  align-items: center;
-  color: #fff;
-}
-
-a,a:visited{
-  color: #ffffff;/*カラーコードは任意*/
-}
-
-/* 左メニューカーソル時の色 */
-.nav_link:hover {
-  color: #ee2522;
-}
-
-.nav_icon {
-  width: 5px;
-  font-size: 19px;
-}
-
-.nav_name {
-  font-size: 15px;
-  font-weight: 500;
-  white-space: nowrap;
-}
-
-.nav_soroe{
-    margin-left: 5px;
-}
-
-/*----------nav_dropdown  */
-/* 左メニュー内の横棒 */
-/* .navtop .nav_link:nth-child(4) {
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  padding-bottom: 20px;
-} */
-
-/* タイムライン画面アイコンの色(常時) */
-.active {
-  color: #ee2522;
-}
-
-/* フィルターボタン(動画/アカウント名)のスタイル */
-.filter-button {
-  background-color: black;
-  color: white;
-  border: none;
-  padding: 1px 1px;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 14px;
-}
-
-/* 検索ボックスのスタイル */
-#search {
-  flex: 1;
-  margin-left: 10px;
-  padding: 5px;
-  font-size: 16px;
-  border: none;
-  border-radius: 5px;
-}
-
-/* 検索アイコンのスタイル */
-.fa-magnifying-glass {
-  margin-left: 10px;
-  font-size: 20px;
-  cursor: pointer;
-}
-
-/*----------nav_dropdown   */
-/*--------------nav------------*/
-/*--------------video_items------------*/
-/* 動画グリッド */
-.video-grid {
-  display: grid;
-  grid-template-columns: repeat(
-    auto-fill,
-    minmax(200px, 1fr)
-  ); /* 最小200pxのカードを横に並べる */
-  gap: 60px; /* カードの間のスペースを広げる */
-}
-
-/* カード全体のデザイン */
-.video-card {
   background-color:rgb(44, 44, 44);
   padding: 15px;
-  border-radius: 10px;
-  /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
+  padding-bottom: 0; /* 下部のpaddingを0に設定 */
+  display: flex;
+  flex-direction: column;
   text-align: center;
-  position: relative;
   position: relative; /* 他の位置を考慮する */
   overflow: hidden; /* カード内の要素がはみ出さないようにする */
 }
@@ -537,10 +39,14 @@ a,a:visited{
   border-radius: 10px;
   position: relative;
   display: flex;
-  justify-content: center;
   align-items: center;
   overflow: hidden; /* はみ出しを防止 */
-  object-fit: cover; /* 画像がはみ出さないようにアスペクト比を維持 */
+}
+
+img.thumbnail {
+  max-width: 100%;
+  height: auto;
+  object-fit: cover;/* 縦横比率保つやつ */
 }
 
 /* サムネイルの再生ボタン */
@@ -557,37 +63,26 @@ a,a:visited{
   border-radius: 30%; /* 丸いボタンにする */
 }
 
-/* サムネイルの停止ボタン */
-.gg-play-pause {
-  box-sizing: border-box;
-  position: relative;
-  display: block;
-  transform: scale(var(--ggs, 1));
-  width: 8px;
-  height: 10px;
-  border-left: 3px solid;
-  border-right: 3px solid;
-}
-
-
 /* 動画情報部分 */
 .video-info {
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  gap: 20px; /* プロフィールとボタンの間にスペースをあける */
-  width: 100%;
+  gap: 10px; /* 現代的な方法 */
+  margin-bottom: 10px; /* 必要に応じて追加 */
 }
 
-/* プロフィール情報を横並びにする */
-.profile-info {
-  display: flex;
-  align-items: center;
-  margin-right: auto; /* プロフィールアイコンを左に固定 */
+/* プロフィールアイコン、ボタンを一列に並べる */
+.video-info > div {
+    display: flex;
+    justify-content: flex-start; /* 左から順に並べる */
+    align-items: center; /* アイコンとボタンを縦方向で中央揃え */
+    gap: 10px; /* ボタン同士の間隔 */
 }
 
 /* プロフィールアイコンの修正 */
 .profile-icon {
+  display: flex;
   align-items: center;
   margin-top: 10px;
   width: 25px;
@@ -595,51 +90,23 @@ a,a:visited{
   margin-right: 10px;
   background-color: #bbb;
   border-radius: 50%;
-  margin-right: px; /* アイコンとテキストの間隔を調整 */
 }
 
-/* いいね＆コメントのボタン */
-.like-comment {
+.icons {
   display: flex;
-  gap: 10px;
+  gap: 1em;
 }
 
-.like-comment button {
-  background: none;
+.session-btn {
+  width: 15px; /* 横幅を指定 */
+  height: 40px; /* 高さを指定 */
+  display: inline-block; /* サイズ指定を適用するためにブロック要素として扱う */
+  text-align: center; /* テキストを中央揃え */
+  line-height: 40px; /* 縦中央揃え（高さと同じ値に） */
   border: none;
-  color: white;
-  font-size: 15px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
-/* いいね＆コメントボタンのカーソル時の色 */
-.like-comment button:hover {
-  color: #ee2522;
-}
-
-/* コメントボタンと数字の間隔 */
-.like-comment button span {
-  margin-left: 5px;
-}
-
-.gg-duplicate {
-  box-sizing: border-box;
-  position: relative;
-  display: block;
-  transform: scale(var(--ggs, 1));
-  width: 10px;
-  height: 10px;
-  border: 2px solid transparent;
-  border-bottom: 4px solid transparent;
-  box-shadow:
-    0 0 0 2px,
-    inset 0 -2px 0 0;
-  margin-left: -4px;
-  margin-top: 4px;
-}
+/* セッションボタン */
 .gg-duplicate::after,
 .gg-duplicate::before {
   content: "";
@@ -706,9 +173,634 @@ a,a:visited{
     left: -2px;
 }
 
-.trash{
-  padding-left: 20px;
+/* 音楽プレイヤーのスタイル */
+.music-player {
+  --primary-color: #ddd;
+  --secondary-color: #e0dddd;
+  --green-color: ;
+  --padding: 1em;
+  background-color: rgb(0, 0, 0);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  position: fixed; /* 変更: 固定位置に設定 */
+  bottom: 0; /* 変更: 画面下部に固定 */
+  left: 0;
+  width: 100%; /* 変更: 画面幅に合わせる */
+  height: 7rem;
+  padding: var(--padding);
+  color: #ee2525;
+  z-index: 999; /* 上に表示するための設定 */
 }
+
+i {
+  color: var(--secondary-color);
+}
+
+i:hover {
+  color: var(--primary-color);
+  color: #ee2525;
+}
+
+/* 音楽プレイヤー非表示ボタン */
+.hide-player-button {
+    position: absolute;
+    top: 10px; /* 上からの距離 */
+    right: 10px; /* 右からの距離 */
+    background-color: transparent; /* 背景色を透明に */
+    border: none; /* ボーダーをなしに */
+    font-size: 20px; /* フォントサイズを調整 */
+    cursor: pointer; /* カーソルをポインターに */
+    color: #fff; /* ボタンの色を白に */
+}
+
+.song-bar {
+  position: absolute;
+  left: var(--padding);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 1.5rem;
+  width: 25%;
+}
+
+.song-infos {
+  display: flex;
+  align-items: center;
+  gap: 1em;
+}
+
+.image-container {
+  --size: 4.5em;
+  flex-shrink: 0;
+  width: var(--size);
+  height: var(--size);
+}
+
+.image-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.song-description p {
+  margin: 0.2em;
+}
+
+.title,
+.artist {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  overflow: hidden;
+}
+
+.title:hover,
+.artist:hover {
+  text-decoration: underline;
+}
+
+.artist {
+  color: var(--secondary-color);
+}
+
+.progress-controller {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5em;
+  color: var(--secondary-color);
+}
+
+.control-buttons {
+  display: flex;
+  align-items: center;
+  gap: 2em;
+}
+
+.play-pause {
+  display: inline-block;
+  padding: 1em;
+  background-color: var(--primary-color);
+  color: #111;
+  border-radius: 50%;
+}
+
+.play-pause:hover {
+  transform: scale(1.1);
+  color: #111;
+}
+
+.progress-container {
+  width: 100%;
+  height: 10px; /* 高さを調整 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1em;
+}
+
+.progress-bar {
+  height: 4px;
+  border-radius: 10px;
+  width: 30%;
+  background-color: #ccc4;
+}
+
+/* シークバーのクリック領域を広げるためのレイヤー */
+.progress-bar::before {
+    content: "";
+    position: absolute;
+    top: 88px; /* シークバー上方向にクリック可能領域を広げる */
+    bottom: 14px; /* シークバー下方向にクリック可能領域を広げる */
+    left: 263px; /* シークバー左方向の当たり判定を広げる */
+    right: 263px; /* シークバー右方向の当たり判定を広げる */
+    z-index: 1; /* 視覚的には見えないがクリック可能に */
+    background-color: transparent; /* 見えない状態にする（クリック範囲のみ機能） */
+}
+
+.progress {
+  position: relative;
+  height: 100%;
+  width: 30%;
+  border-radius: 10px;
+  background-color: #76c7c0; /* 進行状況の色 */
+  background-color: var(--secondary-color);
+}
+
+.progress-bar:hover .progress {
+  background-color: var(--green-color);
+}
+
+.progress-bar:hover .progress::after {
+  content: "";
+  position: absolute;
+  --size: 1em;
+  width: var(--size);
+  height: var(--size);
+  right: 0;
+  border-radius: 50%;
+  background-color: var(--primary-color);
+  transform: translate(50%, calc(2px - 50%));
+}
+
+.other-features {
+    position: absolute;
+    right: var(--padding);
+    display: flex;
+    flex-direction: row;
+    gap: 1em;
+    top: 50%; /* 親要素の中央に配置 */
+    transform: translateY(-50%); /* 中央に配置するための調整 */
+    height: 10px; /* progress-containerと同じ高さに設定 */
+    align-items: center; /* 垂直方向に中央揃え */
+}
+
+.volume-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.7em;
+}
+
+.volume-bar .progress-bar {
+  width: 6em;
+}
+
+.volume-bar .progress-bar:hover .progress::after {
+  --size: 0.8em;
+}
+
+h3 {
+  margin: 0;
+}
+
+a {
+  text-decoration: none;
+}
+
+span,
+i {
+  transition: 0.5s;
+}
+
+/*-------------------header------------*/
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: #232323;
+  box-shadow: 0 1px 0 rgba(22, 8, 43, 0.1);
+  display: flex;
+  justify-content: center;
+  z-index: 50; /* ヘッダーを前面に表示 */
+}
+
+header .header_container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 56px;
+}
+
+/* 検索バー */
+header .search {
+  display: flex;
+  align-items: center;
+  padding: 7px 12px;
+  background-color: #121212;
+  border-radius: 4px;
+  width: 700px;
+}
+
+/* 検索バー内 */
+header input {
+  width: 100%;
+  border: none;
+  outline: none;
+  background-color: #121212;
+  color: white;
+}
+
+/* 検索バー内の文字 */
+header input::placeholder {
+  color: #79777c;
+}
+
+.fa-solid {
+  color: white;
+}
+
+/* 上部アイコン位置
+header .user {
+  display: flex;
+  align-items: center;
+}
+
+/* 上アイコンプロフィール画像 */
+/*header .user img {
+  width: 35px;
+  height: 35px;
+  object-fit: contain;
+}
+
+header .user i {
+  margin-right: 40px;
+}
+
+header i,
+header .toggle {
+  font-size: 19px;
+  color: #fff;
+  cursor: pointer;
+} 
+
+/*-------------------header------------*/
+/*--------------nav------------*/
+
+/* いいね＆コメントのスタイル */
+.like-comment {
+  display: flex;
+  justify-content: flex-start;
+  width: 100%;
+  margin-top: 10px;
+  gap: 10px;
+}
+
+/* 左メニュー */
+.nav {
+  position: fixed;
+  top: 0;
+  left: -100%;
+  height: 100vh;
+  padding: 16px 16px 0;
+  background: #1c1c1c;
+  box-shadow: 1px 0 0 rgba(22, 8, 43, 0.1);
+  z-index: 100;
+  transition: 0.5s;
+}
+
+.nav_container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding-bottom: 48px;
+  overflow: auto;
+  scrollbar-width: none;
+}
+
+.nav_container::-webkit-scrollbar {
+  display: none;
+}
+
+/* 左メニューアイコン */
+
+.nav_soroe {
+  margin-left: 1px}
+
+.nav_logo {
+  font-weight: 600;
+  margin: 0;
+  margin-top: 0;
+  margin-bottom: 20px;
+}
+
+.logo_name {
+  display: flex;
+}
+
+/* 左メニューロゴ */
+.logo_name i {
+  font-size: 25px;
+  margin-right: 10px;
+  color: #ee2525;
+}
+
+.gg-mail,
+.gg-mail::after {
+  display: block;
+  box-sizing: border-box;
+  height: 14px;
+  border: 2px solid;
+}
+.gg-mail {
+  overflow: hidden;
+  transform: scale(var(--ggs, 1));
+  position: relative;
+  width: 18px;
+  border-radius: 2px;
+  
+}
+.gg-mail::after {
+  content: "";
+  position: absolute;
+  border-radius: 3px;
+  width: 14px;
+  transform: rotate(-45deg);
+  bottom: 3px;
+  left: 0;
+}
+
+.gg-crown {
+  box-sizing: border-box;
+  position: relative;
+  display: block;
+  transform: scale(var(--ggs, 1));
+  width: 19px;
+  height: 12px;
+  border: 2px solid;
+  border-top-color: transparent;
+  border-bottom-right-radius: 3px;
+  border-bottom-left-radius: 3px;
+  padding-top: 4px;
+}
+.gg-crown::after,
+.gg-crown::before {
+  content: "";
+  display: block;
+  position: absolute;
+  box-sizing: border-box;
+  width: 8px;
+  height: 8px;
+  border-bottom: 2px solid;
+  border-left: 2px solid;
+  transform: rotate(-45deg);
+  top: -4px;
+}
+.gg-crown::before {
+  border-top-left-radius: 2px;
+  left: -1px;
+}
+.gg-crown::after {
+  border-bottom-right-radius: 2px;
+  right: -1px;
+}
+
+.gg-add-r {
+  box-sizing: border-box;
+  position: relative;
+  display: block;
+  width: 22px;
+  height: 22px;
+  border: 2px solid;
+  transform: scale(var(--ggs, 1));
+  border-radius: 4px;
+}
+.gg-add-r::after,
+.gg-add-r::before {
+  content: "";
+  display: block;
+  box-sizing: border-box;
+  position: absolute;
+  width: 10px;
+  height: 2px;
+  background: currentColor;
+  border-radius: 5px;
+  top: 8px;
+  left: 4px;
+}
+.gg-add-r::after {
+  width: 2px;
+  height: 10px;
+  top: 4px;
+  left: 8px;
+}
+
+.gg-boy,
+.gg-boy::after,
+.gg-boy::before {
+  display: block;
+  box-sizing: border-box;
+  border-radius: 42px;
+}
+.gg-boy {
+  position: relative;
+  width: 20px;
+  height: 20px;
+  transform: scale(var(--ggs, 1));
+  overflow: hidden;
+  box-shadow: inset 0 0 0 2px;
+}
+.gg-boy::after,
+.gg-boy::before {
+  content: "";
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  background: currentColor;
+  box-shadow: 6px 0 0;
+  left: 6px;
+  top: 10px;
+}
+.gg-boy::after {
+  width: 20px;
+  height: 20px;
+  top: -13px;
+  right: -12px;
+}
+
+
+.nav_list,
+.nav_items {
+  display: grid;
+}
+
+/* 画面縮小時のメニュー書式 */
+.nav_list {
+  row-gap: 40px;
+}
+
+/* 画面縮小時のメニュー書式(アイコン) */
+.nav_items {
+  row-gap: 24px;
+}
+
+.nav_link {
+  display: flex;
+  align-items: center;
+  color: #fff;
+}
+
+a,a:visited{
+  color: #ffffff;/*カラーコードは任意*/
+}
+
+/* 左メニューカーソル時の色 */
+.nav_link:hover {
+  color: #ee2525;
+}
+
+.nav_icon {
+  width: 40px;
+  font-size: 19px;
+}
+
+.nav_name {
+  font-size: 15px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+/*----------nav_dropdown  */
+/* 左メニュー内の横棒 */
+.navtop .nav_link:nth-child(4) {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding-bottom: 20px;
+}
+
+/* タイムライン画面アイコンの色(常時) */
+.active {
+  color: #ee2525;
+}
+
+/* フィルターボタン(動画/アカウント名)のスタイル */
+.filter-button {
+  background-color: black;
+  color: white;
+  border: none;
+  padding: 1px 1px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+/* 検索ボックスのスタイル */
+#search {
+  flex: 1;
+  margin-left: 10px;
+  padding: 5px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+}
+
+/* 検索アイコンのスタイル */
+.fa-magnifying-glass {
+  margin-left: 10px;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+/*----------nav_dropdown   */
+/*--------------nav------------*/
+/*--------------video_items------------*/
+/* 動画グリッド */
+.video-grid {
+  display: grid;
+  grid-template-columns: repeat(
+    auto-fill,
+    minmax(200px, 1fr)
+  ); /* 最小200pxのカードを横に並べる */
+  gap: 50px; /* カードの間のスペースを広げる */
+}
+
+/* サムネイルの停止ボタン */
+.gg-play-pause {
+  box-sizing: border-box;
+  position: relative;
+  display: block;
+  transform: scale(var(--ggs, 1));
+  width: 8px;
+  height: 10px;
+  border-left: 3px solid;
+  border-right: 3px solid;
+}
+
+
+
+
+/* プロフィール情報を横並びにする */
+.profile-info {
+  display: flex;
+  align-items: center;
+  margin-right: auto; /* プロフィールアイコンを左に固定 */
+}
+
+.like-comment button {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 15px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+/* いいね＆コメントボタンのカーソル時の色 */
+.like-comment button:hover {
+  color: #ee2525;
+}
+
+/* コメントボタンと数字の間隔 */
+.like-comment button span {
+  margin-left: 5px;
+}
+
+.gg-duplicate {
+  box-sizing: border-box;
+  position: relative;
+  display: block;
+  transform: scale(var(--ggs, 1));
+  width: 10px;
+  height: 10px;
+  border: 2px solid transparent;
+  border-bottom: 4px solid transparent;
+  box-shadow:
+    0 0 0 2px,
+    inset 0 -2px 0 0;
+  margin-left: -4px;
+  margin-top: 4px;
+}
+
+/*
+.trash{
+  padding-left: 30px;
+}
+*/
 
 .heart {
   cursor: pointer;
@@ -835,15 +927,22 @@ a,a:visited{
   display: inline-block; /* 幅を固定するために inline-block を使用 */
 }
 
-dialog {
-    border-radius: 10px;
-    background-color: #000000;
-    border: solid 3px #ee2522;
-    color: white;
-    
+/*dialog {*/
+/*    border-radius: 10px;*/
+/*    background-color: #000000;*/
+/*    border: solid 3px #ee2525;*/
+/*    color: white;*/
+/*}*/
+
+.like-comment dialog {
+  text-align: center;
+  border-radius: 10px;
+  background-color: #000000;
+  border: solid 3px #ee2525;
+  color: white;
 }
 
-#yesButton, #noButton {
+.like-comment .dialogButton {
   width: 90px;
   height: 50px;
   color: rgb(255, 255, 255);
@@ -852,12 +951,14 @@ dialog {
   border-radius: 10px;
   cursor: pointer;
   margin: 0 15px;
-  text-align: center; 
-  
+  display: flex;
+  justify-content: center; 
+  align-items: center; 
 }
-#yesButton:hover, #noButton:hover{
-  color: #ee2522;
-  border-color: #ee2522;
+
+.like-comment .dialogButton:hover {
+  color: #ee2525;
+  border-color: #ee2525;
 }
 
 .buttonContainer {
@@ -867,26 +968,47 @@ dialog {
   padding: 20px;
 }
 
-
- /* .dialogButton:hover {
-    color: #ee2522;
-    border-color: #ee2522;
-}  */
+.confirmationDialog {
+  text-align: center;
+  border-radius: 10px;
+  background-color: #000000;
+  border: solid 3px #ee2525;
+  color: white;
+}
 
 #closeConfirmationButton {
-    width: 90px;
-    display: inline-block;
-    padding: 10px;
-    margin: auto 30px;
-    color: rgb(255, 255, 255);
-    background-color: #000000;
-    border: 1px solid #ffffff;
-    border-radius: 10px;
-    cursor: pointer;
-    text-align: center; 
+  width: 90px;
+  display: inline-block;
+  padding: 10px;
+  margin: auto 30px;
+  color: rgb(255, 255, 255);
+  background-color: #000000;
+  border: 1px solid #ffffff;
+  border-radius: 10px;
+  cursor: pointer;
+  text-align: center;
 }
 
-#closeConfirmationButton:hover{
-    color: #ee2522;
-    border-color: #ee2522;
+#closeConfirmationButton:hover {
+  color: #ee2525;
+  border-color: #ee2525;
 }
+
+.button-group2 {
+  /* border: solid 1px #fff; */
+  margin: 0;
+  margin-right: 20px;
+  justify-content: center;
+}
+
+/*
+.video-info {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 20px;
+  width: 100%;  親要素の幅に合わせる 
+  flex-wrap: wrap;  必要に応じて改行させる 
+  box-sizing: border-box;  パディングや境界線を幅に含める 
+}
+*/

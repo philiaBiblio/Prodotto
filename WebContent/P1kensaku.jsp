@@ -6,52 +6,36 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link type="images/png" rel="icon" href="images/icons8-youtube.png" />
-    <link
-      rel="stylesheet"
+    <link　rel="stylesheet"
       href="https://use.fontawesome.com/releases/v6.0.0/css/all.css"
       integrity="sha384-3B6NwesSXE7YJlcLI9RpRqGf2p/EgVH8BgoKTaUrmKNDkHPStTQ3EyoYjCGXaOTS"
-      crossorigin="anonymous"
-    />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=settings"
-    />
+      crossorigin="anonymous"/>
+    <link rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=settings"/>
     <link rel="stylesheet" href="P1kensaku.css" />
     <title>ProDotto</title>
   </head>
 
-
   <body>
+  <form action="P1SearchServlet">
     <header class="header">
       <div class="header_container">
         <div class="none"></div>
         <div class="search">
+
           <!-- フィルターボタン -->
           <!--  これによりフィルターボタン選択で飛ぶようになる-->
-          
-          <select
-            id="filter"
-            class="filter-button"
-            onChange="location.href=value;"
-          >
-            <option value="title">動画タイトル</option>
+          <select id="filter" class="filter-button" name="url">
+            <option selected value="">タグ</option>
             <option value="P1UserSearch.jsp">アカウント名</option>
           </select>
 
           <!-- 検索バー -->
-          <input type="text" id="search" placeholder="Search" />
-          <i class="fa-solid fa-magnifying-glass"></i>
+          <input type="text" name="search" id="search" placeholder="Search" value=""/>
+          <button type="submit" class="icon-button">
+			<i class="fa-solid fa-magnifying-glass"></i>
+		  </button>
         </div>
-        <!-- <div class="user">
-          <div class="icon">
-            <i class="fa-solid fa-video"></i>
-            <i class="fa-solid fa-grip"></i>
-            <i class="fa-solid fa-bell"></i>
-          </div>
-          <div class="img">
-            <img src="images/logo.png" alt="" />
-          </div>
-        </div> -->
       </div>
     </header>
 
@@ -150,8 +134,18 @@
   	  }
   	}
 
+ // 現在のURLからクエリパラメータを取得
+		const params = new URLSearchParams(window.location.search);
+		const selectedUrl = params.get('url');
+
+		// 選択状態を反映
+		if (selectedUrl) {
+		    const filterElement = document.getElementById('filter');
+		    filterElement.value = selectedUrl;
+		}
+
 		
 	</script>
-  
-  </body>
+</form>  
+</body>
 </html>
