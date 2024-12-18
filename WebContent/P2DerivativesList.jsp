@@ -16,7 +16,7 @@
 	crossorigin="anonymous" />
 <link rel="stylesheet"
 	href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=settings" />
-<link rel="stylesheet" href="P2DerivativesList.css" />
+<link rel="stylesheet" href="P2Timeline.css" />
 <title>派生一覧画面</title>
 </head>
 
@@ -33,7 +33,6 @@
 	ArrayList<Heart> dheartList = (ArrayList) ses.getAttribute("DHEARTLIST");
 	String trueMess = (String)ses.getAttribute("TRUEMESS");
 %>
-
 
 <jsp:include page="P2kensaku.jsp"></jsp:include>
 <script>
@@ -115,77 +114,71 @@ window.onload = function(){
 	<main>
 		<!-- グリッドコンテナ -->
 		<section class="video-grid">
-
-			<%if (TList != null) {%>
-			<%for (int i = 0; i < TList.size(); i++) {%>
+			
+			<%if (dtoukouList != null) {%>
+			<%for (int i = 0; i < dtoukouList.size(); i++) {%>
 			<%boolean flg = false; %>
 			<div class="video-card">
 				<div class="thumbnail-placeholder">
 
-					<img src="image/<%=TList.get(i).getThumbnail()%>"
-						alt="Video Thumbnail" class="thumbnail" />
-
-					<button class="play-button"
-						onclick="saiseiName('<%= i%>');sendData('<%= TList.get(i).getUserid() %>', 
-					'<%= TList.get(i).getToukouid() %>', 
+					<img src="image/<%=dtoukouList.get(i).getThumbnail()%>"
+						alt="Video Thumbnail" class="thumbnail"/>
+						
+					<button class="play-button" 
+					onclick="saiseiName('<%= i%>');sendData('<%= dtoukouList.get(i).getUserid() %>', 
+					'<%= dtoukouList.get(i).getToukouid() %>', 
 					'<%= u.getUserid() %>')">
-						▶️</button>
-
-					<input type="hidden" value="<%=userIconList.get(i).getName() %>"
-						id="<%=i%>">
-
+					▶️</button>
+					
+					<input type="hidden" value="<%= duserIconList.get(i).getName() %>" id="<%=i%>">
+					
 					<!-- 音声再生ボタン -->
 					<audio class="audio-player"
-						src="audio/<%=TList.get(i).getSound()%>"></audio>
+						src="audio/<%=dtoukouList.get(i).getSound()%>"></audio>
 				</div>
 
 				<div class="video-info">
 					<!-- 他人なら他人プロフ。自分ならマイページへ -->
-					<%if (!TList.get(i).getUserid().equals(u.getUserid())) {%>
+					<%if (!dtoukouList.get(i).getUserid().equals(u.getUserid())) {%>
 					<form action="P2UserSearchServlet" method="get">
-						<input type="hidden" name="userID"
-							value="<%=TList.get(i).getUserid()%>" />
-						<button type="submit" class="profile-info"
-							style="all: unset; cursor: pointer;">
-							<a> <img src="image/<%=userIconList.get(i).getIconImage()%>"
-								alt="profile icon" class="profile-icon" />
-							</a>
-						</button>
+    				<input type="hidden" name="userID" value="<%=dtoukouList.get(i).getUserid()%>"/>
+    					<button type="submit" class="profile-info" style="all: unset; cursor: pointer;">
+	    					<a>
+	    						<img src="image/<%=duserIconList.get(i).getIconImage()%>" alt="profile icon" class="profile-icon" />
+	    					</a>
+        				</button>
 					</form>
 					<%}else{%>
-					<form action="P2ProfileServlet" method="get">
-						<input type="hidden" name="userID" value="" />
-						<button type="submit" class="profile-info"
-							style="all: unset; cursor: pointer;">
-							<a> <img src="image/<%=userIconList.get(i).getIconImage()%>"
-								alt="profile icon" class="profile-icon" />
-							</a>
-						</button>
+						<form action="P2ProfileServlet" method="get">
+    					<input type="hidden" name="userID" value="" />
+    					<button type="submit" class="profile-info" style="all: unset; cursor: pointer;">
+	    					<a>
+	    						<img src="image/<%=u.getIconImage()%>" alt="profile icon" class="profile-icon" />
+	    					</a>
+        				</button>
 					</form>
-					<%} %>
+					<%} %> 
 
 					<div class="like-comment">
 						<!-- <form action="P2CommentJusinServlet"> -->
-						<input type="hidden" name="toukouId" value="<%=i%>" />
-						<button class="submit comment"
-							onclick="openPopup('<%=TList.get(i).getToukouid()%>')">
-							<img src="image/こめんと1.png" alt="comment icon"
-								style="width: 20px; height: 20px" /> <span><%=postList.get(i).getCommentCount()%></span>
-						</button>
+							<input type="hidden" name="toukouId" value="<%=i%>" />
+							<button class="submit comment" onclick="openPopup('<%=dtoukouList.get(i).getToukouid()%>')">
+								<img src="image/こめんと1.png" alt="comment icon"
+									style="width: 20px; height: 20px" /> <span><%=dpostList.get(i).getCommentCount()%></span>
+							</button>
 						<!-- </form> -->
 
-						<a
-							href="P2heartServlet?hensuu=<%=i%>&heartId=<%=TList.get(i).getToukouid() %>&page=TL">
-							<button class="heart"
-								onclick="changeImage('heartImage<%=postList.get(i)%>')">
-								<img id="heartImage<%=postList.get(i)%>"
-									<%for(int j = 0; j < heartList.size(); j++){
+						<a href="P2heartServlet?hensuu=<%=i%>&heartId=<%= dtoukouList.get(i).getToukouid() %>&page=TL">
+						<button class="heart" onclick="changeImage('heartImage<%=dpostList.get(i)%>')">
+							<img id="heartImage<%=dpostList.get(i)%>"
+							
+							<%for(int j = 0; j < dheartList.size(); j++){
 							//	System.out.println("for文開始" + i);
 								if(flg == false){
 							//		System.out.println(toukouList.get(i).getToukouid()+":"+heartList.get(j).getPostId());
-									if(TList.get(i).getToukouid().equals(heartList.get(j).getPostId())){
+									if(dtoukouList.get(i).getToukouid().equals(dheartList.get(j).getPostId())){
 							//			System.out.println(u.getUserid()+":"+heartList.get(j).getUserId());	
-										if(u.getUserid().equals(heartList.get(j).getUserId())){
+										if(u.getUserid().equals(dheartList.get(j).getUserId())){
 							//				System.out.println("152");
 											flg = true;
 										}else{
@@ -199,27 +192,28 @@ window.onload = function(){
 							}
 							
 							if(flg == true){ %>
-									src="image/Heart-512x512 test2.png" <%}else{ %>
-									src="image/Heart-512x512 test.png" <%} %> alt="like icon"
-									style="width: 20px; height: 20px" /> <span><%=postList.get(i).getLikeCount()%></span>
-							</button>
-						</a>
+							src="image/Heart-512x512 test2.png"
+							<%}else{ %>
+							src="image/Heart-512x512 test.png"
+							<%} %>
+							alt="like icon" style="width: 20px; height: 20px" /> 
+							<span><%=dpostList.get(i).getLikeCount()%></span>
+						</button></a>
 
 						<%
-						String postId = TList.get(i).getToukouid();
+						String postId = dtoukouList.get(i).getToukouid();
 						String postIdPrefix = postId.substring(0, 6);
 						//System.out.println("postIdPrefix："+postIdPrefix+"i:"+i);
 						//System.out.println("noweventId："+noweventId);
 						
 						%>
-
-
-
-						<!-- セッションボタンイフ -->
+						
+						
+						
+						<!-- セッションボタンイフ -->				
 						<%if(postIdPrefix.equals(noweventId)) {%>
-						<button>
-							<span> <a
-								href="P2SessionParticipation?audioFile=<%= TList.get(i).getSound() %>&ID=<%=TList.get(i).getToukouid()%>&hitoride=2">
+						<button class = session-btn>
+							<span> <a href="P2SessionParticipation?audioFile=<%= dtoukouList.get(i).getSound() %>&ID=<%=dtoukouList.get(i).getToukouid()%>&hitoride=2">
 
 									<div class="nav_icon">
 										<i class="gg-duplicate"></i>
@@ -229,34 +223,31 @@ window.onload = function(){
 						</button>
 						<%}%>
 
-						<!-- 削除ボタンイフ -->
-						<%if (TList.get(i).getUserid().equals(u.getUserid())) {%>
+						<!-- 削除ボタンイフ --> 
+						<%if (dtoukouList.get(i).getUserid().equals(u.getUserid())) {%>
 						<script>
 							console.log("i:" + "<%= i %>");
-    						console.log("toukouList.get(i).getUserid()：" + "<%= TList.get(i).getUserid() %>");
+    						console.log("dtoukouList.get(i).getUserid()：" + "<%= dtoukouList.get(i).getUserid() %>");
     						console.log("u.getUserid()：" + "<%= u.getUserid() %>");
 						</script>
 						<!-- <form action="P2PostDeliteServlet" method="post"> -->
 						<%-- <input type="hidden" name="toukouId" value="<%=i%>" /> --%>
-						<button type="button"
-							id="openDialogButton<%=TList.get(i).getToukouid() %>"
-							onclick="dialog('<%=i%>')">
+						<button type="button" id="openDialogButton<%=dtoukouList.get(i).getToukouid() %>"
+						 onclick="dialog('<%=i%>')">
 							<span>
 								<div class="nav_icon trash">
 									<i class="gg-trash"></i>
 								</div>
 							</span>
-						</button>
-						<dialog id="myDialog<%= i %>">
-						<p>この投稿を削除しますか？</p>
-						<div class="buttonContainer">
-							<a
-								href="P2PostDeliteServlet?hensuu=<%=i%>&sakuzyoId=<%= TList.get(i).getToukouid() %>">
-								<button type="button" class="dialogButton" id="yesButton<%= i%>">はい</button>
-							</a>
-							<button type="button" class="dialogButton" id="noButton<%= i %>">いいえ</button>
-						</div>
-						</dialog>
+						</button> 
+						 <dialog id="myDialog<%= i %>">
+            				<p>この投稿を削除しますか？</p>
+            			<div class="buttonContainer">
+            			<a href="P2PostDeliteServlet?hensuu=<%=i%>&sakuzyoId=<%= dtoukouList.get(i).getToukouid() %>">
+                			<button type="button" class="dialogButton" id="yesButton<%= i%>">はい</button></a>
+                			<button type="button" class="dialogButton" id="noButton<%= i %>">いいえ</button>
+            			</div>
+        				</dialog>
 
 						<%}%>
 					</div>
@@ -296,7 +287,7 @@ window.onload = function(){
 				</div>
 			</div>
 			<!-- 非表示ボタンを追加 -->
-			<button class="hide-player-button">×</button>
+        	<button class="hide-player-button">×</button>
 			<div class="other-features">
 				<i class="fas fa-list-ul"></i> <i class="fas fa-desktop"></i>
 				<!-- 音量コントロール -->
@@ -309,9 +300,9 @@ window.onload = function(){
 			</div>
 		</div>
 	</main>
-
-
-	<script>
+	
+	
+<script>
 //////////////再生回数カウント//////////////////	
 
 function sendData(toukouUserid, toukouId, userId) {
@@ -338,16 +329,15 @@ function sendData(toukouUserid, toukouId, userId) {
         console.log('Error:', error); // エラーをコンソールに表示
     });
 }
-</script>
-
-
-
+</script>		
+	
+	
+	
 	<script src="https://unpkg.com/wavesurfer.js"></script>
-
-	<dialog id="confirmationDialog">
-	<p>削除しました</p>
-	<button type="button" class="dialogButton" id="closeConfirmationButton"
-		onclick="confirmationDialog.close();">閉じる</button>
+	
+	<dialog id="confirmationDialog" class="confirmationDialog">
+		<p>削除しました</p>
+		<button type="button" class="dialogButton" id="closeConfirmationButton" onclick="confirmationDialog.close();">閉じる</button>
 	</dialog>
 </body>
 </html>
