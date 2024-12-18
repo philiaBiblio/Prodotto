@@ -166,6 +166,18 @@ i:hover {
 	background-color: #ccc4;
 }
 
+/* シークバーのクリック領域を広げるためのレイヤー */
+.progress-bar::before {
+    content: "";
+    position: absolute;
+    top: 88px; /* シークバー上方向にクリック可能領域を広げる */
+    bottom: 14px; /* シークバー下方向にクリック可能領域を広げる */
+    left: 263px; /* シークバー左方向の当たり判定を広げる */
+    right: 263px; /* シークバー右方向の当たり判定を広げる */
+    z-index: 1; /* 視覚的には見えないがクリック可能に */
+    background-color: transparent; /* 見えない状態にする（クリック範囲のみ機能） */
+}
+
 /* シークバー */
 .progress {
 	position: relative;
