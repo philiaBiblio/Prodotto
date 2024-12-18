@@ -44,17 +44,6 @@ body {
   overflow: hidden; /* はみ出しを防止 */
 }
 
-.thumbnail-placeholder.no-image::before {
-    content: "No Image"; /* 画像がない場合に表示するテキスト */
-    color: #999;
-    font-size: 16px;
-    text-align: center;
-    position: absolute; /* 中央に配置 */
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
-
 img.thumbnail {
   max-width: 100%;
   height: auto;
