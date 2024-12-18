@@ -247,7 +247,7 @@ public class P2LoginServlet extends HttpServlet {
 					
 					if(au.getAdminLevel().equals("1")) {
 						// 管理者管理画面へ
-						url = "P1AdminManegement.jsp";
+						url = "TLManagementServlet";
 						System.out.println(url);
 						// 画面遷移
 						RequestDispatcher rd = request.getRequestDispatcher(url);
