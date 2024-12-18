@@ -144,9 +144,8 @@ window.onload = function(){
 				</div>
 
 				<div class="video-info">
-					<!-- 他人なら他人プロフ。自分ならマイページへ -->
-					<%if (!toukouList.get(i).getUserid().equals(au.getAdminUserid())) {%>
-					<form action="P2UserSearchServlet" method="get">
+					<!-- 他人プロフィール画面へ -->
+					<form action="P1UserSearchServlet" method="get">
     				<input type="hidden" name="userID" value="<%=toukouList.get(i).getUserid()%>"/>
     					<button type="submit" class="profile-info" style="all: unset; cursor: pointer;">
 	    					<a>
@@ -154,16 +153,6 @@ window.onload = function(){
 	    					</a>
         				</button>
 					</form>
-					<%}else{%>
-						<form action="P2ProfileServlet" method="get">
-    					<input type="hidden" name="userID" value="" />
-    					<button type="submit" class="profile-info" style="all: unset; cursor: pointer;">
-	    					<a>
-	    						<img src="image/<%=userIconList.get(i).getIconImage()%>" alt="profile icon" class="profile-icon" />
-	    					</a>
-        				</button>
-					</form>
-					<%} %> 
 
 					<div class="like-comment">
 						<!-- <form action="P2CommentJusinServlet"> -->
