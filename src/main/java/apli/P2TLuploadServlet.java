@@ -91,7 +91,7 @@ public class P2TLuploadServlet extends HttpServlet {
 		    
 		    if(toukouID == null) {
 			    //////////// 「ひとりでセッション」から投稿 //////////////
-		    	if(ses.getAttribute("ODAI") == null){
+		    	if(ses.getAttribute("ODAITEXST") == null){
 		    		System.out.println("*************** 「ひとりでセッション」から投稿 ****************");
 				 	String insertSQL = 
 			    		    "INSERT INTO 投稿 VALUES (" +

@@ -68,18 +68,7 @@ body {
   position: relative;
 }
 
-#message-area {
-  background-color: #ffffff; /* 背景色を白に設定 */
-  color: #555; /* 文字色 */
-  font-size: 16px; /* 文字サイズ */
-  padding: 0.5rem 1rem; /* 内側余白 */
-  border: 1px solid #ddd; /* 枠線 */
-  border-radius: 5px; /* 角を丸める */
-  white-space: nowrap; /* メッセージを1行で表示 */
-  width: 200px;  /* 幅 */
-  height: 50px; /* 高さ */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 軽い影を追加 */
-}
+
 .playlist-toolbar {
   display: flex; /* 横並び配置 */
   align-items: center; /* ボタン群とメッセージエリアの垂直方向中央揃え */
@@ -121,3 +110,40 @@ body {
   height: 120px; /* 修正: `height120px` を正しい形式に */
   border-bottom: 1px solid #ffffff; /* 下線の太さ、スタイル、色 */
 }
+
+
+
+/***************** おだいのところの見た目 *****************/
+
+.odaitext {
+  /* 背景と文字色 */
+  background-color: #1a1a1a; /* 全体の背景と馴染む暗いグレー */
+  color: #11dadd; /* 見やすいアクセントカラー（シアン系） */
+
+  /* テキストスタイル */
+  font-size: 18px; /* 文字を少し大きく */
+  font-weight: bold; /* お題を強調 */
+  text-align: center; /* テキストを中央揃え */
+  line-height: 50px; /* 高さに合わせて垂直中央揃え */
+
+  /* ボックスサイズ */
+  width: 250px; /* お題部分の幅を少し広げる */
+  height: 60px; /* 高さを少し増やす */
+
+  /* 枠線と角のスタイル */
+  border: 2px solid #11dadd; /* 同じ色で枠線を追加 */
+  border-radius: 10px; /* 角を丸くする */
+
+  /* エフェクト */
+  box-shadow: 0 0 15px #11dadd; /* 発光効果 */
+
+  /* 配置と余白 */
+  margin: 10px auto; /* 全体の中央に配置 */
+  padding: 5px; /* 内側の余白を追加 */
+
+  /* テキスト表示の制御 */
+  overflow: hidden; /* テキストがはみ出した場合に隠す */
+  white-space: nowrap; /* 1行で表示 */
+}
+
+

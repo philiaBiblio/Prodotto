@@ -101,7 +101,7 @@ public class P2TimelineServlet extends HttpServlet {
 			// 自分がいいねしたかの判別用のsql
 			String sql2 = "select * from いいね";
 			// sql文実行
-			ResultSet rs2 = dba.selectExe(sql2);
+			ResultSet rs2 = dba2.selectExe(sql2);
 			
 			while(rs2.next()) {
 				String toukouId = rs2.getString("投稿ID");
@@ -133,7 +133,7 @@ public class P2TimelineServlet extends HttpServlet {
 			e.printStackTrace();
 			// ログアウト処理
 			dba.closeDB();
-			dba.closeDB();
+			dba2.closeDB();
 		}
 	}
 }

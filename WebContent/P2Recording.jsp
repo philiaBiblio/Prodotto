@@ -29,12 +29,13 @@
  %>
 
 <%if("1".equals(request.getParameter("hitoride"))){ %>
-	<% ses.setAttribute("ODAI", null); %>
+	<% ses.setAttribute("ODAITEXST", null); %>
 	<% ses.setAttribute("ID", null); %>
 <%}%>
 
 <%if("0".equals(request.getParameter("hitoride"))){ %>
 	<% ses.setAttribute("ID", null); %>
+	<% ses.setAttribute("ODAITEXST",ses.getAttribute("ODAI")); %>
 <%}%>
 
 <body>
@@ -131,9 +132,9 @@
 						</div>
 						
 						<!-- メッセージ表示エリア -->
-						<% if (ses.getAttribute("ODAI") != null) { %>
-						<div id="message-area">
-    						<%= ses.getAttribute("ODAI") %>
+						<% if (ses.getAttribute("ODAITEXST") != null) { %>
+						<div id="message-area" class="odaitext">
+    						<%= ses.getAttribute("ODAITEXST") %>
     						</div>
 						<% } %>
 						

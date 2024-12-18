@@ -27,14 +27,13 @@
 	String userID = (String) ses.getAttribute("USERID");
 	String trueMess = (String)ses.getAttribute("TRUEMESS");
 	
-	boolean isFollowing = (boolean) ses.getAttribute("isFollowing");
+// 	boolean isFollowing = (boolean) ses.getAttribute("isFollowing");
 	int followCount = (int) ses.getAttribute("followCount");
 	int followerCount = (int) ses.getAttribute("followerCount");
 	System.out.println("followCount：" + followCount);
 	System.out.println("followerCount：" + followerCount);
 	
 	ArrayList<Post> postList = (ArrayList<Post>) ses.getAttribute("postList");
-	ArrayList<Heart> heartList = (ArrayList) ses.getAttribute("HEARTLIST");
 %>
 
 <%
@@ -219,7 +218,7 @@ window.onload = function(){
 						 <dialog id="myDialog<%= i %>">
             				<p>この投稿を削除しますか？</p>
             			<div class="buttonContainer">
-            			<a href="P2PostDeliteServlet?hensuu=<%=i%>&sakuzyoId=<%= postList.get(i).getPostId() %>">
+            			<a href="P1PostDeliteServlet?hensuu=<%=i%>&sakuzyoId=<%= postList.get(i).getPostId() %>&page=prf">
                 			<button type="button" class="dialogButton" id="yesButton<%= i%>">はい</button></a>
                 			<button type="button" class="dialogButton" id="noButton<%= i %>">いいえ</button>
             			</div>
@@ -227,6 +226,7 @@ window.onload = function(){
 						</div>
 					</div>
 				</div>
+				<%}%>
 				<%}%>
 				<%}%>
 			</section>
@@ -243,15 +243,12 @@ window.onload = function(){
 		<button class="scroll-left" id="scroll-left-2">◀</button>
 		<div class="video-grid" id="video-grid-2">
 			<!-- セッションのビデオカード生成 -->
-			<%
-			for (int i = 0; i < postList.size(); i++) {
-			%>
+			<%for (int i = 0; i < postList.size(); i++) {%>
 			<!-- 投稿IDの頭六桁が000000だったら。-->
 			<%
 			String postId2 = postList.get(i).getPostId();
 			boolean flg = false;
-			if (postId2.startsWith("000000")) {
-			%>
+			if (postId2.startsWith("000000")) {%>
 			<div class="video-card">
 				<div class="thumbnail-placeholder">
 					<img src="image/<%=postList.get(i).getThumbnailPath()%>"
@@ -299,7 +296,7 @@ window.onload = function(){
 						 <dialog id="myDialog<%= i %>">
             				<p>この投稿を削除しますか？</p>
             			<div class="buttonContainer">
-            			<a href="P2PostDeliteServlet?hensuu=<%=i%>&sakuzyoId=<%= postList.get(i).getPostId() %>">
+            			<a href="P1PostDeliteServlet?hensuu=<%=i%>&sakuzyoId=<%= postList.get(i).getPostId() %>&page=prf">
                 			<button type="button" class="dialogButton" id="yesButton<%= i%>">はい</button></a>
                 			<button type="button" class="dialogButton" id="noButton<%= i %>">いいえ</button>
             			</div>
@@ -308,7 +305,8 @@ window.onload = function(){
 					</div>
 				</div>
 			</div>
-			<%}}%>
+			<%}
+			}%>
 		</div>
 		<button class="scroll-right" id="scroll-right-2">▶</button>
 	</div>
@@ -320,16 +318,12 @@ window.onload = function(){
 			<div class="song-bar">
 				<div class="song-infos">
 					<div class="image-container">
-						<!-- ここうまく切り替わらん場合はセッション入れればいいにょ -->
-						<img src="." alt="">
+						<img src="." alt="" />
 					</div>
 					<div class="song-description">
-						<p class="artist"><%=up.getName()%></p>
+						<p class="artist" id="artistName"></p>
 					</div>
 				</div>
-				<!-- <div class="icons">
-					<i class="far fa-heart"></i> <i class="fas fa-compress"></i>
-				</div> -->
 			</div>
 			<div class="progress-controller">
 				<div class="control-buttons">
@@ -347,9 +341,10 @@ window.onload = function(){
 					<!-- 全体の音楽の時間 -->
 				</div>
 			</div>
+			<!-- 非表示ボタンを追加 -->
+        	<button class="hide-player-button">×</button>
 			<div class="other-features">
 				<i class="fas fa-list-ul"></i> <i class="fas fa-desktop"></i>
-
 				<!-- 音量コントロール -->
 				<div class="volume-bar">
 					<i class="fas fa-volume-down"></i>

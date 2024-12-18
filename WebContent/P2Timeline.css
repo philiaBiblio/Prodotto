@@ -19,6 +19,7 @@ body {
 /* 全体のカードスタイル */
 .video-card {
   width: 250px;
+  height: 186px;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   background-color:rgb(44, 44, 44);
@@ -33,9 +34,9 @@ body {
 
 /* サムネイル部分 */
 .thumbnail-placeholder {
-  width: 100%;
+  width: 220px;
   height: 120px;
-  background-color: rgb(44, 44, 44);
+  background-color: #11dadd;
   border-radius: 10px;
   position: relative;
   display: flex;

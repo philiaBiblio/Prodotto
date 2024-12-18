@@ -17,22 +17,45 @@ body {
 
 /* 音楽プレイヤーのスタイル */
 .music-player {
-  --primary-color: #ddd;
-  --secondary-color: #e0dddd;
-  --green-color: #ee2522;
-  --padding: 1em;
-  background-color: #302f2f;
-  display: none;
-  justify-content: center;
-  align-items: center;
-  position: fixed; /* 変更: 固定位置に設定 */
-  bottom: 0; /* 変更: 画面下部に固定 */
-  left: 0;
-  width: 100%; /* 変更: 画面幅に合わせる */
-  height: 7rem;
-  padding: var(--padding);
-  color: #ee2522;
-  z-index: 999; /* 上に表示するための設定 */
+	--primary-color: #ddd;
+	--secondary-color: #e0dddd;
+	--green-color: #11dadd;
+	--padding: 1em;
+	background-color: rgb(0, 0, 0);
+	display: none;
+	justify-content: center;
+	align-items: center;
+	position: fixed;
+	/* 変更: 固定位置に設定 */
+	bottom: 0;
+	/* 変更: 画面下部に固定 */
+	left: 0;
+	width: 100%;
+	/* 変更: 画面幅に合わせる */
+	height: 7rem;
+	padding: var(--padding);
+	color: #11dadd;
+	z-index: 999;
+	/* 上に表示するための設定 */
+}
+
+/* 音楽プレイヤー非表示ボタン */
+.hide-player-button {
+	position: absolute;
+	top: 10px;
+	/* 上からの距離 */
+	right: 10px;
+	/* 右からの距離 */
+	background-color: transparent;
+	/* 背景色を透明に */
+	border: none;
+	/* ボーダーをなしに */
+	font-size: 20px;
+	/* フォントサイズを調整 */
+	cursor: pointer;
+	/* カーソルをポインターに */
+	color: #fff;
+	/* ボタンの色を白に */
 }
 
 i {
@@ -174,6 +197,7 @@ i:hover {
   position: absolute;
   right: var(--padding);
   display: flex;
+  	top: 50%;
   flex-direction: row;
   gap: 1em;
 }
