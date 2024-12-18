@@ -208,13 +208,13 @@ window.onload = function(){
 						<!-- <form action="P2PostDeliteServlet" method="post"> -->
 						<%-- <input type="hidden" name="toukouId" value="<%=i%>" /> --%>
 						<button type="button" id="openDialogButton<%=postList.get(i).getPostId() %>"
-						 onclick="dialog('<%=i%>')">
+						 onclick="dialog('<%=i%>')" class="trashbutton">
 							<span>
 								<div class="nav_icon trash">
 									<i class="gg-trash"></i>
 								</div>
 							</span>
-						</button> 
+						</button>
 						 <dialog id="myDialog<%= i %>">
             				<p>この投稿を削除しますか？</p>
             			<div class="buttonContainer">
