@@ -34,6 +34,7 @@ public class P2PostDeliteServlet extends HttpServlet {
 	     User u = (User) ses.getAttribute("LOGIN");
 	     // アレイリストの取得
 	     ArrayList<Toukou> toukouList = (ArrayList) ses.getAttribute("TOUKOULIST");
+	     ArrayList<Post> postList = (ArrayList<Post>) ses.getAttribute("postList");
 	     
 	     // URLの生成
 	     String url = "";   
@@ -73,7 +74,13 @@ public class P2PostDeliteServlet extends HttpServlet {
 	    	 }
 	    	 
 	    	 //リストから削除する
-	    	 toukouList.remove(i);
+	    	 if(toukouList != null) {
+	    		 toukouList.remove(i);
+	    		 ses.setAttribute("TOUKOULIST", toukouList);
+	    	 }else if(postList != null) {
+	    		 postList.remove(i);
+	    		 ses.setAttribute("postList", postList);
+	    	 }
 	    	 
 		     String trueMess = "変更できました。";
 		     ses.setAttribute("TRUEMESS", trueMess);

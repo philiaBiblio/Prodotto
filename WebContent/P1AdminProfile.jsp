@@ -25,6 +25,7 @@
 	AdminUser au = (AdminUser) ses.getAttribute("ADMINLOGIN");
 	User up = (User) ses.getAttribute("PROF");
 	String userID = (String) ses.getAttribute("USERID");
+	String trueMess = (String)ses.getAttribute("TRUEMESS");
 	
 	boolean isFollowing = (boolean) ses.getAttribute("isFollowing");
 	int followCount = (int) ses.getAttribute("followCount");
@@ -45,6 +46,52 @@ String noweventId = String.format("%04d%02d", year, month); // 西暦4桁+月2�
 %>
 
 <script>
+//ダイアログのスクリプト
+function dialog(id){
+	console.log("id:" + id);
+	const openDialogButton = document.getElementById('openDialogButton');
+	const yesButton = document.getElementById('yesButton' + id);
+	const noButton = document.getElementById('noButton' + id);
+	const myDialog = document.getElementById('myDialog' + id);
+	const confirmationDialog = document.getElementById('confirmationDialog');
+	const closeConfirmationButton = document.getElementById('closeConfirmationButton');
+	myDialog.showModal();
+	console.log("no" + noButton)
+	  if (noButton) {
+          noButton.addEventListener('click', () => {
+              if (myDialog) {
+                  console.log("80")
+                  myDialog.close();
+              }
+          });
+      }
+	
+}
+
+
+document.addEventListener('DOMContentLoaded', (event) => {
+    function dialog(id) {
+        const openDialogButton = document.getElementById('openDialogButton');
+        const yesButton = document.getElementById('yesButton' + id);
+        const noButton = document.getElementById('noButton' + id);
+        console.log("no" + noButton)
+        const myDialog = document.getElementById('myDialog' + id);
+        const confirmationDialog = document.getElementById('confirmationDialog');
+        const closeConfirmationButton = document.getElementById('closeConfirmationButton');
+    }
+
+    // dialog関数を呼び出す
+    dialog();
+});
+
+<%if(trueMess != null ){ %>
+window.onload = function(){
+	const dialog = document.querySelector("#confirmationDialog");
+	dialog.showModal();
+	} 	
+	<%} %>
+	<%ses.removeAttribute("TRUEMESS"); %>
+	
 	//コメント表示用
 	function openPopup(toukouId) {
   		window.open(
@@ -159,62 +206,24 @@ String noweventId = String.format("%04d%02d", year, month); // 西暦4桁+月2�
 							</button>
 						<!-- </form> -->
 
-							<a href="P2heartServlet?hensuu=<%=i%>&heartId=<%=postList.get(i).getPostId()%>&page=stranger">
-								<button class="heart"
-									onclick="changeImage('heartImage<%=postList.get(i)%>')">
-									<img id="heartImage<%=postList.get(i)%>"
-										<%for (int j = 0; j < heartList.size(); j++) {
-									//	System.out.println("for文開始" + i);
-									if (flgin == false) {
-										//	System.out.println(postList.get(i).getPostId()+":"+heartList.get(j).getPostId());
-										if (postList.get(i).getPostId().equals(heartList.get(j).getPostId())) {
-											// System.out.println(u.getUserid()+":"+heartList.get(j).getUserId());	
-											if (au.getAdminUserid().equals(heartList.get(j).getUserId())) {
-												//	System.out.println("152");
-												flgin = true;
-												} else {
-												//	System.out.println("158");					
-													}
-											} else {
-												//	System.out.println("162");
-												}
-										//	System.out.println("for文終わり" + i);
-										}
-									}
-									if (flgin == true) {%>
-										src="image/Heart-512x512 test2.png" <%} else {%>
-										src="image/Heart-512x512 test.png" <%}%> alt="like icon"
-										style="width: 20px; height: 20px" /> <span><%=postList.get(i).getLikeCount()%></span>
-								</button>
-							</a>
-
-							<%
-							String postIdPrefix = postId.substring(0, 6);
-							//	System.out.print("postIdPrefix："+postIdPrefix);
-							//	System.out.print("postIdPrefix："+postIdPrefix);
-							//	System.out.print("noweventId："+noweventId);
-							%>
-
-							<!-- 今のイベントIDとこの投稿のイベントIDが同じなら表示 -->
-							<%
-							if (postIdPrefix.equals(noweventId)) {
-							%>
-							<%
-							System.out.println("セッションできるよpostIdPrefix：" + postIdPrefix);
-							%>
-							<form action="P2SessionRecPostServlet" method="post">
-								<input type="hidden" name="postId"
-									value="<%=postList.get(i).getPostId()%>" />
-								<button type="submit">
-									<span>
-										<div class="nav_icon">
-											<i class="gg-duplicate"></i>
-										</div>
-									</span>
-								</button>
-							</form>
-							<%}%>
-							<%}%>
+						<!-- <form action="P2PostDeliteServlet" method="post"> -->
+						<%-- <input type="hidden" name="toukouId" value="<%=i%>" /> --%>
+						<button type="button" id="openDialogButton<%=postList.get(i).getPostId() %>"
+						 onclick="dialog('<%=i%>')">
+							<span>
+								<div class="nav_icon trash">
+									<i class="gg-trash"></i>
+								</div>
+							</span>
+						</button> 
+						 <dialog id="myDialog<%= i %>">
+            				<p>この投稿を削除しますか？</p>
+            			<div class="buttonContainer">
+            			<a href="P2PostDeliteServlet?hensuu=<%=i%>&sakuzyoId=<%= postList.get(i).getPostId() %>">
+                			<button type="button" class="dialogButton" id="yesButton<%= i%>">はい</button></a>
+                			<button type="button" class="dialogButton" id="noButton<%= i %>">いいえ</button>
+            			</div>
+        				</dialog>
 						</div>
 					</div>
 				</div>
@@ -277,42 +286,25 @@ String noweventId = String.format("%04d%02d", year, month); // 西暦4桁+月2�
 							</button>
 						<!-- </form> -->
 						
-						<!-- いいねボタン -->
-						<a
-							href="P2heartServlet?hensuu=<%=i%>&heartId=<%=postList.get(i).getPostId()%>&page=stranger">
-							<button class="heart"
-								onclick="changeImage('heartImage<%=postList.get(i)%>')">
-								<img id="heartImage<%=postList.get(i)%>"
-									<%for (int j = 0; j < heartList.size(); j++) {
-								//		System.out.println("for文開始" + i);
-									if (flg == false) {
-									//	System.out.println(postList.get(i).getPostId()+":"+heartList.get(j).getPostId());
-									if (postList.get(i).getPostId().equals(heartList.get(j).getPostId())) {
-									// System.out.println(u.getUserid()+":"+heartList.get(j).getUserId());	
-									if (au.getAdminUserid().equals(heartList.get(j).getUserId())) {
-										flg = true;
-									// System.out.println("152" + flg);
-									} else {
-									// System.out.println("158");					
-									}
-									} else {
-										// System.out.println("162");
-										}
-										// System.out.println("for文終わり" + i);
-										}
-									}
-								//	System.out.println("324" + flg);
-								
-								if (flg == true) {
-									//	System.out.println("trueの処理" + flg);%>
-									src="image/Heart-512x512 test2.png"
-									<%} else {
-										//	System.out.println("elseの処理" + flg);%>
-									src="image/Heart-512x512 test.png" <%}%> alt="like icon"
-									style="width: 20px; height: 20px" /> <span><%=postList.get(i).getLikeCount()%></span>
-							</button>
-						</a>
-
+						<!-- <form action="P2PostDeliteServlet" method="post"> -->
+						<%-- <input type="hidden" name="toukouId" value="<%=i%>" /> --%>
+						<button type="button" id="openDialogButton<%=postList.get(i).getPostId() %>"
+						 onclick="dialog('<%=i%>')">
+							<span>
+								<div class="nav_icon trash">
+									<i class="gg-trash"></i>
+								</div>
+							</span>
+						</button> 
+						 <dialog id="myDialog<%= i %>">
+            				<p>この投稿を削除しますか？</p>
+            			<div class="buttonContainer">
+            			<a href="P2PostDeliteServlet?hensuu=<%=i%>&sakuzyoId=<%= postList.get(i).getPostId() %>">
+                			<button type="button" class="dialogButton" id="yesButton<%= i%>">はい</button></a>
+                			<button type="button" class="dialogButton" id="noButton<%= i %>">いいえ</button>
+            			</div>
+        				</dialog>
+					
 					</div>
 				</div>
 			</div>
@@ -370,6 +362,11 @@ String noweventId = String.format("%04d%02d", year, month); // 西暦4桁+月2�
 	</main>
 
 	<jsp:include page="P1kensaku.jsp"></jsp:include>
+	
+	<dialog id="confirmationDialog" class="confirmationDialog">
+		<p>削除しました</p>
+		<button type="button" class="dialogButton" id="closeConfirmationButton" onclick="confirmationDialog.close();">閉じる</button>
+	</dialog>
 
 	<script>
       const scrollLeftButton1 = document.getElementById("scroll-left-1");
