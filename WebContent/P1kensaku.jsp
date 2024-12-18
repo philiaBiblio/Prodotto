@@ -77,7 +77,7 @@
                 <span class="nav_name">設定</span>
               </a>
 
-              <a href="P1TLManagement.jsp" class="nav_link navtop" id="P1TLManagementid">
+              <a href="TLManagementServlet" class="nav_link navtop" id="P1TLManagementid">
                 <i class="fa fa-house nav_icon"></i>
                 <span class="nav_name">管理者タイムライン</span>
               </a>
