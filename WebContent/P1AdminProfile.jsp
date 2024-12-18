@@ -27,14 +27,14 @@
 	String userID = (String) ses.getAttribute("USERID");
 	String trueMess = (String)ses.getAttribute("TRUEMESS");
 	
-	boolean isFollowing = (boolean) ses.getAttribute("isFollowing");
+/* 	boolean isFollowing = (boolean) ses.getAttribute("isFollowing");
 	int followCount = (int) ses.getAttribute("followCount");
 	int followerCount = (int) ses.getAttribute("followerCount");
 	System.out.println("followCount：" + followCount);
-	System.out.println("followerCount：" + followerCount);
+	System.out.println("followerCount：" + followerCount); */
 	
 	ArrayList<Post> postList = (ArrayList<Post>) ses.getAttribute("postList");
-	ArrayList<Heart> heartList = (ArrayList) ses.getAttribute("HEARTLIST");
+	/* ArrayList<Heart> heartList = (ArrayList) ses.getAttribute("HEARTLIST"); */
 %>
 
 <%
@@ -229,6 +229,7 @@ window.onload = function(){
 				</div>
 				<%}%>
 				<%}%>
+				<%}%>
 			</section>
 		</div>
 		<button class="scroll-right" id="scroll-right-1">▶</button>
@@ -243,15 +244,12 @@ window.onload = function(){
 		<button class="scroll-left" id="scroll-left-2">◀</button>
 		<div class="video-grid" id="video-grid-2">
 			<!-- セッションのビデオカード生成 -->
-			<%
-			for (int i = 0; i < postList.size(); i++) {
-			%>
+			<%for (int i = 0; i < postList.size(); i++) {%>
 			<!-- 投稿IDの頭六桁が000000だったら。-->
 			<%
 			String postId2 = postList.get(i).getPostId();
 			boolean flg = false;
-			if (postId2.startsWith("000000")) {
-			%>
+			if (postId2.startsWith("000000")) {%>
 			<div class="video-card">
 				<div class="thumbnail-placeholder">
 					<img src="image/<%=postList.get(i).getThumbnailPath()%>"
@@ -308,7 +306,8 @@ window.onload = function(){
 					</div>
 				</div>
 			</div>
-			<%}}%>
+			<%}
+			}%>
 		</div>
 		<button class="scroll-right" id="scroll-right-2">▶</button>
 	</div>
