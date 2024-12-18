@@ -54,6 +54,7 @@ public class P2PostAndRecordingServlet extends HttpServlet {
 				String Eve = rs.getString("お題");
 				// お題を保存
 				ses.setAttribute("ODAI",Eve);
+				ses.setAttribute("ODAITEXST",Eve);
 			}
 			else {
 				System.out.println("イベントがありません");

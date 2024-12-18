@@ -19,7 +19,7 @@
     <div class="container">
         <!-- セッションセクション -->
         <section class="section session">
-            <div class="session-content"><%=ses.getAttribute("ODAI") %></div>
+            <div class="session-content"><%=ses.getAttribute("ODAITEXST") %></div>
             <div class="button-group">
                 <a href="P2Recording.jsp?hitoride=0" class="link-button start">セッションをはじめる</a>
                 <a href="P2DerivativesListServlet" class="link-button party">セッションをさがす</a>
