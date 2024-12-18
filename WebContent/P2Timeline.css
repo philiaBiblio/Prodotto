@@ -932,7 +932,14 @@ a,a:visited{
   display: inline-block; /* 幅を固定するために inline-block を使用 */
 }
 
-.like-comment button.dialog {
+/*dialog {*/
+/*    border-radius: 10px;*/
+/*    background-color: #000000;*/
+/*    border: solid 3px #11dadd;*/
+/*    color: white;*/
+/*}*/
+
+.like-comment dialog {
   text-align: center;
   border-radius: 10px;
   background-color: #000000;
@@ -940,7 +947,7 @@ a,a:visited{
   color: white;
 }
 
-.like-comment button.dialog #yesButton,
+.like-comment dialog #yesButton,
 #noButton {
   width: 90px;
   height: 50px;
