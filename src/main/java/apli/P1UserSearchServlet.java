@@ -73,37 +73,37 @@ public class P1UserSearchServlet extends HttpServlet {
                 up.setIconImage(icon);
                 
                 // フォロー状態を確認
-                boolean isFollowing = checkIfFollowing(dba, au.getAdminUserid(), up.getUserid());
-                ses.setAttribute("isFollowing", isFollowing);
+//                boolean isFollowing = checkIfFollowing(dba, au.getAdminUserid(), up.getUserid());
+//                ses.setAttribute("isFollowing", isFollowing);
                 
 				/*  int followCount = 0;
 				int followerCount = 0;
 				ses.setAttribute("followCount", followCount);
 				ses.setAttribute("followerCount", followerCount);*/
                 
-                try (ResultSet rsFollow = dba.selectExe("SELECT COUNT(*) AS follow_count FROM フォロー WHERE フォロワー = '" + up.getUserid() + "'")) {
-                    if (rsFollow.next()) {
-                        int followCount = rsFollow.getInt("follow_count"); // フォローしている数
-                        System.out.println("followCount："+followCount);
-                        ses.setAttribute("followCount", followCount);
-                    }
-                }
-
-                try (ResultSet rsFollower = dba.selectExe("SELECT COUNT(*) AS follower_count FROM フォロー WHERE フォロー = '" + up.getUserid() + "'")) {
-                    if (rsFollower.next()) {
-                        int followerCount = rsFollower.getInt("follower_count"); // フォロワー数
-                        System.out.println("followerCount："+followerCount);
-                        ses.setAttribute("followerCount", followerCount);
-                    }
-                }
-                int followCount = (int) ses.getAttribute("followCount");
-                int followerCount = (int) ses.getAttribute("followerCount");
-                System.out.println("94:followCount："+followCount);
-                System.out.println("95:followerCount："+followerCount);
+//                try (ResultSet rsFollow = dba.selectExe("SELECT COUNT(*) AS follow_count FROM フォロー WHERE フォロワー = '" + up.getUserid() + "'")) {
+//                    if (rsFollow.next()) {
+//                        int followCount = rsFollow.getInt("follow_count"); // フォローしている数
+//                        System.out.println("followCount："+followCount);
+//                        ses.setAttribute("followCount", followCount);
+//                    }
+//                }
+//
+//                try (ResultSet rsFollower = dba.selectExe("SELECT COUNT(*) AS follower_count FROM フォロー WHERE フォロー = '" + up.getUserid() + "'")) {
+//                    if (rsFollower.next()) {
+//                        int followerCount = rsFollower.getInt("follower_count"); // フォロワー数
+//                        System.out.println("followerCount："+followerCount);
+//                        ses.setAttribute("followerCount", followerCount);
+//                    }
+//                }
+//                int followCount = (int) ses.getAttribute("followCount");
+//                int followerCount = (int) ses.getAttribute("followerCount");
+//                System.out.println("94:followCount："+followCount);
+//                System.out.println("95:followerCount："+followerCount);
                 
                 // リクエストスコープに保存
                 ses.setAttribute("PROF", up);
-                ses.setAttribute("isFollowing", isFollowing);
+  //              ses.setAttribute("isFollowing", isFollowing);
                 
                 // 投稿リストを取得してリクエストスコープに保存
                 ArrayList<Post> postList = getPostList(dba, up.getUserid());
@@ -114,24 +114,24 @@ public class P1UserSearchServlet extends HttpServlet {
                 ses.setAttribute("error", "ユーザーが見つかりませんでした。");
             }
             
-            // 自分がいいねしたかの判別用のsql
- 			String sql = "select * from いいね";
- 			// sql文実行
- 			ResultSet rs = dba2.selectExe(sql);
- 			
- 			while(rs.next()) {
- 				String toukouId = rs.getString("投稿ID");
- 				String userId = rs.getString("ユーザーID");
- 				
- 				// インスタンス生成
- 				Heart heart = new Heart();
- 				heart.setPostId(toukouId);
- 				heart.setUserId(userId);
- 				
- 				// アレイリストに追加
- 				heartList.add(heart);
- 			}
- 			ses.setAttribute("HEARTLIST", heartList);
+//            // 自分がいいねしたかの判別用のsql
+// 			String sql = "select * from いいね";
+// 			// sql文実行
+// 			ResultSet rs = dba2.selectExe(sql);
+// 			
+// 			while(rs.next()) {
+// 				String toukouId = rs.getString("投稿ID");
+// 				String userId = rs.getString("ユーザーID");
+// 				
+// 				// インスタンス生成
+// 				Heart heart = new Heart();
+// 				heart.setPostId(toukouId);
+// 				heart.setUserId(userId);
+// 				
+// 				// アレイリストに追加
+// 				heartList.add(heart);
+// 			}
+// 			ses.setAttribute("HEARTLIST", heartList);
  			
         } catch (Exception e) {
             e.printStackTrace();
@@ -147,26 +147,26 @@ public class P1UserSearchServlet extends HttpServlet {
         rd.forward(request, response);
     }
 
-    private boolean checkIfFollowing(DBAcs dba, String followUserID, String followerUserID) {
-        boolean result = false;
-        System.out.println("result："+result);
-        String query = "SELECT * FROM フォロー WHERE フォロー = ? AND フォロワー = ?";
-        System.out.println("query："+query);
-        try (PreparedStatement pstmt = dba.getConnection().prepareStatement(query)) {
-            pstmt.setString(1, followUserID);
-            System.out.println("followUserID："+followUserID);
-            pstmt.setString(2, followerUserID);
-            System.out.println("followerUserID："+followerUserID);
-            try (ResultSet rs = pstmt.executeQuery()) {
-                result = rs.next(); 
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        System.out.println("return result："+result);
-        return result;
-        
-    }
+//    private boolean checkIfFollowing(DBAcs dba, String followUserID, String followerUserID) {
+//        boolean result = false;
+//        System.out.println("result："+result);
+//        String query = "SELECT * FROM フォロー WHERE フォロー = ? AND フォロワー = ?";
+//        System.out.println("query："+query);
+//        try (PreparedStatement pstmt = dba.getConnection().prepareStatement(query)) {
+//            pstmt.setString(1, followUserID);
+//            System.out.println("followUserID："+followUserID);
+//            pstmt.setString(2, followerUserID);
+//            System.out.println("followerUserID："+followerUserID);
+//            try (ResultSet rs = pstmt.executeQuery()) {
+//                result = rs.next(); 
+//            }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        System.out.println("return result："+result);
+//        return result;
+//        
+//    }
 
     private ArrayList<Post> getPostList(DBAcs dba, String userID) throws Exception {
         	ArrayList<Post> postList = new ArrayList<>();

@@ -135,7 +135,7 @@ window.onload = function(){
 
           <!-- 動画カードがここに配置される -->
           <%if (toukouList3 != null) {%>
-			<%for (int i = 0; i < 10; i++) {%>
+			<%for (int i = 0; i < postList3.size(); i++) {%>
 			<%boolean flg = false; %>
 			<div class="video-card">
 				<div class="thumbnail-placeholder">
@@ -339,7 +339,7 @@ window.onload = function(){
 
           <!-- 動画カードがここに配置される -->
           <%if (toukouList1 != null) {%>
-			<%for (int i = 0; i < 10; i++) {%>
+			<%for (int i = 0; i < postList1.size(); i++) {%>
 			<%boolean flg = false; %>
 			<div class="video-card">
 				<div class="thumbnail-placeholder">
@@ -497,7 +497,7 @@ window.onload = function(){
 
           <!-- 動画カードがここに配置される -->
           <%if (toukouList2 != null) {%>
-			<%for (int i = 0; i < 10; i++) {%>
+			<%for (int i = 0; i < postList2.size(); i++) {%>
 			<%boolean flg = false; %>
 			<div class="video-card">
 				<div class="thumbnail-placeholder">
