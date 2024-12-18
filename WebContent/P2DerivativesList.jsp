@@ -168,7 +168,7 @@ window.onload = function(){
 							</button>
 						<!-- </form> -->
 
-						<a href="P2heartServlet?hensuu=<%=i%>&heartId=<%= dtoukouList.get(i).getToukouid() %>&page=TL">
+						<a href="P2heartServlet?hensuu=<%=i%>&heartId=<%= dtoukouList.get(i).getToukouid() %>&page=Deri">
 						<button class="heart" onclick="changeImage('heartImage<%=dpostList.get(i)%>')">
 							<img id="heartImage<%=dpostList.get(i)%>"
 							
@@ -243,7 +243,7 @@ window.onload = function(){
 						 <dialog id="myDialog<%= i %>">
             				<p>この投稿を削除しますか？</p>
             			<div class="buttonContainer">
-            			<a href="P2PostDeliteServlet?hensuu=<%=i%>&sakuzyoId=<%= dtoukouList.get(i).getToukouid() %>">
+            			<a href="P2PostDeliteServlet?hensuu=<%=i%>&sakuzyoId=<%= dtoukouList.get(i).getToukouid() %>&page=deri">
                 			<button type="button" class="dialogButton" id="yesButton<%= i%>">はい</button></a>
                 			<button type="button" class="dialogButton" id="noButton<%= i %>">いいえ</button>
             			</div>

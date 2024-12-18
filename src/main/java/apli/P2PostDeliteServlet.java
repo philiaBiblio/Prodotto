@@ -86,7 +86,17 @@ public class P2PostDeliteServlet extends HttpServlet {
 		     ses.setAttribute("TRUEMESS", trueMess);
 		        	        
 		     // 画面へ遷移
-		     url = "P2TimelineServlet";
+		     
+		  // どのページから来たかの把握
+	    	 String pageFlg = request.getParameter("page");
+	    	 
+		     if(pageFlg.equals("deri")) {
+				url = "P2DerivativesListServlet";
+			}else{
+				url = "P2TimelineServlet";
+			}
+		     
+		     
 		     response.sendRedirect(url);
 	    	 
 		     // ログアウト処理
