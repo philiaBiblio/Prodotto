@@ -198,7 +198,7 @@ function openPopup(toukouId) {
 							</button>
 						<!-- </form> -->
 
-						<a href="P2heartServlet?hensuu=<%=i%>&heartId=<%= upList.get(i).getToukouid() %>&page=TL">
+						<a href="P2heartServlet?hensuu=<%=i%>&heartId=<%= upList.get(i).getToukouid() %>&page=mine">
 						<button class="heart" onclick="changeImage('heartImage<%=upList.get(i)%>')">
 							<img id="heartImage<%=upList.get(i)%>"
 							
