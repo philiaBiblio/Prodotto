@@ -942,8 +942,7 @@ a,a:visited{
   color: white;
 }
 
-.like-comment dialog #yesButton,
-#noButton {
+.like-comment .dialogButton {
   width: 90px;
   height: 50px;
   color: rgb(255, 255, 255);
@@ -952,14 +951,12 @@ a,a:visited{
   border-radius: 10px;
   cursor: pointer;
   margin: 0 15px;
-  /* フレックスボックスでテキストを中央揃え */
   display: flex;
-  justify-content: center; /* 水平方向の中央揃え */
-  align-items: center; /* 垂直方向の中央揃え */
+  justify-content: center; 
+  align-items: center; 
 }
 
-#yesButton:hover,
-#noButton:hover {
+.like-comment .dialogButton:hover {
   color: #11dadd;
   border-color: #11dadd;
 }
@@ -969,6 +966,14 @@ a,a:visited{
   justify-content: center;
   align-items: center;
   padding: 20px;
+}
+
+.confirmationDialog {
+  text-align: center;
+  border-radius: 10px;
+  background-color: #000000;
+  border: solid 3px #11dadd;
+  color: white;
 }
 
 #closeConfirmationButton {

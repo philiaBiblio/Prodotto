@@ -40,7 +40,7 @@ ArrayList<User> searchU = (ArrayList<User>) ses.getAttribute("USERLIST");
 				<div class="soroe">
 					<input type="hidden" name="userID" value="<%= searchU.get(i).getUserid() %>">
 					<button type="submit" class="icon-button">
-						<img src="<%= searchU.get(i).getIconImage()%>" alt="アイコン" class="icon">
+						<img src="image/<%= searchU.get(i).getIconImage()%>" alt="アイコン" class="icon">
 					</button>
 				</div>
 				<div class="user-content">
