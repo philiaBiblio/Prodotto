@@ -14,7 +14,7 @@
 
 	<!-- Bootstrapスタイルシートのリンク。ボタンやレイアウトのスタイル -->
 	<link rel="stylesheet" href="bootstrap.min.css" />
-	<link rel="stylesheet" href="main.css" />
+	<link rel="stylesheet" href="P2Recording2.css" />
 	<link rel="stylesheet" href="P2Recording.css" />
 
 	<!-- Font Awesomeのリンク。ボタンのアイコンを使用するために必要 -->
