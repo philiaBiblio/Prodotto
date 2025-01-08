@@ -12,18 +12,18 @@ body {
     height: 100vh;
   }
   
-  form {
-    width: 400px;
-    max-width: 500%;
-    padding: 20px;
-    border-radius: 10px;
-    margin-top: 20px;
-    border: solid 1px #fff;
-  }
-  
-  form:hover {
-    border-color: #ffffff;
-  }
+ .area {
+  width: 400px;
+  max-width: 500%;
+  padding: 20px;
+  border-radius: 10px;
+  margin-top: 20px;
+  border: solid 1px #fff;
+}
+
+.area:hover {
+  border-color: #ffffff;
+}
   
   .icon {
     text-align: center;

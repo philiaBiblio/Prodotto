@@ -12,6 +12,15 @@ body {
   margin-bottom: 20px;
 }
 
+.no-notification {
+	color: #58555e;
+    font-size: 24px; /* フォントサイズ */
+    font-weight: bold; /* 太字 */
+    text-align: center; /* 中央寄せ */
+    padding: 10px; /* 余白 */
+}
+
+
 /* 全体レイアウト */
 .container {
   display: flex;

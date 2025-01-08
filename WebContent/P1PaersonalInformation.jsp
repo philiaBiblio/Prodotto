@@ -17,7 +17,7 @@ HttpSession ses = request.getSession();
 AdminUser au = (AdminUser) ses.getAttribute("ADMINLOGIN");
 %>
 <body>
-	<form action="PersonalInformationServlet" method="post">
+	<form action="PersonalInformationServlet" method="post" class="area">
 		<div class="nakami">
 			<!-- ユーザー名 -->
 			<div class="profile-item">

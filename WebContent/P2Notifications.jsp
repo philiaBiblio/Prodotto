@@ -25,6 +25,14 @@
   <body>
   <!-- 通知リスト --> 
   <div class="notifications">
+  
+  		<%if(tuchiList == null || tuchiList.isEmpty()) {%>
+  		<div class="no-notification">
+  			通知がありません
+        </div>
+  		<%} %>
+  
+  
   		<%if(tuchiList != null){
   			for(int i = 0; i < tuchiList.size(); i++){ 
   				// いいねの場合
