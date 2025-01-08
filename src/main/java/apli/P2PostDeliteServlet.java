@@ -95,7 +95,9 @@ public class P2PostDeliteServlet extends HttpServlet {
 		     }else if(pageFlg.equals("tl")){
 				url = "P2TimelineServlet";
 		     }else if(pageFlg.equals("mine")){
-					url = "P2ProfileServlet";
+				url = "P2ProfileServlet";
+			 }else if(pageFlg.equals("Ranking")) {
+				 url = "P2RankingServlet";
 			 }
 		     
 		     
