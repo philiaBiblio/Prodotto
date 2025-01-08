@@ -34,7 +34,7 @@ ArrayList<Heart> heartList = (ArrayList) ses.getAttribute("HEARTLIST");
 
 int followCount = (int) ses.getAttribute("followCount");
 int followerCount = (int) ses.getAttribute("followerCount");
-String trueMess = (String) ses.getAttribute("TRUEMESS");
+String DELET = (String) ses.getAttribute("DDDDELET");
 %>
 
 
@@ -83,13 +83,13 @@ document.addEventListener('DOMContentLoaded', (event) => {
     dialog();
 });
 
-<%if (trueMess != null) {%>
+<%if (DELET != null) {%>
 	window.onload = function(){
 	const dialog = document.querySelector("#confirmationDialog");
 	dialog.showModal();
 	} 	
 <%}%>
-<%ses.removeAttribute("TRUEMESS");%>
+<%ses.removeAttribute("DDDDELET");%>
 
 // コメント表示用
 function openPopup(toukouId) {
