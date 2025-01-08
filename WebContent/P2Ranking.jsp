@@ -42,7 +42,7 @@
 	ArrayList<Post> postList2 = (ArrayList) ses.getAttribute("POSTLIST2");
 	ArrayList<Post> postList3 = (ArrayList) ses.getAttribute("POSTLIST3");
 	ArrayList<Heart> heartList = (ArrayList) ses.getAttribute("HEARTLIST");
-	String trueMess = (String)ses.getAttribute("TRUEMESS");
+	String DELET = (String)ses.getAttribute("DDDDELET");
 %>
 
 <jsp:include page="P2kensaku.jsp"></jsp:include>
@@ -86,13 +86,13 @@ document.addEventListener('DOMContentLoaded', (event) => {
     dialog();
 });
 
-<%if(trueMess != null ){ %>
+<%if(DELET != null ){ %>
 window.onload = function(){
 	const dialog = document.querySelector("#confirmationDialog");
 	dialog.showModal();
 	} 	
 	<%} %>
-	<%ses.removeAttribute("TRUEMESS"); %>
+	<%ses.removeAttribute("DDDDELET"); %>
 
 	// コメント表示用
 	function openPopup(toukouId) {

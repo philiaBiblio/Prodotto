@@ -85,7 +85,7 @@ window.onload = function(){
 	dialog.showModal();
 	} 	
 	<%} %>
-	<%ses.removeAttribute("TRUEMESS"); %>
+	<%ses.removeAttribute("DDDDELET"); %>
 
 	// コメント表示用
 	function openPopup(toukouId) {

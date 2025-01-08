@@ -52,7 +52,6 @@ public class P2LoginServlet extends HttpServlet {
 			// ユーザーか管理者か判定するためのフラグ
 			boolean isUser = false; 
 			
-			
 			//まずはパスワードを暗号化
 			// inpass暗号化
 			// 暗号化部品の生成
@@ -247,7 +246,7 @@ public class P2LoginServlet extends HttpServlet {
 					
 					if(au.getAdminLevel().equals("1")) {
 						// 管理者管理画面へ
-						url = "TLManagementServlet";
+						url = "P1AdminManegement.jsp";
 						System.out.println(url);
 						// 画面遷移
 						RequestDispatcher rd = request.getRequestDispatcher(url);
