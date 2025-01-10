@@ -1002,6 +1002,20 @@ a,a:visited{
   justify-content: center;
 }
 
+.error-message {
+    position: absolute; /* control-buttons に関連する位置を設定 */
+    top: 50%; /* control-buttons の高さの中央に揃える */
+    transform: translateY(-50%); /* 縦方向を中央揃え */
+    left: -250px; /* 左側に適切な位置を調整 */
+    background-color: rgba(255, 0, 0, 0.8); /* 半透明の赤背景 */
+    color: white; /* 白文字 */
+    padding: 10px 20px; /* パディング */
+    border-radius: 5px; /* 角を丸める */
+    font-size: 14px; /* フォントサイズ */
+    z-index: 1000; /* 他の要素の上に表示 */
+    display: none; /* 初期状態では非表示 */
+}
+
 /*
 .video-info {
   display: flex;
