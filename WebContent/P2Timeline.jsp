@@ -103,6 +103,28 @@ window.onload = function(){
 		const artist = document.getElementById('artistName');
 		artist.innerText = kazu.value;
 		}
+
+	// いいねのスクロールバー
+	window.addEventListener('load', loadFinished);
+	function loadFinished() {
+		consol.log("110");
+		var OffsetTop = sessionStorage.getItem("OffsetTop");
+		window.scroll({
+			top: OffsetTop,
+        	behavior: 'smooth',
+
+    // sessionStorage削除
+    sessionStorage.removeItem("OffsetTop");
+    }
+    
+    document.addEventListener('click', event => {
+    if (event.target.id === 'test') {
+        //スクロール位置取得
+        var location = window.pageYOffset;
+        // sessionStorageに保存する
+        sessionStorage.setItem('OffsetTop', location);
+        }
+    });
 	
 </script>
 
@@ -173,7 +195,8 @@ window.onload = function(){
 							</button>
 						<!-- </form> -->
 
-						<a href="P2heartServlet?hensuu=<%=i%>&heartId=<%= toukouList.get(i).getToukouid() %>&page=TL">
+						<a href="P2heartServlet?hensuu=<%=i%>&heartId=<%= toukouList.get(i).getToukouid() %>&page=TL"
+						id="test">
 						<button class="heart" onclick="changeImage('heartImage<%=postList.get(i)%>')">
 							<img id="heartImage<%=postList.get(i)%>"
 							
