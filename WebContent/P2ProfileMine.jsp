@@ -34,7 +34,7 @@ ArrayList<Heart> heartList = (ArrayList) ses.getAttribute("HEARTLIST");
 
 int followCount = (int) ses.getAttribute("followCount");
 int followerCount = (int) ses.getAttribute("followerCount");
-String trueMess = (String) ses.getAttribute("TRUEMESS");
+String DELET = (String) ses.getAttribute("DDDDELET");
 %>
 
 
@@ -83,13 +83,13 @@ document.addEventListener('DOMContentLoaded', (event) => {
     dialog();
 });
 
-<%if (trueMess != null) {%>
+<%if (DELET != null) {%>
 	window.onload = function(){
 	const dialog = document.querySelector("#confirmationDialog");
 	dialog.showModal();
 	} 	
 <%}%>
-<%ses.removeAttribute("TRUEMESS");%>
+<%ses.removeAttribute("DDDDELET");%>
 
 // コメント表示用
 function openPopup(toukouId) {
@@ -411,7 +411,7 @@ function openPopup(toukouId) {
 						<dialog id="myDialog<%=i%>">
 							<p>この投稿を削除しますか？</p>
 							<div class="buttonContainer">
-								<a href="P2PostDeliteServlet?hensuu=<%=i%>&sakuzyoId=<%=upList.get(i).getToukouid()%>">
+								<a href="P2PostDeliteServlet?hensuu=<%=i%>&sakuzyoId=<%=upList.get(i).getToukouid()%>&page=mine">
 									<button type="button" class="dialogButton" id="yesButton<%=i%>">はい</button>
 								</a>
 								<button type="button" class="dialogButton" id="noButton<%=i%>">いいえ</button>
@@ -517,5 +517,11 @@ function openPopup(toukouId) {
 
     </script>
 	<script src="https://unpkg.com/wavesurfer.js"></script>
+	
+	<dialog id="confirmationDialog" class="confirmationDialog">
+		<p>削除しました</p>
+		<button type="button" class="dialogButton" id="closeConfirmationButton" onclick="confirmationDialog.close();">閉じる</button>
+	</dialog>
+	
 </body>
 </html>

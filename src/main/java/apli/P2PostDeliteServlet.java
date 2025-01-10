@@ -50,6 +50,10 @@ public class P2PostDeliteServlet extends HttpServlet {
 	    	 String sakuzyoId = request.getParameter("sakuzyoId");
 	    	 System.out.println("51：" + sakuzyoId);
 	    	 
+	    	// どのページから来たかの把握
+	    	 String pageFlg = request.getParameter("page");
+	    	 System.out.println(pageFlg);
+	    	 
 	    	 // 投稿ID検索のsql文実行
 	    	 ResultSet rs = dba.selectExe("select * from 投稿 where 投稿ID = '" + sakuzyoId + "'");
 	    	 
@@ -84,18 +88,16 @@ public class P2PostDeliteServlet extends HttpServlet {
 	    	 
 		     String trueMess = "変更できました。";
 		     ses.setAttribute("DDDDELET", trueMess);
-		        	        
-		     // 画面へ遷移
 		     
-		  // どのページから来たかの把握
-	    	 String pageFlg = request.getParameter("page");
-	    	 
+		     // 画面へ遷移
 		     if(pageFlg.equals("deri")) {
 				url = "P2DerivativesListServlet";
 		     }else if(pageFlg.equals("tl")){
 				url = "P2TimelineServlet";
 		     }else if(pageFlg.equals("mine")){
-					url = "P2ProfileServlet";
+				url = "P2ProfileServlet";
+			 }else if(pageFlg.equals("Ranking")) {
+				 url = "P2RankingServlet";
 			 }
 		     
 		     

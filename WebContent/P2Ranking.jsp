@@ -42,7 +42,7 @@
 	ArrayList<Post> postList2 = (ArrayList) ses.getAttribute("POSTLIST2");
 	ArrayList<Post> postList3 = (ArrayList) ses.getAttribute("POSTLIST3");
 	ArrayList<Heart> heartList = (ArrayList) ses.getAttribute("HEARTLIST");
-	String trueMess = (String)ses.getAttribute("TRUEMESS");
+	String DELET = (String)ses.getAttribute("DDDDELET");
 %>
 
 <jsp:include page="P2kensaku.jsp"></jsp:include>
@@ -86,13 +86,13 @@ document.addEventListener('DOMContentLoaded', (event) => {
     dialog();
 });
 
-<%if(trueMess != null ){ %>
+<%if(DELET != null ){ %>
 window.onload = function(){
 	const dialog = document.querySelector("#confirmationDialog");
 	dialog.showModal();
 	} 	
 	<%} %>
-	<%ses.removeAttribute("TRUEMESS"); %>
+	<%ses.removeAttribute("DDDDELET"); %>
 
 	// コメント表示用
 	function openPopup(toukouId) {
@@ -260,7 +260,7 @@ window.onload = function(){
 						 <dialog id="myDialog<%= i %>">
             				<p>この投稿を削除しますか？</p>
             			<div class="buttonContainer">
-            			<a href="P2PostDeliteServlet?hensuu=<%=i%>&sakuzyoId=<%= toukouList3.get(i).getToukouid() %>">
+            			<a href="P2PostDeliteServlet?hensuu=<%=i%>&sakuzyoId=<%= toukouList3.get(i).getToukouid() %>&page=Ranking">
                 			<button type="button" class="dialogButton" id="yesButton<%= i%>">はい</button></a>
                 			<button type="button" class="dialogButton" id="noButton<%= i %>">いいえ</button>
             			</div>
@@ -464,7 +464,7 @@ window.onload = function(){
 						 <dialog id="myDialog<%= i %>">
             				<p>この投稿を削除しますか？</p>
             			<div class="buttonContainer">
-            			<a href="P2PostDeliteServlet?hensuu=<%=i%>&sakuzyoId=<%= toukouList1.get(i).getToukouid() %>">
+            			<a href="P2PostDeliteServlet?hensuu=<%=i%>&sakuzyoId=<%= toukouList1.get(i).getToukouid() %>&page=Ranking">
                 			<button type="button" class="dialogButton" id="yesButton<%= i%>">はい</button></a>
                 			<button type="button" class="dialogButton" id="noButton<%= i %>">いいえ</button>
             			</div>
@@ -622,7 +622,7 @@ window.onload = function(){
 						 <dialog id="myDialog<%= i %>">
             				<p>この投稿を削除しますか？</p>
             			<div class="buttonContainer">
-            			<a href="P2PostDeliteServlet?hensuu=<%=i%>&sakuzyoId=<%= toukouList2.get(i).getToukouid() %>">
+            			<a href="P2PostDeliteServlet?hensuu=<%=i%>&sakuzyoId=<%= toukouList2.get(i).getToukouid() %>&page=Ranking">
                 			<button type="button" class="dialogButton" id="yesButton<%= i%>">はい</button></a>
                 			<button type="button" class="dialogButton" id="noButton<%= i %>">いいえ</button>
             			</div>
@@ -640,10 +640,6 @@ window.onload = function(){
         <button class="scroll-right" id="scroll-right-2">▶</button>
       </div>
 
-
-    
-
-     
     <script>
         const scrollLeftButton1 = document.getElementById("scroll-left-1");
       const scrollRightButton1 = document.getElementById("scroll-right-1");
@@ -730,6 +726,11 @@ console.error('Error:', error); // エラーをコンソールに表示
 }
 
 </script>
+
+<dialog id="confirmationDialog" class="confirmationDialog">
+		<p>削除しました</p>
+		<button type="button" class="dialogButton" id="closeConfirmationButton" onclick="confirmationDialog.close();">閉じる</button>
+</dialog>
     
   </body>
 </html>
