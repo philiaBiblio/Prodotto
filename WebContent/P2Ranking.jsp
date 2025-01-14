@@ -111,6 +111,24 @@ window.onload = function(){
 		const artist = document.getElementById('artistName');
 		artist.innerText = kazu.value;
 		}
+
+	// いいねのスクロールバー
+	var scrollPosition; 
+	var STORAGE_KEY = "scrollY";
+
+	function saveScrollPosition(){
+		scrollPosition = window.pageYOffset; 
+		localStorage.setItem(STORAGE_KEY, scrollPosition);
+		}
+
+	window.addEventListener("load", function(){
+		scrollPosition = localStorage.getItem(STORAGE_KEY);
+		if(scrollPosition !== null){
+			scrollTo(0, scrollPosition);
+			}
+		window.addEventListener("scroll", saveScrollPosition, false);
+		});
+	
 </script>
 
   <body>
