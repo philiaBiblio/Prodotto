@@ -104,27 +104,22 @@ window.onload = function(){
 		artist.innerText = kazu.value;
 		}
 
-	// いいねのスクロールバー
-	window.addEventListener('load', loadFinished);
-	function loadFinished() {
-		consol.log("110");
-		var OffsetTop = sessionStorage.getItem("OffsetTop");
-		window.scroll({
-			top: OffsetTop,
-        	behavior: 'smooth',
+ 	// いいねのスクロールバー
+	var scrollPosition; 
+	var STORAGE_KEY = "scrollY";
 
-    // sessionStorage削除
-    sessionStorage.removeItem("OffsetTop");
-    }
-    
-    document.addEventListener('click', event => {
-    if (event.target.id === 'test') {
-        //スクロール位置取得
-        var location = window.pageYOffset;
-        // sessionStorageに保存する
-        sessionStorage.setItem('OffsetTop', location);
-        }
-    });
+	function saveScrollPosition(){
+		scrollPosition = window.pageYOffset; 
+		localStorage.setItem(STORAGE_KEY, scrollPosition);
+		}
+
+	window.addEventListener("load", function(){
+		scrollPosition = localStorage.getItem(STORAGE_KEY);
+		if(scrollPosition !== null){
+			scrollTo(0, scrollPosition);
+			}
+		window.addEventListener("scroll", saveScrollPosition, false);
+		});
 	
 </script>
 
