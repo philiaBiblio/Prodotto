@@ -49,20 +49,26 @@ public class P2heartServlet extends HttpServlet {
 	     try {
 	    	 // どのページから来たかの把握
 	    	 String pageFlg = request.getParameter("page");
-	    	 System.out.println("53：" + pageFlg);
+	    	 System.out.println("52：" + pageFlg);
+	    	 // ランキングだった場合どのリストか確認
+	    	 String num = request.getParameter("List");
+	    	 System.out.println("55：" + num);
 	    	 
 	    	 // どの投稿に対してか投稿IDを取得
 	    	 String x = request.getParameter("hensuu");
 	    	 Integer i = Integer.parseInt(x);
-	    	 System.out.println("46：" + i); 
+	    	 System.out.println("60：" + i); 
 
 	    	 String heartId = request.getParameter("heartId");
-	    	 System.out.println("49：" + heartId);
+	    	 System.out.println("63：" + heartId);
 	    	 if(pageFlg.equals("Ranking")) {
-	    		 System.out.println("62：" + postList1.get(i).getLikeCount());
-	    		 System.out.println("63：" + postList2.get(i).getLikeCount());
-	    		 System.out.println("64：" + postList3.get(i).getLikeCount());
-	    		 
+	    		 if(num.equals("3")) {
+	    			 System.out.println("66：" + postList3.get(i).getLikeCount());
+	    		 }else if(num.equals("2")) {
+	    			 System.out.println("68：" + postList2.get(i).getLikeCount());
+	    		 }else if(num.equals("1")) {
+	    			  System.out.println("70：" + postList1.get(i).getLikeCount());
+	    		 }
 	    	 }else {
 	    		 System.out.println("67：" + postList.get(i).getLikeCount());
 	    	 }
