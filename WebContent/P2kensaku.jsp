@@ -13,6 +13,7 @@
 <link rel="stylesheet"
 	href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=settings" />
 <link rel="stylesheet" href="P2kensaku.css" />
+<link rel="stylesheet" href="searchbar.css" />
 <title>ProDotto</title>
 </head>
 
@@ -29,14 +30,56 @@
 					          <option value="P2UserSearch.jsp">アカウント名</option> 
 					</select>
 
-				<!-- 検索バー -->
-				<input type="text" name="search" id="search" placeholder="Search" value="">
-				<button type="submit" class="icon-button">
-					<i class="fa-solid fa-magnifying-glass"></i>
-				</button>
+
+                <!-- タグ検索フォーム -->
+                <input name="search" id="tags" class="some_class_name" placeholder='タグを入力' data-placeholder="タグを入力">
+                <button type="submit" class="icon-button">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </button>
 			</div>
 		</div>
 	</header>
+	
+	<!-- Tagifyの設定 -->
+<script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify@latest/dist/tagify.min.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    var inputElm = document.querySelector('#tags');
+    var tagify;
+
+    function initializeTagify(enable) {
+        if (enable) {
+            tagify = new Tagify(inputElm, {
+                enforceWhitelist: true,
+                whitelist: ["css", "html", "javascript", "php", "python", "java", "ruby", "nodejs"],
+                maxTags: 10,
+                dropdown: {
+                    enabled: 1,
+                    maxItems: 10,
+                }
+            });
+        } else if (tagify) {
+            tagify.destroy();
+            tagify = null;
+        }
+    }
+
+    // タグ検索初期化
+    initializeTagify(true);
+
+    // フィルターボタン変更時の挙動
+    document.querySelector('#filter').addEventListener('change', function() {
+        const selectedFilter = this.value;
+        if (selectedFilter === "P2UserSearch.jsp") {
+            inputElm.placeholder = "アカウント名を入力";
+            initializeTagify(false);
+        } else {
+            inputElm.placeholder = "タグを入力";
+            initializeTagify(true);
+        }
+    });
+});
+</script>
 
 	<section class="nav" id="navbar">
 		<nav class="nav_container">
@@ -141,11 +184,6 @@
   		    filterElement.value = selectedUrl;
   		}
 
-        		
-
-
-
-        
 	</script>
 </form>
 </body>
