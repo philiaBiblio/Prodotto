@@ -746,8 +746,8 @@ console.error('Error:', error); // エラーをコンソールに表示
 </script>
 
 <dialog id="confirmationDialog" class="confirmationDialog">
-		<p>削除しました</p>
-		<button type="button" class="dialogButton" id="closeConfirmationButton" onclick="confirmationDialog.close();">閉じる</button>
+	<p>削除しました</p>
+	<button type="button" class="dialogButton" id="closeConfirmationButton" onclick="confirmationDialog.close();">閉じる</button>
 </dialog>
     
   </body>

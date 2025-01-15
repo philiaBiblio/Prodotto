@@ -91,7 +91,7 @@ window.onload = function(){
 	// コメント表示用
 	function openPopup(toukouId) {
 	  window.open(
-	    "P2CommentJusinServlet?toukouId=" + toukouId,
+	    "P1CommentJusinServlet?toukouId=" + toukouId,
 	    "popupWindow",
 	    "width=500,height=300,scrollbars=yes"
 	  );

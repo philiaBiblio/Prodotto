@@ -599,3 +599,29 @@ img.thumbnail {
 	/* ホバー時の色を追加 */
 	border: solid 3px #11dadd;
 }
+
+.confirmationDialog {
+  text-align: center;
+  border-radius: 10px;
+  background-color: #000000;
+  border: solid 3px #11dadd;
+  color: white;
+}
+
+#closeConfirmationButton {
+  width: 90px;
+  display: inline-block;
+  padding: 10px;
+  margin: auto 30px;
+  color: rgb(255, 255, 255);
+  background-color: #000000;
+  border: 1px solid #ffffff;
+  border-radius: 10px;
+  cursor: pointer;
+  text-align: center;
+}
+
+#closeConfirmationButton:hover {
+  color: #11dadd;
+  border-color: #11dadd;
+}

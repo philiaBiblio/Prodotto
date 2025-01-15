@@ -13,19 +13,18 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
- * Servlet implementation class P2CommentJusinServlet
+ * Servlet implementation class P1CommentJusinServlet
  */
-@WebServlet("/P2CommentJusinServlet")
-public class P2CommentJusinServlet extends HttpServlet {
+@WebServlet("/P1CommentJusinServlet")
+public class P1CommentJusinServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		System.out.println("P2CommentJusinServlet実行");
+		System.out.println("P1CommentJusinServlet実行");
 
 		//文字化け防止
 		request.setCharacterEncoding("UTF-8");
@@ -43,6 +42,11 @@ public class P2CommentJusinServlet extends HttpServlet {
 			String toukouId;
 			//どの投稿に対してか投稿IDを取得
 			toukouId = request.getParameter("toukouId");
+			if(toukouId == null) {
+				System.out.println("test");
+				toukouId = (String)ses.getAttribute("comID");
+				System.out.println(toukouId);
+			}
 			System.out.println("toukouId" + toukouId);
 			
 			ses.setAttribute("comID", toukouId);
@@ -98,7 +102,7 @@ public class P2CommentJusinServlet extends HttpServlet {
 			ses.setAttribute("CM", cmList);
 			ses.setAttribute("comeKazu", comeKazu);
 			//タイムラインへ
-			url = "P2popup.jsp";
+			url = "P1popup.jsp";
 			System.out.println("url:" + url);
 
 			//画面遷移を行う
@@ -114,6 +118,5 @@ public class P2CommentJusinServlet extends HttpServlet {
 			dl.closeDB();
 			cnt.closeDB();
 		}
-	}
-
+	}		
 }
