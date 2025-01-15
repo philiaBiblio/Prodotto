@@ -70,6 +70,10 @@ document.addEventListener('DOMContentLoaded', function() {
     // フィルターボタン変更時の挙動
     document.querySelector('#filter').addEventListener('change', function() {
         const selectedFilter = this.value;
+
+        // 検索バー内の文字を削除
+        inputElm.value = '';
+        
         if (selectedFilter === "P2UserSearch.jsp") {
             inputElm.placeholder = "アカウント名を入力";
             initializeTagify(false);
