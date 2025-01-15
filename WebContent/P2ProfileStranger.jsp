@@ -55,6 +55,23 @@ String noweventId = String.format("%04d%02d", year, month); // 西暦4桁+月2�
     	"width=500,height=300,scrollbars=yes"
   		);
 	}
+
+	// いいねのスクロールバー
+	var scrollPosition; 
+	var STORAGE_KEY = "scrollY";
+
+	function saveScrollPosition(){
+		scrollPosition = window.pageYOffset; 
+		localStorage.setItem(STORAGE_KEY, scrollPosition);
+		}
+
+	window.addEventListener("load", function(){
+		scrollPosition = localStorage.getItem(STORAGE_KEY);
+		if(scrollPosition !== null){
+			scrollTo(0, scrollPosition);
+			}
+		window.addEventListener("scroll", saveScrollPosition, false);
+		});
 </script>
 
 <body>

@@ -599,3 +599,70 @@ img.thumbnail {
 	/* ホバー時の色を追加 */
 	border: solid 3px #11dadd;
 }
+
+.like-comment dialog {
+  text-align: center;
+  border-radius: 10px;
+  background-color: #000000;
+  border: solid 3px #11dadd;
+  color: white;
+}
+
+.like-comment .dialogButton {
+  width: 90px;
+  height: 50px;
+  color: rgb(255, 255, 255);
+  background-color: #000000;
+  border: 1px solid #ffffff;
+  border-radius: 10px;
+  cursor: pointer;
+  margin: 0 15px;
+  display: flex;
+  justify-content: center; 
+  align-items: center; 
+}
+
+.like-comment .dialogButton:hover {
+  color: #11dadd;
+  border-color: #11dadd;
+}
+
+.buttonContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.confirmationDialog {
+  text-align: center;
+  border-radius: 10px;
+  background-color: #000000;
+  border: solid 3px #11dadd;
+  color: white;
+}
+
+#closeConfirmationButton {
+  width: 90px;
+  display: inline-block;
+  padding: 10px;
+  margin: auto 30px;
+  color: rgb(255, 255, 255);
+  background-color: #000000;
+  border: 1px solid #ffffff;
+  border-radius: 10px;
+  cursor: pointer;
+  text-align: center;
+}
+
+#closeConfirmationButton:hover {
+  color: #11dadd;
+  border-color: #11dadd;
+}
+
+.button-group2 {
+  /* border: solid 1px #fff; */
+  margin: 0;
+  margin-right: 20px;
+  justify-content: center;
+}
