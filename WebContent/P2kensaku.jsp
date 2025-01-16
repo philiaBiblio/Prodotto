@@ -52,7 +52,7 @@ document.addEventListener('DOMContentLoaded', function() {
             tagify = new Tagify(inputElm, {
                 enforceWhitelist: true,
                 whitelist: ["css", "html", "javascript", "php", "python", "java", "ruby", "nodejs"],
-                maxTags: 10,
+                maxTags: 5,
                 dropdown: {
                     enabled: 1,
                     maxItems: 10,
