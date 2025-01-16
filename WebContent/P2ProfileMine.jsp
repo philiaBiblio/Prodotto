@@ -187,7 +187,7 @@ window.addEventListener("load", function(){
 					'<%= u.getUserid() %>')">
 					▶️</button>
 					
-					<input type="hidden" value="<%=userIconList.get(i).getName() %>" id="<%=i%>">
+					<input type="hidden" value="<%=u.getName() %>" id="<%=i%>">
 					
 					<!-- 音声再生ボタン -->
 					<audio class="audio-player"
@@ -451,7 +451,7 @@ window.addEventListener("load", function(){
 						<img src="." alt="" />
 					</div>
 					<div class="song-description">
-						<p class="artist" id="artistName"><%=u.getName() %></p>
+						<p class="artist" id="artistName"><</p>
 					</div>
 				</div>
 			</div>
