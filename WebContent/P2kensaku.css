@@ -3,59 +3,61 @@
 *,
 ::before,
 ::after {
-  box-sizing: border-box;
+	box-sizing: border-box;
 }
 
 a {
-  text-decoration: none;
+	text-decoration: none;
 }
 
 /*-------------------header------------*/
 .header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  background-color: #232323;
-  box-shadow: 0 1px 0 rgba(22, 8, 43, 0.1);
-  display: flex;
-  justify-content: center;
-  z-index: 50; /* ヘッダーを前面に表示 */
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	background-color: #232323;
+	box-shadow: 0 1px 0 rgba(22, 8, 43, 0.1);
+	display: flex;
+	justify-content: center;
+	z-index: 50;
+	/* ヘッダーを前面に表示 */
 }
 
 header .header_container {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  height: 56px;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	height: 56px;
 }
 
 /* 検索バー */
 header .search {
-  display: flex;
-  align-items: center;
-  padding: 7px 12px;
-  background-color: #121212;
-  border-radius: 4px;
-  width: 700px;
+	display: flex;
+	align-items: center;
+	padding: 7px 12px;
+	background-color: #121212;
+	border-radius: 4px;
+	width: 700px;
+	height: 36px;
 }
 
 /* 検索バー内 */
 header input {
-  width: 100%;
-  border: none;
-  outline: none;
-  background-color: #121212;
-  color: white;
+	width: 100%;
+	border: none;
+	outline: none;
+	background-color: #121212;
+	color: white;
 }
 
 /* 検索バー内の文字 */
 header input::placeholder {
-  color: #79777c;
+	color: #79777c;
 }
 
 .fa-solid {
-  color: white;
+	color: white;
 }
 
 /*-------------------header------------*/
@@ -63,309 +65,328 @@ header input::placeholder {
 
 /* 左メニュー */
 .nav {
-  position: fixed;
-  top: 0;
-  left: -100%;
-  height: 100vh;
-  padding: 16px 16px 0;
-  background: #1c1c1c;
-  box-shadow: 1px 0 0 rgba(22, 8, 43, 0.1);
-  z-index: 100;
-  transition: 0.5s;
+	position: fixed;
+	top: 0;
+	left: -100%;
+	height: 100vh;
+	padding: 16px 16px 0;
+	background: #1c1c1c;
+	box-shadow: 1px 0 0 rgba(22, 8, 43, 0.1);
+	z-index: 100;
+	transition: 0.5s;
 }
 
 .nav_container {
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  padding-bottom: 48px;
-  overflow: auto;
-  scrollbar-width: none;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	padding-bottom: 48px;
+	overflow: auto;
+	scrollbar-width: none;
 }
 
 .nav_container::-webkit-scrollbar {
-  display: none;
+	display: none;
 }
 
 /* 左メニューアイコン */
 .nav_soroe {
-  margin-left: 1px}
+	margin-left: 1px
+}
 
 .nav_logo {
-  font-weight: 600;
-  margin: 0;
-  margin-top: 0;
-  margin-bottom: 20px;
+	font-weight: 600;
+	margin: 0;
+	margin-top: 0;
+	margin-bottom: 20px;
 }
 
 .logo_name {
-  display: flex;
+	display: flex;
 }
 
 /* 左メニューロゴ */
 .logo_name i {
-  font-size: 25px;
-  margin-right: 10px;
-  color: #11dadd;
+	font-size: 25px;
+	margin-right: 10px;
+	color: #11dadd;
 }
 
 .gg-mail,
 .gg-mail::after {
-  display: block;
-  box-sizing: border-box;
-  height: 14px;
-  border: 2px solid;
+	display: block;
+	box-sizing: border-box;
+	height: 14px;
+	border: 2px solid;
 }
+
 .gg-mail {
-  overflow: hidden;
-  transform: scale(var(--ggs, 1));
-  position: relative;
-  width: 18px;
-  border-radius: 2px;
-  
+	overflow: hidden;
+	transform: scale(var(--ggs, 1));
+	position: relative;
+	width: 18px;
+	border-radius: 2px;
+
 }
+
 .gg-mail::after {
-  content: "";
-  position: absolute;
-  border-radius: 3px;
-  width: 14px;
-  transform: rotate(-45deg);
-  bottom: 3px;
-  left: 0;
+	content: "";
+	position: absolute;
+	border-radius: 3px;
+	width: 14px;
+	transform: rotate(-45deg);
+	bottom: 3px;
+	left: 0;
 }
 
 .gg-crown {
-  box-sizing: border-box;
-  position: relative;
-  display: block;
-  transform: scale(var(--ggs, 1));
-  width: 19px;
-  height: 12px;
-  border: 2px solid;
-  border-top-color: transparent;
-  border-bottom-right-radius: 3px;
-  border-bottom-left-radius: 3px;
-  padding-top: 4px;
+	box-sizing: border-box;
+	position: relative;
+	display: block;
+	transform: scale(var(--ggs, 1));
+	width: 19px;
+	height: 12px;
+	border: 2px solid;
+	border-top-color: transparent;
+	border-bottom-right-radius: 3px;
+	border-bottom-left-radius: 3px;
+	padding-top: 4px;
 }
+
 .gg-crown::after,
 .gg-crown::before {
-  content: "";
-  display: block;
-  position: absolute;
-  box-sizing: border-box;
-  width: 8px;
-  height: 8px;
-  border-bottom: 2px solid;
-  border-left: 2px solid;
-  transform: rotate(-45deg);
-  top: -4px;
+	content: "";
+	display: block;
+	position: absolute;
+	box-sizing: border-box;
+	width: 8px;
+	height: 8px;
+	border-bottom: 2px solid;
+	border-left: 2px solid;
+	transform: rotate(-45deg);
+	top: -4px;
 }
+
 .gg-crown::before {
-  border-top-left-radius: 2px;
-  left: -1px;
+	border-top-left-radius: 2px;
+	left: -1px;
 }
+
 .gg-crown::after {
-  border-bottom-right-radius: 2px;
-  right: -1px;
+	border-bottom-right-radius: 2px;
+	right: -1px;
 }
 
 .gg-add-r {
-  box-sizing: border-box;
-  position: relative;
-  display: block;
-  width: 22px;
-  height: 22px;
-  border: 2px solid;
-  transform: scale(var(--ggs, 1));
-  border-radius: 4px;
+	box-sizing: border-box;
+	position: relative;
+	display: block;
+	width: 22px;
+	height: 22px;
+	border: 2px solid;
+	transform: scale(var(--ggs, 1));
+	border-radius: 4px;
 }
+
 .gg-add-r::after,
 .gg-add-r::before {
-  content: "";
-  display: block;
-  box-sizing: border-box;
-  position: absolute;
-  width: 10px;
-  height: 2px;
-  background: currentColor;
-  border-radius: 5px;
-  top: 8px;
-  left: 4px;
+	content: "";
+	display: block;
+	box-sizing: border-box;
+	position: absolute;
+	width: 10px;
+	height: 2px;
+	background: currentColor;
+	border-radius: 5px;
+	top: 8px;
+	left: 4px;
 }
+
 .gg-add-r::after {
-  width: 2px;
-  height: 10px;
-  top: 4px;
-  left: 8px;
+	width: 2px;
+	height: 10px;
+	top: 4px;
+	left: 8px;
 }
 
 .gg-boy,
 .gg-boy::after,
 .gg-boy::before {
-  display: block;
-  box-sizing: border-box;
-  border-radius: 42px;
+	display: block;
+	box-sizing: border-box;
+	border-radius: 42px;
 }
+
 .gg-boy {
-  position: relative;
-  width: 20px;
-  height: 20px;
-  transform: scale(var(--ggs, 1));
-  overflow: hidden;
-  box-shadow: inset 0 0 0 2px;
+	position: relative;
+	width: 20px;
+	height: 20px;
+	transform: scale(var(--ggs, 1));
+	overflow: hidden;
+	box-shadow: inset 0 0 0 2px;
 }
+
 .gg-boy::after,
 .gg-boy::before {
-  content: "";
-  position: absolute;
-  width: 2px;
-  height: 2px;
-  background: currentColor;
-  box-shadow: 6px 0 0;
-  left: 6px;
-  top: 10px;
+	content: "";
+	position: absolute;
+	width: 2px;
+	height: 2px;
+	background: currentColor;
+	box-shadow: 6px 0 0;
+	left: 6px;
+	top: 10px;
 }
+
 .gg-boy::after {
-  width: 20px;
-  height: 20px;
-  top: -13px;
-  right: -12px;
+	width: 20px;
+	height: 20px;
+	top: -13px;
+	right: -12px;
 }
 
 .nav_list,
 .nav_items {
-  display: grid;
+	display: grid;
 }
 
 .nav_link {
-  display: flex;
-  align-items: center;
-  color: #fff;
+	display: flex;
+	align-items: center;
+	color: #fff;
 }
 
 /* 左メニューカーソル時の色 */
 .nav_link:hover {
-  color: #11dadd;
+	color: #11dadd;
 }
 
 .nav_icon {
-  width: 40px;
-  font-size: 19px;
+	width: 40px;
+	font-size: 19px;
 }
 
 .nav_name {
-  font-size: 15px;
-  font-weight: 500;
-  white-space: nowrap;
+	font-size: 15px;
+	font-weight: 500;
+	white-space: nowrap;
 }
 
 /*----------nav_dropdown  */
 /* 左メニュー内の横棒 */
 .navtop .nav_link:nth-child(4) {
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  padding-bottom: 20px;
+	border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+	padding-bottom: 20px;
 }
 
 /* タイムライン画面アイコンの色(常時) */
 .active {
-  color: #11dadd;
+	color: #11dadd;
 }
 
 /* フィルターボタン(動画/アカウント名)のスタイル */
 .filter-button {
-  background-color: black;
-  color: white;
-  border: none;
-  padding: 1px 1px;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 14px;
+	background-color: black;
+	color: white;
+	border: none;
+	padding: 1px 1px;
+	border-radius: 5px;
+	cursor: pointer;
+	font-size: 14px;
+}
+
+.search {
+	display: flex;
+	align-items: center;
+	gap: 0.5em;
 }
 
 /* 検索ボックスのスタイル */
 #search {
-  flex: 1;
-  margin-left: 10px;
-  padding: 5px;
-  font-size: 16px;
-  border: none;
-  border-radius: 5px;
+	flex: 1;
+	margin-left: 10px;
+	padding: 5px;
+	font-size: 16px;
+	border: none;
+	border-radius: 5px;
 }
 
 /* 検索アイコンのスタイル */
 .fa-magnifying-glass {
-  margin-left: 10px;
-  font-size: 20px;
-  cursor: pointer;
+	margin-left: 10px;
+	font-size: 20px;
+	cursor: pointer;
 }
 
 
 /*--------------video_items------------*/
 @media screen and (min-width: 768px) {
-  /* 上のアイコンと検索バーの間隔 */
-  header {
-    padding: 0 48px 0 96px;
-  }
 
-  /* 上の間隔の大きさ(?) */
-  header .header_container {
-    height: calc(56px + 8px);
-  }
+	/* 上のアイコンと検索バーの間隔 */
+	header {
+		padding: 0 48px 0 96px;
+	}
 
-  /* 左メニューの上下間隔 */
-  .nav .nav_items {
-    row-gap: 27px;
-  }
+	/* 上の間隔の大きさ(?) */
+	header .header_container {
+		height: calc(56px + 8px);
+	}
 
-  .nav {
-    left: 0;
-    padding: 19px 24px 0;
-    width: 88px;
-  }
+	/* 左メニューの上下間隔 */
+	.nav .nav_items {
+		row-gap: 27px;
+	}
 
-  .nav:hover {
-    width: 265px;
-  }
+	.nav {
+		left: 0;
+		padding: 19px 24px 0;
+		width: 88px;
+	}
 
-  .nav .nav_subititle,
-  .nav .logo_name,
-  .nav .nav_dropdown-icon,
-  .nav .navtop .nav_link:nth-child(7),
-  .nav .subscribe-contain {
-    opacity: 0;
-    transition: 0.5s;
-  }
+	.nav:hover {
+		width: 265px;
+	}
 
-  .nav:hover .nav_subititle,
-  .nav:hover .logo_name,
-  .nav:hover .nav_dropdown-icon,
-  .nav:hover .navtop .nav_link:nth-child(4),
-  .nav:hover .subscribe-contain {
-    opacity: 1;
-  }
+	.nav .nav_subititle,
+	.nav .logo_name,
+	.nav .nav_dropdown-icon,
+	.nav .navtop .nav_link:nth-child(7),
+	.nav .subscribe-contain {
+		opacity: 0;
+		transition: 0.5s;
+	}
+
+	.nav:hover .nav_subititle,
+	.nav:hover .logo_name,
+	.nav:hover .nav_dropdown-icon,
+	.nav:hover .navtop .nav_link:nth-child(4),
+	.nav:hover .subscribe-contain {
+		opacity: 1;
+	}
 
 }
 
-.icon-button,.pullchange-button{
-  background: none; 
-  border: none; 
-  padding: 0;
-  cursor: pointer;
+.icon-button,
+.pullchange-button {
+	background: none;
+	border: none;
+	padding: 0;
+	cursor: pointer;
 }
+
 .icon-button:hover i {
-  color: #11dadd;
+	color: #11dadd;
 }
-
-
-
 
 
 @media screen and (max-width: 420px) {
 
-  /* ナビゲーションメニューを左側に固定 */
-  .nav {
-    left: 0; /* メニューを左に固定 */
-    width: 80px; /* 小さい画面に合わせた幅 */
-  }
+	/* ナビゲーションメニューを左側に固定 */
+	.nav {
+		left: 0;
+		/* メニューを左に固定 */
+		width: 80px;
+		/* 小さい画面に合わせた幅 */
+	}
 }
