@@ -495,13 +495,9 @@ window.onload = function(){
 			<%}%>
 			<%}%>
           
-          
         </div>
         <button class="scroll-right" id="scroll-right-1">▶</button>
       </div>
-  
-  
-  
   
       <!-- ************************３***************************** -->
       <div class="section-header">
@@ -659,7 +655,7 @@ window.onload = function(){
       </div>
 
     <script>
-        const scrollLeftButton1 = document.getElementById("scroll-left-1");
+      const scrollLeftButton1 = document.getElementById("scroll-left-1");
       const scrollRightButton1 = document.getElementById("scroll-right-1");
       const videoGrid1 = document.getElementById("video-grid-1");
 

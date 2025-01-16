@@ -161,9 +161,8 @@ window.addEventListener("load", function(){
 	</div>
 	<div class="scroll-container">
 		<button class="scroll-left" id="scroll-left-1">◀</button>
-		<section class="video-grid" id="video-grid-1">
-
-
+		<div class="video-grid" id="video-grid-1">
+		
 			<%
 			if (upList != null) {
 				for (int i = 0; i < upList.size(); i++) {
@@ -291,8 +290,7 @@ window.addEventListener("load", function(){
 			<% } %>
 			<% } %>
 			<% } %>
-		</section>
-
+		</div>
 		<button class="scroll-right" id="scroll-right-1">▶</button>
 	</div>
 
@@ -304,9 +302,7 @@ window.addEventListener("load", function(){
 	</div>
 	<div class="scroll-container">
 		<button class="scroll-left" id="scroll-left-2">◀</button>
-		<section class="video-grid" id="video-grid-2">
-
-
+		<div class="video-grid" id="video-grid-2">
 			<% if (upList != null) {
 					for (int i = 0; i < upList.size(); i++) {
 					boolean flgin = false;
@@ -441,8 +437,7 @@ window.addEventListener("load", function(){
 			<% } %>
 			<% } %>
 			
-		</section>
-
+		</div>
 		<button class="scroll-right" id="scroll-right-2">▶</button>
 	</div>
 
@@ -456,7 +451,7 @@ window.addEventListener("load", function(){
 						<img src="." alt="" />
 					</div>
 					<div class="song-description">
-						<p class="artist" id="artistName"></p>
+						<p class="artist" id="artistName"><%=u.getName() %></p>
 					</div>
 				</div>
 			</div>
@@ -494,7 +489,60 @@ window.addEventListener("load", function(){
 	<jsp:include page="P2kensaku.jsp"></jsp:include>
 
 
-	<script>	
+	<script>
+	 const scrollLeftButton1 = document.getElementById("scroll-left-1");
+     const scrollRightButton1 = document.getElementById("scroll-right-1");
+     const videoGrid1 = document.getElementById("video-grid-1");
+
+     scrollLeftButton1.addEventListener("click", () => {
+       videoGrid1.scrollBy({
+         left: -150, // スクロールする距離（左）
+         behavior: "smooth", // スムーズスクロール
+       });
+     });
+
+     scrollRightButton1.addEventListener("click", () => {
+       videoGrid1.scrollBy({
+         left: 150, // スクロールする距離（右）
+         behavior: "smooth", // スムーズスクロール
+       });
+     });
+
+     // 2行目のボタンのイベントハンドラー
+     const scrollLeftButton2 = document.getElementById("scroll-left-2");
+     const scrollRightButton2 = document.getElementById("scroll-right-2");
+     const videoGrid2 = document.getElementById("video-grid-2");
+
+     scrollLeftButton2.addEventListener("click", () => {
+       videoGrid2.scrollBy({
+         left: -150, // スクロールする距離（左）
+         behavior: "smooth", // スムーズスクロール
+       });
+     });
+
+     scrollRightButton2.addEventListener("click", () => {
+       videoGrid2.scrollBy({
+         left: 150, // スクロールする距離（右）
+         behavior: "smooth", // スムーズスクロール
+       });
+     });
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+	/* 	
       const scrollLeftButton1 = document.getElementById("scroll-left-1");
       const scrollRightButton1 = document.getElementById("scroll-right-1");
       const videoGrid1 = document.getElementById("video-grid-1");
@@ -531,7 +579,7 @@ window.addEventListener("load", function(){
           behavior: "smooth", // スムーズスクロール
         });
       });
-
+ */
     </script>
 	<script src="https://unpkg.com/wavesurfer.js"></script>
 	
