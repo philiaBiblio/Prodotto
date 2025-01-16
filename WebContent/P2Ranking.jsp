@@ -207,7 +207,7 @@ window.onload = function(){
 							</button>
 						<!-- </form> -->
 
-						<a href="P2heartServlet?hensuu=<%=i%>&heartId=<%= toukouList3.get(i).getToukouid() %>&page=Ranking">
+						<a href="P2heartServlet?hensuu=<%=i%>&heartId=<%= toukouList3.get(i).getToukouid() %>&page=Ranking&List=3">
 						<button class="heart" onclick="changeImage('heartImage<%=postList1.get(i)%>')">
 							<img id="heartImage<%=postList3.get(i)%>"
 							
@@ -278,7 +278,7 @@ window.onload = function(){
 						 <dialog id="myDialog<%= i %>">
             				<p>この投稿を削除しますか？</p>
             			<div class="buttonContainer">
-            			<a href="P2PostDeliteServlet?hensuu=<%=i%>&sakuzyoId=<%= toukouList3.get(i).getToukouid() %>&page=Ranking">
+            			<a href="P2PostDeliteServlet?hensuu=<%=i%>&sakuzyoId=<%= toukouList3.get(i).getToukouid() %>&page=Ranking&List=3">
                 			<button type="button" class="dialogButton" id="yesButton<%= i%>">はい</button></a>
                 			<button type="button" class="dialogButton" id="noButton<%= i %>">いいえ</button>
             			</div>
@@ -411,7 +411,7 @@ window.onload = function(){
 							</button>
 						<!-- </form> -->
 
-						<a href="P2heartServlet?hensuu=<%=i%>&heartId=<%= toukouList1.get(i).getToukouid() %>&page=Ranking">
+						<a href="P2heartServlet?hensuu=<%=i%>&heartId=<%= toukouList1.get(i).getToukouid() %>&page=Ranking&List=1">
 						<button class="heart" onclick="changeImage('heartImage<%=postList1.get(i)%>')">
 							<img id="heartImage<%=postList1.get(i)%>"
 							
@@ -482,7 +482,7 @@ window.onload = function(){
 						 <dialog id="myDialog<%= i %>">
             				<p>この投稿を削除しますか？</p>
             			<div class="buttonContainer">
-            			<a href="P2PostDeliteServlet?hensuu=<%=i%>&sakuzyoId=<%= toukouList1.get(i).getToukouid() %>&page=Ranking">
+            			<a href="P2PostDeliteServlet?hensuu=<%=i%>&sakuzyoId=<%= toukouList1.get(i).getToukouid() %>&page=Ranking&List=1">
                 			<button type="button" class="dialogButton" id="yesButton<%= i%>">はい</button></a>
                 			<button type="button" class="dialogButton" id="noButton<%= i %>">いいえ</button>
             			</div>
@@ -495,13 +495,9 @@ window.onload = function(){
 			<%}%>
 			<%}%>
           
-          
         </div>
         <button class="scroll-right" id="scroll-right-1">▶</button>
       </div>
-  
-  
-  
   
       <!-- ************************３***************************** -->
       <div class="section-header">
@@ -569,7 +565,7 @@ window.onload = function(){
 							</button>
 						<!-- </form> -->
 
-						<a href="P2heartServlet?hensuu=<%=i%>&heartId=<%= toukouList2.get(i).getToukouid() %>&page=Ranking">
+						<a href="P2heartServlet?hensuu=<%=i%>&heartId=<%= toukouList2.get(i).getToukouid() %>&page=Ranking&List=2">
 						<button class="heart" onclick="changeImage('heartImage<%=postList2.get(i)%>')">
 							<img id="heartImage<%=postList2.get(i)%>"
 							
@@ -640,7 +636,7 @@ window.onload = function(){
 						 <dialog id="myDialog<%= i %>">
             				<p>この投稿を削除しますか？</p>
             			<div class="buttonContainer">
-            			<a href="P2PostDeliteServlet?hensuu=<%=i%>&sakuzyoId=<%= toukouList2.get(i).getToukouid() %>&page=Ranking">
+            			<a href="P2PostDeliteServlet?hensuu=<%=i%>&sakuzyoId=<%= toukouList2.get(i).getToukouid() %>&page=Ranking&List=2">
                 			<button type="button" class="dialogButton" id="yesButton<%= i%>">はい</button></a>
                 			<button type="button" class="dialogButton" id="noButton<%= i %>">いいえ</button>
             			</div>
@@ -659,7 +655,7 @@ window.onload = function(){
       </div>
 
     <script>
-        const scrollLeftButton1 = document.getElementById("scroll-left-1");
+      const scrollLeftButton1 = document.getElementById("scroll-left-1");
       const scrollRightButton1 = document.getElementById("scroll-right-1");
       const videoGrid1 = document.getElementById("video-grid-1");
 

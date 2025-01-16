@@ -33,7 +33,12 @@ public class P2heartServlet extends HttpServlet {
 		 // ログイン情報の取得
 	     User u = (User) ses.getAttribute("LOGIN");
 	     // アレイリストの取得
+	     // タイムライン用
 	 	 ArrayList<Post> postList = (ArrayList) ses.getAttribute("POSTLIST");
+	 	 // ランキング用
+	 	 ArrayList<Post> postList1 = (ArrayList) ses.getAttribute("POSTLIST1");
+		 ArrayList<Post> postList2 = (ArrayList) ses.getAttribute("POSTLIST2");
+		 ArrayList<Post> postList3 = (ArrayList) ses.getAttribute("POSTLIST3");
 	     
 	     // URLの生成
 	     String url = "";   
@@ -42,18 +47,31 @@ public class P2heartServlet extends HttpServlet {
 	     DBAcs dba2 = new DBAcs();
 	     
 	     try {
-	    	// どの投稿に対してか投稿IDを取得
-	    	 String x = request.getParameter("hensuu");
-	    	 Integer i = Integer.parseInt(x);
-	    	 System.out.println("46：" + i); 
-
-	    	 String heartId = request.getParameter("heartId");
-	    	 System.out.println("49：" + heartId);
-	    	 System.out.println("50：" + postList.get(i).getLikeCount());
-	    	 
 	    	 // どのページから来たかの把握
 	    	 String pageFlg = request.getParameter("page");
-	    	 System.out.println("53：" + pageFlg);
+	    	 System.out.println("52：" + pageFlg);
+	    	 // ランキングだった場合どのリストか確認
+	    	 String num = request.getParameter("List");
+	    	 System.out.println("55：" + num);
+	    	 
+	    	 // どの投稿に対してか投稿IDを取得
+	    	 String x = request.getParameter("hensuu");
+	    	 Integer i = Integer.parseInt(x);
+	    	 System.out.println("60：" + i); 
+
+	    	 String heartId = request.getParameter("heartId");
+	    	 System.out.println("63：" + heartId);
+	    	 if(pageFlg.equals("Ranking")) {
+	    		 if(num.equals("3")) {
+	    			 System.out.println("66：" + postList3.get(i).getLikeCount());
+	    		 }else if(num.equals("2")) {
+	    			 System.out.println("68：" + postList2.get(i).getLikeCount());
+	    		 }else if(num.equals("1")) {
+	    			  System.out.println("70：" + postList1.get(i).getLikeCount());
+	    		 }
+	    	 }else {
+	    		 System.out.println("67：" + postList.get(i).getLikeCount());
+	    	 }
 	    	 
 	    	 // 既にいいねを押してるかのチェック
 	    	 String sql = "select * from いいね where 投稿ID = '" + heartId + "' and ユーザーID = '" + u.getUserid() + "'";
