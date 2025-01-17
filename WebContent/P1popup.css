@@ -1,0 +1,156 @@
+/* 基本設定 */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #000000;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.comment-section {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.comment-item {
+  display: flex; 
+  align-items: flex-start;
+  margin-bottom: 20px;
+}
+
+/* アイコン */
+.comment-item .icon {
+  width: 50px; 
+  height: 50px;
+  border-radius: 50%; 
+  margin-right: 10px; 
+  margin-top: 10px;
+  object-fit: cover; 
+}
+
+/* コメントコンテンツ */
+.comment-content {
+  border-radius: 10px;
+  max-width: 80%;
+}
+
+/* ユーザーネーム */
+.username {
+  font-weight: bold;
+  margin-bottom: 5px;
+  color: #ffffff;
+}
+
+/* コメントテキスト */
+.comment {
+  margin: 0;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+}
+
+/* ×ボタン */
+.round_btn {
+	display: inline-block;
+    width: 30px;
+    height: 30px;
+    background: black;
+    position: relative;
+    margin-left: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+ 
+.round_btn::before, .round_btn::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 2px; /* 棒の幅（太さ） */
+  height: 18px; /* 棒の高さ */
+  background: white; /* バツ印の色 */
+}
+
+.round_btn:hover::before, .round_btn:hover::after {
+    background: #ee2525; /* ホバー時のバツ印の色 */
+}
+
+.round_btn::before {
+  transform: translate(-50%,-50%) rotate(45deg);
+}
+ 
+.round_btn::after {
+  transform: translate(-50%,-50%) rotate(-45deg);
+}
+
+dialog {
+  text-align: center;
+  border-radius: 10px;
+  background-color: #000000;
+  border: solid 3px #ee2525;
+  color: white;
+}
+
+.dialogButton {
+  width: 90px;
+  height: 50px;
+  color: rgb(255, 255, 255);
+  background-color: #000000;
+  border: 1px solid #ffffff;
+  border-radius: 10px;
+  cursor: pointer;
+  margin: 0 15px;
+  display: flex;
+  justify-content: center; 
+  align-items: center; 
+}
+
+.dialogButton:hover {
+  color: #ee2525;
+  border-color: #ee2525;
+}
+
+input:focus{
+	outline: none;
+}
+
+.buttonContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.confirmationDialog {
+  text-align: center;
+  border-radius: 10px;
+  background-color: #000000;
+  border: solid 3px #ee2525;
+  color: white;
+}
+
+#closeConfirmationButton {
+  width: 90px;
+  display: inline-block;
+  padding: 10px;
+  margin: auto 30px;
+  color: rgb(255, 255, 255);
+  background-color: #000000;
+  border: 1px solid #ffffff;
+  border-radius: 10px;
+  cursor: pointer;
+  text-align: center;
+}
+
+#closeConfirmationButton:hover {
+  color: #ee2525;
+  border-color: #ee2525;
+}
+
+a {
+  text-decoration: none;
+}

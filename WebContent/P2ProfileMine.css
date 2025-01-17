@@ -245,6 +245,7 @@ img {
 /* 全体のカードスタイル */
 .video-card {
 	width: 250px;
+	min-width: 250px;
 	height: 186px;
 	border-radius: 10px;
 	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -401,6 +402,7 @@ img.thumbnail {
 	cursor: pointer;
 	display: flex;
 	align-items: center;
+	border: none;
 }
 
 .heart {
@@ -659,59 +661,71 @@ img.thumbnail {
 }
 
 /*ゴミ箱ダイアログ*/
-dialog {
-	text-align: center;
-	border-radius: 10px;
-	background-color: #000000;
-	border: solid 3px #11dadd;
-	color: white;
+/*dialog {*/
+/*    border-radius: 10px;*/
+/*    background-color: #000000;*/
+/*    border: solid 3px #11dadd;*/
+/*    color: white;*/
+/*}*/
+
+.like-comment dialog {
+  text-align: center;
+  border-radius: 10px;
+  background-color: #000000;
+  border: solid 3px #11dadd;
+  color: white;
 }
 
-.dialogButton {
-	width: 90px;
-	height: 50px;
-	color: rgb(255, 255, 255);
-	background-color: #000000;
-	border: 1px solid #ffffff;
-	border-radius: 10px;
-	cursor: pointer;
-	margin: 0 15px;
-	/* フレックスボックスでテキストを中央揃え */
-	display: flex;
-	justify-content: center;
-	/* 水平方向の中央揃え */
-	align-items: center;
-	/* 垂直方向の中央揃え */
+.like-comment .dialogButton {
+  width: 90px;
+  height: 50px;
+  color: rgb(255, 255, 255);
+  background-color: #000000;
+  border: 1px solid #ffffff;
+  border-radius: 10px;
+  cursor: pointer;
+  margin: 0 15px;
+  display: flex;
+  justify-content: center; 
+  align-items: center; 
 }
 
-.dialogButton {
-	color: #11dadd;
-	border-color: #11dadd;
+.like-comment .dialogButton:hover {
+  color: #11dadd;
+  border-color: #11dadd;
 }
 
 .buttonContainer {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.confirmationDialog {
+  text-align: center;
+  border-radius: 10px;
+  background-color: #000000;
+  border: solid 3px #11dadd;
+  color: white;
 }
 
 #closeConfirmationButton {
-	width: 90px;
-	display: inline-block;
-	padding: 10px;
-	margin: auto 30px;
-	color: rgb(255, 255, 255);
-	background-color: #000000;
-	border: 1px solid #ffffff;
-	border-radius: 10px;
-	cursor: pointer;
-	text-align: center;
+  width: 90px;
+  display: inline-block;
+  padding: 10px;
+  margin: auto 30px;
+  color: rgb(255, 255, 255);
+  background-color: #000000;
+  border: 1px solid #ffffff;
+  border-radius: 10px;
+  cursor: pointer;
+  text-align: center;
 }
 
 #closeConfirmationButton:hover {
-	color: #11dadd;
-	border-color: #11dadd;
+  color: #11dadd;
+  border-color: #11dadd;
 }
 
 .button-group2 {

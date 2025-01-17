@@ -103,6 +103,23 @@ window.onload = function(){
 		const artist = document.getElementById('artistName');
 		artist.innerText = kazu.value;
 		}
+
+ 	// いいねのスクロールバー
+	var scrollPosition; 
+	var STORAGE_KEY = "scrollY";
+
+	function saveScrollPosition(){
+		scrollPosition = window.pageYOffset; 
+		localStorage.setItem(STORAGE_KEY, scrollPosition);
+		}
+
+	window.addEventListener("load", function(){
+		scrollPosition = localStorage.getItem(STORAGE_KEY);
+		if(scrollPosition !== null){
+			scrollTo(0, scrollPosition);
+			}
+		window.addEventListener("scroll", saveScrollPosition, false);
+		});
 	
 </script>
 
@@ -173,7 +190,8 @@ window.onload = function(){
 							</button>
 						<!-- </form> -->
 
-						<a href="P2heartServlet?hensuu=<%=i%>&heartId=<%= toukouList.get(i).getToukouid() %>&page=TL">
+						<a href="P2heartServlet?hensuu=<%=i%>&heartId=<%= toukouList.get(i).getToukouid() %>&page=TL"
+						id="test">
 						<button class="heart" onclick="changeImage('heartImage<%=postList.get(i)%>')">
 							<img id="heartImage<%=postList.get(i)%>"
 							

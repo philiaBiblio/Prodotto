@@ -111,6 +111,24 @@ window.onload = function(){
 		const artist = document.getElementById('artistName');
 		artist.innerText = kazu.value;
 		}
+
+	// いいねのスクロールバー
+	var scrollPosition; 
+	var STORAGE_KEY = "scrollY";
+
+	function saveScrollPosition(){
+		scrollPosition = window.pageYOffset; 
+		localStorage.setItem(STORAGE_KEY, scrollPosition);
+		}
+
+	window.addEventListener("load", function(){
+		scrollPosition = localStorage.getItem(STORAGE_KEY);
+		if(scrollPosition !== null){
+			scrollTo(0, scrollPosition);
+			}
+		window.addEventListener("scroll", saveScrollPosition, false);
+		});
+	
 </script>
 
   <body>
@@ -189,7 +207,7 @@ window.onload = function(){
 							</button>
 						<!-- </form> -->
 
-						<a href="P2heartServlet?hensuu=<%=i%>&heartId=<%= toukouList3.get(i).getToukouid() %>&page=Ranking">
+						<a href="P2heartServlet?hensuu=<%=i%>&heartId=<%= toukouList3.get(i).getToukouid() %>&page=Ranking&List=3">
 						<button class="heart" onclick="changeImage('heartImage<%=postList1.get(i)%>')">
 							<img id="heartImage<%=postList3.get(i)%>"
 							
@@ -260,7 +278,7 @@ window.onload = function(){
 						 <dialog id="myDialog<%= i %>">
             				<p>この投稿を削除しますか？</p>
             			<div class="buttonContainer">
-            			<a href="P2PostDeliteServlet?hensuu=<%=i%>&sakuzyoId=<%= toukouList3.get(i).getToukouid() %>">
+            			<a href="P2PostDeliteServlet?hensuu=<%=i%>&sakuzyoId=<%= toukouList3.get(i).getToukouid() %>&page=Ranking&List=3">
                 			<button type="button" class="dialogButton" id="yesButton<%= i%>">はい</button></a>
                 			<button type="button" class="dialogButton" id="noButton<%= i %>">いいえ</button>
             			</div>
@@ -393,7 +411,7 @@ window.onload = function(){
 							</button>
 						<!-- </form> -->
 
-						<a href="P2heartServlet?hensuu=<%=i%>&heartId=<%= toukouList1.get(i).getToukouid() %>&page=Ranking">
+						<a href="P2heartServlet?hensuu=<%=i%>&heartId=<%= toukouList1.get(i).getToukouid() %>&page=Ranking&List=1">
 						<button class="heart" onclick="changeImage('heartImage<%=postList1.get(i)%>')">
 							<img id="heartImage<%=postList1.get(i)%>"
 							
@@ -464,7 +482,7 @@ window.onload = function(){
 						 <dialog id="myDialog<%= i %>">
             				<p>この投稿を削除しますか？</p>
             			<div class="buttonContainer">
-            			<a href="P2PostDeliteServlet?hensuu=<%=i%>&sakuzyoId=<%= toukouList1.get(i).getToukouid() %>">
+            			<a href="P2PostDeliteServlet?hensuu=<%=i%>&sakuzyoId=<%= toukouList1.get(i).getToukouid() %>&page=Ranking&List=1">
                 			<button type="button" class="dialogButton" id="yesButton<%= i%>">はい</button></a>
                 			<button type="button" class="dialogButton" id="noButton<%= i %>">いいえ</button>
             			</div>
@@ -477,13 +495,9 @@ window.onload = function(){
 			<%}%>
 			<%}%>
           
-          
         </div>
         <button class="scroll-right" id="scroll-right-1">▶</button>
       </div>
-  
-  
-  
   
       <!-- ************************３***************************** -->
       <div class="section-header">
@@ -551,7 +565,7 @@ window.onload = function(){
 							</button>
 						<!-- </form> -->
 
-						<a href="P2heartServlet?hensuu=<%=i%>&heartId=<%= toukouList2.get(i).getToukouid() %>&page=Ranking">
+						<a href="P2heartServlet?hensuu=<%=i%>&heartId=<%= toukouList2.get(i).getToukouid() %>&page=Ranking&List=2">
 						<button class="heart" onclick="changeImage('heartImage<%=postList2.get(i)%>')">
 							<img id="heartImage<%=postList2.get(i)%>"
 							
@@ -622,7 +636,7 @@ window.onload = function(){
 						 <dialog id="myDialog<%= i %>">
             				<p>この投稿を削除しますか？</p>
             			<div class="buttonContainer">
-            			<a href="P2PostDeliteServlet?hensuu=<%=i%>&sakuzyoId=<%= toukouList2.get(i).getToukouid() %>">
+            			<a href="P2PostDeliteServlet?hensuu=<%=i%>&sakuzyoId=<%= toukouList2.get(i).getToukouid() %>&page=Ranking&List=2">
                 			<button type="button" class="dialogButton" id="yesButton<%= i%>">はい</button></a>
                 			<button type="button" class="dialogButton" id="noButton<%= i %>">いいえ</button>
             			</div>
@@ -640,12 +654,8 @@ window.onload = function(){
         <button class="scroll-right" id="scroll-right-2">▶</button>
       </div>
 
-
-    
-
-     
     <script>
-        const scrollLeftButton1 = document.getElementById("scroll-left-1");
+      const scrollLeftButton1 = document.getElementById("scroll-left-1");
       const scrollRightButton1 = document.getElementById("scroll-right-1");
       const videoGrid1 = document.getElementById("video-grid-1");
 
@@ -730,6 +740,11 @@ console.error('Error:', error); // エラーをコンソールに表示
 }
 
 </script>
+
+<dialog id="confirmationDialog" class="confirmationDialog">
+	<p>削除しました</p>
+	<button type="button" class="dialogButton" id="closeConfirmationButton" onclick="confirmationDialog.close();">閉じる</button>
+</dialog>
     
   </body>
 </html>

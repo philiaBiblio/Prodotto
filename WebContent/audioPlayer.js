@@ -15,28 +15,69 @@ document.addEventListener("DOMContentLoaded", () => {
 	const hidePlayerButton = musicPlayer.querySelector(".hide-player-button");
 	const repeatButton = musicPlayer.querySelector(".fa-undo-alt"); // リピートボタン
 	const prevButton = document.querySelector(".fa-step-backward"); // 戻るボタン（例: プレイヤー内に配置）
-
 	const nextButton = document.querySelector(".fa-step-forward");
+
+	// エラーメッセージ表示用
+	const errorMessage = document.createElement("div");
+	errorMessage.classList.add("error-message");
+	musicPlayer.appendChild(errorMessage);
+
+	// 音声の再生・停止処理を関数化
+	function playAudio(audioPlayer, playButton) {
+		audioPlayer.play().catch(() => {
+			showErrorMessage("音声ファイルの再生に失敗しました。");
+		});
+		playButton.textContent = "⏸️";
+		playPauseButton.classList.remove("fa-play");
+		playPauseButton.classList.add("fa-pause");
+		currentAudioPlayer = audioPlayer;
+		currentPlayButton = playButton;
+	}
+
+	function stopAudio(audioPlayer, playButton) {
+		audioPlayer.pause();
+		playButton.textContent = "▶️";
+		playPauseButton.classList.remove("fa-pause");
+		playPauseButton.classList.add("fa-play");
+	}
+
+	function showErrorMessage(message) {
+		errorMessage.textContent = message;
+
+		// control-buttons の位置を基準にエラーメッセージを配置
+		const controlButtons = document.querySelector('.control-buttons');
+		const buttonsRect = controlButtons.getBoundingClientRect();
+
+		errorMessage.style.top = `${buttonsRect.top + (buttonsRect.height / 2)}px`; // 縦方向中央
+		errorMessage.style.left = `${buttonsRect.left - 250}px`; // 左側にオフセット
+		errorMessage.style.transform = "translateY(-50%)";
+
+		// 表示
+		errorMessage.style.display = "block";
+
+		// 5秒後に非表示
+		setTimeout(() => {
+			errorMessage.style.display = "none";
+		}, 5000);
+	}
 
 	// 戻るボタンの動作
 	prevButton.addEventListener("click", () => {
 		if (!currentAudioPlayer) {
-			alert("再生中の音声がありません。");
+			showErrorMessage("再生中の音声がありません。");
 			return;
 		}
 
-		// 音声の再生時間が0:00の場合、前の音楽に戻る
 		if (currentAudioPlayer.currentTime < 1) {
 			const currentCard = currentAudioPlayer.closest(".video-card");
 			let prevCard = currentCard.previousElementSibling;
 
-			// 前のカードが見つかるまでループ
 			while (prevCard && !prevCard.classList.contains("video-card")) {
-				prevCard = prevCard.previousElementSibling; // 前のノードに移動
+				prevCard = prevCard.previousElementSibling;
 			}
 
 			if (!prevCard) {
-				alert("これ以上前の音声がありません。");
+				showErrorMessage("これ以上前の音声がありません。");
 				return;
 			}
 
@@ -44,47 +85,25 @@ document.addEventListener("DOMContentLoaded", () => {
 			const prevPlayButton = prevCard.querySelector(".play-button");
 
 			if (!prevAudioPlayer || !prevAudioPlayer.src) {
-				alert("前の音声ファイルが見つかりません。");
+				showErrorMessage("前の音声ファイルが見つかりません。");
 				return;
 			}
 
-			// 現在の音声を停止
-			currentAudioPlayer.pause();
-			currentAudioPlayer.currentTime = 0;
-			if (currentPlayButton) currentPlayButton.textContent = "▶️";
+			stopAudio(currentAudioPlayer, currentPlayButton);
+			playAudio(prevAudioPlayer, prevPlayButton);
 
-			// 前の音声を再生
-			currentAudioPlayer = prevAudioPlayer;
-			currentPlayButton = prevPlayButton;
-
-			currentAudioPlayer.play().catch(() => {
-				alert("前の音声ファイルの再生に失敗しました。");
-			});
-			currentPlayButton.textContent = "⏸️";
-
-			// プレイヤーのUIを更新
-			const prevThumbnailImage = prevCard.querySelector(".thumbnail").src;
-			const playerImageContainer = musicPlayer.querySelector(".image-container img");
-			playerImageContainer.src = prevThumbnailImage;
-
-			const prevArtistName = prevCard.getAttribute("data-artist-name") || "Unknown Artist";
-			const artist = document.getElementById("artistName");
-			artist.innerText = prevArtistName;
-
+			// サムネイルとアーティスト名を更新
+			updatePlayerInfo(prevCard);
 		} else {
-			// 再生時間が0:00でない場合、現在の音楽を最初から再生
 			currentAudioPlayer.currentTime = 0;
-			currentAudioPlayer.play().catch(() => {
-				alert("音声ファイルの再生に失敗しました。");
-			});
-			if (currentPlayButton) currentPlayButton.textContent = "⏸️";
+			playAudio(currentAudioPlayer, currentPlayButton);
 		}
 	});
 
 	// 次へボタンの動作
 	nextButton.addEventListener("click", () => {
 		if (!currentAudioPlayer) {
-			alert("再生中の音声がありません。");
+			showErrorMessage("再生中の音声がありません。");
 			return;
 		}
 
@@ -96,36 +115,31 @@ document.addEventListener("DOMContentLoaded", () => {
 			const nextPlayButton = nextCard.querySelector(".play-button");
 
 			if (!nextAudioPlayer || !nextAudioPlayer.src) {
-				alert("次の音声ファイルが見つかりません。");
+				showErrorMessage("次の音声ファイルが見つかりません。");
 				return;
 			}
 
-			// 現在の音声を停止
-			currentAudioPlayer.pause();
-			currentAudioPlayer.currentTime = 0;
-			if (currentPlayButton) currentPlayButton.textContent = "▶️";
+			stopAudio(currentAudioPlayer, currentPlayButton);
+			playAudio(nextAudioPlayer, nextPlayButton);
 
-			// 次の音声を再生
-			currentAudioPlayer = nextAudioPlayer;
-			currentPlayButton = nextPlayButton;
-
-			currentAudioPlayer.play().catch(() => {
-				alert("次の音声ファイルの再生に失敗しました。");
-			});
-			currentPlayButton.textContent = "⏸️";
-
-			// プレイヤーのUIを更新
-			const nextThumbnailImage = nextCard.querySelector(".thumbnail").src;
-			const playerImageContainer = musicPlayer.querySelector(".image-container img");
-			playerImageContainer.src = nextThumbnailImage;
-
-//			const nextArtistName = nextCard.getAttribute("data-artist-name") || "Unknown Artist";
-//			const artist = document.getElementById("artistName");
-//			artist.innerText = nextArtistName;
+			// サムネイルとアーティスト名を更新
+			updatePlayerInfo(nextCard);
 		} else {
-			alert("これ以上次の音声がありません。");
+			showErrorMessage("これ以上次の音声がありません。");
 		}
 	});
+
+	// サムネイルとアーティスト名の更新
+	function updatePlayerInfo(card) {
+		const thumbnailImage = card.querySelector(".thumbnail").src;
+		const playerImageContainer = musicPlayer.querySelector(".image-container img");
+		playerImageContainer.src = thumbnailImage;
+
+		const artistId = card.querySelector("input[type='hidden']").id;
+		const artistName = document.getElementById(artistId).value;
+		const artist = document.getElementById("artistName");
+		artist.textContent = artistName;
+	}
 
 	// リピートモード管理フラグ
 	let isRepeatMode = false;
@@ -137,47 +151,26 @@ document.addEventListener("DOMContentLoaded", () => {
 			const audioPlayer = card.querySelector(".audio-player");
 
 			if (!audioPlayer || !audioPlayer.src) {
-				alert("音声ファイルがありません。");
+				showErrorMessage("音声ファイルがありません。");
 				return;
 			}
 
 			if (currentAudioPlayer && currentAudioPlayer !== audioPlayer) {
-				currentAudioPlayer.pause();
-				currentAudioPlayer.currentTime = 0;
-				if (currentPlayButton) currentPlayButton.textContent = "▶️";
+				stopAudio(currentAudioPlayer, currentPlayButton);
 			}
 
 			if (audioPlayer.paused) {
-				audioPlayer.play().catch(() => {
-					alert("音声ファイルの再生に失敗しました。");
-				});
-				event.target.textContent = "⏸️";
-				playPauseButton.classList.remove("fa-play");
-				playPauseButton.classList.add("fa-pause");
-				currentAudioPlayer = audioPlayer;
-				currentPlayButton = event.target;
+				playAudio(audioPlayer, event.target);
 			} else {
-				audioPlayer.pause();
-				event.target.textContent = "▶️";
-				playPauseButton.classList.remove("fa-pause");
-				playPauseButton.classList.add("fa-play");
+				stopAudio(audioPlayer, event.target);
 			}
 
 			musicPlayer.style.display = "block";
+			updatePlayerInfo(card);
 
-			const thumbnailImage = card.querySelector(".thumbnail").src;
-			const playerImageContainer = musicPlayer.querySelector(".image-container img");
-			playerImageContainer.src = thumbnailImage;
-
-			/*const artistName = card.getAttribute("data-artist-name") || "Unknown Artist";
-			const artist = document.getElementById("artistName");
-			artist.innerText = artistName;*/
-
-			// リピートモードの再生終了処理
 			audioPlayer.addEventListener("ended", () => {
 				if (isRepeatMode) {
-					audioPlayer.currentTime = 0; // 再生位置を先頭に戻す
-					audioPlayer.play(); // 再度再生
+					audioPlayer.play();
 				} else {
 					resetPlayer();
 				}
@@ -187,10 +180,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
 	// リピートボタンの動作
 	repeatButton.addEventListener("click", () => {
-		isRepeatMode = !isRepeatMode; // リピートモードのトグル
-		repeatButton.classList.toggle("active", isRepeatMode); // 見た目を切り替える
+		isRepeatMode = !isRepeatMode;
+		repeatButton.classList.toggle("active", isRepeatMode);
 	});
 
+	// プレイヤーをリセット
 	function resetPlayer() {
 		if (currentAudioPlayer) {
 			currentAudioPlayer.pause();
@@ -201,10 +195,9 @@ document.addEventListener("DOMContentLoaded", () => {
 		}
 		playPauseButton.classList.remove("fa-pause");
 		playPauseButton.classList.add("fa-play");
-		currentAudioPlayer = null;
-		currentPlayButton = null;
 	}
 
+	// プログレスバーの更新
 	function updateProgress() {
 		if (!currentAudioPlayer) return;
 
@@ -230,6 +223,7 @@ document.addEventListener("DOMContentLoaded", () => {
 		return Math.min(Math.max(clickX / rect.width, 0), 1);
 	}
 
+	// バーのインタラクションを設定
 	function setupBarInteraction(barElement, callback) {
 		let isDragging = false;
 
@@ -284,27 +278,21 @@ document.addEventListener("DOMContentLoaded", () => {
 		volumeProgress.style.width = `${progress * 100}%`;
 	});
 
+	// 再生/停止ボタンのクリックイベント
 	playPauseButton.addEventListener("click", () => {
 		if (!currentAudioPlayer) {
-			alert("現在再生中の音声がありません。");
+			showErrorMessage("現在再生中の音声がありません。");
 			return;
 		}
 
 		if (currentAudioPlayer.paused) {
-			currentAudioPlayer.play().catch(() => {
-				alert("音声ファイルの再生に失敗しました。");
-			});
-			playPauseButton.classList.remove("fa-play");
-			playPauseButton.classList.add("fa-pause");
-			if (currentPlayButton) currentPlayButton.textContent = "⏸️";
+			playAudio(currentAudioPlayer, currentPlayButton);
 		} else {
-			currentAudioPlayer.pause();
-			playPauseButton.classList.remove("fa-pause");
-			playPauseButton.classList.add("fa-play");
-			if (currentPlayButton) currentPlayButton.textContent = "▶️";
+			stopAudio(currentAudioPlayer, currentPlayButton);
 		}
 	});
 
+	// プレイヤーを非表示
 	hidePlayerButton.addEventListener("click", () => {
 		musicPlayer.style.display = "none";
 		resetPlayer();

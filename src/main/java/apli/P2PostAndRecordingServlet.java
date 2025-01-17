@@ -41,7 +41,7 @@ public class P2PostAndRecordingServlet extends HttpServlet {
         // 中身の確認
         response.setContentType("text/plain");
 		System.out.println("現在の年月: " + yearMonth);
-        
+		ses.setAttribute("yearMonth",yearMonth);
         
 		try {
 			

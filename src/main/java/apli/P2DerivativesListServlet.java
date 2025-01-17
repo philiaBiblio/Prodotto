@@ -39,6 +39,7 @@ public class P2DerivativesListServlet extends HttpServlet {
 		ArrayList<User> DuserIconList = new ArrayList<User>();
 		ArrayList<Post> DpostList = new ArrayList<Post>();
 		ArrayList<Heart> DheartList = new ArrayList<Heart>();
+		String yearMonth = (String)ses.getAttribute("yearMonth");
 
 		LocalDate currentDate = LocalDate.now();
 		int year = currentDate.getYear();
@@ -64,7 +65,7 @@ public class P2DerivativesListServlet extends HttpServlet {
 			           + "(SELECT COUNT(*) FROM いいね WHERE いいね.投稿ID = 投稿.投稿ID) AS いいね数"
 			           + " from 投稿"
 			           + " join ユーザー on 投稿.ユーザーID = ユーザー.ユーザーID"
-			           + " where 投稿.イベントID = '202412'"
+			           + " where 投稿.イベントID = '" + yearMonth + "'"
 			           + " order by アップロード日 desc";
 
 			// sql文実行

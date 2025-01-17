@@ -99,6 +99,23 @@ function openPopup(toukouId) {
     "width=500,height=300,scrollbars=yes"
   );
 }
+
+//いいねのスクロールバー
+var scrollPosition; 
+var STORAGE_KEY = "scrollY";
+
+function saveScrollPosition(){
+	scrollPosition = window.pageYOffset; 
+	localStorage.setItem(STORAGE_KEY, scrollPosition);
+	}
+
+window.addEventListener("load", function(){
+	scrollPosition = localStorage.getItem(STORAGE_KEY);
+	if(scrollPosition !== null){
+		scrollTo(0, scrollPosition);
+		}
+	window.addEventListener("scroll", saveScrollPosition, false);
+	});
 </script>
 
 
@@ -144,9 +161,8 @@ function openPopup(toukouId) {
 	</div>
 	<div class="scroll-container">
 		<button class="scroll-left" id="scroll-left-1">◀</button>
-		<section class="video-grid" id="video-grid-1">
-
-
+		<div class="video-grid" id="video-grid-1">
+		
 			<%
 			if (upList != null) {
 				for (int i = 0; i < upList.size(); i++) {
@@ -171,7 +187,7 @@ function openPopup(toukouId) {
 					'<%= u.getUserid() %>')">
 					▶️</button>
 					
-					<input type="hidden" value="<%=userIconList.get(i).getName() %>" id="<%=i%>">
+					<input type="hidden" value="<%=u.getName() %>" id="<%=i%>">
 					
 					<!-- 音声再生ボタン -->
 					<audio class="audio-player"
@@ -274,8 +290,7 @@ function openPopup(toukouId) {
 			<% } %>
 			<% } %>
 			<% } %>
-		</section>
-
+		</div>
 		<button class="scroll-right" id="scroll-right-1">▶</button>
 	</div>
 
@@ -287,9 +302,7 @@ function openPopup(toukouId) {
 	</div>
 	<div class="scroll-container">
 		<button class="scroll-left" id="scroll-left-2">◀</button>
-		<section class="video-grid" id="video-grid-2">
-
-
+		<div class="video-grid" id="video-grid-2">
 			<% if (upList != null) {
 					for (int i = 0; i < upList.size(); i++) {
 					boolean flgin = false;
@@ -411,7 +424,7 @@ function openPopup(toukouId) {
 						<dialog id="myDialog<%=i%>">
 							<p>この投稿を削除しますか？</p>
 							<div class="buttonContainer">
-								<a href="P2PostDeliteServlet?hensuu=<%=i%>&sakuzyoId=<%=upList.get(i).getToukouid()%>">
+								<a href="P2PostDeliteServlet?hensuu=<%=i%>&sakuzyoId=<%=upList.get(i).getToukouid()%>&page=mine">
 									<button type="button" class="dialogButton" id="yesButton<%=i%>">はい</button>
 								</a>
 								<button type="button" class="dialogButton" id="noButton<%=i%>">いいえ</button>
@@ -424,8 +437,7 @@ function openPopup(toukouId) {
 			<% } %>
 			<% } %>
 			
-		</section>
-
+		</div>
 		<button class="scroll-right" id="scroll-right-2">▶</button>
 	</div>
 
@@ -439,7 +451,7 @@ function openPopup(toukouId) {
 						<img src="." alt="" />
 					</div>
 					<div class="song-description">
-						<p class="artist" id="artistName"></p>
+						<p class="artist" id="artistName"><</p>
 					</div>
 				</div>
 			</div>
@@ -477,7 +489,60 @@ function openPopup(toukouId) {
 	<jsp:include page="P2kensaku.jsp"></jsp:include>
 
 
-	<script>	
+	<script>
+	 const scrollLeftButton1 = document.getElementById("scroll-left-1");
+     const scrollRightButton1 = document.getElementById("scroll-right-1");
+     const videoGrid1 = document.getElementById("video-grid-1");
+
+     scrollLeftButton1.addEventListener("click", () => {
+       videoGrid1.scrollBy({
+         left: -150, // スクロールする距離（左）
+         behavior: "smooth", // スムーズスクロール
+       });
+     });
+
+     scrollRightButton1.addEventListener("click", () => {
+       videoGrid1.scrollBy({
+         left: 150, // スクロールする距離（右）
+         behavior: "smooth", // スムーズスクロール
+       });
+     });
+
+     // 2行目のボタンのイベントハンドラー
+     const scrollLeftButton2 = document.getElementById("scroll-left-2");
+     const scrollRightButton2 = document.getElementById("scroll-right-2");
+     const videoGrid2 = document.getElementById("video-grid-2");
+
+     scrollLeftButton2.addEventListener("click", () => {
+       videoGrid2.scrollBy({
+         left: -150, // スクロールする距離（左）
+         behavior: "smooth", // スムーズスクロール
+       });
+     });
+
+     scrollRightButton2.addEventListener("click", () => {
+       videoGrid2.scrollBy({
+         left: 150, // スクロールする距離（右）
+         behavior: "smooth", // スムーズスクロール
+       });
+     });
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+	/* 	
       const scrollLeftButton1 = document.getElementById("scroll-left-1");
       const scrollRightButton1 = document.getElementById("scroll-right-1");
       const videoGrid1 = document.getElementById("video-grid-1");
@@ -514,8 +579,14 @@ function openPopup(toukouId) {
           behavior: "smooth", // スムーズスクロール
         });
       });
-
+ */
     </script>
 	<script src="https://unpkg.com/wavesurfer.js"></script>
+	
+	<dialog id="confirmationDialog" class="confirmationDialog">
+		<p>削除しました</p>
+		<button type="button" class="dialogButton" id="closeConfirmationButton" onclick="confirmationDialog.close();">閉じる</button>
+	</dialog>
+	
 </body>
 </html>
