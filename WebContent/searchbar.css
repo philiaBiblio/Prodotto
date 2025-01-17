@@ -369,7 +369,6 @@
 .tagify__input {
 	flex-grow: 1;
 	display: inline-block;
-	width: 522px;
 	transform: translateY(0px);	/* 垂直方向に中央揃え */
 	padding: var(--tag-pad);
 	line-height: normal;
