@@ -121,25 +121,6 @@ body {
 	color: white;
 }
 
-.submit {
-	text-align: center;
-	margin-top: 20px;
-}
-
-.submit button {
-	background-color: #28a745;
-	color: white;
-	border: none;
-	padding: 15px 30px;
-	border-radius: 5px;
-	cursor: pointer;
-	font-size: 16px;
-}
-
-.submit button:hover {
-	background-color: #218838;
-}
-
 img.thumbnail {
   max-width: 100%;
   height: auto;
@@ -147,40 +128,29 @@ img.thumbnail {
 }
 
 .video-card {
-  width: 250px;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  background-color: white;
-  padding: 10px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-/* カード全体のデザイン */
-.video-card {
-  background-color:rgb(44, 44, 44);
-  padding: 15px;
-  border-radius: 10px;
-  /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
-  text-align: center;
-  position: relative;
-  position: relative; /* 他の位置を考慮する */
-  overflow: hidden; /* カード内の要素がはみ出さないようにする */
+    width: 220px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: rgb(44, 44, 44);
+    padding: 15px;
+    padding-bottom: 0;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
 }
 
 /* サムネイル部分 */
 .thumbnail-placeholder {
   width: 220px;
   height: 120px;
-  background-color: rgb(44, 44, 44);
+  background-color: #11dadd;
   border-radius: 10px;
   position: relative;
   display: flex;
-  justify-content: center;
   align-items: center;
   overflow: hidden; /* はみ出しを防止 */
-  object-fit: cover; /* 画像がはみ出さないようにアスペクト比を維持 */
 }
 
 /* サムネイルの再生ボタン */
@@ -202,12 +172,24 @@ img.thumbnail {
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  gap: 20px; /* プロフィールとボタンの間にスペースをあける */
-  width: 100%;
-  flex-wrap: wrap; /* 必要に応じて改行させる */
-  box-sizing: border-box; /* パディングや境界線を幅に含める */
+  gap: 10px; /* 現代的な方法 */
+  margin-bottom: 10px; /* 必要に応じて追加 */
 }
 
+/* プロフィールアイコン、ボタンを一列に並べる */
+.video-info > div {
+    display: flex;
+    justify-content: flex-start; /* 左から順に並べる */
+    align-items: center; /* アイコンとボタンを縦方向で中央揃え */
+    gap: 10px; /* ボタン同士の間隔 */
+}
+
+/* プロフィール情報を横並びにする */
+.profile-info {
+  display: flex;
+  align-items: center;
+  margin-right: auto; /* プロフィールアイコンを左に固定 */
+}
 
 /* プロフィールアイコンの修正 */
 .profile-icon {
@@ -221,9 +203,16 @@ img.thumbnail {
   margin-right: 8px; /* アイコンとテキストの間隔を調整 */
 }
 
+.heart {
+  cursor: pointer;
+}
+
 /* いいね＆コメントのボタン */
 .like-comment {
   display: flex;
+  justify-content: flex-start;
+  width: 100%;
+  margin-top: 10px;
   gap: 10px;
 }
 
@@ -235,6 +224,43 @@ img.thumbnail {
   cursor: pointer;
   display: flex;
   align-items: center;
+}
+
+/* いいね＆コメントボタンのカーソル時の色 */
+.like-comment button:hover {
+  color: #11dadd;
+}
+
+/* コメントボタンと数字の間隔 */
+.like-comment button span {
+  margin-left: 5px;
+}
+
+.like-comment dialog {
+  text-align: center;
+  border-radius: 10px;
+  background-color: #000000;
+  border: solid 3px #11dadd;
+  color: white;
+}
+
+.like-comment .dialogButton {
+  width: 90px;
+  height: 50px;
+  color: rgb(255, 255, 255);
+  background-color: #000000;
+  border: 1px solid #ffffff;
+  border-radius: 10px;
+  cursor: pointer;
+  margin: 0 15px;
+  display: flex;
+  justify-content: center; 
+  align-items: center; 
+}
+
+.like-comment .dialogButton:hover {
+  color: #11dadd;
+  border-color: #11dadd;
 }
 
 /* コメントボタンと数字の間隔 */
