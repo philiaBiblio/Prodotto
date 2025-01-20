@@ -1,108 +1,139 @@
 body {
-  background: #000000;
-  color: #ffffff; /* 文字 */
-  font-family: Arial, sans-serif;
-  padding: 20px;
-      text-align: left;
+	background: #000000;
+	color: #ffffff;
+	/* 文字 */
+	font-family: Arial, sans-serif;
+	padding: 20px;
+	text-align: left;
 }
 
-.btn{
-  margin: 0.9px;  /* ボタン間のスペース */
+.btn {
+	margin: 0.9px;
+	/* ボタン間のスペース */
 }
 
 /* 一時停止ボタン */
 .btn-pause {
-  width: 50px;  /* 幅 */
-  height: 50px; /* 高さ */
+	width: 50px;
+	/* 幅 */
+	height: 50px;
+	/* 高さ */
 }
 
 /* 再生ボタン */
 .btn-play {
-  width: 50px;  /* 幅 */
-  height: 50px; /* 高さ */
+	width: 50px;
+	/* 幅 */
+	height: 50px;
+	/* 高さ */
 }
 
 /* 停止ボタン */
 .btn-stop {
-  width: 50px;  /* 幅 */
-  height: 50px; /* 高さ */
+	width: 50px;
+	/* 幅 */
+	height: 50px;
+	/* 高さ */
 }
 
 /* 巻き戻しボタン */
 .btn-rewind {
-  width: 50px;  /* 幅 */
-  height: 50px; /* 高さ */
+	width: 50px;
+	/* 幅 */
+	height: 50px;
+	/* 高さ */
 }
 
 /* 早送りボタン */
 .btn-fast-forward {
-  width: 50px;  /* 幅 */
-  height: 50px; /* 高さ */
+	width: 50px;
+	/* 幅 */
+	height: 50px;
+	/* 高さ */
 }
 
 /* 録音ボタン */
-.btn-record{
-  width: 50px;  /* 幅 */
-  height: 50px; /* 高さ */
+.btn-record {
+	width: 50px;
+	/* 幅 */
+	height: 50px;
+	/* 高さ */
 }
 
-.controls{
-  position: sticky; /* スクロール時に固定 */
-  top: 0; /* 上端に固定 */
-  left: 0; /* 左端に固定 */
+.controls {
+	position: sticky;
+	/* スクロール時に固定 */
+	top: 0;
+	/* 上端に固定 */
+	left: 0;
+	/* 左端に固定 */
 }
 
-.playlist-tracks{
-  max-height: 480px;
-  max-weight: 1200px;
-  position: relative; /* 子要素の位置決めに影響を与える */
-  overflow: auto; /* スクロール領域を確保 */
+.playlist-tracks {
+	max-height: 480px;
+	max-weight: 1200px;
+	position: relative;
+	/* 子要素の位置決めに影響を与える */
+	overflow: auto;
+	/* スクロール領域を確保 */
 
 }
 
 .channel-wrapper {
-  display: flex;
+	display: flex;
 }
 
 .playlist-overrlay {
-  position: relative;
+	position: relative;
 }
 
 
 .playlist-toolbar {
-  display: flex; /* 横並び配置 */
-  align-items: center; /* ボタン群とメッセージエリアの垂直方向中央揃え */
-  gap: 0.3rem; /* ボタン群とメッセージエリアの間隔を調整 */
+	display: flex;
+	/* 横並び配置 */
+	align-items: center;
+	/* ボタン群とメッセージエリアの垂直方向中央揃え */
+	gap: 0.3rem;
+	/* ボタン群とメッセージエリアの間隔を調整 */
 }
 
 /* スクロールバー全体のスタイル */
 .playlist-tracks::-webkit-scrollbar {
-  width: 10px; /* 横スクロールバーの幅 */
-  height: 10px; /* 縦スクロールバーの高さ */
+	width: 10px;
+	/* 横スクロールバーの幅 */
+	height: 10px;
+	/* 縦スクロールバーの高さ */
 }
 
 /* スクロールバーのトラック（背景）のスタイル */
 .playlist-tracks::-webkit-scrollbar-track {
-  background: #000000; /* 背景色 */
-  border-radius: 5px; /* 角を丸くする */
+	background: #000000;
+	/* 背景色 */
+	border-radius: 5px;
+	/* 角を丸くする */
 }
 
 /* スクロールバーのつまみ（ドラッグ部分）のスタイル */
 .playlist-tracks::-webkit-scrollbar-thumb {
-  background: #025963; /* 色 */
-  border-radius: 5px; /* 角を丸くする */
+	background: #025963;
+	/* 色 */
+	border-radius: 5px;
+	/* 角を丸くする */
 }
 
 /* スクロールバーのつまみをホバーした時のスタイル */
 .playlist-tracks::-webkit-scrollbar-thumb:hover {
-  background: #049dae; /* ホバー時の色 */
+	background: #049dae;
+	/* ホバー時の色 */
 }
 
 /* トラック移動ボタンを押すと光ってかっこE */
 .playlist-overlay.state-shift {
-  margin-left: 0px;
-  height: 120px; /* 修正: `height120px` を正しい形式に */
-  border-bottom: 2px solid #ff0000; /* 下線の太さ、スタイル、色 */
+	margin-left: 0px;
+	height: 120px;
+	/* 修正: `height120px` を正しい形式に */
+	border-bottom: 2px solid #ff0000;
+	/* 下線の太さ、スタイル、色 */
 }
 
 /*.playlist-overlay  {
@@ -116,34 +147,70 @@ body {
 /***************** おだいのところの見た目 *****************/
 
 .odaitext {
-  /* 背景と文字色 */
-  background-color: #1a1a1a; /* 全体の背景と馴染む暗いグレー */
-  color: #11dadd; /* 見やすいアクセントカラー（シアン系） */
+	/* 背景と文字色 */
+	background-color: #1a1a1a;
+	/* 全体の背景と馴染む暗いグレー */
+	color: #11dadd;
+	/* 見やすいアクセントカラー（シアン系） */
 
-  /* テキストスタイル */
-  font-size: 18px; /* 文字を少し大きく */
-  font-weight: bold; /* お題を強調 */
-  text-align: center; /* テキストを中央揃え */
-  line-height: 50px; /* 高さに合わせて垂直中央揃え */
+	/* テキストスタイル */
+	font-size: 18px;
+	/* 文字を少し大きく */
+	font-weight: bold;
+	/* お題を強調 */
+	text-align: center;
+	/* テキストを中央揃え */
+	line-height: 50px;
+	/* 高さに合わせて垂直中央揃え */
 
-  /* ボックスサイズ */
-  width: 250px; /* お題部分の幅を少し広げる */
-  height: 60px; /* 高さを少し増やす */
+	/* ボックスサイズ */
+	width: 250px;
+	/* お題部分の幅を少し広げる */
+	height: 60px;
+	/* 高さを少し増やす */
 
-  /* 枠線と角のスタイル */
-  border: 2px solid #11dadd; /* 同じ色で枠線を追加 */
-  border-radius: 10px; /* 角を丸くする */
+	/* 枠線と角のスタイル */
+	border: 2px solid #11dadd;
+	/* 同じ色で枠線を追加 */
+	border-radius: 10px;
+	/* 角を丸くする */
 
-  /* エフェクト */
-  box-shadow: 0 0 15px #11dadd; /* 発光効果 */
+	/* エフェクト */
+	box-shadow: 0 0 15px #11dadd;
+	/* 発光効果 */
 
-  /* 配置と余白 */
-  margin: 10px auto; /* 全体の中央に配置 */
-  padding: 5px; /* 内側の余白を追加 */
+	/* 配置と余白 */
+	margin: 10px auto;
+	/* 全体の中央に配置 */
+	padding: 5px;
+	/* 内側の余白を追加 */
 
-  /* テキスト表示の制御 */
-  overflow: hidden; /* テキストがはみ出した場合に隠す */
-  white-space: nowrap; /* 1行で表示 */
+	/* テキスト表示の制御 */
+	overflow: hidden;
+	/* テキストがはみ出した場合に隠す */
+	white-space: nowrap;
+	/* 1行で表示 */
 }
 
+.loading-modal {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.5);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	z-index: 9999;
+}
 
+.loading-content {
+	text-align: center;
+	color: white;
+}
+
+.spinner-border {
+	width: 3rem;
+	height: 3rem;
+}

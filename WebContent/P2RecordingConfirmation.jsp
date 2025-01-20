@@ -36,6 +36,7 @@
                 </button>
 			</div>
 		</div>
+		
 			<!-- Tagifyの設定 -->
 <script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify@latest/dist/tagify.min.js"></script>
 <script>
@@ -43,22 +44,24 @@ document.addEventListener('DOMContentLoaded', function() {
     var inputElm = document.querySelector('#tags');
     var tagify;
 
-    function initializeTagify(enable) {
-        if (enable) {
-            tagify = new Tagify(inputElm, {
-                enforceWhitelist: true,
-                whitelist: ["css", "html", "javascript", "php", "python", "java", "ruby", "nodejs"],
-                maxTags: 5,
-                dropdown: {
-                    enabled: 1,
-                    maxItems: 10,
-                }
-            });
-        } else if (tagify) {
-            tagify.destroy();
-            tagify = null;
-        }
-    }
+ // Tagifyを初期化
+    var tagify = new Tagify(inputElm, {
+        enforceWhitelist: true,
+        whitelist: ["css", "html", "javascript", "php", "python", "java", "ruby", "nodejs"],
+        maxTags: 5,
+    });
+
+    // タグリストの変更イベントを監視
+    tagify.on('change', function(e) {
+        // 現在のタグリストを取得
+        var tags = tagify.value; // タグのリスト (配列形式)
+        console.log('タグリスト:', tags);
+
+        // 各タグの値を取得
+        tags.forEach(function(tag) {
+            console.log('タグの値:', tag.value);
+        });
+    });
 
     // タグ検索初期化
     initializeTagify(true);
