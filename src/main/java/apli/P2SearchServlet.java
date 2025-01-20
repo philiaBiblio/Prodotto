@@ -3,6 +3,8 @@ package apli;
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -11,6 +13,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
  * Servlet implementation class P2SearchServlet
@@ -37,6 +43,7 @@ public class P2SearchServlet extends HttpServlet {
 		String url = "";
 		// DBアクセス用部品の生成
 		DBAcs dba = new DBAcs();
+		DBAcs dba2 = new DBAcs();
 		//ユーザーリストの生成
 		// セッションからUSERLISTを取得
 		ArrayList<User> UList = (ArrayList<User>) ses.getAttribute("USERLIST");
@@ -46,7 +53,13 @@ public class P2SearchServlet extends HttpServlet {
 			UList.clear(); // 既存データをクリア
 		}
 		
-		System.out.println(request.getParameter("url"));
+		// 動画用のlistの生成
+		ArrayList<Toukou> toukouList = new ArrayList<Toukou>();
+		ArrayList<User> userIconList = new ArrayList<User>();
+		ArrayList<Post> postList = new ArrayList<Post>();
+		ArrayList<Heart> heartList = new ArrayList<Heart>();
+		
+		System.out.println("どっちの検索か：" + request.getParameter("url"));
 		
 		try {
 			
@@ -109,66 +122,250 @@ public class P2SearchServlet extends HttpServlet {
 				dba.closeDB();
 			}else {
 				
+				// ここからタグ検索 
 				// 検索キーワードの取得
 				String title = request.getParameter("search");
-				System.out.println(title);
-	
+				System.out.println("113：" + title);
+				
 				// 検索キーワードが空の場合の処理
 				if (title == null || title.trim().isEmpty()) {
 					System.out.println("検索キーワードが空です。");
-					// USERLIST をクリア
-					UList.clear();
-					ses.setAttribute("USERLIST", UList);
-	
+					
 					// 検索結果がない状態で画面遷移
 					url = "P2Search.jsp";
 					RequestDispatcher rd = request.getRequestDispatcher(url);
 					rd.forward(request, response);
 					return; // 処理終了
 				}
-	
-				// SELECT文ユーザー情報を取得
-				ResultSet rs = dba.selectExe("SELECT * FROM 投稿 WHERE 投稿ID LIKE '%" + title + "%'");
-	
-				// カーソルを１行ずらす。flgに結果を保存。
-				boolean flg = rs.next();
-	
-				// 検索結果の数分繰り返す。
-				while (flg) {
-					// ユーザー情報を変数に保存する
-					String uid = rs.getString("ユーザーID");
-					String name = rs.getString("名前");
-					String icon = rs.getString("アイコン");
-	
-					// ユーザーインスタンスの生成
-					User uu = new User();
-					uu.setUserid(uid);
-					uu.setName(name);
-					uu.setIconImage(icon);
-	
-					// ユーザーリストにユーザー情報を保存する
-					UList.add(uu);
-	
-					// カーソルを一行ずらす
-					flg = rs.next();
-				}
-	
-				// 会員の一覧を保存
-				ses.setAttribute("USERLIST", UList);
-	
-				// 画面遷移
-				url = "P2Search.jsp";
-				RequestDispatcher rd = request.getRequestDispatcher(url);
-				rd.forward(request, response);
-	
-				// ログアウト処理
-				dba.closeDB();
 				
+				ObjectMapper mapper = new ObjectMapper();
+				 
+			    try {
+			    	TypeReference<List<Map<String, String>>> type = new TypeReference<List<Map<String, String>>>() {};
+			    	List<Map<String, String>> list = mapper.readValue(title, type);
+			    
+			      System.out.println("129：" + list);
+			      title = "";
+			      if(list.size() != 0) {
+			    	  for(int i = 0; i < list.size(); i++) {
+			    		  if(i >= 1) {
+			    			  title = title + "," + list.get(i).get("value");
+			    			//  System.out.println("134：" + title);
+			    		  }else {
+			    			  title = title + list.get(i).get("value");
+			    		  }
+			    	  }
+			      }
+			      System.out.println("147：" + title);
+			      // 複数の「,」区切りのものをばらす
+			      String search;
+			      String search2;
+			      String search3;
+			      String search4;
+			      String search5;
+			      
+			      String sql = "";
+			      
+			      String word[] = title.split(",");
+			      if(word.length != 0) {
+			    	  System.out.println("aa" + word.length);
+			    	  switch(word.length) {
+			    	  case 1:
+			    		  search = "'" + word[0] + "'";
+			    		  System.out.println("174：" + search);
+			    		  sql = "SELECT 投稿ID, 投稿.ユーザーID, イベントID, 派生ID, アップロード日, 作品, サムネイル, 投稿.タグID, "
+			    		  		+ "t1.タグ名 AS タグ名1, 投稿.タグID2, t2.タグ名 AS タグ名2, タグID3, t3.タグ名 AS タグ名3, 投稿.タグID4, t4.タグ名 AS タグ名4, 投稿.タグID5, t5.タグ名 AS タグ名5,名前,アイコン,"
+			    				+ "(SELECT COUNT(*) FROM コメント WHERE コメント.投稿ID = 投稿.投稿ID) AS コメント数, "
+			    				+ "(SELECT COUNT(*) FROM いいね WHERE いいね.投稿ID = 投稿.投稿ID) AS いいね数 "
+			    		  		+ "FROM 投稿 LEFT JOIN タグ t1 ON 投稿.タグID = t1.タグID "
+			    		  		+ "LEFT JOIN タグ t2 ON 投稿.タグID2 = t2.タグID "
+			    		  		+ "LEFT JOIN タグ t3 ON 投稿.タグID3 = t3.タグID "
+			    		  		+ "LEFT JOIN タグ t4 ON 投稿.タグID4 = t4.タグID "
+			    		  		+ "LEFT JOIN タグ t5 ON 投稿.タグID5 = t5.タグID "
+			    		  		+ "join ユーザー on 投稿.ユーザーID = ユーザー.ユーザーID "
+			    		  		+ "WHERE" + search + " IN (t1.タグ名, t2.タグ名, t3.タグ名, t4.タグ名, t5.タグ名)"
+			    		  		+ "order by アップロード日 desc";  
+			    		  break;
+			    	  case 2:
+			    		  search = "'" + word[0] + "'";
+			    		  search2 = "'" + word[1] + "'";
+			    		  System.out.println("187：" + search);
+			    		  System.out.println("188：" + search2);
+			    		  sql = "SELECT 投稿ID, 投稿.ユーザーID, イベントID, 派生ID, アップロード日, 作品, サムネイル, 投稿.タグID, "
+				    		  	+ "t1.タグ名 AS タグ名1, 投稿.タグID2, t2.タグ名 AS タグ名2, タグID3, t3.タグ名 AS タグ名3, 投稿.タグID4, t4.タグ名 AS タグ名4, 投稿.タグID5, t5.タグ名 AS タグ名5,名前,アイコン,"
+				    		  	+ "(SELECT COUNT(*) FROM コメント WHERE コメント.投稿ID = 投稿.投稿ID) AS コメント数, "
+			    				+ "(SELECT COUNT(*) FROM いいね WHERE いいね.投稿ID = 投稿.投稿ID) AS いいね数 "
+				    		  	+ "FROM 投稿 LEFT JOIN タグ t1 ON 投稿.タグID = t1.タグID "
+				    		  	+ "LEFT JOIN タグ t2 ON 投稿.タグID2 = t2.タグID "
+				    		  	+ "LEFT JOIN タグ t3 ON 投稿.タグID3 = t3.タグID "
+				    		  	+ "LEFT JOIN タグ t4 ON 投稿.タグID4 = t4.タグID "
+				    		  	+ "LEFT JOIN タグ t5 ON 投稿.タグID5 = t5.タグID "
+				    		  	+ "join ユーザー on 投稿.ユーザーID = ユーザー.ユーザーID "
+				    		  	+ "WHERE " + search + " IN (t1.タグ名, t2.タグ名, t3.タグ名, t4.タグ名, t5.タグ名)"
+				    		  	+ "OR " + search2 + " IN (t1.タグ名, t2.タグ名, t3.タグ名, t4.タグ名, t5.タグ名)"
+				    		  	+ "order by アップロード日 desc";
+			    		  break;
+			    	  case 3:
+			    		  search = "'" + word[0] + "'";
+			    		  search2 = "'" + word[1] + "'";
+			    		  search3 = "'" + word[2] + "'";
+			    		  System.out.println("203：" + search);
+			    		  System.out.println("204：" + search2);
+			    		  System.out.println("205：" + search3);
+			    		  sql = "SELECT 投稿ID, 投稿.ユーザーID, イベントID, 派生ID, アップロード日, 作品, サムネイル, 投稿.タグID, "
+				    		  	+ "t1.タグ名 AS タグ名1, 投稿.タグID2, t2.タグ名 AS タグ名2, タグID3, t3.タグ名 AS タグ名3, 投稿.タグID4, t4.タグ名 AS タグ名4, 投稿.タグID5, t5.タグ名 AS タグ名5,名前,アイコン,"
+				    		  	+ "(SELECT COUNT(*) FROM コメント WHERE コメント.投稿ID = 投稿.投稿ID) AS コメント数, "
+			    				+ "(SELECT COUNT(*) FROM いいね WHERE いいね.投稿ID = 投稿.投稿ID) AS いいね数 "
+				    		  	+ "FROM 投稿 LEFT JOIN タグ t1 ON 投稿.タグID = t1.タグID "
+				    		  	+ "LEFT JOIN タグ t2 ON 投稿.タグID2 = t2.タグID "
+				    		  	+ "LEFT JOIN タグ t3 ON 投稿.タグID3 = t3.タグID "
+				    		  	+ "LEFT JOIN タグ t4 ON 投稿.タグID4 = t4.タグID "
+				    		  	+ "LEFT JOIN タグ t5 ON 投稿.タグID5 = t5.タグID "
+				    		  	+ "join ユーザー on 投稿.ユーザーID = ユーザー.ユーザーID "
+				    		  	+ "WHERE " + search + " IN (t1.タグ名, t2.タグ名, t3.タグ名, t4.タグ名, t5.タグ名)"
+				    		  	+ "OR " + search2 + " IN (t1.タグ名, t2.タグ名, t3.タグ名, t4.タグ名, t5.タグ名)"
+				    		  	+ "OR " + search3 + " IN (t1.タグ名, t2.タグ名, t3.タグ名, t4.タグ名, t5.タグ名)"
+				    		  	+ "order by アップロード日 desc";
+			    		  break;
+			    	  case 4:
+			    		  search = "'" + word[0] + "'";
+			    		  search2 = "'" + word[1] + "'";
+			    		  search3 = "'" + word[2] + "'";
+			    		  search4 = "'" + word[3] + "'";
+			    		  System.out.println("222：" + search);
+			    		  System.out.println("223：" + search2);
+			    		  System.out.println("224：" + search3);
+			    		  System.out.println("225：" + search4);
+			    		  sql = "SELECT 投稿ID, 投稿.ユーザーID, イベントID, 派生ID, アップロード日, 作品, サムネイル, 投稿.タグID, "
+				    		  	+ "t1.タグ名 AS タグ名1, 投稿.タグID2, t2.タグ名 AS タグ名2, タグID3, t3.タグ名 AS タグ名3, 投稿.タグID4, t4.タグ名 AS タグ名4, 投稿.タグID5, t5.タグ名 AS タグ名5,名前,アイコン,"
+				    		  	+ "(SELECT COUNT(*) FROM コメント WHERE コメント.投稿ID = 投稿.投稿ID) AS コメント数, "
+			    				+ "(SELECT COUNT(*) FROM いいね WHERE いいね.投稿ID = 投稿.投稿ID) AS いいね数 "
+				    		  	+ "FROM 投稿 LEFT JOIN タグ t1 ON 投稿.タグID = t1.タグID "
+				    		 	+ "LEFT JOIN タグ t2 ON 投稿.タグID2 = t2.タグID "
+				    		  	+ "LEFT JOIN タグ t3 ON 投稿.タグID3 = t3.タグID "
+				    		  	+ "LEFT JOIN タグ t4 ON 投稿.タグID4 = t4.タグID "
+				    		  	+ "LEFT JOIN タグ t5 ON 投稿.タグID5 = t5.タグID "
+				    		  	+ "join ユーザー on 投稿.ユーザーID = ユーザー.ユーザーID "
+				    		  	+ "WHERE " + search + " IN (t1.タグ名, t2.タグ名, t3.タグ名, t4.タグ名, t5.タグ名)"
+				    		  	+ "OR " + search2 + " IN (t1.タグ名, t2.タグ名, t3.タグ名, t4.タグ名, t5.タグ名)"
+				    		  	+ "OR " + search3 + " IN (t1.タグ名, t2.タグ名, t3.タグ名, t4.タグ名, t5.タグ名)"
+				    		  	+ "OR " + search4 + " IN (t1.タグ名, t2.タグ名, t3.タグ名, t4.タグ名, t5.タグ名)"
+				    		  	+ "order by アップロード日 desc";
+			    		  
+			    		  break;
+			    	  case 5:
+			    		  search = "'" + word[0] + "'";
+			    		  search2 = "'" + word[1] + "'";
+			    		  search3 = "'" + word[2] + "'";
+			    		  search4 = "'" + word[3] + "'";
+			    		  search5 = "'" + word[4] + "'";
+			    		  System.out.println("245：" + search);
+			    		  System.out.println("246：" + search2);
+			    		  System.out.println("247：" + search3);
+			    		  System.out.println("248：" + search4);
+			    		  System.out.println("249：" + search5);
+			    		  sql = "SELECT 投稿ID, 投稿.ユーザーID, イベントID, 派生ID, アップロード日, 作品, サムネイル, 投稿.タグID, "
+				    		  	+ "t1.タグ名 AS タグ名1, 投稿.タグID2, t2.タグ名 AS タグ名2, タグID3, t3.タグ名 AS タグ名3, 投稿.タグID4, t4.タグ名 AS タグ名4, 投稿.タグID5, t5.タグ名 AS タグ名5,名前,アイコン,"
+				    		  	+ "(SELECT COUNT(*) FROM コメント WHERE コメント.投稿ID = 投稿.投稿ID) AS コメント数, "
+			    				+ "(SELECT COUNT(*) FROM いいね WHERE いいね.投稿ID = 投稿.投稿ID) AS いいね数 "
+				    		  	+ "FROM 投稿 LEFT JOIN タグ t1 ON 投稿.タグID = t1.タグID "
+				    		  	+ "LEFT JOIN タグ t2 ON 投稿.タグID2 = t2.タグID "
+				    		  	+ "LEFT JOIN タグ t3 ON 投稿.タグID3 = t3.タグID "
+				    		  	+ "LEFT JOIN タグ t4 ON 投稿.タグID4 = t4.タグID "
+				    		  	+ "LEFT JOIN タグ t5 ON 投稿.タグID5 = t5.タグID "
+				    		  	+ "join ユーザー on 投稿.ユーザーID = ユーザー.ユーザーID "
+				    		  	+ "WHERE " + search + " IN (t1.タグ名, t2.タグ名, t3.タグ名, t4.タグ名, t5.タグ名)"
+				    		  	+ "OR " + search2 + " IN (t1.タグ名, t2.タグ名, t3.タグ名, t4.タグ名, t5.タグ名)"
+				    		  	+ "OR " + search3 + " IN (t1.タグ名, t2.タグ名, t3.タグ名, t4.タグ名, t5.タグ名)"
+				    		  	+ "OR " + search4 + " IN (t1.タグ名, t2.タグ名, t3.タグ名, t4.タグ名, t5.タグ名)"
+				    		  	+ "OR " + search5 + " IN (t1.タグ名, t2.タグ名, t3.タグ名, t4.タグ名, t5.タグ名)"
+				    		  	+ "order by アップロード日 desc";
+			    	  }
+			      }
+			      
+			      // SELECT文ユーザー情報を取得
+			      ResultSet rs = dba.selectExe(sql);
+			      // 検索結果の数分繰り返す。
+			      while(rs.next()) {
+			    	  String toukouId = rs.getString("投稿ID");
+			    	  String userId = rs.getString("ユーザーID");
+			    	  String eventId = rs.getString("イベントID");
+			    	  String haseiId = rs.getString("派生ID");
+			    	  String time = rs.getString("アップロード日");
+			    	  String audio = rs.getString("作品");
+			    	  String samune = rs.getString("サムネイル");
+			    	  
+			    	  String upName = rs.getString("名前");
+			    	  String toukouIcon = rs.getString("アイコン");
+						
+			    	  int 	comm = rs.getInt("コメント数");
+			    	  int iine = rs.getInt("いいね数");
+			    	  //System.out.println(toukouId.substring(0,6));
+						
+						// インスタンス生成
+						Toukou toukou = new Toukou();
+						toukou.setToukouid(toukouId);
+						toukou.setUserid(userId);
+						toukou.setEventid(eventId);
+						toukou.setDeriveid(haseiId);
+						toukou.setUpday(time);
+						toukou.setSound(audio);
+						toukou.setThumbnail(samune);
+						
+						User up = new User();
+						up.setName(upName);
+						up.setIconImage(toukouIcon);
+						
+						Post kazu = new Post();
+						kazu.setCommentCount(comm);
+						kazu.setLikeCount(iine);
+						
+						// アレイリストに追加
+						toukouList.add(toukou);
+						userIconList.add(up);
+						postList.add(kazu);
+					}
+					ses.setAttribute("TOUKOULIST", toukouList);
+					ses.setAttribute("ICONLIST", userIconList);
+					ses.setAttribute("POSTLIST", postList);
+					
+					// 自分がいいねしたかの判別用のsql
+					String sql2 = "select * from いいね";
+					// sql文実行
+					ResultSet rs2 = dba2.selectExe(sql2);
+					
+					while(rs2.next()) {
+						String toukouId = rs2.getString("投稿ID");
+						String userId = rs2.getString("ユーザーID");
+						
+						// インスタンス生成
+						Heart heart = new Heart();
+						heart.setPostId(toukouId);
+						heart.setUserId(userId);
+						
+						// アレイリストに追加
+						heartList.add(heart);
+					}
+					ses.setAttribute("HEARTLIST", heartList);
+					
+					// 画面遷移
+					url = "P2Search.jsp";
+					RequestDispatcher rd = request.getRequestDispatcher(url);
+					rd.forward(request, response);
+		
+					// ログアウト処理
+					dba.closeDB();
+					dba2.closeDB();
+					
+			    } catch (JsonProcessingException e) {
+			      e.printStackTrace();
+			    }
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			// ログアウト処理
 			dba.closeDB();
+			dba2.closeDB();
 		}
 	}
 

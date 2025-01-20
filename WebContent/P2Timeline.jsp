@@ -24,7 +24,6 @@
 <title>ProDotto</title>
 </head>
 
-
 <%
 	// セッションの取得
 	HttpSession ses = request.getSession();
@@ -353,9 +352,7 @@ function sendData(toukouUserid, toukouId, userId) {
     });
 }
 </script>		
-	
-	
-	
+
 	<script src="https://unpkg.com/wavesurfer.js"></script>
 	
 	<dialog id="confirmationDialog" class="confirmationDialog">

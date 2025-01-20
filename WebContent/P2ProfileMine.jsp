@@ -318,6 +318,9 @@ window.addEventListener("load", function(){
 					<img src="image/<%=upList.get(i).getThumbnail()%>"
 						alt="Video Thumbnail" class="thumbnail" />
 					<button class="play-button">▶️</button>
+					
+					<input type="hidden" value="<%=u.getName() %>" id="<%=i%>">
+					
 					<!-- 音声再生ボタン -->
 					<audio class="audio-player"
 						src="audio/<%=upList.get(i).getSound()%>">

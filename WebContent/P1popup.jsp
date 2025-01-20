@@ -93,7 +93,7 @@ window.onload = function(){
 					<dialog id="myDialog<%= i %>">
             				<p>この投稿を削除しますか？</p>
             			<div class="buttonContainer">
-            			<a href="P1CommentDeliteServlet?commId=<%=cmList.get(i).getCommentId() %>&hensuu=<%=i%>">
+            			<a class="dialoglink" href="P1CommentDeliteServlet?commId=<%=cmList.get(i).getCommentId() %>&hensuu=<%=i%>">
                 			<button type="button" class="dialogButton" id="yesButton<%= i%>">はい</button></a>
                 			<button type="button" class="dialogButton" id="noButton<%= i %>">いいえ</button>
             			</div>

@@ -154,3 +154,7 @@ input:focus{
 a {
   text-decoration: none;
 }
+
+a:focus{
+	outline: none;
+}
