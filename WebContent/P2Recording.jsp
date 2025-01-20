@@ -210,6 +210,9 @@ ses.setAttribute("ODAITEXST", ses.getAttribute("ODAI"));
 						// ロード画面を表示
 					    const loadingModal = document.getElementById('loadingModal');
 					    loadingModal.style.display = 'flex';
+
+					    const buttons = document.querySelectorAll('button');
+					    buttons.forEach(button => button.disabled = true);
 						
 						// `channel-0` 要素を取得
 						const channelElement = document.querySelector('.channel.channel-0');
