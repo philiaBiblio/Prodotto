@@ -20,7 +20,9 @@ String audioFile = (String) request.getAttribute("audioFile"); // サーブレ�
 <!-- Font Awesomeのリンク。ボタンのアイコンを使用するために必要 -->
 <script src="https://kit.fontawesome.com/032b012e04.js"
 	crossorigin="anonymous"></script>
-
+<script src="
+https://cdn.jsdelivr.net/npm/soundfont-player@0.12.0/dist/soundfont-player.min.js
+"></script>
 <title>録音画面</title>
 </head>
 
@@ -203,6 +205,115 @@ ses.setAttribute("ODAITEXST", ses.getAttribute("ODAI"));
 						<p>録音データを処理しています...</p>
 					</div>
 				</div>
+				
+<div class="piano">
+    <!-- 白鍵 -->
+    <div class="key white" data-note="C4"></div>
+    <div class="key black" data-note="C#4"></div>
+    <div class="key white" data-note="D4"></div>
+    <div class="key black" data-note="D#4"></div>
+    <div class="key white" data-note="E4"></div>
+    <div class="key white" data-note="F4"></div>
+    <div class="key black" data-note="F#4"></div>
+    <div class="key white" data-note="G4"></div>
+    <div class="key black" data-note="G#4"></div>
+    <div class="key white" data-note="A4"></div>
+    <div class="key black" data-note="A#4"></div>
+    <div class="key white" data-note="B4"></div>
+    <div class="key white" data-note="C5"></div>
+    <div class="key black" data-note="C#5"></div>
+    <div class="key white" data-note="D5"></div>
+    <div class="key black" data-note="D#5"></div>
+    <div class="key white" data-note="E5"></div>
+    <div class="key white" data-note="F5"></div>
+    <div class="key black" data-note="F#5"></div>
+    <div class="key white" data-note="G5"></div>
+    <div class="key black" data-note="G#5"></div>
+    <div class="key white" data-note="A5"></div>
+    <div class="key black" data-note="A#5"></div>
+    <div class="key white" data-note="B5"></div>
+    <div class="key white" data-note="C6"></div>
+    <div class="key black" data-note="C#6"></div>
+    <div class="key white" data-note="D6"></div>
+    <div class="key black" data-note="D#6"></div>
+    <div class="key white" data-note="E6"></div>
+    <div class="key white" data-note="F6"></div>
+    <div class="key black" data-note="F#6"></div>
+    <div class="key white" data-note="G6"></div>
+    <div class="key black" data-note="G#6"></div>
+    <div class="key white" data-note="A6"></div>
+    <div class="key black" data-note="A#6"></div>
+    <div class="key white" data-note="B6"></div>
+    <div class="key white" data-note="C7"></div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        
+        // ピアノ音源のロード
+        Soundfont.instrument(audioContext, 'acoustic_grand_piano').then(piano => {
+            // 鍵盤を選択
+            const keys = document.querySelectorAll('.key');
+
+            // 各鍵盤にイベントリスナーを設定
+            keys.forEach(key => {
+                key.addEventListener('mousedown', () => {
+                    piano.play(key.dataset.note);
+                });
+            });
+
+            // キーボード入力の処理
+            document.addEventListener('keydown', (e) => {
+                let note = '';
+                switch (e.key) {
+                    case 'a': note = 'C4'; break;
+                    case 'w': note = 'C#4'; break;
+                    case 's': note = 'D4'; break;
+                    case 'e': note = 'D#4'; break;
+                    case 'd': note = 'E4'; break;
+                    case 'f': note = 'F4'; break;
+                    case 't': note = 'F#4'; break;
+                    case 'g': note = 'G4'; break;
+                    case 'y': note = 'G#4'; break;
+                    case 'h': note = 'A4'; break;
+                    case 'u': note = 'A#4'; break;
+                    case 'j': note = 'B4'; break;
+                    case 'k': note = 'C5'; break;
+                    case 'o': note = 'C#5'; break;
+                    case 'l': note = 'D5'; break;
+                    case 'p': note = 'D#5'; break;
+                    case ';': note = 'E5'; break;
+                    case "'": note = 'F5'; break;
+                    case '[': note = 'F#5'; break;
+                    case ']': note = 'G5'; break;
+                    case '\\': note = 'G#5'; break;
+                    case 'z': note = 'A5'; break;
+                    case 'x': note = 'A#5'; break;
+                    case 'c': note = 'B5'; break;
+                    case 'v': note = 'C6'; break;
+                    case 'b': note = 'C#6'; break;
+                    case 'n': note = 'D6'; break;
+                    case 'm': note = 'D#6'; break;
+                    case ',': note = 'E6'; break;
+                    case '.': note = 'F6'; break;
+                    case '/': note = 'F#6'; break;
+                    case '1': note = 'G6'; break;
+                    case '2': note = 'G#6'; break;
+                    case '3': note = 'A6'; break;
+                    case '4': note = 'A#6'; break;
+                    case '5': note = 'B6'; break;
+                    case '6': note = 'C7'; break;
+                    default: return; // それ以外のキーは無視
+                }
+
+                if (note) {
+                    piano.play(note);
+                }
+            });
+        });
+    });
+</script>
 
 				<!-- スクリプト -->
 				<script>
@@ -210,9 +321,6 @@ ses.setAttribute("ODAITEXST", ses.getAttribute("ODAI"));
 						// ロード画面を表示
 					    const loadingModal = document.getElementById('loadingModal');
 					    loadingModal.style.display = 'flex';
-
-					    const buttons = document.querySelectorAll('button');
-					    buttons.forEach(button => button.disabled = true);
 						
 						// `channel-0` 要素を取得
 						const channelElement = document.querySelector('.channel.channel-0');
