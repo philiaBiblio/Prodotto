@@ -8,6 +8,7 @@
 <title>録音確定画面</title>
 <!-- CSSファイルを読み込み -->
 <link rel="stylesheet" href="P2RecordingConfirmation.css">
+<link rel="stylesheet" href="searchbar.css" />
 </head>
 
 <body>
@@ -25,15 +26,62 @@
 		<div class="container">
 			<!-- 左側ブロック -->
 			<div class="left-block">
-				<div>
-					<span>公開範囲:</span> <a href="#">公開</a>
-				</div>
-				<div>
-					<span>タグ:</span> <a href="#">未設定</a>
-				</div>
-				<div>
-					<span>コメント:</span> <a href="#">ON</a>
-				</div>
+		<div class="header_container">
+			<div class="none"></div>
+			<div class="search">
+                <!-- タグ検索フォーム -->
+                <input name="search" id="tags" class="some_class_name" placeholder='タグを入力' data-placeholder="タグを入力">
+                <button type="submit" class="icon-button">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </button>
+			</div>
+		</div>
+			<!-- Tagifyの設定 -->
+<script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify@latest/dist/tagify.min.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    var inputElm = document.querySelector('#tags');
+    var tagify;
+
+    function initializeTagify(enable) {
+        if (enable) {
+            tagify = new Tagify(inputElm, {
+                enforceWhitelist: true,
+                whitelist: ["css", "html", "javascript", "php", "python", "java", "ruby", "nodejs"],
+                maxTags: 5,
+                dropdown: {
+                    enabled: 1,
+                    maxItems: 10,
+                }
+            });
+        } else if (tagify) {
+            tagify.destroy();
+            tagify = null;
+        }
+    }
+
+    // タグ検索初期化
+    initializeTagify(true);
+
+    // フィルターボタン変更時の挙動
+    document.querySelector('#filter').addEventListener('change', function() {
+        const selectedFilter = this.value;
+
+        // 検索バー内の文字を削除
+        inputElm.value = '';
+        
+        if (selectedFilter === "P2UserSearch.jsp") {
+            inputElm.placeholder = "アカウント名を入力";
+            initializeTagify(false);
+        } else {
+            inputElm.placeholder = "タグを入力";
+            initializeTagify(true);
+        }
+    });
+});
+</script>
+		
+		
 			</div>
 
 			<!-- 右側ブロック -->

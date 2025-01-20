@@ -38,7 +38,7 @@
 	--tag--max-width: auto;
 	--tag-hide-transition: 0.3s;
 	--placeholder-color: rgba(0, 0, 0, 0.4);
-	--placeholder-color-focus: rgba(0, 0, 0, 0.25);
+	--placeholder-color-focus:#11dadd;
 	--loader-size: .8em;
 	display: flex;
 	width: 522px;
@@ -369,7 +369,6 @@
 .tagify__input {
 	flex-grow: 1;
 	display: inline-block;
-	width: 522px;
 	transform: translateY(0px);	/* 垂直方向に中央揃え */
 	padding: var(--tag-pad);
 	line-height: normal;
@@ -516,6 +515,7 @@
 	/* テキストの色を変更 */
 }
 
+placeholder-color-focus
 
 .tagify--mix .tagify--empty .tagify__input::before {
 	display: inline-block
