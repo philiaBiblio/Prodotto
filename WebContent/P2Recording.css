@@ -215,28 +215,3 @@ body {
 	height: 3rem;
 }
 
-/*★★★★★★★★★★以下ピアノコード★★★★★★★★★★*/
-.piano {
-    display: flex;
-}
-
-.key {
-    width: 40px;
-    height: 150px;
-    border: 1px solid black;
-    margin: 1px;
-    cursor: pointer;
-}
-
-.white {
-    background-color: white;
-}
-
-.black {
-    background-color: black;
-    width: 30px;
-    height: 100px;
-    margin-left: -15px;
-    margin-right: -15px;
-    z-index: 1;
-}
