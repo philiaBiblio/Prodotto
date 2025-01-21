@@ -120,7 +120,12 @@ public class P2SearchServlet extends HttpServlet {
 	
 				// ログアウト処理
 				dba.closeDB();
-			}else {
+			}
+			
+			
+			////////////ここからタグ検索/////////////			
+			
+			else {
 				
 				// ここからタグ検索 
 				// 検索キーワードの取得
@@ -139,10 +144,10 @@ public class P2SearchServlet extends HttpServlet {
 				}
 				
 				ObjectMapper mapper = new ObjectMapper();
-				 
+				
 			    try {
-			    	TypeReference<List<Map<String, String>>> type = new TypeReference<List<Map<String, String>>>() {};
-			    	List<Map<String, String>> list = mapper.readValue(title, type);
+			      TypeReference<List<Map<String, String>>> type = new TypeReference<List<Map<String, String>>>() {};
+			      List<Map<String, String>> list = mapper.readValue(title, type);
 			    
 			      System.out.println("129：" + list);
 			      title = "";
