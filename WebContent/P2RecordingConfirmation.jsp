@@ -33,6 +33,7 @@
                 <input name="search" id="tags" class="some_class_name" placeholder='タグを入力' data-placeholder="タグを入力">
 			</div>
 		</div>
+		
 			<!-- Tagifyの設定 -->
 <script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify@latest/dist/tagify.min.js"></script>
 <script>
@@ -59,6 +60,7 @@ document.addEventListener('DOMContentLoaded', function() {
             tagify = null;
         }
     }
+
 
     // タグ検索初期化
     initializeTagify(true);

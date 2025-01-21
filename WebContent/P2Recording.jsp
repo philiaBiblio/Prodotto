@@ -1,46 +1,65 @@
-<%@ page import="java.util.*" %>
+<%@ page import="java.util.*"%>
 <%
-    String audioFile = (String) request.getAttribute("audioFile");  // サーブレットから音声ファイル名を取得
+String audioFile = (String) request.getAttribute("audioFile"); // サーブレットから音声ファイル名を取得
 %>
 <%@ page contentType="text/html; charset=UTF-8" language="java"%>
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-	<meta charset="utf-8" />
-	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-	<!-- IE互換モードをEdgeに設定 -->
-	<meta name="viewport" content="width=device-width, initial-scale=1" />
-	<!-- デバイスの幅に基づいて表示サイズを調整 -->
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<!-- IE互換モードをEdgeに設定 -->
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<!-- デバイスの幅に基づいて表示サイズを調整 -->
 
-	<!-- Bootstrapスタイルシートのリンク。ボタンやレイアウトのスタイル -->
-	<link rel="stylesheet" href="bootstrap.min.css" />
-	<link rel="stylesheet" href="P2Recording2.css" />
-	<link rel="stylesheet" href="P2Recording.css" />
+<!-- Bootstrapスタイルシートのリンク。ボタンやレイアウトのスタイル -->
+<link rel="stylesheet" href="bootstrap.min.css" />
+<link rel="stylesheet" href="P2Recording2.css" />
+<link rel="stylesheet" href="P2Recording.css" />
 
-	<!-- Font Awesomeのリンク。ボタンのアイコンを使用するために必要 -->
-	<script src="https://kit.fontawesome.com/032b012e04.js" crossorigin="anonymous"></script>
-
-	<title>録音画面</title>
+<!-- Font Awesomeのリンク。ボタンのアイコンを使用するために必要 -->
+<script src="https://kit.fontawesome.com/032b012e04.js"
+	crossorigin="anonymous"></script>
+<script src="
+https://cdn.jsdelivr.net/npm/soundfont-player@0.12.0/dist/soundfont-player.min.js
+"></script>
+<title>録音画面</title>
 </head>
 
 <%
-	//セッションの取得
-	HttpSession ses = request.getSession();
- %>
+//セッションの取得
+HttpSession ses = request.getSession();
+%>
 
-<%if("1".equals(request.getParameter("hitoride"))){ %>
-	<% ses.setAttribute("ODAITEXST", null); %>
-	<% ses.setAttribute("ID", null); %>
-<%}%>
+<%
+if ("1".equals(request.getParameter("hitoride"))) {
+%>
+<%
+ses.setAttribute("ODAITEXST", null);
+%>
+<%
+ses.setAttribute("ID", null);
+%>
+<%
+}
+%>
 
-<%if("0".equals(request.getParameter("hitoride"))){ %>
-	<% ses.setAttribute("ID", null); %>
-	<% ses.setAttribute("ODAITEXST",ses.getAttribute("ODAI")); %>
-<%}%>
+<%
+if ("0".equals(request.getParameter("hitoride"))) {
+%>
+<%
+ses.setAttribute("ID", null);
+%>
+<%
+ses.setAttribute("ODAITEXST", ses.getAttribute("ODAI"));
+%>
+<%
+}
+%>
 
 <body>
 	<!-- メインコンテンツ部分 -->
-	<main class="container" title="demo">
+	<main class="container">
 		<div class="wrapper">
 			<article class="post">
 				<!-- トップバーの設定。再生/停止などのコントロールを配置 -->
@@ -130,14 +149,18 @@
 								<i class="fas fa-download" aria-hidden="true"></i>
 							</button>
 						</div>
-						
+
 						<!-- メッセージ表示エリア -->
-						<% if (ses.getAttribute("ODAITEXST") != null) { %>
+						<%
+						if (ses.getAttribute("ODAITEXST") != null) {
+						%>
 						<div id="message-area" class="odaitext">
-    						<%= ses.getAttribute("ODAITEXST") %>
-    						</div>
-						<% } %>
-						
+							<%=ses.getAttribute("ODAITEXST")%>
+						</div>
+						<%
+						}
+						%>
+
 					</div>
 				</div>
 
@@ -151,7 +174,9 @@
 						<div class="track-drop">::before</div>
 						<!-- 自動スクロール設定のチェックボックス -->
 						<div class="form-check form-check-inline">
-							<input class="form-check-input automatic-scroll" type="checkbox" id="automatic_scroll" /> <label class="form-check-label" for="automatic_scroll"> 自動スクロール </label>
+							<input class="form-check-input automatic-scroll" type="checkbox"
+								id="automatic_scroll" /> <label class="form-check-label"
+								for="automatic_scroll"> 自動スクロール </label>
 						</div>
 					</form>
 				</div>
@@ -161,21 +186,38 @@
 					<button type="button" class="btn btn-download btn-outline-primary"
 						onclick="location.href='P2PostAndRecording.jsp'">キャンセル</button>
 				</div>
-				
+
 				<!-- 録音確定ボタン -->
 				<div class="btn-group">
-					<button type="submit" class="btn btn-download btn-outline-primary" title="録音確定" id="confirmRecordingBtn" onclick="redirectAfterDelay()">
+					<button type="submit" class="btn btn-download btn-outline-primary"
+						title="録音確定" id="confirmRecordingBtn"
+						onclick="redirectAfterDelay()">
 						録音を確定 <i class="fas fa-download" aria-hidden="true"></i>
 					</button>
+				</div>
+
+				<!-- ロード画面 -->
+				<div id="loadingModal" class="loading-modal" style="display: none;">
+					<div class="loading-content">
+						<div class="spinner-border text-primary" role="status">
+							<span class="sr-only">Loading...</span>
+						</div>
+						<p>録音データを処理しています...</p>
+					</div>
 				</div>
 
 				<!-- スクリプト -->
 				<script>
 					function redirectAfterDelay() {
+						// ロード画面を表示
+					    const loadingModal = document.getElementById('loadingModal');
+					    loadingModal.style.display = 'flex';
+						
 						// `channel-0` 要素を取得
 						const channelElement = document.querySelector('.channel.channel-0');
 						const widthValue = parseInt(window.getComputedStyle(channelElement).width, 10);
 						const delay = widthValue * 6; // ミリ秒単位
+						
 						console.log(`Redirecting after ${delay}ms based on channel width`);
 
 						// 遷移の遅延処理
@@ -187,17 +229,20 @@
 			</article>
 		</div>
 	</main>
-	
+
 	<!-- 外部JavaScriptファイルのリンク -->
-	<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"
+		integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+		crossorigin="anonymous"></script>
 	<script type="text/javascript" src="waveform-playlist.js"></script>
 	<script type="text/javascript" src="record.js"></script>
 	<script type="text/javascript" src="emitter.js"></script>
-	
+
 	<!-- 音声ファイルのパスをrecord.jsに渡す -->
-    <script type="text/javascript">
-        const audioFilePath = "audio/<%= audioFile %>";  // サーブレットから渡された音声ファイルのパス
-        loadAudioFile(audioFilePath);  // record.js内で音声をロード
-    </script>
+	<script type="text/javascript">
+        const audioFilePath = "audio/<%=audioFile%>
+		"; // サーブレットから渡された音声ファイルのパス
+		loadAudioFile(audioFilePath); // record.js内で音声をロード
+	</script>
 </body>
 </html>
