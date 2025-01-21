@@ -26,7 +26,7 @@
 	--tag-text-color: black;
 	--tag-text-color--edit: black;
 	--tag-pad: 0.3em 0.5em;
-	--tag-inset-shadow-size: 1.1em;
+	--tag-inset-shadow-size: 1000em;
 	--tag-invalid-color: #D39494;
 	--tag-invalid-bg: rgba(211, 148, 148, 0.5);
 	--tag-remove-bg: rgba(211, 148, 148, 0.3);
@@ -42,6 +42,7 @@
 	--loader-size: .8em;
 	display: flex;
 	width: 522px;
+	max-width: 522px;
 	align-items: flex-start;
 	border: 1px solid #ddd;
 	border: 1px solid var(--tags-border-color);
@@ -149,6 +150,7 @@
 }
 
 .tagify__tag {
+	height: 34.4px;    /* 固定の高さ */
 	display: inline-flex;
 	align-items: center;
 	margin: 0px 0 0px 6px;
