@@ -25,7 +25,7 @@
  	String mess = (String)ses.getAttribute("MESS");
 %>
 
-  <body style="margin: 70px 0 0 -5px;">
+  <body style="margin: 70px 0 0 0;">
     <!-- メインコンテンツ -->
     <div class="main-content">
     <!-- メッセージリスト -->
@@ -53,8 +53,9 @@
      <%if(dmList != null){ %>
       	<div class="chat-container">
         <!-- ヘッダーにはユーザネームを表示 -->
-        <div class="chat-header"><%= dmssList.get(kazu).getYourName() %>
-        </div>
+		<div class="chat-header">
+    		<span class="chat-partner"><%= dmssList.get(kazu).getYourName() %></span>
+		</div>
         <!--もってきたトークを上から表示していく-->
         <div class="chat-messages">
         <% for (int j = 0; j < dmList.size(); j++) { %>
@@ -96,6 +97,35 @@
           item.classList.add('selected');
         });
       });
+
+      
+   // チャットエリアのスクロールバーを一番下に設定
+      document.addEventListener("DOMContentLoaded", () => {
+        const chatMessages = document.querySelector('.chat-messages');
+        if (chatMessages) {
+          chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+      });
+
+
+      document.addEventListener("DOMContentLoaded", function () {
+    	  const messageList = document.querySelector(".message-list");
+
+    	  // ページ読み込み時にスクロール位置を復元
+    	  const savedScrollPosition = localStorage.getItem("messageListScrollPosition");
+    	  if (savedScrollPosition) {
+    	    messageList.scrollTop = parseInt(savedScrollPosition, 10);
+    	  }
+
+    	  // スクロール位置を保存
+    	  messageList.addEventListener("scroll", function () {
+    	    localStorage.setItem("messageListScrollPosition", messageList.scrollTop);
+    	  });
+    	});
+
+
+      
+      
     </script>
   </body>
 

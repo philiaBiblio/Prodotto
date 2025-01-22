@@ -36,7 +36,7 @@
   		<%if(tuchiList != null){
   			for(int i = 0; i < tuchiList.size(); i++){ 
   				// いいねの場合
-  				if(tuchiList.get(i).getSyurui().equals("いいね")){ %>
+  				if(tuchiList.get(i).getSyurui().equals("いいね") && !tuchiList.get(i).getYourName().equals(u.getName())){ %>
   				 <div class="notification">
   				 <a href="P2UserSearchServlet?userID=<%=tuchiList.get(i).getUserId()%>">
             		<img src="image/<%=tuchiList.get(i).getYourIcon() %>" class="icon"></a>
@@ -87,7 +87,7 @@
           		</div>
   				<% }
   				// コメントの場合
-  				else if(tuchiList.get(i).getSyurui().equals("コメント")){%>
+  				else if(tuchiList.get(i).getSyurui().equals("コメント") && !tuchiList.get(i).getYourName().equals(u.getName())){%>
   				<div class="notification">
   				<a href="P2UserSearchServlet?userID=<%=tuchiList.get(i).getUserId()%>">
             		<img src="image/<%=tuchiList.get(i).getYourIcon() %>" class="icon"></a>
