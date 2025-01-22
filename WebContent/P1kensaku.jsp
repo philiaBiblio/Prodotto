@@ -13,7 +13,7 @@
     <link rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=settings"/>
     <link rel="stylesheet" href="P1kensaku.css" />
-    <link rel="stylesheet" href="searchbar.css" />
+    <link rel="stylesheet" href="searchbar1.css" />
     <title>ProDotto</title>
   </head>
 
@@ -31,11 +31,11 @@
             <option value="P1UserSearch.jsp">アカウント名</option>
           </select>
 
-          <!-- 検索バー -->
-          <input type="text" name="search" id="search" placeholder="Search" value=""/>
+          <!-- タグ検索フォーム -->
+          <input type="text" name="search" id="tags" class="some_class_name" placeholder='タグを入力' data-placeholder="タグを入力">
           <button type="submit" class="icon-button">
-			<i class="fa-solid fa-magnifying-glass"></i>
-		  </button>
+          	<i class="fa-solid fa-magnifying-glass"></i>
+          </button>
         </div>
       </div>
     </header>
@@ -77,7 +77,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // 検索バー内の文字を削除
         inputElm.value = '';
         
-        if (selectedFilter === "P2UserSearch.jsp") {
+        if (selectedFilter === "P1UserSearch.jsp") {
             inputElm.placeholder = "アカウント名を入力";
             initializeTagify(false);
         } else {
