@@ -164,9 +164,9 @@ public class P2SearchServlet extends HttpServlet {
 					
 					// sql文実行
 					ResultSet rs = dba.selectExe(sql);
+					postList.clear();
 					
 					while(rs.next()) {
-						postList.clear();
 						int 	comm = rs.getInt("コメント数");
 						int iine = rs.getInt("いいね数");
 						System.out.println("164：" + iine);
@@ -188,6 +188,7 @@ public class P2SearchServlet extends HttpServlet {
 					String sql2 = "select * from いいね";
 					// sql文実行
 					ResultSet rs2 = dba2.selectExe(sql2);
+					heartList.clear();
 					
 					while(rs2.next()) {
 						String toukouId = rs2.getString("投稿ID");

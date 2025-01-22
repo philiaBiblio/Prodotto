@@ -1,6 +1,7 @@
 package apli;
 
 import java.io.IOException;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 
 import javax.servlet.ServletException;
@@ -56,57 +57,55 @@ public class P2PostDeliteServlet extends HttpServlet {
 	    	 System.out.println(pageFlg);
 	    	 
 	    	 // 投稿ID検索のsql文実行
-//	    	 ResultSet rs = dba.selectExe("select * from 投稿 where 投稿ID = '" + sakuzyoId + "'");
-//	    	 
-//	    	 if(rs.next()) {
-//	    		 String deleteSQL;
-//	    		 // 指定した投稿をテーブルから削除
-//	    		 deleteSQL =  "DELETE FROM 再生 where 投稿ID = '" + sakuzyoId + "'"; 		        
-//	    		 // デリート文実行
-//	    		 dba.UpdateExe(deleteSQL);
-//	    		 
-//	    		 deleteSQL = "DELETE FROM いいね where 投稿ID = '" + sakuzyoId + "'"; 		        
-//	    		 // デリート文実行
-//	    		 dba.UpdateExe(deleteSQL);
-//	    		 
-//	    		 deleteSQL = "DELETE FROM コメント where 投稿ID = '" + sakuzyoId + "'"; 		        
-//	    		 // デリート文実行
-//	    		 dba.UpdateExe(deleteSQL);
-//	    		 
-//	    		 deleteSQL = "DELETE FROM 投稿 where 投稿ID = '" + sakuzyoId + "'"; 		        
-//	    		 // デリート文実行
-//	    		 dba.UpdateExe(deleteSQL);
-//	    	 }
-//	    	 
-//	    	 //リストから削除する
-//	    	 if(toukouList != null) {
-//	    		 toukouList.remove(i);
-//	    		 ses.setAttribute("TOUKOULIST", toukouList);
-//	    	 }else if(postList != null) {
-//	    		 postList.remove(i);
-//	    		 ses.setAttribute("postList", postList);
-//	    	 }
+	    	 ResultSet rs = dba.selectExe("select * from 投稿 where 投稿ID = '" + sakuzyoId + "'");
 	    	 
-//	    	 if(pageFlg.equals("search")) {
-//	    		 if(kensakuToukouList != null) {
-//	    			 kensakuToukouList.remove(i);
-//	    			 ses.setAttribute("KENSAKUTOUKOULIST", kensakuToukouList);
-//	    		 }else if(kensakuPostList != null) {
-//	    			 kensakuPostList.remove(i);
-//	    			 ses.setAttribute("KENSAKUPOSTLIST", kensakuPostList);
-//	    		 }
-//	    	 }else {
-//	    		 if(toukouList != null) {
-//		    		 toukouList.remove(i);
-//		    		 ses.setAttribute("TOUKOULIST", toukouList);
-//		    	 }else if(postList != null) {
-//		    		 postList.remove(i);
-//		    		 ses.setAttribute("postList", postList);
-//		    	 }
-//	    	 }
+	    	 if(rs.next()) {
+	    		 String deleteSQL;
+	    		 // 指定した投稿をテーブルから削除
+	    		 deleteSQL =  "DELETE FROM 再生 where 投稿ID = '" + sakuzyoId + "'"; 		        
+	    		 // デリート文実行
+	    		 dba.UpdateExe(deleteSQL);
+	    		 
+	    		 deleteSQL = "DELETE FROM いいね where 投稿ID = '" + sakuzyoId + "'"; 		        
+	    		 // デリート文実行
+	    		 dba.UpdateExe(deleteSQL);
+	    		 
+	    		 deleteSQL = "DELETE FROM コメント where 投稿ID = '" + sakuzyoId + "'"; 		        
+	    		 // デリート文実行
+	    		 dba.UpdateExe(deleteSQL);
+	    		 
+	    		 deleteSQL = "DELETE FROM 投稿 where 投稿ID = '" + sakuzyoId + "'"; 		        
+	    		 // デリート文実行
+	    		 dba.UpdateExe(deleteSQL);
+	    	 }
 	    	 
-		     String trueMess = "変更できました。";
-		     ses.setAttribute("DDDDELET", trueMess);
+	    	 if(pageFlg.equals("search")) {
+	    		 if(kensakuToukouList != null) {
+	    			 int j = i; 
+	    			 kensakuToukouList.remove(j);
+	    			 ses.setAttribute("KENSAKUTOUKOULIST", kensakuToukouList);
+	    		 }
+	    		 if(kensakuPostList != null) {
+	    			 int j = i;
+	    			 kensakuPostList.remove(j);
+	    			 ses.setAttribute("KENSAKUPOSTLIST", kensakuPostList);
+	    		 }
+	    		 String trueMess = "変更できました。";
+			     ses.setAttribute("DDDDELET", trueMess);
+			     
+	    	 }else {
+	    		 if(toukouList != null) {
+		    		 toukouList.remove(i);
+		    		 ses.setAttribute("TOUKOULIST", toukouList);
+		    	 }
+	    		 if(postList != null) {
+		    		 postList.remove(i);
+		    		 ses.setAttribute("postList", postList);
+		    	 }
+	    		 String trueMess = "変更できました。";
+	    		 System.out.println("通常リスト削除");
+			     ses.setAttribute("DDDDELET", trueMess);
+	    	 }
 		     
 		     // 画面へ遷移
 		     if(pageFlg.equals("deri")) {
@@ -118,12 +117,10 @@ public class P2PostDeliteServlet extends HttpServlet {
 			 }else if(pageFlg.equals("Ranking")) {
 				 url = "P2RankingServlet";
 			 }else if(pageFlg.equals("search")) {
-					url = "P2SearchServlet";
-				}
-		     
-		     
+				 url = "P2SearchServlet";
+			}
 		     response.sendRedirect(url);
-	    	 
+		     
 		     // ログアウト処理
 	    	 dba.closeDB();
 	    	 
