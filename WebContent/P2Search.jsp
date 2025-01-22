@@ -30,10 +30,10 @@
 	// ログイン情報の取得
 	User u = (User) ses.getAttribute("LOGIN");
 	// 音声情報の取得
-	ArrayList<Toukou> toukouList = (ArrayList) ses.getAttribute("TOUKOULIST");
-	ArrayList<User> userIconList = (ArrayList) ses.getAttribute("ICONLIST");
-	ArrayList<Post> postList = (ArrayList) ses.getAttribute("POSTLIST");
-	ArrayList<Heart> heartList = (ArrayList) ses.getAttribute("HEARTLIST");
+	ArrayList<Toukou> toukouList = (ArrayList) ses.getAttribute("KENSAKUTOUKOULIST");
+	ArrayList<User> userIconList = (ArrayList) ses.getAttribute("KENSAKUICONLIST");
+	ArrayList<Post> postList = (ArrayList) ses.getAttribute("KENSAKUPOSTLIST");
+	ArrayList<Heart> heartList = (ArrayList) ses.getAttribute("KENSAKUHEARTLIST");
 	String DELEAT = (String)ses.getAttribute("DDDDELET");
 %>
   	
@@ -138,7 +138,7 @@ window.onload = function(){
 			<%boolean flg = false; %>
 			<div class="video-card">
 				<div class="thumbnail-placeholder">
-
+				
 					<img src="image/<%=toukouList.get(i).getThumbnail()%>"
 						alt="Video Thumbnail" class="thumbnail"/>
 						
@@ -186,7 +186,7 @@ window.onload = function(){
 							</button>
 						<!-- </form> -->
 
-						<a href="P2heartServlet?hensuu=<%=i%>&heartId=<%= toukouList.get(i).getToukouid() %>&page=TL"
+						<a href="P2heartServlet?hensuu=<%=i%>&heartId=<%= toukouList.get(i).getToukouid() %>&page=search"
 						id="test">
 						<button class="heart" onclick="changeImage('heartImage<%=postList.get(i)%>')">
 							<img id="heartImage<%=postList.get(i)%>"
@@ -262,7 +262,7 @@ window.onload = function(){
 						 <dialog id="myDialog<%= i %>">
             				<p>この投稿を削除しますか？</p>
             			<div class="buttonContainer">
-            			<a href="P2PostDeliteServlet?hensuu=<%=i%>&sakuzyoId=<%= toukouList.get(i).getToukouid() %>&page=tl">
+            			<a href="P2PostDeliteServlet?hensuu=<%=i%>&sakuzyoId=<%= toukouList.get(i).getToukouid() %>&page=search">
                 			<button type="button" class="dialogButton" id="yesButton<%= i%>">はい</button></a>
                 			<button type="button" class="dialogButton" id="noButton<%= i %>">いいえ</button>
             			</div>
