@@ -56,7 +56,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     "金管楽器","木管楽器","ファンク","クレイジー","カノン","雅楽"],
                 maxTags: 5,
                 dropdown: {
-                    enabled: 1,
+                    enabled: 0,
                     maxItems: 10,
                 }
             });
@@ -64,6 +64,10 @@ document.addEventListener('DOMContentLoaded', function() {
             tagify.destroy();
             tagify = null;
         }
+     // 検索バーをクリックしたときにドロップダウンを表示
+        input.addEventListener("click", () => {
+            tagify.dropdown.show(); // ドロップダウンを強制的に表示
+        });
     }
 
     // タグ検索初期化

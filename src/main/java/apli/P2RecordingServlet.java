@@ -74,6 +74,7 @@ public class P2RecordingServlet extends HttpServlet {
 		rd.forward(request, response);
 		
 	}
+	
 
 	// ファイル名を取得するメソッド
 	private String getFileName(Part part) {

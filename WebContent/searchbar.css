@@ -559,16 +559,19 @@ placeholder-color-focus
 }
 
 .tagify__dropdown__wrapper {
+	color: rgb(255, 255, 255);
 	max-height: 300px;
 	overflow: auto;
 	background: #fff;
-	background: var(--tagify-dd-bg-color);
+	background: rgb(0, 0, 0);
 	border: 1px solid #3595f6;
 	border-color: var(--tagify-dd-color-primary);
 	border-bottom-width: 1.33px;
 	border-top-width: 0;
 	box-shadow: 0 2px 4px -2px rgba(0, 0, 0, .2);
-	transition: .25s cubic-bezier(0, 1, .5, 1)
+	transition: .25s cubic-bezier(0, 1, .5, 1) ;
+    scrollbar-width: none; /* Firefox用: スクロールバーを非表示 */
+    -ms-overflow-style: none; /* IE/Edge用: スクロールバーを非表示 */
 }
 
 .tagify__dropdown--initial .tagify__dropdown__wrapper {
@@ -592,8 +595,8 @@ placeholder-color-focus
 
 .tagify__dropdown__item--active {
 	background: #3595f6;
-	background: var(--tagify-dd-color-primary);
-	color: #fff
+	background: #11dadd;
+	color: rgb(0, 0, 0)
 }
 
 .tagify__dropdown__item:active {
