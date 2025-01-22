@@ -1,7 +1,6 @@
 package apli;
 
 import java.io.IOException;
-import java.sql.ResultSet;
 import java.util.ArrayList;
 
 import javax.servlet.ServletException;
@@ -35,6 +34,8 @@ public class P2PostDeliteServlet extends HttpServlet {
 	     // アレイリストの取得
 	     ArrayList<Toukou> toukouList = (ArrayList) ses.getAttribute("TOUKOULIST");
 	     ArrayList<Post> postList = (ArrayList<Post>) ses.getAttribute("postList");
+	     ArrayList<Toukou> kensakuToukouList = (ArrayList) ses.getAttribute("KENSAKUTOUKOULIST");
+		 ArrayList<Post> kensakuPostList = (ArrayList) ses.getAttribute("KENSAKUPOSTLIST");
 	     
 	     // URLの生成
 	     String url = "";   
@@ -55,36 +56,54 @@ public class P2PostDeliteServlet extends HttpServlet {
 	    	 System.out.println(pageFlg);
 	    	 
 	    	 // 投稿ID検索のsql文実行
-	    	 ResultSet rs = dba.selectExe("select * from 投稿 where 投稿ID = '" + sakuzyoId + "'");
+//	    	 ResultSet rs = dba.selectExe("select * from 投稿 where 投稿ID = '" + sakuzyoId + "'");
+//	    	 
+//	    	 if(rs.next()) {
+//	    		 String deleteSQL;
+//	    		 // 指定した投稿をテーブルから削除
+//	    		 deleteSQL =  "DELETE FROM 再生 where 投稿ID = '" + sakuzyoId + "'"; 		        
+//	    		 // デリート文実行
+//	    		 dba.UpdateExe(deleteSQL);
+//	    		 
+//	    		 deleteSQL = "DELETE FROM いいね where 投稿ID = '" + sakuzyoId + "'"; 		        
+//	    		 // デリート文実行
+//	    		 dba.UpdateExe(deleteSQL);
+//	    		 
+//	    		 deleteSQL = "DELETE FROM コメント where 投稿ID = '" + sakuzyoId + "'"; 		        
+//	    		 // デリート文実行
+//	    		 dba.UpdateExe(deleteSQL);
+//	    		 
+//	    		 deleteSQL = "DELETE FROM 投稿 where 投稿ID = '" + sakuzyoId + "'"; 		        
+//	    		 // デリート文実行
+//	    		 dba.UpdateExe(deleteSQL);
+//	    	 }
+//	    	 
+//	    	 //リストから削除する
+//	    	 if(toukouList != null) {
+//	    		 toukouList.remove(i);
+//	    		 ses.setAttribute("TOUKOULIST", toukouList);
+//	    	 }else if(postList != null) {
+//	    		 postList.remove(i);
+//	    		 ses.setAttribute("postList", postList);
+//	    	 }
 	    	 
-	    	 if(rs.next()) {
-	    		 String deleteSQL;
-	    		 // 指定した投稿をテーブルから削除
-	    		 deleteSQL =  "DELETE FROM 再生 where 投稿ID = '" + sakuzyoId + "'"; 		        
-	    		 // デリート文実行
-	    		 dba.UpdateExe(deleteSQL);
-	    		 
-	    		 deleteSQL = "DELETE FROM いいね where 投稿ID = '" + sakuzyoId + "'"; 		        
-	    		 // デリート文実行
-	    		 dba.UpdateExe(deleteSQL);
-	    		 
-	    		 deleteSQL = "DELETE FROM コメント where 投稿ID = '" + sakuzyoId + "'"; 		        
-	    		 // デリート文実行
-	    		 dba.UpdateExe(deleteSQL);
-	    		 
-	    		 deleteSQL = "DELETE FROM 投稿 where 投稿ID = '" + sakuzyoId + "'"; 		        
-	    		 // デリート文実行
-	    		 dba.UpdateExe(deleteSQL);
-	    	 }
-	    	 
-	    	 //リストから削除する
-	    	 if(toukouList != null) {
-	    		 toukouList.remove(i);
-	    		 ses.setAttribute("TOUKOULIST", toukouList);
-	    	 }else if(postList != null) {
-	    		 postList.remove(i);
-	    		 ses.setAttribute("postList", postList);
-	    	 }
+//	    	 if(pageFlg.equals("search")) {
+//	    		 if(kensakuToukouList != null) {
+//	    			 kensakuToukouList.remove(i);
+//	    			 ses.setAttribute("KENSAKUTOUKOULIST", kensakuToukouList);
+//	    		 }else if(kensakuPostList != null) {
+//	    			 kensakuPostList.remove(i);
+//	    			 ses.setAttribute("KENSAKUPOSTLIST", kensakuPostList);
+//	    		 }
+//	    	 }else {
+//	    		 if(toukouList != null) {
+//		    		 toukouList.remove(i);
+//		    		 ses.setAttribute("TOUKOULIST", toukouList);
+//		    	 }else if(postList != null) {
+//		    		 postList.remove(i);
+//		    		 ses.setAttribute("postList", postList);
+//		    	 }
+//	    	 }
 	    	 
 		     String trueMess = "変更できました。";
 		     ses.setAttribute("DDDDELET", trueMess);
@@ -98,7 +117,9 @@ public class P2PostDeliteServlet extends HttpServlet {
 				url = "P2ProfileServlet";
 			 }else if(pageFlg.equals("Ranking")) {
 				 url = "P2RankingServlet";
-			 }
+			 }else if(pageFlg.equals("search")) {
+					url = "P2SearchServlet";
+				}
 		     
 		     
 		     response.sendRedirect(url);
