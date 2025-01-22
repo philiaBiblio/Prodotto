@@ -52,7 +52,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 maxTags: 5,
                 dropdown: {
                     enabled: 0,
-                    maxItems: 10,
+                    maxItems: 10000000000000000,
                 }
             });
         } else if (tagify) {
