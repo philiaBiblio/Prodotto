@@ -13,6 +13,7 @@
     <link rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=settings"/>
     <link rel="stylesheet" href="P1kensaku.css" />
+    <link rel="stylesheet" href="searchbar.css" />
     <title>ProDotto</title>
   </head>
 
@@ -38,6 +39,54 @@
         </div>
       </div>
     </header>
+    
+    <!-- Tagifyの設定 -->
+<script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify@latest/dist/tagify.min.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    var inputElm = document.querySelector('#tags');
+    var tagify;
+
+    function initializeTagify(enable) {
+        if (enable) {
+            tagify = new Tagify(inputElm, {
+                enforceWhitelist: true,
+                whitelist: ["バンド", "自由投稿", "セッション", "ギター", "ベース", "ドラム", "キーボード", "ジャズ",
+                    "ブルース","クラシック","ラテン","ミニマル","ファンクグルーヴ","スローバラード","スケールアルペジオ","ワルツ",
+                    "ポップス","ロックリフ","民族","神秘","ミステリー","クール","ロック","メタル","合唱","打楽器","弦楽器",
+                    "金管楽器","木管楽器","ファンク","クレイジー","カノン","雅楽"],
+                maxTags: 5,
+                dropdown: {
+                    enabled: 1,
+                    maxItems: 10,
+                }
+            });
+        } else if (tagify) {
+            tagify.destroy();
+            tagify = null;
+        }
+    }
+
+    // タグ検索初期化
+    initializeTagify(true);
+
+    // フィルターボタン変更時の挙動
+    document.querySelector('#filter').addEventListener('change', function() {
+        const selectedFilter = this.value;
+
+        // 検索バー内の文字を削除
+        inputElm.value = '';
+        
+        if (selectedFilter === "P2UserSearch.jsp") {
+            inputElm.placeholder = "アカウント名を入力";
+            initializeTagify(false);
+        } else {
+            inputElm.placeholder = "タグを入力";
+            initializeTagify(true);
+        }
+    });
+});
+</script>
 
     <section class="nav" id="navbar">
       <nav class="nav_container">

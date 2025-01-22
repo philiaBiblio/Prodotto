@@ -7,8 +7,6 @@
 <html lang="ja">
 <head>
 	<meta charset="utf-8" />
-	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-	<!-- IE互換モードをEdgeに設定 -->
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
 	<!-- デバイスの幅に基づいて表示サイズを調整 -->
 
@@ -159,7 +157,7 @@
 				<!-- 戻るボタン -->
 				<div class="btn-group">
 					<button type="button" class="btn btn-download btn-outline-primary"
-						onclick="location.href='P2PostAndRecording.jsp'">キャンセル</button>
+						onclick="location.href='P2PostAndRecording.jsp'">戻る</button>
 				</div>
 				
 				<!-- 録音確定ボタン -->

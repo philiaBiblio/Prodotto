@@ -7,8 +7,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>録音確定画面</title>
 <!-- CSSファイルを読み込み -->
-<link rel="stylesheet" href="P2RecordingConfirmation.css">
 <link rel="stylesheet" href="searchbar.css" />
+<link rel="stylesheet" href="P2RecordingConfirmation.css">
 </head>
 
 <body>
@@ -51,7 +51,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     "金管楽器","木管楽器","ファンク","クレイジー","カノン","雅楽"],
                 maxTags: 5,
                 dropdown: {
-                    enabled: 1,
+                    enabled: 0,
                     maxItems: 10,
                 }
             });
@@ -59,6 +59,10 @@ document.addEventListener('DOMContentLoaded', function() {
             tagify.destroy();
             tagify = null;
         }
+        // 検索バーをクリックしたときにドロップダウンを表示
+        input.addEventListener("click", () => {
+            tagify.dropdown.show(); // ドロップダウンを強制的に表示
+        });
     }
 
 
@@ -165,6 +169,13 @@ document.addEventListener('DOMContentLoaded', function() {
 						title="再生">▶</button>
 				</div>
 				<div class="submit">
+				
+					<!-- 戻るボタン -->
+					<div class="btn-group">
+						<button type="button" class="btn btn-download btn-outline-primary"
+							onclick="location.href='P2Recording.jsp'">戻る</button>
+					</div>
+					
 					<button>投稿して次へ →</button>
 				</div>
 			</div>

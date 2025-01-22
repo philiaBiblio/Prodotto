@@ -35,6 +35,8 @@ public class P2PostDeliteServlet extends HttpServlet {
 	     // アレイリストの取得
 	     ArrayList<Toukou> toukouList = (ArrayList) ses.getAttribute("TOUKOULIST");
 	     ArrayList<Post> postList = (ArrayList<Post>) ses.getAttribute("postList");
+	     ArrayList<Toukou> kensakuToukouList = (ArrayList) ses.getAttribute("KENSAKUTOUKOULIST");
+		 ArrayList<Post> kensakuPostList = (ArrayList) ses.getAttribute("KENSAKUPOSTLIST");
 	     
 	     // URLの生成
 	     String url = "";   
@@ -77,17 +79,33 @@ public class P2PostDeliteServlet extends HttpServlet {
 	    		 dba.UpdateExe(deleteSQL);
 	    	 }
 	    	 
-	    	 //リストから削除する
-	    	 if(toukouList != null) {
-	    		 toukouList.remove(i);
-	    		 ses.setAttribute("TOUKOULIST", toukouList);
-	    	 }else if(postList != null) {
-	    		 postList.remove(i);
-	    		 ses.setAttribute("postList", postList);
+	    	 if(pageFlg.equals("search")) {
+	    		 if(kensakuToukouList != null) {
+	    			 int j = i; 
+	    			 kensakuToukouList.remove(j);
+	    			 ses.setAttribute("KENSAKUTOUKOULIST", kensakuToukouList);
+	    		 }
+	    		 if(kensakuPostList != null) {
+	    			 int j = i;
+	    			 kensakuPostList.remove(j);
+	    			 ses.setAttribute("KENSAKUPOSTLIST", kensakuPostList);
+	    		 }
+	    		 String trueMess = "変更できました。";
+			     ses.setAttribute("DDDDELET", trueMess);
+			     
+	    	 }else {
+	    		 if(toukouList != null) {
+		    		 toukouList.remove(i);
+		    		 ses.setAttribute("TOUKOULIST", toukouList);
+		    	 }
+	    		 if(postList != null) {
+		    		 postList.remove(i);
+		    		 ses.setAttribute("postList", postList);
+		    	 }
+	    		 String trueMess = "変更できました。";
+	    		 System.out.println("通常リスト削除");
+			     ses.setAttribute("DDDDELET", trueMess);
 	    	 }
-	    	 
-		     String trueMess = "変更できました。";
-		     ses.setAttribute("DDDDELET", trueMess);
 		     
 		     // 画面へ遷移
 		     if(pageFlg.equals("deri")) {
@@ -98,11 +116,11 @@ public class P2PostDeliteServlet extends HttpServlet {
 				url = "P2ProfileServlet";
 			 }else if(pageFlg.equals("Ranking")) {
 				 url = "P2RankingServlet";
-			 }
-		     
-		     
+			 }else if(pageFlg.equals("search")) {
+				 url = "P2SearchServlet";
+			}
 		     response.sendRedirect(url);
-	    	 
+		     
 		     // ログアウト処理
 	    	 dba.closeDB();
 	    	 

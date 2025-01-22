@@ -63,14 +63,14 @@ public class P2heartServlet extends HttpServlet {
 	    	 System.out.println("63：" + heartId);
 	    	 if(pageFlg.equals("Ranking")) {
 	    		 if(num.equals("3")) {
-	    			 System.out.println("66：" + postList3.get(i).getLikeCount());
+	    		//	 System.out.println("66：" + postList3.get(i).getLikeCount());
 	    		 }else if(num.equals("2")) {
-	    			 System.out.println("68：" + postList2.get(i).getLikeCount());
+	    		//	 System.out.println("68：" + postList2.get(i).getLikeCount());
 	    		 }else if(num.equals("1")) {
-	    			  System.out.println("70：" + postList1.get(i).getLikeCount());
+	    		//	  System.out.println("70：" + postList1.get(i).getLikeCount());
 	    		 }
 	    	 }else {
-	    		 System.out.println("67：" + postList.get(i).getLikeCount());
+	    	//	 System.out.println("67：" + postList.get(i).getLikeCount());
 	    	 }
 	    	 
 	    	 // 既にいいねを押してるかのチェック
@@ -103,6 +103,8 @@ public class P2heartServlet extends HttpServlet {
 					url = "P2RankingServlet";
 				}else if(pageFlg.equals("Deri")){
 					url = "P2DerivativesListServlet";
+				}else if(pageFlg.equals("search")) {
+					url = "P2SearchServlet";
 				}
 	    	 
 			System.out.println(url);

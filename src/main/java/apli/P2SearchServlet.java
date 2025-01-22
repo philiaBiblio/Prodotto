@@ -54,10 +54,16 @@ public class P2SearchServlet extends HttpServlet {
 		}
 		
 		// 動画用のlistの生成
-		ArrayList<Toukou> toukouList = new ArrayList<Toukou>();
-		ArrayList<User> userIconList = new ArrayList<User>();
-		ArrayList<Post> postList = new ArrayList<Post>();
-		ArrayList<Heart> heartList = new ArrayList<Heart>();
+		ArrayList<Toukou> toukouList = (ArrayList) ses.getAttribute("KENSAKUTOUKOULIST");
+		ArrayList<User> userIconList = (ArrayList) ses.getAttribute("KENSAKUICONLIST");
+		ArrayList<Post> postList = (ArrayList) ses.getAttribute("KENSAKUPOSTLIST");
+		ArrayList<Heart> heartList = (ArrayList) ses.getAttribute("KENSAKUHEARTLIST");
+		if(toukouList == null) {
+			toukouList = new ArrayList<Toukou>();
+			userIconList = new ArrayList<User>();
+			postList = new ArrayList<Post>();
+			heartList = new ArrayList<Heart>();
+		}
 		
 		System.out.println("どっちの検索か：" + request.getParameter("url"));
 		
@@ -133,8 +139,74 @@ public class P2SearchServlet extends HttpServlet {
 				System.out.println("113：" + title);
 				
 				// 検索キーワードが空の場合の処理
+				String listword = "";
 				if (title == null || title.trim().isEmpty()) {
 					System.out.println("検索キーワードが空です。");
+					if(toukouList != null) {
+						for(int i = 0; i < toukouList.size(); i++) {
+							if(i >= 1) {
+								System.out.println("140：" + toukouList.get(i).getToukouid());
+				    			listword = listword + ",'" + toukouList.get(i).getToukouid() + "'";
+				    			System.out.println("142：" + listword);
+				    			}else {
+				    				System.out.println("144：" + toukouList.get(i).getToukouid());
+					    			listword = listword + "'" + toukouList.get(i).getToukouid() + "'";
+					    			System.out.println("146：" + listword);
+				    		  }	
+						}
+					}
+					
+					// 検索画面内でいいねしたときの処理
+					String sql = "select 投稿.投稿ID,投稿.ユーザーID,(SELECT COUNT(*) FROM コメント WHERE コメント.投稿ID = 投稿.投稿ID) AS コメント数,"
+							+ "(SELECT COUNT(*) FROM いいね WHERE いいね.投稿ID = 投稿.投稿ID) AS いいね数 "
+							+ "from 投稿 join ユーザー on 投稿.ユーザーID = ユーザー.ユーザーID where 投稿ID in(" + listword + ")"
+							+ "order by アップロード日 desc";
+					
+					// sql文実行
+					ResultSet rs = dba.selectExe(sql);
+					postList.clear();
+					
+					while(rs.next()) {
+						int 	comm = rs.getInt("コメント数");
+						int iine = rs.getInt("いいね数");
+						System.out.println("164：" + iine);
+						
+						Post kazu = new Post();
+						kazu.setCommentCount(comm);
+						kazu.setLikeCount(iine);
+						
+						// アレイリストに追加
+						postList.add(kazu);
+					}
+					ses.setAttribute("KENSAKUPOSTLIST", postList);
+					
+					for(int i = 0; i < postList.size(); i++) {
+						System.out.println("179：" + i + "：" + postList.get(i).getLikeCount());
+					}
+					
+					// 自分がいいねしたかの判別用のsql
+					String sql2 = "select * from いいね";
+					// sql文実行
+					ResultSet rs2 = dba2.selectExe(sql2);
+					heartList.clear();
+					
+					while(rs2.next()) {
+						String toukouId = rs2.getString("投稿ID");
+						String userId = rs2.getString("ユーザーID");
+						
+						// インスタンス生成
+						Heart heart = new Heart();
+						heart.setPostId(toukouId);
+						heart.setUserId(userId);
+						
+						// アレイリストに追加
+						heartList.add(heart);
+					}
+					ses.setAttribute("KENSAKUHEARTLIST", heartList);
+					
+					// ログアウト処理
+					dba.closeDB();
+					dba2.closeDB();
 					
 					// 検索結果がない状態で画面遷移
 					url = "P2Search.jsp";
@@ -142,6 +214,12 @@ public class P2SearchServlet extends HttpServlet {
 					rd.forward(request, response);
 					return; // 処理終了
 				}
+				
+				// 既存データをクリア
+				toukouList.clear();
+				userIconList.clear();
+				postList.clear();
+				heartList.clear();
 				
 				ObjectMapper mapper = new ObjectMapper();
 				
@@ -303,7 +381,7 @@ public class P2SearchServlet extends HttpServlet {
 			    	  String upName = rs.getString("名前");
 			    	  String toukouIcon = rs.getString("アイコン");
 						
-			    	  int 	comm = rs.getInt("コメント数");
+			    	  int comm = rs.getInt("コメント数");
 			    	  int iine = rs.getInt("いいね数");
 			    	  //System.out.println(toukouId.substring(0,6));
 						
@@ -330,10 +408,11 @@ public class P2SearchServlet extends HttpServlet {
 						userIconList.add(up);
 						postList.add(kazu);
 					}
-					ses.setAttribute("TOUKOULIST", toukouList);
-					ses.setAttribute("ICONLIST", userIconList);
-					ses.setAttribute("POSTLIST", postList);
+					ses.setAttribute("KENSAKUTOUKOULIST", toukouList);
+					ses.setAttribute("KENSAKUICONLIST", userIconList);
+					ses.setAttribute("KENSAKUPOSTLIST", postList);
 					
+					// 最初にページに飛んだ時用のいいね処理
 					// 自分がいいねしたかの判別用のsql
 					String sql2 = "select * from いいね";
 					// sql文実行
@@ -351,7 +430,7 @@ public class P2SearchServlet extends HttpServlet {
 						// アレイリストに追加
 						heartList.add(heart);
 					}
-					ses.setAttribute("HEARTLIST", heartList);
+					ses.setAttribute("KENSAKUHEARTLIST", heartList);
 					
 					// 画面遷移
 					url = "P2Search.jsp";
