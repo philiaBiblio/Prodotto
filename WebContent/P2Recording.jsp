@@ -40,7 +40,7 @@
 
 <body>
 	<!-- メインコンテンツ部分 -->
-	<main class="container" title="demo">
+	<main class="container">
 		<div class="wrapper">
 			<article class="post">
 				<!-- トップバーの設定。再生/停止などのコントロールを配置 -->
@@ -159,7 +159,7 @@
 				<!-- 戻るボタン -->
 				<div class="btn-group">
 					<button type="button" class="btn btn-download btn-outline-primary"
-						onclick="location.href='P2PostAndRecording.jsp'">キャンセル</button>
+						onclick="location.href='P2PostAndRecording.jsp'">戻る</button>
 				</div>
 				
 				<!-- 録音確定ボタン -->
@@ -168,10 +168,24 @@
 						録音を確定 <i class="fas fa-download" aria-hidden="true"></i>
 					</button>
 				</div>
+				
+				<!-- ロード画面 -->
+				<div id="loadingModal" class="loading-modal" style="display: none;">
+					<div class="loading-content">
+						<div class="spinner-border text-primary" role="status">
+							<span class="sr-only">Loading...</span>
+						</div>
+						<p>録音データを処理しています...</p>
+					</div>
+				</div>
 
 				<!-- スクリプト -->
 				<script>
 					function redirectAfterDelay() {
+						// ロード画面を表示
+					    const loadingModal = document.getElementById('loadingModal');
+					    loadingModal.style.display = 'flex';
+						
 						// `channel-0` 要素を取得
 						const channelElement = document.querySelector('.channel.channel-0');
 						const widthValue = parseInt(window.getComputedStyle(channelElement).width, 10);

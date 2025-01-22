@@ -7,8 +7,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>録音確定画面</title>
 <!-- CSSファイルを読み込み -->
-<link rel="stylesheet" href="P2RecordingConfirmation.css">
 <link rel="stylesheet" href="searchbar.css" />
+<link rel="stylesheet" href="P2RecordingConfirmation.css">
 </head>
 
 <body>
@@ -20,7 +20,6 @@
 		// サーブレットから渡された音声ファイルのパスを取得
 		String filename = (String) ses.getAttribute("audioPath");
 		System.out.println("15 " + filename);
-
 		%>
 
 		<div class="container">
@@ -29,13 +28,12 @@
 		<div class="header_container">
 			<div class="none"></div>
 			<div class="search">
+			
                 <!-- タグ検索フォーム -->
                 <input name="search" id="tags" class="some_class_name" placeholder='タグを入力' data-placeholder="タグを入力">
-                <button type="submit" class="icon-button">
-                    <i class="fa-solid fa-magnifying-glass"></i>
-                </button>
 			</div>
 		</div>
+		
 			<!-- Tagifyの設定 -->
 <script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify@latest/dist/tagify.min.js"></script>
 <script>
@@ -47,7 +45,10 @@ document.addEventListener('DOMContentLoaded', function() {
         if (enable) {
             tagify = new Tagify(inputElm, {
                 enforceWhitelist: true,
-                whitelist: ["css", "html", "javascript", "php", "python", "java", "ruby", "nodejs"],
+                whitelist: ["バンド", "自由投稿", "セッション", "ギター", "ベース", "ドラム", "キーボード", "ジャズ",
+                    "ブルース","クラシック","ラテン","ミニマル","ファンクグルーヴ","スローバラード","スケールアルペジオ","ワルツ",
+                    "ポップス","ロックリフ","民族","神秘","ミステリー","クール","ロック","メタル","合唱","打楽器","弦楽器",
+                    "金管楽器","木管楽器","ファンク","クレイジー","カノン","雅楽"],
                 maxTags: 5,
                 dropdown: {
                     enabled: 1,
@@ -59,6 +60,7 @@ document.addEventListener('DOMContentLoaded', function() {
             tagify = null;
         }
     }
+
 
     // タグ検索初期化
     initializeTagify(true);
@@ -163,6 +165,13 @@ document.addEventListener('DOMContentLoaded', function() {
 						title="再生">▶</button>
 				</div>
 				<div class="submit">
+				
+					<!-- 戻るボタン -->
+					<div class="btn-group">
+						<button type="button" class="btn btn-download btn-outline-primary"
+							onclick="location.href='P2Recording.jsp'">戻る</button>
+					</div>
+					
 					<button>投稿して次へ →</button>
 				</div>
 			</div>

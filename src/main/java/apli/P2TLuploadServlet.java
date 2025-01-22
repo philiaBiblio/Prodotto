@@ -2,6 +2,8 @@ package apli;
 
 import java.io.IOException;
 import java.sql.ResultSet;
+import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -11,6 +13,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
+
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
  * Servlet implementation class P2TLuploadServlet
@@ -57,6 +62,121 @@ public class P2TLuploadServlet extends HttpServlet {
 		
 		
 		try {
+			// タグの取得
+			String title = request.getParameter("search");
+			System.out.println("113：" + title);
+			
+			ObjectMapper mapper = new ObjectMapper();
+			
+			String taguID1 = "";
+		    String taguID2 = "";
+		    String taguID3 = "";
+		    String taguID4 = "";
+		    String taguID5 = "";
+			
+			try {
+				TypeReference<List<Map<String, String>>> type = new TypeReference<List<Map<String, String>>>() {};
+			    List<Map<String, String>> list = mapper.readValue(title, type);
+			    
+			      System.out.println("129：" + list);
+			      title = "";
+			      if(list.size() != 0) {
+			    	  for(int i = 0; i < list.size(); i++) {
+			    		  if(i >= 1) {
+			    			  title = title + "," + list.get(i).get("value");
+			    			//  System.out.println("134：" + title);
+			    		  }else {
+			    			  title = title + list.get(i).get("value");
+			    		  }
+			    	  }
+			      }
+			      System.out.println("147：" + title);
+			      
+			      
+			      // 複数の「,」区切りのものをばらす
+			      String word[] = title.split(",");
+			      
+			      //////////タグ名をタグIDに変換/////////
+			      
+			      String sql = "";
+			      ResultSet rs;
+			      
+			      ////////// １個目 ////////			      
+			      if(word.length >= 1) {
+			      sql = "SELECT タグID FROM タグ WHERE タグ名 = '"+word[0]+"'";
+			      rs = dba.selectExe(sql);
+			      // SELECT文タグIDを取得
+			    	  while(rs.next()) {
+			    		  taguID1 = rs.getString("タグID");
+			      	}
+			      }
+			      else {
+			    	  taguID1="";
+			      }
+			      
+			      ////////// ２個目 ////////
+				  if(word.length >= 2) {
+				  sql = "SELECT タグID FROM タグ WHERE タグ名 = '"+word[1]+"'";
+				  // SELECT文タグIDを取得
+				  rs = dba.selectExe(sql);
+					  while(rs.next()) {
+						  taguID2 = rs.getString("タグID");
+					  } 
+				  }	
+				  else {
+			    	  taguID2="";
+			      }
+				  
+				  ////////// ３個目 ////////
+				  if(word.length >= 3) {
+				  sql = "SELECT タグID FROM タグ WHERE タグ名 = '"+word[2]+"'";
+				  // SELECT文タグIDを取得
+				  rs = dba.selectExe(sql);
+					  while(rs.next()) {
+						  taguID3 = rs.getString("タグID");
+					  }     
+				  }
+				  else {
+			    	  taguID3="";
+			      }
+				  
+				  ////////// ４個目 ////////
+				  if(word.length >= 4) {
+				  sql = "SELECT タグID FROM タグ WHERE タグ名 = '"+word[3]+"'";
+				  // SELECT文タグIDを取得
+				  rs = dba.selectExe(sql);
+					  while(rs.next()) {
+						  taguID4 = rs.getString("タグID");
+					  }
+				  }
+				  else {
+			    	  taguID4="";
+			      }
+				  
+				  ////////// ５個目 ////////
+				  if(word.length >= 5) {
+				  sql = "SELECT タグID FROM タグ WHERE タグ名 = '"+word[4]+"'";
+				  // SELECT文タグIDを取得
+				  rs = dba.selectExe(sql);
+					  while(rs.next()) {
+						  taguID5 = rs.getString("タグID");
+				  	}
+				  }
+				  else {
+			    	  taguID5="";
+			      }
+				  
+				  
+				  System.out.println("//// "+taguID1+" ////");
+				  System.out.println("//// "+taguID2+" ////");
+				  System.out.println("//// "+taguID3+" ////");
+				  System.out.println("//// "+taguID4+" ////");
+				  System.out.println("//// "+taguID5+" ////");
+			}
+			catch (Exception e) {
+				e.printStackTrace();
+			}
+			
 			
 			// 画像の受け取り
 			Part part = request.getPart("samune");
@@ -102,7 +222,7 @@ public class P2TLuploadServlet extends HttpServlet {
 			    		        "to_char(systimestamp, 'yyyy-mm-dd HH24:MI:SS'), " +
 			    		        "'" + audiopath + "', " +
 			    		        "'" + name + "', " +
-			    		        "NULL" +
+			    		        "'" +taguID1+ "',"+"'" +taguID2+ "',"+"'" +taguID3+ "',"+"'" +taguID4+ "',"+"'" +taguID5+ "'"+
 			    		    ")";
 			    	
 				 	// インサート文実行
@@ -126,7 +246,7 @@ public class P2TLuploadServlet extends HttpServlet {
 		    		        "to_char(systimestamp, 'yyyy-mm-dd HH24:MI:SS'), " +
 		    		        "'" + audiopath + "', " +
 		    		        "'" + name + "', " +
-		    		        "NULL" +
+		    		        "'" +taguID1+ "',"+"'" +taguID2+ "',"+"'" +taguID3+ "',"+"'" +taguID4+ "',"+"'" +taguID5+ "'"+
 		    		    ")";			    	
 				 	// インサート文実行
 				 	dba.UpdateExe(insertSQL);
@@ -159,7 +279,7 @@ public class P2TLuploadServlet extends HttpServlet {
 			 	        "to_char(systimestamp, 'yyyy-mm-dd HH24:MI:SS'), " +
 			 	        "'" + audiopath + "', " +
 			 	        "'" + name + "', " +
-			 	        "NULL" +
+			 	       "'" +taguID1+ "',"+"'" +taguID2+ "',"+"'" +taguID3+ "',"+"'" +taguID4+ "',"+"'" +taguID5+ "'"+
 			 	    ")";		    	
 			 	// インサート文実行
 			 	dba.UpdateExe(insertSQL);
