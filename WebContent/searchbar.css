@@ -41,6 +41,11 @@
 	--placeholder-color-focus:#11dadd;
 	--loader-size: .8em;
 	display: flex;
+    overflow-x: auto;
+    overflow-y: hidden;
+    
+    scrollbar-width: none; 
+    -ms-overflow-style: none; 
 	width: 522px;
 	max-width: 522px;
 	align-items: flex-start;
@@ -177,7 +182,6 @@
 }
 
 .tagify__tag>div>* {
-	white-space: pre-wrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
 	display: inline-block;
@@ -379,6 +383,7 @@
 	color: var(--input-color);
 	box-sizing: inherit;
 	overflow: hidden;
+	
 }
 
 .tagify__input:focus {
