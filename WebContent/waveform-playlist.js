@@ -5443,6 +5443,7 @@ var WaveformPlaylist;
 
 						// Web Worker内で現在のホスト情報を取得して動的にURLを生成
 						const baseUrl = `${self.location.origin}/Prodotto`;
+						console.log("5446:"+baseUrl);
 
 						// サーバーにPOSTリクエストを送信
 						fetch(`${baseUrl}/P2RecordingServlet`, {
