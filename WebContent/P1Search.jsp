@@ -1,49 +1,48 @@
 <%@page import="apli.AdminUser"%>
 <%@page import="apli.Heart"%>
-<%@page
-	import="org.eclipse.jdt.internal.compiler.env.IUpdatableModule.UpdateKind"%>
 <%@page import="apli.Post"%>
 <%@page import="apli.Toukou"%>
-<%@page import="apli.DM"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="apli.User"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="ja">
-<head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<link rel="stylesheet"
-	href="https://use.fontawesome.com/releases/v6.0.0/css/all.css"
-	integrity="sha384-3B6NwesSXE7YJlcLI9RpRqGf2p/EgVH8BgoKTaUrmKNDkHPStTQ3EyoYjCGXaOTS"
-	crossorigin="anonymous" />
-<link rel="stylesheet"
-	href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=settings" />
-<link rel="stylesheet" href="P1TLManagement.css" />
-
-<title>ProDotto</title>
-</head>
-
-
-<%
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v6.0.0/css/all.css"
+      integrity="sha384-3B6NwesSXE7YJlcLI9RpRqGf2p/EgVH8BgoKTaUrmKNDkHPStTQ3EyoYjCGXaOTS"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=settings"
+    />
+    <link rel="stylesheet" href="P1Search.css" />
+    <title>検索画面</title>
+  </head>
+  
+  <%
 	// セッションの取得
 	HttpSession ses = request.getSession();
-	// ログイン情報の取得
+//ログイン情報の取得
 	AdminUser au = (AdminUser)ses.getAttribute("ADMINLOGIN");
 	// 音声情報の取得
-	ArrayList<Toukou> toukouList = (ArrayList) ses.getAttribute("TOUKOULIST");
-	ArrayList<User> userIconList = (ArrayList) ses.getAttribute("ICONLIST");
-	ArrayList<Post> postList = (ArrayList) ses.getAttribute("POSTLIST");
-	ArrayList<Heart> heartList = (ArrayList) ses.getAttribute("HEARTLIST");
+	ArrayList<Toukou> toukouList = (ArrayList) ses.getAttribute("KENSAKUTOUKOULIST");
+	ArrayList<User> userIconList = (ArrayList) ses.getAttribute("KENSAKUICONLIST");
+	ArrayList<Post> postList = (ArrayList) ses.getAttribute("KENSAKUPOSTLIST");
+	ArrayList<Heart> heartList = (ArrayList) ses.getAttribute("KENSAKUHEARTLIST");
 	String DELEAT = (String)ses.getAttribute("DELEAT");
 %>
-
-
-<jsp:include page="P1kensaku.jsp"></jsp:include>
-<script>
-//ダイアログのスクリプト
-function dialog(id){
+  	
+  	<jsp:include page="P1kensaku.jsp"></jsp:include>
+  	
+  <script>
+  //ダイアログのスクリプト
+  function dialog(id){
 	console.log("id:" + id);
 	const openDialogButton = document.getElementById('openDialogButton');
 	const yesButton = document.getElementById('yesButton' + id);
@@ -61,11 +60,9 @@ function dialog(id){
               }
           });
       }
-	
-}
+	}
 
-
-document.addEventListener('DOMContentLoaded', (event) => {
+  document.addEventListener('DOMContentLoaded', (event) => {
     function dialog(id) {
         const openDialogButton = document.getElementById('openDialogButton');
         const yesButton = document.getElementById('yesButton' + id);
@@ -78,7 +75,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
     // dialog関数を呼び出す
     dialog();
-});
+    });
 
 <%if(DELEAT != null ){ %>
 window.onload = function(){
@@ -104,7 +101,6 @@ window.onload = function(){
 		const artist = document.getElementById('artistName');
 		artist.innerText = kazu.value;
 		}
-	
 </script>
 
 <body>
@@ -191,7 +187,7 @@ window.onload = function(){
 						 <dialog id="myDialog<%= i %>">
             				<p>この投稿を削除しますか？</p>
             			<div class="buttonContainer">
-            			<a href="P1PostDeliteServlet?hensuu=<%=i%>&sakuzyoId=<%= toukouList.get(i).getToukouid() %>">
+            			<a href="P1PostDeliteServlet?hensuu=<%=i%>&sakuzyoId=<%= toukouList.get(i).getToukouid() %>&page=search">
                 			<button type="button" class="dialogButton" id="yesButton<%= i%>">はい</button></a>
                 			<button type="button" class="dialogButton" id="noButton<%= i %>">いいえ</button>
             			</div>

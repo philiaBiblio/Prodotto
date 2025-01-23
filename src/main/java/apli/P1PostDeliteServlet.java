@@ -30,8 +30,6 @@ public class P1PostDeliteServlet extends HttpServlet {
 		 // セッションの生成
 		 HttpSession ses = request.getSession();
 		 
-		 // ログイン情報の取得
-	     User u = (User) ses.getAttribute("LOGIN");
 	     // アレイリストの取得
 	     ArrayList<Toukou> toukouList = (ArrayList) ses.getAttribute("TOUKOULIST");
 	     
@@ -84,10 +82,11 @@ public class P1PostDeliteServlet extends HttpServlet {
 		     // 画面へ遷移
 		     if(pageflg == null) {
 		    	 url = "TLManagementServlet";
-		     }else {
+		     }else if(pageflg.equals("prf")){
 		    	 url = "P1UserSearchServlet";
+		     }else if(pageflg.equals("search")) {
+		    	 url = "P1SearchServlet";
 		     }
-		     
 		     response.sendRedirect(url);
 	    	 
 		     // ログアウト処理
