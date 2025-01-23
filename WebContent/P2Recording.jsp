@@ -178,7 +178,7 @@
 				</div>
 
 				<!-- スクリプト -->
-				<script>
+				<script>				
 					function redirectAfterDelay() {
 						// ロード画面を表示
 					    const loadingModal = document.getElementById('loadingModal');
