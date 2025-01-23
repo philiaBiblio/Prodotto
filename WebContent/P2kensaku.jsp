@@ -43,51 +43,66 @@
 <script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify@latest/dist/tagify.min.js"></script>
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    var inputElm = document.querySelector('#tags');
-    var tagify;
+    const filterElement = document.getElementById('filter'); // 検索バーのドロップダウン
+    const inputElm = document.getElementById('tags'); // 検索バーの入力欄
+    let tagify; // Tagifyのインスタンス
+
+
+    // 初期状態でTagifyを有効化
+    initializeTagify(true);
 
     function initializeTagify(enable) {
         if (enable) {
-            tagify = new Tagify(inputElm, {
-                enforceWhitelist: true,
-                whitelist: ["バンド", "自由投稿", "セッション", "ギター", "ベース", "ドラム", "キーボード", "ジャズ",
-                    "ブルース","クラシック","ラテン","ミニマル","ファンクグルーヴ","スローバラード","スケールアルペジオ","ワルツ",
-                    "ポップス","ロックリフ","民族","神秘","ミステリー","クール","ロック","メタル","合唱","打楽器","弦楽器",
-                    "金管楽器","木管楽器","ファンク","クレイジー","カノン","雅楽"],
-                maxTags: 5,
-                dropdown: {
-                    enabled: 0,
-                    maxItems: 10000000000,
-                }
-            });
-        } else if (tagify) {
-            tagify.destroy();
-            tagify = null;
+            if (!tagify) { // Tagifyが未初期化の場合のみ初期化
+                tagify = new Tagify(inputElm, {
+                    enforceWhitelist: true,
+                    whitelist: ["バンド", "自由投稿", "セッション", "ギター", "ベース", "ドラム", "キーボード", "ジャズ",
+                        "ブルース","クラシック","ラテン","ミニマル","ファンクグルーヴ","スローバラード","スケールアルペジオ","ワルツ",
+                        "ポップス","ロックリフ","民族","神秘","ミステリー","クール","ロック","メタル","合唱","打楽器","弦楽器",
+                        "金管楽器","木管楽器","ファンク","クレイジー","カノン","雅楽"],
+
+                    maxTags: 5,
+                    dropdown: {
+                        enabled: 0,
+                    },
+                });
+            }
+        } else {
+            if (tagify) { // Tagifyが既に存在する場合のみ削除
+                tagify.destroy();
+                tagify = null;
+            }
         }
-     // 検索バーをクリックしたときにドロップダウンを表示
-        input.addEventListener("click", () => {
-            tagify.dropdown.show(); // ドロップダウンを強制的に表示
-        });
     }
 
-    // タグ検索初期化
-    initializeTagify(true);
-
-    // フィルターボタン変更時の挙動
-    document.querySelector('#filter').addEventListener('change', function() {
+    // フィルタ選択肢が変更されたときのイベントリスナー
+    filterElement.addEventListener('change', function () {
         const selectedFilter = this.value;
+        inputElm.value = ''; // 入力フィールドをリセット
 
-        // 検索バー内の文字を削除
-        inputElm.value = '';
-        
-        if (selectedFilter === "P2UserSearch.jsp") {
+        if (selectedFilter === "P2UserSearch.jsp") { // アカウント名検索
             inputElm.placeholder = "アカウント名を入力";
-            initializeTagify(false);
-        } else {
+            initializeTagify(false); // Tagifyを無効化
+        } else { // タグ検索
             inputElm.placeholder = "タグを入力";
-            initializeTagify(true);
+            initializeTagify(true); // Tagifyを有効化
         }
     });
+    // ページロード時にURLのパラメータに基づいてフィルタの状態を設定
+    const params = new URLSearchParams(window.location.search);
+    const selectedUrl = params.get('url');
+
+    if (selectedUrl) {
+        const filterElement = document.getElementById('filter');
+        filterElement.value = selectedUrl;
+
+        if (selectedUrl === "P2UserSearch.jsp") { // アカウント名検索
+            inputElm.placeholder = "アカウント名を入力"; // プレースホルダ変更
+            initializeTagify(false); // Tagifyを無効化
+        } else { // タグ検索
+            inputElm.placeholder = "タグを入力"; // プレースホルダ変更
+            initializeTagify(true); // Tagifyを有効化
+        }}
 });
 </script>
 
