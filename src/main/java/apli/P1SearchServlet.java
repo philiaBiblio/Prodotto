@@ -166,7 +166,7 @@ public class P1SearchServlet extends HttpServlet {
 					while(rs.next()) {
 						int 	comm = rs.getInt("コメント数");
 						int iine = rs.getInt("いいね数");
-						System.out.println("164：" + iine);
+						System.out.println("164：" + comm);
 						
 						Post kazu = new Post();
 						kazu.setCommentCount(comm);
@@ -178,7 +178,7 @@ public class P1SearchServlet extends HttpServlet {
 					ses.setAttribute("KENSAKUPOSTLIST", postList);
 					
 					for(int i = 0; i < postList.size(); i++) {
-						System.out.println("179：" + i + "：" + postList.get(i).getLikeCount());
+						System.out.println("179：" + i + "：" + postList.get(i).getCommentCount());
 					}
 					
 					// 自分がいいねしたかの判別用のsql
