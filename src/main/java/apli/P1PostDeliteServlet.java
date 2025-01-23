@@ -32,6 +32,9 @@ public class P1PostDeliteServlet extends HttpServlet {
 		 
 	     // アレイリストの取得
 	     ArrayList<Toukou> toukouList = (ArrayList) ses.getAttribute("TOUKOULIST");
+	     ArrayList<Post> postList = (ArrayList<Post>) ses.getAttribute("postList");
+	     ArrayList<Toukou> kensakuToukouList = (ArrayList) ses.getAttribute("KENSAKUTOUKOULIST");
+		 ArrayList<Post> kensakuPostList = (ArrayList) ses.getAttribute("KENSAKUPOSTLIST");
 	     
 	     // URLの生成
 	     String url = "";   
@@ -74,13 +77,36 @@ public class P1PostDeliteServlet extends HttpServlet {
 	    	 }
 	    	 
 	    	 //リストから削除する
-	    	 toukouList.remove(i);
-	    	 
-		     String trueMess = "変更できました。";
-		     ses.setAttribute("DELEAT", trueMess);
-		        	        
+	    	 if(pageflg.equals("search")) {
+	    		 if(kensakuToukouList != null) {
+	    			 int j = i; 
+	    			 kensakuToukouList.remove(j);
+	    			 ses.setAttribute("KENSAKUTOUKOULIST", kensakuToukouList);
+	    		 }
+	    		 if(kensakuPostList != null) {
+	    			 int j = i;
+	    			 kensakuPostList.remove(j);
+	    			 ses.setAttribute("KENSAKUPOSTLIST", kensakuPostList);
+	    		 }
+	    		 String trueMess = "変更できました。";
+			     ses.setAttribute("DELEAT", trueMess);
+			     
+	    	 }else {
+	    		 if(toukouList != null) {
+		    		 toukouList.remove(i);
+		    		 ses.setAttribute("TOUKOULIST", toukouList);
+		    	 }
+	    		 if(postList != null) {
+		    		 postList.remove(i);
+		    		 ses.setAttribute("postList", postList);
+		    	 }
+	    		 String trueMess = "変更できました。";
+	    		 System.out.println("通常リスト削除");
+			     ses.setAttribute("DELEAT", trueMess);
+	    	 }
+
 		     // 画面へ遷移
-		     if(pageflg == null) {
+		     if(pageflg.equals("TL")) {
 		    	 url = "TLManagementServlet";
 		     }else if(pageflg.equals("prf")){
 		    	 url = "P1UserSearchServlet";
