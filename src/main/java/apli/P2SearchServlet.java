@@ -68,7 +68,6 @@ public class P2SearchServlet extends HttpServlet {
 		System.out.println("どっちの検索か：" + request.getParameter("url"));
 		
 		try {
-			
 			if("P2UserSearch.jsp".equals(request.getParameter("url"))) {
 				
 				// 検索キーワードの取得
@@ -131,9 +130,8 @@ public class P2SearchServlet extends HttpServlet {
 			
 			////////////ここからタグ検索/////////////			
 			
+			
 			else {
-				
-				// ここからタグ検索 
 				// 検索キーワードの取得
 				String title = request.getParameter("search");
 				System.out.println("113：" + title);
@@ -363,6 +361,7 @@ public class P2SearchServlet extends HttpServlet {
 				    		  	+ "OR " + search4 + " IN (t1.タグ名, t2.タグ名, t3.タグ名, t4.タグ名, t5.タグ名)"
 				    		  	+ "OR " + search5 + " IN (t1.タグ名, t2.タグ名, t3.タグ名, t4.タグ名, t5.タグ名)"
 				    		  	+ "order by アップロード日 desc";
+			    		  break;
 			    	  }
 			      }
 			      
