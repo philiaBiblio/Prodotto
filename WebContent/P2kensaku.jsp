@@ -45,6 +45,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     const filterElement = document.getElementById('filter'); // 検索バーのドロップダウン
     const inputElm = document.getElementById('tags'); // 検索バーの入力欄
+    const searchButton = document.querySelector('.icon-button'); // 検索ボタン
     let tagify; // Tagifyのインスタンス
 
 
@@ -64,6 +65,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     maxTags: 5,
                     dropdown: {
                         enabled: 0,
+                        maxItems: 10000000000,
                     },
                 });
             }
@@ -88,6 +90,29 @@ document.addEventListener('DOMContentLoaded', function() {
             initializeTagify(true); // Tagifyを有効化
         }
     });
+
+    // エンターキーの動作をカスタマイズ
+    inputElm.addEventListener('keydown', function (event) {
+        if (event.key === 'Enter') {
+            // ドロップダウンの可視性を直接確認
+            const dropdown = document.querySelector('.tagify__dropdown');
+            const isDropdownVisible = dropdown && dropdown.offsetParent !== null;
+
+            console.log('Enter key pressed');
+            console.log('Dropdown visible:', isDropdownVisible);
+
+            if (isDropdownVisible) {
+                console.log('Tagify dropdown is visible. Default Tagify behavior will handle this.');
+                return; // タグ選択に任せる
+            } else {
+                console.log('No dropdown visible. Triggering search.');
+                event.preventDefault(); // デフォルト動作を防止
+                searchButton.click(); // 検索ボタンをクリック
+            }
+        }
+    });
+
+    
     // ページロード時にURLのパラメータに基づいてフィルタの状態を設定
     const params = new URLSearchParams(window.location.search);
     const selectedUrl = params.get('url');
