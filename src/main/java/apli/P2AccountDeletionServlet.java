@@ -69,29 +69,25 @@ public class P2AccountDeletionServlet extends HttpServlet {
 			if(rs.next()) {
 				String deleteSQL;
 				
-				for(int x = 0; x < PList.size(); x++) {
+				
 				// 指定したユーザーを再生テーブルから削除
 		        deleteSQL = 
-		        "DELETE FROM 再生 where ユーザーID = '" + u.getUserid() + "' OR 投稿ID = '"+ PList.get(x) + "'"; 		        
+		        "DELETE FROM 再生 where ユーザーID = '" + u.getUserid() + "'"; 		        
 		        // デリート文実行
 		        dba.UpdateExe(deleteSQL);
-				}
-		        
-				for(int x = 0; x < PList.size(); x++) {
-				// 指定したユーザーを再生テーブルから削除
-				deleteSQL = 
-				"DELETE FROM いいね where ユーザーID = '" + u.getUserid() + "' OR 投稿ID = '"+ PList.get(x) + "'"; 		        
-				// デリート文実行
-				dba.UpdateExe(deleteSQL);
-				}
 				
-				for(int x = 0; x < PList.size(); x++) {
-				// 指定したユーザーを再生テーブルから削除
+				// 指定したユーザーをいいねテーブルから削除
 				deleteSQL = 
-				"DELETE FROM コメント where ユーザーID = '" + u.getUserid() + "' OR 投稿ID = '"+ PList.get(x) + "'"; 		        
+				"DELETE FROM いいね where ユーザーID = '" + u.getUserid() + "'"; 		        
 				// デリート文実行
 				dba.UpdateExe(deleteSQL);
-				}
+				
+				// 指定したユーザーをコメントテーブルから削除
+				deleteSQL = 
+				"DELETE FROM コメント where ユーザーID = '" + u.getUserid() + "'"; 		        
+				// デリート文実行
+				dba.UpdateExe(deleteSQL);
+				
 				
 				// 指定したユーザーをDMテーブルから削除
 		        deleteSQL = 

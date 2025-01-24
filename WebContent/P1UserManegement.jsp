@@ -105,7 +105,6 @@
         <button type="button" class="dialogButton" id="closeConfirmationButton" onclick="confirmationDialog.close();">閉じる</button>
     </dialog>
     
-    
      <jsp:include page="P1kensaku.jsp"></jsp:include>
 
 
@@ -129,10 +128,7 @@
       	} 	
       	<%} %>
       	<%ses.removeAttribute("TRUEMESS"); %>
-
-
-    	  			
-
+      	
     </script>
   </body>
 </html>

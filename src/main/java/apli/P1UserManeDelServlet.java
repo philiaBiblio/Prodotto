@@ -111,6 +111,16 @@ public class P1UserManeDelServlet extends HttpServlet {
 		        // デリート文実行
 		        dba.UpdateExe(deleteSQL);
 		        
+		        // 指定したユーザーをコメントテーブルから削除
+		        deleteSQL = "DELETE FROM コメント where ユーザーID = '" + u.get(uIndex).getUserid() + "'"; 		        
+	    		// デリート文実行
+	    		dba.UpdateExe(deleteSQL);
+	    		 
+	    		// 指定したユーザーをコメントテーブルから削除
+		        deleteSQL = "DELETE FROM いいね where ユーザーID = '" + u.get(uIndex).getUserid() + "'"; 		        
+	    		// デリート文実行
+	    		dba.UpdateExe(deleteSQL); 
+		        
 		        // 指定したユーザーをフォローテーブルから削除
 		        deleteSQL = 
 		        "DELETE FROM フォロー where フォロー = '" + u.get(uIndex).getUserid() + "' OR フォロワー = '" + u.get(uIndex).getUserid() + "'"; 		        
@@ -134,12 +144,14 @@ public class P1UserManeDelServlet extends HttpServlet {
 		        
 		        String trueMess = "変更できました。";
 				ses.setAttribute("TRUEMESS", trueMess);
-		        	        
-				// 画面へ遷移
-				url = "P1UserManegement.jsp";
-				RequestDispatcher rd = request.getRequestDispatcher(url);
-				rd.forward(request, response);
+				// 会員の一覧を保存しなおす
+				ses.setAttribute("USERLIST",u);
 			}
+			
+			// 画面へ遷移
+			url = "P1UserManegement.jsp";
+			RequestDispatcher rd = request.getRequestDispatcher(url);
+			rd.forward(request, response);
 			
 			// ログアウト処理
 			dba.closeDB();
