@@ -134,11 +134,10 @@ document.addEventListener('DOMContentLoaded', function() {
 	<section class="nav" id="navbar">
 		<nav class="nav_container">
 			<div>
-				<a href="#" class="nav_link nav_logo"> 
-					<i class="fa-solid fa-bars nav_icon"></i> 
+				<a class="nav_logo">  
 					<span class="logo_name">
 						<!-- ここにProDottoアイコンを入れる --> 
-						<i class="fab fa-"></i> ProDotto
+						ProDotto
 					</span>
 				</a>
 
