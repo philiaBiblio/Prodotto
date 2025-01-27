@@ -104,6 +104,7 @@ header input::placeholder {
 
 .logo_name {
 	display: flex;
+	margin-bottom: 30px;
 }
 
 /* 左メニューロゴ */

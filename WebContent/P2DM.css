@@ -172,7 +172,7 @@ a{
   padding: 10px;
   overflow-y: auto;
   position: relative;
-  height: 730px;
+  height: 70%;
   border-left: #1f1f1f;
   max-width: 1200px;
 }
@@ -180,6 +180,8 @@ a{
 .chat-messages::-webkit-scrollbar {
   display: none; /* スクロールバーを非表示にする */
 }
+
+
 
 
 /* メッセージ設定 */
@@ -192,10 +194,10 @@ a{
   position: relative;
 }
 
-/* 受信メッセージ設定（右側） */
+/* 受信メッセージ設定 */
 .message.received {
   display: flex;
-  justify-content: flex-end; /* メッセージを右寄せ */
+  justify-content: flex-start; /* メッセージを左寄せ */
   margin-bottom: 10px; /* 下に余白を追加 */
   position: relative; /* ::afterの基準に必要 */
 }
@@ -216,17 +218,17 @@ a{
 .message.received::after {
   content: "";
   position: absolute;
-  right: -8px; /* 矢印をバブルの右端に配置 */
+  left: -8px; /* 矢印をバブルの左端に配置 */
   transform: translateY(-50%);
   border: 10px solid transparent;
-  border-left-color: #e1e1e1; /* バブルの背景色と一致 */
-  border-right: 0;
+  border-right-color: #e1e1e1; /* バブルの背景色と一致 */
+  border-left: 0;
 }
 
-/* 送信メッセージ設定（左側） */
+/* 送信メッセージ設定 */
 .message.sent {
   display: flex;
-  justify-content: flex-start; /* メッセージを左寄せ */
+  justify-content: flex-end; /* メッセージを右寄せ */
   margin-bottom: 10px; /* 下に余白を追加 */
   position: relative; /* ::afterの基準に必要 */
 }
@@ -247,11 +249,11 @@ a{
 .message.sent::after {
   content: "";
   position: absolute;
-  left: -8px; /* 矢印をバブルの左端に配置 */
+  right: -8px; /* 矢印をバブルの右端に配置 */
   transform: translateY(-50%);
   border: 10px solid transparent;
-  border-right-color: #11dadd; /* バブルの背景色と一致 */
-  border-left: 0;
+  border-left-color: #11dadd; /* バブルの背景色と一致 */
+  border-right: 0;
 }
 
 

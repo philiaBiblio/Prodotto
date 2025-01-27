@@ -60,7 +60,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     whitelist: ["バンド", "自由投稿", "セッション", "ギター", "ベース", "ドラム", "キーボード", "ジャズ",
                         "ブルース","クラシック","ラテン","ミニマル","ファンクグルーヴ","スローバラード","スケールアルペジオ","ワルツ",
                         "ポップス","ロックリフ","民族","神秘","ミステリー","クール","ロック","メタル","合唱","打楽器","弦楽器",
-                        "金管楽器","木管楽器","ファンク","クレイジー","カノン","雅楽"],
+                        "金管楽器","木管楽器","ファンク","クレイジー","カノン","雅楽","シリアス"],
 
                     maxTags: 5,
                     dropdown: {
@@ -134,11 +134,10 @@ document.addEventListener('DOMContentLoaded', function() {
 	<section class="nav" id="navbar">
 		<nav class="nav_container">
 			<div>
-				<a href="#" class="nav_link nav_logo"> 
-					<i class="fa-solid fa-bars nav_icon"></i> 
+				<a class="nav_logo">  
 					<span class="logo_name">
 						<!-- ここにProDottoアイコンを入れる --> 
-						<i class="fab fa-"></i> ProDotto
+						ProDotto
 					</span>
 				</a>
 
