@@ -32,7 +32,7 @@ public class P1UserManeDelServlet extends HttpServlet {
 		HttpSession ses = request.getSession();
 		
 		//リストを取得
-		ArrayList<User> u = (ArrayList<User>)ses.getAttribute("USERLIST");
+		ArrayList<User> u = (ArrayList<User>)ses.getAttribute("P1USERLIST");
 		
 		//投稿IDリストの生成
 		ArrayList<String> PList = (ArrayList<String>) ses.getAttribute("POSTLIST");
@@ -145,7 +145,7 @@ public class P1UserManeDelServlet extends HttpServlet {
 		        String trueMess = "変更できました。";
 				ses.setAttribute("TRUEMESS", trueMess);
 				// 会員の一覧を保存しなおす
-				ses.setAttribute("USERLIST",u);
+				ses.setAttribute("P1USERLIST",u);
 			}
 			
 			// 画面へ遷移
