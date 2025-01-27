@@ -18,6 +18,8 @@
     <link rel="stylesheet" href="P1AdminProfile.css" />
     <title>プロフィール画面</title>
   </head>
+  
+  <jsp:include page="P1kensaku.jsp"></jsp:include>
 
 <%
 	HttpSession ses = request.getSession();
@@ -355,8 +357,6 @@ window.onload = function(){
 			</div>
 		</div>
 	</main>
-
-	<jsp:include page="P1kensaku.jsp"></jsp:include>
 	
 	<dialog id="confirmationDialog" class="confirmationDialog">
 		<p>削除しました</p>
