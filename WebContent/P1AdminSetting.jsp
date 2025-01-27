@@ -7,6 +7,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>管理者用設定画面</title>
     <link rel="stylesheet" href="P1AdminSetting.css" />
+    <link rel="stylesheet"
+	href="https://use.fontawesome.com/releases/v6.0.0/css/all.css"
+	integrity="sha384-3B6NwesSXE7YJlcLI9RpRqGf2p/EgVH8BgoKTaUrmKNDkHPStTQ3EyoYjCGXaOTS"
+	crossorigin="anonymous" />
   </head>
   <body>
     <div class="container">
