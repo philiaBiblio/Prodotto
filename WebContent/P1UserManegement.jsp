@@ -15,7 +15,7 @@
 	//セッションの取得
 	HttpSession ses = request.getSession();
 	//会員リストを取得
-	ArrayList<User> u = (ArrayList<User>)ses.getAttribute("USERLIST");
+	ArrayList<User> u = (ArrayList<User>)ses.getAttribute("P1USERLIST");
 	String trueMess = (String)ses.getAttribute("TRUEMESS");
    %>
   
