@@ -8,7 +8,7 @@ body {
   padding: 0;
   overflow: hidden; /* 全体のスクロールを防ぐ */
 }
-
+ 
 /* サイドバー設定 */
 .sidebar {
   width: 250px;
@@ -19,19 +19,19 @@ body {
   align-items: center;
   padding: 20px 0;
 }
-
+ 
 a{
 	color:white;
 	text-decoration: none;
 }
-
+ 
 /* コンテンツ設定 */
 .content {
   flex: 1;
   display: flex;
   flex-direction: column;
 }
-
+ 
 /* ヘッダー設定 */
 .header {
   background-color: #fff;
@@ -41,7 +41,7 @@ a{
   justify-content: space-between;
   align-items: center;
 }
-
+ 
 /* メインコンテンツ設定 */
 .main-content {
   display: flex;
@@ -50,8 +50,8 @@ a{
   background-color: #000;
   color: #ffffff;
 }
-
-
+ 
+ 
 /* メッセージリスト設定 */
 .message-list {
   width: 550px; /* 固定幅 */
@@ -68,28 +68,27 @@ a{
   scrollbar-width: none; /* Firefox用 */
   -ms-overflow-style: none; /* IE/Edge用 */
 }
-
+ 
 .message-list::-webkit-scrollbar {
   display: none; /* Chrome, Safari用 */
 }
-
-
-
+ 
+ 
 /* スクロールバーのスタイル（オプション） */
 .message-list::-webkit-scrollbar {
   width: 8px; /* スクロールバーの幅を調整 */
 }
-
+ 
 .message-list::-webkit-scrollbar-thumb {
   background-color: #555; /* スクロールバーのつまみの色 */
   border-radius: 4px;
 }
-
+ 
 .message-list::-webkit-scrollbar-track {
   background-color: #222; /* スクロールバーの背景 */
 }
-
-
+ 
+ 
 .message-list .message-item {
   display: flex;
   align-items: center;
@@ -104,15 +103,15 @@ a{
   transition: transform 0.2s, box-shadow 0.2s; /* ホバー時のアニメーション */
   position: relative; /* バッジ位置を保持 */
 }
-
+ 
 .message-list .message-item:hover {
   color: #11dadd; /* テキストカラーは元のホバーと同じ */
   background-color: #1f1f1f; /* ホバー時も背景を保つ */
   transform: scale(1.05); /* 拡大アニメーション */
   box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2); /* ホバー時の影を強調 */
 }
-
-
+ 
+ 
 /* アイコンのスタイル */
 .message-item .icon {
   width: 40px;
@@ -121,7 +120,7 @@ a{
   margin-right: 10px;
   object-fit: cover; /* 縦横比率保つやつ */
 }
-
+ 
 /* 未既読バッジのスタイル */
 .notification-badge {
   position: absolute;
@@ -138,7 +137,7 @@ a{
   font-weight: bold;
   z-index: 1; /* バッジが他の要素の下に行かないように */
 }
-
+ 
 /* チャットコンテナ設定 */
 .chat-container {
   flex: 1;
@@ -146,7 +145,7 @@ a{
   flex-direction: column;
   background-color: #000000;
 }
-
+ 
 /* チャットヘッダー設定 */
 .chat-header {
   padding: 10px;
@@ -156,7 +155,7 @@ a{
   position: relative; /* 位置調整を有効にする */
   padding-top: 20px; /* 上部の余白を減らす */
 }
-
+ 
 .chat-header .chat-partner {
   font-weight: bold; /* 太字 */
   font-size: 1.2em; /* 少し大きめに */
@@ -164,9 +163,8 @@ a{
   position: relative; /* 名前の位置を調整 */
   top: -5px; /* 上に少し移動 */
 }
-
-
-
+ 
+ 
 /* チャットメッセージ設定 */
 .chat-messages {
   padding: 10px;
@@ -176,14 +174,13 @@ a{
   border-left: #1f1f1f;
   max-width: 1200px;
 }
-
+ 
 .chat-messages::-webkit-scrollbar {
   display: none; /* スクロールバーを非表示にする */
 }
-
-
-
-
+ 
+ 
+ 
 /* メッセージ設定 */
 .message {
   display: flex;
@@ -193,7 +190,7 @@ a{
   border-radius: 10px;
   position: relative;
 }
-
+ 
 /* 受信メッセージ設定 */
 .message.received {
   display: flex;
@@ -201,7 +198,7 @@ a{
   margin-bottom: 10px; /* 下に余白を追加 */
   position: relative; /* ::afterの基準に必要 */
 }
-
+ 
 .message.received .bubble {
   display: inline-block;
   max-width: 40%; /* 改行を早めるため幅を狭く */
@@ -214,7 +211,7 @@ a{
   white-space: pre-wrap; /* 改行を保持 */
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
 }
-
+ 
 .message.received::after {
   content: "";
   position: absolute;
@@ -224,7 +221,7 @@ a{
   border-right-color: #e1e1e1; /* バブルの背景色と一致 */
   border-left: 0;
 }
-
+ 
 /* 送信メッセージ設定 */
 .message.sent {
   display: flex;
@@ -232,7 +229,7 @@ a{
   margin-bottom: 10px; /* 下に余白を追加 */
   position: relative; /* ::afterの基準に必要 */
 }
-
+ 
 .message.sent .bubble {
   display: inline-block;
   max-width: 40%; /* 改行を早めるため幅を狭く */
@@ -245,7 +242,7 @@ a{
   white-space: pre-wrap;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
 }
-
+ 
 .message.sent::after {
   content: "";
   position: absolute;
@@ -255,16 +252,15 @@ a{
   border-left-color: #11dadd; /* バブルの背景色と一致 */
   border-right: 0;
 }
-
-
-
-
+ 
+ 
+ 
 /* チャット入力設定 */
 .chat-input {
   display: flex;
   padding: 22px;
 }
-
+ 
 .chat-input input[type="text"] {
   flex: 1;
   padding: 10px;
@@ -274,11 +270,11 @@ a{
   border-radius: 8px;
   outline: none;
 }
-
+ 
 .chat-input input:hover[type="text"] {
   border-color: #11dadd;
 }
-
+ 
 #sousin1 {
   background-color: #050505;
   border: 1px solid #ffffff;
@@ -288,44 +284,44 @@ a{
   border-radius: 8px;
   cursor: pointer;
 }
-
+ 
 #sousin1:hover {
   border-color: #11dadd;
   color: #11dadd;
 }
-
+ 
 /* スクロールバー全体の背景色 */
 ::-webkit-scrollbar {
   width: 10px; /* スクロールバーの幅 */
   background-color: #f9f9f9; /* 背景色 */
 }
-
+ 
 /* スクロールバーのスライダー部分（スクロールバーのつまみ） */
 ::-webkit-scrollbar-thumb {
   background-color: #3b3b3b; /* スライダーの色 */
   border: 2px solid #878787;
 }
-
+ 
 /* 水平スクロールバーのつまみ部分の高さ */
 ::-webkit-scrollbar-thumb:horizontal {
   height: 12px; /* つまみ部分の高さを指定 */
 }
-
+ 
 /* スクロールバーのボタン */
 ::-webkit-scrollbar-button {
   background-color: #333; /* ボタンの色（上下の矢印） */
 }
-
+ 
 /* スクロールバーのつまみがホバーされた時 */
 ::-webkit-scrollbar-thumb:hover {
   background-color: #000000; /* ホバー時の色 */
 }
-
+ 
 /* スクロールバーの背景色を変更する */
 ::-webkit-scrollbar-track {
   background-color: #000000; /* 背景色 */
 }
-
+ 
 .selected {
   background-color: rgb(79, 79, 79) !important;
 }
