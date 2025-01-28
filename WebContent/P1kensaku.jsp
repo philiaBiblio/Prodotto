@@ -27,7 +27,7 @@
           <!-- フィルターボタン -->
           <!--  これによりフィルターボタン選択で飛ぶようになる-->
           <select id="filter" class="filter-button" name="url">
-            <option selected value="">タグ</option>
+            <option selected value="P1Search.jsp">タグ</option>
             <option value="P1UserSearch.jsp">アカウント名</option>
           </select>
 
