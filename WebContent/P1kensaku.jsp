@@ -122,7 +122,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const filterElement = document.getElementById('filter');
         filterElement.value = selectedUrl;
 
-        if (selectedUrl === "P2UserSearch.jsp") { // アカウント名検索
+        if (selectedUrl === "P1UserSearch.jsp") { // アカウント名検索
             inputElm.placeholder = "アカウント名を入力"; // プレースホルダ変更
             initializeTagify(false); // Tagifyを無効化
         } else { // タグ検索
@@ -213,7 +213,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
   	function getId(filename) {
   	  if (filename.includes("UserManagementServlet")) {
-  	    return "P1UserManegementid";
+  	    return "P2UserManegementid";
   	  }
   	  return fileToIdMap[filename] || null;
   	}
