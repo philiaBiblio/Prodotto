@@ -36,7 +36,7 @@
 	ArrayList<User> userIconList = (ArrayList) ses.getAttribute("ICONLIST");
 	ArrayList<Post> postList = (ArrayList) ses.getAttribute("POSTLIST");
 	ArrayList<Heart> heartList = (ArrayList) ses.getAttribute("HEARTLIST");
-	String DELEAT = (String)ses.getAttribute("DDDDELET");
+	String DELEAT = (String)ses.getAttribute("DELEAT");
 %>
 
 
@@ -86,7 +86,7 @@ window.onload = function(){
 	dialog.showModal();
 	} 	
 	<%} %>
-	<%ses.removeAttribute("TRUEMESS"); %>
+	<%ses.removeAttribute("DELEAT"); %>
 
 	// コメント表示用
 	function openPopup(toukouId) {
@@ -191,7 +191,7 @@ window.onload = function(){
 						 <dialog id="myDialog<%= i %>">
             				<p>この投稿を削除しますか？</p>
             			<div class="buttonContainer">
-            			<a href="P1PostDeliteServlet?hensuu=<%=i%>&sakuzyoId=<%= toukouList.get(i).getToukouid() %>">
+            			<a href="P1PostDeliteServlet?hensuu=<%=i%>&sakuzyoId=<%= toukouList.get(i).getToukouid() %>&page=TL">
                 			<button type="button" class="dialogButton" id="yesButton<%= i%>">はい</button></a>
                 			<button type="button" class="dialogButton" id="noButton<%= i %>">いいえ</button>
             			</div>

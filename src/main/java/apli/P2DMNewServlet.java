@@ -52,14 +52,16 @@ public class P2DMNewServlet extends HttpServlet {
 			
 			boolean flg = false;
 			// リスト内で重複しないようにチェック
-			for(int x = 0; x < dmssList.size(); x++) {
-				if(dmssList.get(x).getYour().equals(up.getUserid())) {
-					System.out.println("重複してるので弾きたい");
-					flg = true;
-					// 重複してたのを消して一番前に追加
-					dmssList.remove(x);
-					dmssList.add(0,dm);
-					break;
+			if(dmssList != null) {
+				for(int x = 0; x < dmssList.size(); x++) {
+					if(dmssList.get(x).getYour().equals(up.getUserid())) {
+						System.out.println("重複してるので弾きたい");
+						flg = true;
+						// 重複してたのを消して一番前に追加
+						dmssList.remove(x);
+						dmssList.add(0,dm);
+						break;
+					}
 				}
 			}
 			if(flg == false) {

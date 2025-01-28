@@ -16,8 +16,10 @@
       crossorigin="anonymous"/>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=settings"/>
     <link rel="stylesheet" href="P1AdminProfile.css" />
-    <title>ProDotto</title>
+    <title>プロフィール画面</title>
   </head>
+  
+  <jsp:include page="P1kensaku.jsp"></jsp:include>
 
 <%
 	HttpSession ses = request.getSession();
@@ -25,13 +27,13 @@
 	AdminUser au = (AdminUser) ses.getAttribute("ADMINLOGIN");
 	User up = (User) ses.getAttribute("PROF");
 	String userID = (String) ses.getAttribute("USERID");
-	String trueMess = (String)ses.getAttribute("TRUEMESS");
 	
 // 	boolean isFollowing = (boolean) ses.getAttribute("isFollowing");
 	int followCount = (int) ses.getAttribute("followCount");
 	int followerCount = (int) ses.getAttribute("followerCount");
 	System.out.println("followCount：" + followCount);
 	System.out.println("followerCount：" + followerCount);
+	String DELEAT = (String)ses.getAttribute("DELEAT");
 	
 	ArrayList<Post> postList = (ArrayList<Post>) ses.getAttribute("postList");
 %>
@@ -83,13 +85,13 @@ document.addEventListener('DOMContentLoaded', (event) => {
     dialog();
 });
 
-<%if(trueMess != null ){ %>
+<%if(DELEAT != null ){ %>
 window.onload = function(){
 	const dialog = document.querySelector("#confirmationDialog");
 	dialog.showModal();
 	} 	
 	<%} %>
-	<%ses.removeAttribute("TRUEMESS"); %>
+	<%ses.removeAttribute("DELEAT"); %>
 	
 	//コメント表示用
 	function openPopup(toukouId) {
@@ -355,8 +357,6 @@ window.onload = function(){
 			</div>
 		</div>
 	</main>
-
-	<jsp:include page="P1kensaku.jsp"></jsp:include>
 	
 	<dialog id="confirmationDialog" class="confirmationDialog">
 		<p>削除しました</p>

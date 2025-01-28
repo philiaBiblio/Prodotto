@@ -5441,8 +5441,12 @@ var WaveformPlaylist;
 						const formData = new FormData();
 						formData.append("audioData", file);  // "audioData"はサーブレットで受け取るパラメータ名
 
+						// Web Worker内で現在のホスト情報を取得して動的にURLを生成
+						const baseUrl = `${self.location.origin}/Prodotto`;
+						console.log("5446:"+baseUrl);
+
 						// サーバーにPOSTリクエストを送信
-						fetch("http://localhost:8080/Prodotto/P2RecordingServlet", {
+						fetch(`${baseUrl}/P2RecordingServlet`, {
 							method: "POST",
 							body: formData
 						})
@@ -5451,7 +5455,7 @@ var WaveformPlaylist;
 									console.log(responseL.ok);
 									// サーバー側での処理が成功した後、画面遷移はサーブレットで行うので不要
 									console.log("ファイルが正常に送信されました");
-									location.href = "http://localhost:8080/Prodotto/P2RecordingServlet"
+									location.href = `${baseUrl}/P2RecordingServlet`
 								} else {
 									console.log(responseL.ok);
 									console.error("サーバーとの通信に失敗しました");

@@ -8,6 +8,10 @@
     <meta charset="UTF-8" >
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>ユーザー管理画面</title>
+<link rel="stylesheet"
+	href="https://use.fontawesome.com/releases/v6.0.0/css/all.css"
+	integrity="sha384-3B6NwesSXE7YJlcLI9RpRqGf2p/EgVH8BgoKTaUrmKNDkHPStTQ3EyoYjCGXaOTS"
+	crossorigin="anonymous" />    
     <link rel="stylesheet" href="P1UserManegement.css">
   </head>
   
@@ -15,7 +19,7 @@
 	//セッションの取得
 	HttpSession ses = request.getSession();
 	//会員リストを取得
-	ArrayList<User> u = (ArrayList<User>)ses.getAttribute("USERLIST");
+	ArrayList<User> u = (ArrayList<User>)ses.getAttribute("P1USERLIST");
 	String trueMess = (String)ses.getAttribute("TRUEMESS");
    %>
   
@@ -105,7 +109,6 @@
         <button type="button" class="dialogButton" id="closeConfirmationButton" onclick="confirmationDialog.close();">閉じる</button>
     </dialog>
     
-    
      <jsp:include page="P1kensaku.jsp"></jsp:include>
 
 
@@ -129,10 +132,7 @@
       	} 	
       	<%} %>
       	<%ses.removeAttribute("TRUEMESS"); %>
-
-
-    	  			
-
+      	
     </script>
   </body>
 </html>

@@ -1,7 +1,5 @@
 
 body {
-  text-align: center;
-  font-family: Arial, sans-serif;
   background-color: #000000;
   margin: 0;
   padding: 0;
@@ -131,8 +129,6 @@ tr:last-child td:last-child {
 
 
 Button {
-  padding: 10px 20px;
-  border-radius: 10px;
   border: none;
   background-color: #000000;
   color: rgb(255, 255, 255);
@@ -167,7 +163,7 @@ dialog {
   text-align: center;
   border-radius: 10px;
   background-color: #000000;
-  border: solid 3px rgb(255, 255, 255);
+  border: solid 3px #ee2522;
   color: white; 
   z-index: 1000;
 }

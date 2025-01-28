@@ -39,7 +39,7 @@ public class P1UserManagementServlet extends HttpServlet {
 		
 		//ユーザーリストの生成
 		// セッションからUSERLISTを取得
-		ArrayList<User> UList = (ArrayList<User>) ses.getAttribute("USERLIST");
+		ArrayList<User> UList = (ArrayList<User>) ses.getAttribute("P1USERLIST");
 		if (UList == null) {
 		    UList = new ArrayList<>(); // 初回のみ新規作成
 		} else {
@@ -82,7 +82,7 @@ public class P1UserManagementServlet extends HttpServlet {
 				}
 			
 				// 会員の一覧を保存
-				ses.setAttribute("USERLIST", UList);
+				ses.setAttribute("P1USERLIST", UList);
 						
 				// ログアウト処理
 				dba.closeDB();

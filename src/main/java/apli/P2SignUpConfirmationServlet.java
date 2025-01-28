@@ -1,6 +1,7 @@
 package apli;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -89,6 +90,10 @@ public class P2SignUpConfirmationServlet extends HttpServlet {
 	        
 	        // その会員情報を保存
 	        ses.setAttribute("LOGIN", u);
+	        
+	        // DMのための準備
+			ArrayList<DM> dmssList = new ArrayList<DM>();
+			ses.setAttribute("DMSSLIST", dmssList);
 	        
 	        // タイムラインのためのサーブレットへ
 			url = "P2TimelineServlet";
