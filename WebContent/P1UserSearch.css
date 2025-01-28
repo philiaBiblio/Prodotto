@@ -17,6 +17,7 @@ body {
     margin-top: 20px; /* 上部に余白を追加 */
 }
 
+
 /* ユーザーセクション */
 .user-section {
     flex: 1;
@@ -62,12 +63,6 @@ body {
     margin-right: 30px; /* 名前との間のスペースを確保 */
     display: block;
 }
-
-.icon-button{
-	background-color: #1f1f1f;
-	border: none;
-}
-
 
 /* ユーザーコンテンツ */
 .user-content {

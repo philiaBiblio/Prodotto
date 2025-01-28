@@ -33,24 +33,21 @@ ArrayList<User> u = (ArrayList<User>) ses.getAttribute("USERLIST");
 			<p class="no-results">検索結果が見つかりません</p>
 			<%} else {
 			for (int i = 0; i < u.size(); i++) {%>
-			<div class="user-item">
-				<div class="soroe">
-				<form action="P1UserSearchServlet">
-				<input type="hidden" name="userID" value="<%= u.get(i).getUserid() %>">
-					<button type="submit" class="icon-button">
-						<img src="image/<%= u.get(i).getIconImage()%>" alt="アイコン" class="icon">
-					</button>
-				</div>
-				<div class="user-content">
-					<p class="username">
-						<%=u.get(i).getName()%>
-					</p>
-					<p class="user-subtext">
-						<%=u.get(i).getUserid()%>
-					</p>
-					</form>
-				</div>
-			</div>
+			<a href="P1UserSearchServlet?userID=<%= u.get(i).getUserid() %>" class="user-item">
+    			<div class="soroe">
+        			<button type="button" class="icon-button">
+            			<img src="image/<%= u.get(i).getIconImage()%>" alt="アイコン" class="icon">
+        			</button>
+    				</div>
+    				<div class="user-content">
+        			<p class="username">
+            			<%= u.get(i).getName() %>
+        			</p>
+        			<p class="user-subtext">
+            			<%= u.get(i).getUserid() %>
+        			</p>
+    			</div>
+			</a>
 			<hr>
 			<%}}
 			ses.removeAttribute("USERLIST");

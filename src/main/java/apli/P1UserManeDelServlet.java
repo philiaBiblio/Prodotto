@@ -82,7 +82,7 @@ public class P1UserManeDelServlet extends HttpServlet {
 				String deleteSQL;
 				
 				for(int x = 0; x < PList.size(); x++) {
-				// 指定したユーザーを再生テーブルから削除
+				// 指定したユーザーの投稿を再生テーブルから削除
 		        deleteSQL = 
 		        "DELETE FROM 再生 where ユーザーID = '" + u.get(uIndex).getUserid() + "' OR 投稿ID = '"+ PList.get(x) + "'"; 		        
 		        // デリート文実行
@@ -104,6 +104,13 @@ public class P1UserManeDelServlet extends HttpServlet {
 				// デリート文実行
 				dba.UpdateExe(deleteSQL);
 				}
+				
+				
+				// 指定したユーザーを再生テーブルから削除
+		        deleteSQL = 
+		        "DELETE FROM 再生 where ユーザーID = '" + u.get(uIndex).getUserid()+"'"; 		        
+		        // デリート文実行
+		        dba.UpdateExe(deleteSQL);
 				
 		        // 指定したユーザーをDMテーブルから削除
 		        deleteSQL = 
