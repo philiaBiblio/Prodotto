@@ -35,24 +35,21 @@ ArrayList<User> searchU = (ArrayList<User>) ses.getAttribute("USERLIST");
 			<p class="no-results">検索結果が見つかりません</p>
 			<% } else { 
 				for (int i = 0; i < searchU.size(); i++) { %>			
-			<div class="user-item">			
-				<div class="soroe">
-				<form action = "P2UserSearchServlet">
-					<input type="hidden" name="userID" value="<%= searchU.get(i).getUserid() %>">
-					<button type="submit" class="icon-button">
-						<img src="image/<%= searchU.get(i).getIconImage()%>" alt="アイコン" class="icon">
-					</button>
-				</div>
-				<div class="user-content">
-					<p class="username">
-						<%=searchU.get(i).getName()%>
-					</p>
-					<p class="user-subtext">
-						<%=searchU.get(i).getUserid()%>
-					</p>
-				</form>	
-				</div>				
-			</div>						
+			<a href="P2UserSearchServlet?userID=<%= searchU.get(i).getUserid() %>" class="user-item">
+    			<div class="soroe">
+        			<button type="button" class="icon-button">
+            			<img src="image/<%= searchU.get(i).getIconImage()%>" alt="アイコン" class="icon">
+        			</button>
+    				</div>
+    				<div class="user-content">
+        			<p class="username">
+            			<%= searchU.get(i).getName() %>
+        			</p>
+        			<p class="user-subtext">
+            			<%= searchU.get(i).getUserid() %>
+        			</p>
+    			</div>
+			</a>
 			<hr>
 			<% } } %>
 			
