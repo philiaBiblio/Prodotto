@@ -146,7 +146,7 @@
 				<div class="playlist-bottom-bar">
 					<!-- オーディオ選択範囲の開始/終了時間入力フォーム -->
 					<form class="form-inline">
-						<div class="track-drop">::before</div>
+						<div class="track-drop">::test</div>
 						<!-- 自動スクロール設定のチェックボックス -->
 						<div class="form-check form-check-inline">
 							<input class="form-check-input automatic-scroll" type="checkbox" id="automatic_scroll" /> <label class="form-check-label" for="automatic_scroll"> 自動スクロール </label>
