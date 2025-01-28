@@ -193,14 +193,14 @@ a{
 }
 
 /* 受信メッセージ設定（右側） */
-.message.received {
+.message.sent {
   display: flex;
   justify-content: flex-end; /* メッセージを右寄せ */
   margin-bottom: 10px; /* 下に余白を追加 */
   position: relative; /* ::afterの基準に必要 */
 }
 
-.message.received .bubble {
+.message.sent .bubble {
   display: inline-block;
   max-width: 40%; /* 改行を早めるため幅を狭く */
   padding: 10px;
@@ -213,7 +213,7 @@ a{
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
 }
 
-.message.received::after {
+.message.sent::after {
   content: "";
   position: absolute;
   right: -8px; /* 矢印をバブルの右端に配置 */
@@ -224,14 +224,14 @@ a{
 }
 
 /* 送信メッセージ設定（左側） */
-.message.sent {
+.message.received {
   display: flex;
   justify-content: flex-start; /* メッセージを左寄せ */
   margin-bottom: 10px; /* 下に余白を追加 */
   position: relative; /* ::afterの基準に必要 */
 }
 
-.message.sent .bubble {
+.message.received .bubble {
   display: inline-block;
   max-width: 40%; /* 改行を早めるため幅を狭く */
   padding: 10px;
@@ -244,7 +244,7 @@ a{
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
 }
 
-.message.sent::after {
+.message.received::after {
   content: "";
   position: absolute;
   left: -8px; /* 矢印をバブルの左端に配置 */
