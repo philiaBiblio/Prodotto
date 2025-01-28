@@ -27,7 +27,7 @@
           <!-- フィルターボタン -->
           <!--  これによりフィルターボタン選択で飛ぶようになる-->
           <select id="filter" class="filter-button" name="url">
-            <option selected value="">タグ</option>
+            <option selected value="P1Search.jsp">タグ</option>
             <option value="P1UserSearch.jsp">アカウント名</option>
           </select>
 
@@ -122,7 +122,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const filterElement = document.getElementById('filter');
         filterElement.value = selectedUrl;
 
-        if (selectedUrl === "P2UserSearch.jsp") { // アカウント名検索
+        if (selectedUrl === "P1UserSearch.jsp") { // アカウント名検索
             inputElm.placeholder = "アカウント名を入力"; // プレースホルダ変更
             initializeTagify(false); // Tagifyを無効化
         } else { // タグ検索
