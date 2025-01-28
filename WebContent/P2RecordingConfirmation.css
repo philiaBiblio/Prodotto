@@ -147,7 +147,7 @@ img.thumbnail {
 .thumbnail-placeholder {
   width: 220px;
   height: 120px;
-  background-color: #11dadd;
+    background-color: #111;
   border-radius: 10px;
   position: relative;
   display: flex;
