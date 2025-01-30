@@ -60,7 +60,7 @@ public class P1CommentDeliteServlet extends HttpServlet {
 	    	
 	    	 
 		     String trueMess = "変更できました。";
-		     ses.setAttribute("DELEAT", trueMess);
+		     ses.setAttribute("comeDELEAT", trueMess);
 		     
 //		     String toukouId = cmList.get(i).getToukouId();
 //		     ses.setAttribute("TTTTTOUKOUID", toukouId);
