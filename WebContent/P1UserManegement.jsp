@@ -22,9 +22,8 @@
 	ArrayList<User> u = (ArrayList<User>)ses.getAttribute("P1USERLIST");
 	String trueMess = (String)ses.getAttribute("TRUEMESS");
    %>
-  
+   
   	<script>
-  	
   	function dialog(id){
   		console.log("id:" + id);
   		const openDialogButton = document.getElementById('openDialogButton');
@@ -129,7 +128,7 @@
       window.onload = function(){
   		const dialog = document.querySelector("#confirmationDialog");
       	dialog.showModal();
-      	} 	
+      	}
       	<%} %>
       	<%ses.removeAttribute("TRUEMESS"); %>
       	

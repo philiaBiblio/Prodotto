@@ -128,6 +128,12 @@ public class P1TLManagementServlet extends HttpServlet {
 			// ログアウト処理
 			dba.closeDB();
 			dba2.closeDB();
+			
+			ArrayList<User> u = (ArrayList<User>)ses.getAttribute("P1USERLIST");
+			if(u != null){
+				u.clear();
+			}
+			
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();

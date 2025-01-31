@@ -1,3 +1,5 @@
+<%@page import="apli.User"%>
+<%@page import="java.util.ArrayList"%>
 <%@page import="apli.Event"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -19,6 +21,11 @@
 	// ログイン情報の取得
 	String mess = (String)ses.getAttribute("ERROR");
 	Event e = (Event)ses.getAttribute("EVENT");
+	
+	ArrayList<User> u = (ArrayList<User>)ses.getAttribute("P1USERLIST");
+	if(u != null){
+		u.clear();
+	}
 %>
 
   <body>
