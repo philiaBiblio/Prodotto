@@ -23,7 +23,7 @@
 		System.out.println("ポップ:");
 /* 		System.out.println("a:"+cmList.get(1).getCsender());
 		System.out.println("b:"+cmList.get(1).getCcontent()) */;
-		String DELEAT = (String)ses.getAttribute("DDDDELET");
+		String comeDELEAT = (String)ses.getAttribute("comeDELEAT");
 		/* Integer cnt = (Integer)ses.getAttribute("rs1");
 		System.out.println(cnt); */
 		%>
@@ -66,13 +66,13 @@ document.addEventListener('DOMContentLoaded', (event) => {
     dialog();
 });
 
-<%if(DELEAT != null ){ %>
+<%if(comeDELEAT != null ){ %>
 window.onload = function(){
 	const dialog = document.querySelector("#confirmationDialog");
 	dialog.showModal();
 	} 	
 	<%} %>
-	<%ses.removeAttribute("DDDDELET"); %>
+	<%ses.removeAttribute("comeDELEAT"); %>
 
 </script>
 
