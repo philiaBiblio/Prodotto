@@ -187,7 +187,7 @@
 						// `channel-0` 要素を取得
 						const channelElement = document.querySelector('.channel.channel-0');
 						const widthValue = parseInt(window.getComputedStyle(channelElement).width, 10);
-						const delay = widthValue * 3; // ミリ秒単位
+						const delay = widthValue * 5; // ミリ秒単位
 						console.log(`Redirecting after ${delay}ms based on channel width`);
 
 						// 遷移の遅延処理

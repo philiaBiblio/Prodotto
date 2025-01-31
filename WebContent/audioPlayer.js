@@ -17,6 +17,18 @@ document.addEventListener("DOMContentLoaded", () => {
 	const prevButton = document.querySelector(".fa-step-backward"); // 戻るボタン（例: プレイヤー内に配置）
 	const nextButton = document.querySelector(".fa-step-forward");
 
+	const style = document.createElement("style");
+	style.textContent = `
+    .video-card.playing {
+        box-shadow: 0 0 15px 5px #11dadd; /* ライトブルーの発光 */
+        border: 2px solid #11dadd; /* 枠線の強調 */
+        transition: box-shadow 0.3s ease-in-out, border 0.3s ease-in-out;
+    }
+`;
+	document.head.appendChild(style);
+
+	let currentPlayingCard = null; // 現在再生中の動画カードを保存
+
 	// 音声の再生・停止処理を関数化
 	function playAudio(audioPlayer, playButton) {
 		audioPlayer.play().catch(() => {
@@ -27,6 +39,18 @@ document.addEventListener("DOMContentLoaded", () => {
 		playPauseButton.classList.add("fa-pause");
 		currentAudioPlayer = audioPlayer;
 		currentPlayButton = playButton;
+
+		// 現在の動画カードを取得
+		let videoCard = playButton.closest(".video-card");
+
+		// すでに再生中のカードがあれば発光を解除
+		if (currentPlayingCard) {
+			currentPlayingCard.classList.remove("playing");
+		}
+
+		// 新しいカードに発光エフェクトを追加
+		videoCard.classList.add("playing");
+		currentPlayingCard = videoCard; // 現在再生中のカードを更新
 	}
 
 	function stopAudio(audioPlayer, playButton) {
@@ -34,6 +58,12 @@ document.addEventListener("DOMContentLoaded", () => {
 		playButton.textContent = "▶️";
 		playPauseButton.classList.remove("fa-pause");
 		playPauseButton.classList.add("fa-play");
+
+		// 発光エフェクトを削除
+		if (currentPlayingCard) {
+			currentPlayingCard.classList.remove("playing");
+			currentPlayingCard = null;
+		}
 	}
 
 	// 戻るボタンの動作
