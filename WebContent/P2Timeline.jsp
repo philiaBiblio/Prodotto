@@ -253,7 +253,7 @@ if (flg == true) {%>
 						%>
 						<button class=session-btn>
 							<span> <a
-								href="P2SessionParticipation?audioFile=<%=toukouList.get(i).getSound()%>&ID=<%=toukouList.get(i).getToukouid()%>&hitoride=2">
+								href="P2SessionParticipation?audioFile=<%=toukouList.get(i).getSound()%>&ID=<%=toukouList.get(i).getToukouid()%>&hitoride=2&Name=<%=toukouList.get(i).getUserid()%>">
 
 									<div class="nav_icon">
 										<i class="gg-duplicate"></i>

@@ -2,6 +2,9 @@
 <%
     String audioFile = (String) request.getAttribute("audioFile");  // サーブレットから音声ファイル名を取得
 %>
+<%
+    String Name = (String) request.getAttribute("Name");  // サーブレットから音声ファイル名を取得
+%>
 <%@ page contentType="text/html; charset=UTF-8" language="java"%>
 <!DOCTYPE html>
 <html lang="ja">
@@ -111,24 +114,6 @@
 							</button>
 						</div>
 
-						<!-- 選択した再生範囲をループするボタン -->
-						<div class="btn-group btn-select-state-group">
-							<button type="button"
-								class="btn-loop btn btn-outline-success disabled"
-								title="再生範囲をループ">
-								<i class="fas fa-redo-alt" aria-hidden="true"> </i>
-							</button>
-						</div>
-
-						<!-- ダウンロードボタン -->
-						<div class="btn-group">
-							<button type="button"
-								class="btn btn-download btn-outline-primary"
-								title="現在の音声をwavファイルでダウンロード">
-								<i class="fas fa-download" aria-hidden="true"></i>
-							</button>
-						</div>
-						
 						<!-- メッセージ表示エリア -->
 						<% if (ses.getAttribute("ODAITEXST") != null) { %>
 						<div id="message-area" class="odaitext">
@@ -160,42 +145,81 @@
 						onclick="location.href='P2PostAndRecording.jsp'">戻る</button>
 				</div>
 				
-				<!-- 録音確定ボタン -->
-				<div class="btn-group">
-					<button type="submit" class="btn btn-download btn-outline-primary" title="録音確定" id="confirmRecordingBtn" onclick="redirectAfterDelay()">
-						録音を確定 <i class="fas fa-download" aria-hidden="true"></i>
-					</button>
-				</div>
-				
-				<!-- ロード画面 -->
-				<div id="loadingModal" class="loading-modal" style="display: none;">
-					<div class="loading-content">
-						<div class="spinner-border text-primary" role="status">
-							<span class="sr-only">Loading...</span>
-						</div>
-						<p>録音データを処理しています...</p>
-					</div>
-				</div>
+<!-- 録音確定ボタン -->
+<div class="btn-group">
+    <button type="button" class="btn btn-download btn-outline-primary disabled-btn" title="録音確定" id="confirmRecordingBtn" disabled onclick="redirectAfterDelay()">
+        録音を確定 <i class="fas fa-download" aria-hidden="true"></i>
+    </button>
+</div>
 
-				<!-- スクリプト -->
-				<script>				
-					function redirectAfterDelay() {
-						// ロード画面を表示
-					    const loadingModal = document.getElementById('loadingModal');
-					    loadingModal.style.display = 'flex';
-						
-						// `channel-0` 要素を取得
-						const channelElement = document.querySelector('.channel.channel-0');
-						const widthValue = parseInt(window.getComputedStyle(channelElement).width, 10);
-						const delay = widthValue * 5; // ミリ秒単位
-						console.log(`Redirecting after ${delay}ms based on channel width`);
+<!-- ロード画面 -->
+<div id="loadingModal" class="loading-modal" style="display: none;">
+    <div class="loading-content">
+        <div class="spinner-border text-primary" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+        <p>録音データを処理しています...</p>
+    </div>
+</div>
 
-						// 遷移の遅延処理
-						setTimeout(function() {
-							location.href = 'P2RecordingServlet';
-						}, delay);
-					}
-				</script>
+<!-- スタイル -->
+<style>
+    /* ボタンが無効のとき（赤色） */
+    .disabled-btn {
+        background-color: #dc3545 !important; /* Bootstrapのdangerカラー */
+        border-color: #dc3545 !important;
+        color: white !important;
+        cursor: not-allowed;
+        opacity: 0.7;
+    }
+
+    /* ボタンが有効のとき（Bootstrapのデフォルト色） */
+    .enabled-btn {
+        cursor: pointer;
+        opacity: 1;
+    }
+</style>
+
+<!-- スクリプト -->
+<script>
+    function checkAudioExists() {
+        const channelWrapper = document.querySelector('.channel-wrapper');
+        const confirmButton = document.getElementById('confirmRecordingBtn');
+
+        if (channelWrapper) {
+            confirmButton.disabled = false; // 音声があればボタンを有効化
+            confirmButton.classList.remove('disabled-btn');
+            confirmButton.classList.add('enabled-btn');
+        } else {
+            confirmButton.disabled = true; // 音声がなければボタンを無効化
+            confirmButton.classList.remove('enabled-btn');
+            confirmButton.classList.add('disabled-btn');
+        }
+    }
+
+    // 定期的にチェック（録音が開始されたらボタンを有効にする）
+    setInterval(checkAudioExists, 500); 
+
+    function redirectAfterDelay() {
+        // ロード画面を表示
+        const loadingModal = document.getElementById('loadingModal');
+        loadingModal.style.display = 'flex';
+
+        // `channel-0` 要素を取得
+        const channelElement = document.querySelector('.channel.channel-0');
+        const widthValue = parseInt(window.getComputedStyle(channelElement).width, 10);
+        const delay = widthValue * 5; // ミリ秒単位
+        console.log(`Redirecting after ${delay}ms based on channel width`);
+
+        // 遷移の遅延処理
+        setTimeout(function() {
+            location.href = 'P2RecordingServlet';
+        }, delay);
+    }
+</script>
+
+
+
 			</article>
 		</div>
 	</main>
@@ -209,6 +233,12 @@
 	<!-- 音声ファイルのパスをrecord.jsに渡す -->
     <script type="text/javascript">
         const audioFilePath = "audio/<%= audioFile %>";  // サーブレットから渡された音声ファイルのパス
+        loadAudioFile(audioFilePath);  // record.js内で音声をロード
+    </script>
+    
+    <!-- 音声ファイルのパスをrecord.jsに渡す -->
+    <script type="text/javascript">
+        const Name = "<%= Name %>";  // サーブレットから渡された音声ファイルのパス
         loadAudioFile(audioFilePath);  // record.js内で音声をロード
     </script>
 </body>

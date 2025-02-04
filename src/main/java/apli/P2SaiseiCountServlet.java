@@ -64,7 +64,10 @@ public class P2SaiseiCountServlet extends HttpServlet {
             System.out.println("toukouId: " + toukouId);
             System.out.println("userId: " + userId);
             
-            if(toukouUserid.equals(userId)) {
+			ResultSet rs1 = dba.selectExe("select * from ユーザー where ユーザーID = '"+userId+"'");
+
+            
+            if(toukouUserid.equals(userId) || !rs1.next()) {
             	System.out.println("再生したのが自分だから何もしない");
             }
             else {
