@@ -85,6 +85,22 @@ document.addEventListener('DOMContentLoaded', (event) => {
     dialog();
 });
 
+//再生バーの名前
+function saiseiName(id){
+	const kazu = document.getElementById('' + id);
+	console.log("46" + kazu.value);
+	const artist = document.getElementById('artistName');
+	artist.innerText = kazu.value;
+	}
+
+function saiseiName_free(id){
+	const kazu = document.getElementById('fm' + id);
+	console.log("69" + kazu.value);
+	const artist = document.getElementById('artistName');
+	artist.innerText = kazu.value;
+	}
+
+
 <%if(DELEAT != null ){ %>
 window.onload = function(){
 	const dialog = document.querySelector("#confirmationDialog");
@@ -180,9 +196,10 @@ window.onload = function(){
 					<div class="thumbnail-placeholder">
 						<img src="image/<%=postList.get(i).getThumbnailPath()%>"
 							alt="Video Thumbnail" class="thumbnail" />
-						<button class="play-button" onclick="sendData('<%= up.getUserid() %>', 
-					'<%= postList.get(i).getPostId() %>', 
-					'<%= au.getAdminUserid() %>')">▶️</button>
+						<button class="play-button" onclick="saiseiName('<%= i%>');">▶️</button>
+						
+						<input type="hidden" value="<%=up.getName() %>" id="<%=i%>">
+						
 						<!-- 音声再生ボタン -->
 						<audio class="audio-player"
 							src="audio/<%=postList.get(i).getAudioPath()%>"></audio>
@@ -255,9 +272,10 @@ window.onload = function(){
 				<div class="thumbnail-placeholder">
 					<img src="image/<%=postList.get(i).getThumbnailPath()%>"
 						alt="Video Thumbnail" class="thumbnail" />
-					<button class="play-button" onclick="sendData('<%= up.getUserid() %>', 
-					'<%= postList.get(i).getPostId() %>', 
-					'<%= au.getAdminUserid() %>')">▶️</button>
+					<button class="play-button" onclick="saiseiName_free('<%=i%>');">▶️</button>
+					
+					<input type="hidden" value="<%=up.getName() %>" id="fm<%=i%>">
+					
 					<!-- 音声再生ボタン -->
 					<audio class="audio-player"
 						src="<%=postList.get(i).getAudioPath()%>"></audio>
