@@ -49,6 +49,21 @@ document.addEventListener('DOMContentLoaded', function() {
     const searchButton = document.querySelector('.icon-button'); // 検索ボタン
     let tagify; // Tagifyのインスタンス
 
+    // 初期状態で検索ボタンを無効化
+    searchButton.disabled = true;
+    searchButton.style.opacity = "0.5"; // ボタンの透明度を下げる
+
+    // 入力状態のチェック関数
+    function checkInput() {
+        if (filterElement.value === "P1UserSearch.jsp") {
+            // アカウント名検索: 通常のテキスト入力をチェック
+            searchButton.disabled = inputElm.value.trim() === "";
+        } else {
+            // タグ検索: Tagifyのタグがあるかチェック
+            searchButton.disabled = tagify.value.length === 0;
+        }
+        searchButton.style.opacity = searchButton.disabled ? "0.5" : "1";
+    }
 
     // 初期状態でTagifyを有効化
     initializeTagify(true);
@@ -62,13 +77,15 @@ document.addEventListener('DOMContentLoaded', function() {
                         "ブルース","クラシック","ラテン","ミニマル","ファンクグルーヴ","スローバラード","スケールアルペジオ","ワルツ",
                         "ポップス","ロックリフ","民族","神秘","ミステリー","クール","ロック","メタル","合唱","打楽器","弦楽器",
                         "金管楽器","木管楽器","ファンク","クレイジー","カノン","雅楽","シリアス"],
-
                     maxTags: 5,
                     dropdown: {
                         enabled: 0,
                         maxItems: 10000000000,
                     },
                 });
+
+                // Tagifyの変更イベントを監視
+                tagify.on('change', checkInput);
             }
         } else {
             if (tagify) { // Tagifyが既に存在する場合のみ削除
@@ -82,6 +99,8 @@ document.addEventListener('DOMContentLoaded', function() {
     filterElement.addEventListener('change', function () {
         const selectedFilter = this.value;
         inputElm.value = ''; // 入力フィールドをリセット
+        searchButton.disabled = true;
+        searchButton.style.opacity = "0.5";
 
         if (selectedFilter === "P1UserSearch.jsp") { // アカウント名検索
             inputElm.placeholder = "アカウント名を入力";
@@ -92,34 +111,14 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // エンターキーの動作をカスタマイズ
-    inputElm.addEventListener('keydown', function (event) {
-        if (event.key === 'Enter') {
-            // ドロップダウンの可視性を直接確認
-            const dropdown = document.querySelector('.tagify__dropdown');
-            const isDropdownVisible = dropdown && dropdown.offsetParent !== null;
+    // 通常のテキスト入力（アカウント名検索）の場合も監視
+    inputElm.addEventListener('input', checkInput);
 
-            console.log('Enter key pressed');
-            console.log('Dropdown visible:', isDropdownVisible);
-
-            if (isDropdownVisible) {
-                console.log('Tagify dropdown is visible. Default Tagify behavior will handle this.');
-                return; // タグ選択に任せる
-            } else {
-                console.log('No dropdown visible. Triggering search.');
-                event.preventDefault(); // デフォルト動作を防止
-                searchButton.click(); // 検索ボタンをクリック
-            }
-        }
-    });
-
-    
     // ページロード時にURLのパラメータに基づいてフィルタの状態を設定
     const params = new URLSearchParams(window.location.search);
     const selectedUrl = params.get('url');
 
     if (selectedUrl) {
-        const filterElement = document.getElementById('filter');
         filterElement.value = selectedUrl;
 
         if (selectedUrl === "P1UserSearch.jsp") { // アカウント名検索
@@ -128,7 +127,8 @@ document.addEventListener('DOMContentLoaded', function() {
         } else { // タグ検索
             inputElm.placeholder = "タグを入力"; // プレースホルダ変更
             initializeTagify(true); // Tagifyを有効化
-        }}
+        }
+    }
 });
 </script>
 
