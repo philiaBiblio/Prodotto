@@ -100,6 +100,14 @@ function openPopup(toukouId) {
   );
 }
 
+//再生バーの名前
+function saiseiName(id){
+	const kazu = document.getElementById('' + id);
+	console.log("46" + kazu.value);
+	const artist = document.getElementById('artistName');
+	artist.innerText = kazu.value;
+	}
+
 //いいねのスクロールバー
 var scrollPosition; 
 var STORAGE_KEY = "scrollY";
@@ -317,7 +325,7 @@ window.addEventListener("load", function(){
 				<div class="thumbnail-placeholder">
 					<img src="image/<%=upList.get(i).getThumbnail()%>"
 						alt="Video Thumbnail" class="thumbnail" />
-					<button class="play-button">▶️</button>
+					<button class="play-button" onclick="saiseiName('<%= i%>');">▶️</button>
 					
 					<input type="hidden" value="<%=u.getName() %>" id="<%=i%>">
 					
@@ -454,7 +462,7 @@ window.addEventListener("load", function(){
 						<img src="." alt="" />
 					</div>
 					<div class="song-description">
-						<p class="artist" id="artistName"><</p>
+						<p class="artist" id="artistName"></p>
 					</div>
 				</div>
 			</div>
