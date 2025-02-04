@@ -175,9 +175,6 @@
 
     /* ボタンが有効のとき（Bootstrapのデフォルト色） */
     .enabled-btn {
-        background-color: transparent !important;
-        border-color: #007bff !important; /* Bootstrapのprimaryカラー */
-        color: #007bff !important;
         cursor: pointer;
         opacity: 1;
     }
