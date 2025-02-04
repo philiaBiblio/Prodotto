@@ -219,6 +219,7 @@ window.onload = function(){
 			</div>
 			<div class="progress-controller">
 				<div class="control-buttons">
+					<i class="fas fa-random"></i> <i class="fas fa-step-backward"></i>
 					<i class="play-pause fas fa-play"></i> <i
 						class="fas fa-step-forward"></i> <i class="fas fa-undo-alt"></i>
 				</div>

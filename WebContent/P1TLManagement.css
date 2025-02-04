@@ -15,6 +15,10 @@ body {
   background: #121212;
 }
 
+body::-webkit-scrollbar {
+    display: none;
+}
+
 /* 動画カード */
 /* 全体のカードスタイル */
 .video-card {
