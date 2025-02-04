@@ -143,7 +143,6 @@ String noweventId = String.format("%04d%02d", year, month); // 西暦4桁+月2�
 		<button class="scroll-left" id="scroll-left-1">◀</button>
 		<div class="video-grid" id="video-grid-1">
 
-			<section class="video-grid" id="video-grid-1">
 				<%
 				if (postList != null) {
 					for (int i = 0; i < postList.size(); i++) {
@@ -264,7 +263,6 @@ String noweventId = String.format("%04d%02d", year, month); // 西暦4桁+月2�
 				<% } %>
 				<% } %>
 				<% } %>
-			</section>
 		</div>
 		<button class="scroll-right" id="scroll-right-1">▶</button>
 	</div>
@@ -416,42 +414,42 @@ String noweventId = String.format("%04d%02d", year, month); // 西暦4桁+月2�
 	<jsp:include page="P2kensaku.jsp"></jsp:include>
 
 	<script>
-      const scrollLeftButton1 = document.getElementById("scroll-left-1");
-      const scrollRightButton1 = document.getElementById("scroll-right-1");
-      const videoGrid1 = document.getElementById("video-grid-1");
+	const scrollLeftButton1 = document.getElementById("scroll-left-1");
+    const scrollRightButton1 = document.getElementById("scroll-right-1");
+    const videoGrid1 = document.getElementById("video-grid-1");
 
-      scrollLeftButton1.addEventListener("click", () => {
-        videoGrid1.scrollBy({
-          left: -350, // スクロールする距離（左）
-          behavior: "smooth", // スムーズスクロール
-        });
+    scrollLeftButton1.addEventListener("click", () => {
+      videoGrid1.scrollBy({
+        left: -150, // スクロールする距離（左）
+        behavior: "smooth", // スムーズスクロール
       });
+    });
 
-      scrollRightButton1.addEventListener("click", () => {
-        videoGrid1.scrollBy({
-          left: 350, // スクロールする距離（右）
-          behavior: "smooth", // スムーズスクロール
-        });
+    scrollRightButton1.addEventListener("click", () => {
+      videoGrid1.scrollBy({
+        left: 150, // スクロールする距離（右）
+        behavior: "smooth", // スムーズスクロール
       });
+    });
 
-      // 2行目のボタンのイベントハンドラー
-      const scrollLeftButton2 = document.getElementById("scroll-left-2");
-      const scrollRightButton2 = document.getElementById("scroll-right-2");
-      const videoGrid2 = document.getElementById("video-grid-2");
+    // 2行目のボタンのイベントハンドラー
+    const scrollLeftButton2 = document.getElementById("scroll-left-2");
+    const scrollRightButton2 = document.getElementById("scroll-right-2");
+    const videoGrid2 = document.getElementById("video-grid-2");
 
-      scrollLeftButton2.addEventListener("click", () => {
-        videoGrid2.scrollBy({
-          left: -350, // スクロールする距離（左）
-          behavior: "smooth", // スムーズスクロール
-        });
+    scrollLeftButton2.addEventListener("click", () => {
+      videoGrid2.scrollBy({
+        left: -150, // スクロールする距離（左）
+        behavior: "smooth", // スムーズスクロール
       });
+    });
 
-      scrollRightButton2.addEventListener("click", () => {
-        videoGrid2.scrollBy({
-          left: 350, // スクロールする距離（右）
-          behavior: "smooth", // スムーズスクロール
-        });
+    scrollRightButton2.addEventListener("click", () => {
+      videoGrid2.scrollBy({
+        left: 150, // スクロールする距離（右）
+        behavior: "smooth", // スムーズスクロール
       });
+    });
 
 
 //////////////再生回数カウント//////////////////	
