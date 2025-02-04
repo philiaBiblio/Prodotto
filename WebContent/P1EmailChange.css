@@ -125,7 +125,8 @@ dialog {
   padding: 20px;
   border-radius: 10px;
   background-color: #000000;
-  border: solid 3px rgb(255, 255, 255);
+  border: solid 3px;
+  border-color: #ee2522;
   
 }
 

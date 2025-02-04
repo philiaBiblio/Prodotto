@@ -41,6 +41,7 @@
 
 
 <jsp:include page="P1kensaku.jsp"></jsp:include>
+
 <script>
 //ダイアログのスクリプト
 function dialog(id){
@@ -131,9 +132,7 @@ window.onload = function(){
 						alt="Video Thumbnail" class="thumbnail"/>
 						
 					<button class="play-button" 
-					onclick="saiseiName('<%= i%>');sendData('<%= toukouList.get(i).getUserid() %>', 
-					'<%= toukouList.get(i).getToukouid() %>', 
-					'<%= au.getAdminUserid() %>')">
+					onclick="saiseiName('<%= i%>');">
 					▶️</button>
 					
 					<input type="hidden" value="<%=userIconList.get(i).getName() %>" id="<%=i%>">
@@ -246,38 +245,6 @@ window.onload = function(){
 			</div>
 		</div>
 	</main>
-	
-	
-<script>
-//////////////再生回数カウント//////////////////	
-
-function sendData(toukouUserid, toukouId, userId) {
-    // データを準備
-    const data = {
-        toukouUserid: toukouUserid,
-        toukouId: toukouId,
-        userId: userId
-    };
-
-    // AJAXリクエストを送信
-    fetch('P2SaiseiCountServlet', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data) // データをJSONに変換
-    })
-    .then(response => response.json()) // サーバーからのレスポンスをJSONとして処理
-    .then(result => {
-        console.log('Success:', result); // 結果をコンソールに表示
-    })
-    .catch(error => {
-        console.log('Error:', error); // エラーをコンソールに表示
-    });
-}
-</script>		
-	
-	
 	
 	<script src="https://unpkg.com/wavesurfer.js"></script>
 	

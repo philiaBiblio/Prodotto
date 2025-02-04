@@ -34,6 +34,7 @@ document.addEventListener("DOMContentLoaded", () => {
 		audioPlayer.play().catch(() => {
 			alert("音声ファイルの再生に失敗しました。");
 		});
+		console.log("動くか");
 		playButton.textContent = "⏸️";
 		playPauseButton.classList.remove("fa-play");
 		playPauseButton.classList.add("fa-pause");
