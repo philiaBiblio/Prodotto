@@ -85,6 +85,22 @@ document.addEventListener('DOMContentLoaded', (event) => {
     dialog();
 });
 
+//再生バーの名前
+function saiseiName(id){
+	const kazu = document.getElementById('' + id);
+	console.log("46" + kazu.value);
+	const artist = document.getElementById('artistName');
+	artist.innerText = kazu.value;
+	}
+
+function saiseiName_free(id){
+	const kazu = document.getElementById('fm' + id);
+	console.log("69" + kazu.value);
+	const artist = document.getElementById('artistName');
+	artist.innerText = kazu.value;
+	}
+
+
 <%if(DELEAT != null ){ %>
 window.onload = function(){
 	const dialog = document.querySelector("#confirmationDialog");
@@ -168,7 +184,6 @@ window.onload = function(){
 		<button class="scroll-left" id="scroll-left-1">◀</button>
 		<div class="video-grid" id="video-grid-1">
 		
-		<section class="video-grid" id="video-grid-1">
 				<%if (postList != null) {
 					for (int i = 0; i < postList.size(); i++) {
 						boolean flgin = false;
@@ -180,9 +195,10 @@ window.onload = function(){
 					<div class="thumbnail-placeholder">
 						<img src="image/<%=postList.get(i).getThumbnailPath()%>"
 							alt="Video Thumbnail" class="thumbnail" />
-						<button class="play-button" onclick="sendData('<%= up.getUserid() %>', 
-					'<%= postList.get(i).getPostId() %>', 
-					'<%= au.getAdminUserid() %>')">▶️</button>
+						<button class="play-button" onclick="saiseiName('<%= i%>');">▶️</button>
+						
+						<input type="hidden" value="<%=up.getName() %>" id="<%=i%>">
+						
 						<!-- 音声再生ボタン -->
 						<audio class="audio-player"
 							src="audio/<%=postList.get(i).getAudioPath()%>"></audio>
@@ -231,7 +247,6 @@ window.onload = function(){
 				<%}%>
 				<%}%>
 				<%}%>
-			</section>
 		</div>
 		<button class="scroll-right" id="scroll-right-1">▶</button>
 	</div>
@@ -255,9 +270,10 @@ window.onload = function(){
 				<div class="thumbnail-placeholder">
 					<img src="image/<%=postList.get(i).getThumbnailPath()%>"
 						alt="Video Thumbnail" class="thumbnail" />
-					<button class="play-button" onclick="sendData('<%= up.getUserid() %>', 
-					'<%= postList.get(i).getPostId() %>', 
-					'<%= au.getAdminUserid() %>')">▶️</button>
+					<button class="play-button" onclick="saiseiName_free('<%=i%>');">▶️</button>
+					
+					<input type="hidden" value="<%=up.getName() %>" id="fm<%=i%>">
+					
 					<!-- 音声再生ボタン -->
 					<audio class="audio-player"
 						src="<%=postList.get(i).getAudioPath()%>"></audio>
@@ -364,42 +380,42 @@ window.onload = function(){
 	</dialog>
 
 	<script>
-      const scrollLeftButton1 = document.getElementById("scroll-left-1");
-      const scrollRightButton1 = document.getElementById("scroll-right-1");
-      const videoGrid1 = document.getElementById("video-grid-1");
+	const scrollLeftButton1 = document.getElementById("scroll-left-1");
+    const scrollRightButton1 = document.getElementById("scroll-right-1");
+    const videoGrid1 = document.getElementById("video-grid-1");
 
-      scrollLeftButton1.addEventListener("click", () => {
-        videoGrid1.scrollBy({
-          left: -350, // スクロールする距離（左）
-          behavior: "smooth", // スムーズスクロール
-        });
+    scrollLeftButton1.addEventListener("click", () => {
+      videoGrid1.scrollBy({
+        left: -150, // スクロールする距離（左）
+        behavior: "smooth", // スムーズスクロール
       });
+    });
 
-      scrollRightButton1.addEventListener("click", () => {
-        videoGrid1.scrollBy({
-          left: 350, // スクロールする距離（右）
-          behavior: "smooth", // スムーズスクロール
-        });
+    scrollRightButton1.addEventListener("click", () => {
+      videoGrid1.scrollBy({
+        left: 150, // スクロールする距離（右）
+        behavior: "smooth", // スムーズスクロール
       });
+    });
 
-      // 2行目のボタンのイベントハンドラー
-      const scrollLeftButton2 = document.getElementById("scroll-left-2");
-      const scrollRightButton2 = document.getElementById("scroll-right-2");
-      const videoGrid2 = document.getElementById("video-grid-2");
+    // 2行目のボタンのイベントハンドラー
+    const scrollLeftButton2 = document.getElementById("scroll-left-2");
+    const scrollRightButton2 = document.getElementById("scroll-right-2");
+    const videoGrid2 = document.getElementById("video-grid-2");
 
-      scrollLeftButton2.addEventListener("click", () => {
-        videoGrid2.scrollBy({
-          left: -350, // スクロールする距離（左）
-          behavior: "smooth", // スムーズスクロール
-        });
+    scrollLeftButton2.addEventListener("click", () => {
+      videoGrid2.scrollBy({
+        left: -150, // スクロールする距離（左）
+        behavior: "smooth", // スムーズスクロール
       });
+    });
 
-      scrollRightButton2.addEventListener("click", () => {
-        videoGrid2.scrollBy({
-          left: 350, // スクロールする距離（右）
-          behavior: "smooth", // スムーズスクロール
-        });
+    scrollRightButton2.addEventListener("click", () => {
+      videoGrid2.scrollBy({
+        left: 150, // スクロールする距離（右）
+        behavior: "smooth", // スムーズスクロール
       });
+    });
 
 
 //////////////再生回数カウント//////////////////	
