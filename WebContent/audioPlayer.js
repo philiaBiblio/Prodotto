@@ -305,3 +305,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
 	setInterval(updateProgress, 500);
 });
+
+
+document.addEventListener("DOMContentLoaded", () => {
+    // 他のコード...
+
+    // 非表示にするアイコン要素を取得
+    const randomIcon = document.querySelector(".fas.fa-random");
+    const listIcon = document.querySelector(".fas.fa-list-ul");
+    const desktopIcon = document.querySelector(".fas.fa-desktop");
+
+    // アイコンを非表示にする
+    if (randomIcon) randomIcon.style.display = "none";
+    if (listIcon) listIcon.style.display = "none";
+    if (desktopIcon) desktopIcon.style.display = "none";
+
+    // 他のコード...
+});

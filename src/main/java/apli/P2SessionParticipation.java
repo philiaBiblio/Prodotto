@@ -63,6 +63,20 @@ public class P2SessionParticipation extends HttpServlet {
         String toukouID = request.getParameter("ID");
         System.out.println("////////////////"+toukouID+"//////////////");
         
+        // セッション参加ボタンから名前を取得
+        String toukouName = request.getParameter("Name"); 
+        System.out.println("////////////////"+toukouName+"//////////////");
+        
+    	ResultSet rs1 = dba.selectExe("SELECT * FROM ユーザー WHERE ユーザーID  = '"+toukouName+"'");
+        
+        if(rs1.next()) {
+        	String Name = rs1.getString("名前");
+            System.out.println("////////////////"+Name+"//////////////");     
+            request.setAttribute("Name", Name);
+        }
+        
+        
+        
         
         // 音声ファイルのパスをセッションに保存
         request.setAttribute("audioFile", audioFile);

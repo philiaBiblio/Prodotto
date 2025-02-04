@@ -36,7 +36,6 @@ header .header_container {
 header .search {
   display: flex;
   align-items: center;
-  padding: 7px 12px;
   background-color: #121212;
   border-radius: 4px;
   width: 700px;

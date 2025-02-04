@@ -264,10 +264,12 @@ img {
 
 /* いいね＆コメントのスタイル */
 .like-comment {
-	display: flex;
-	justify-content: flex-start;
-	width: 100%;
-	margin-top: 10px;
+    display: flex;
+    justify-content: flex-start;
+    width: 100%;
+    margin-top: 10px;
+    gap: 10px;
+    height: 22px;
 }
 
 /*----------nav_dropdown   */
@@ -387,12 +389,6 @@ img.thumbnail {
 	margin-right: 10px;
 	background-color: #bbb;
 	border-radius: 50%;
-}
-
-/* いいね＆コメントのボタン */
-.like-comment {
-	display: flex;
-	gap: 10px;
 }
 
 .like-comment button {
