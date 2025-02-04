@@ -37,6 +37,11 @@ public class P1SearchServlet extends HttpServlet {
 		// セッションの生成
 		HttpSession ses = request.getSession();
 		
+		ArrayList<User> u = (ArrayList<User>)ses.getAttribute("P1USERLIST");
+		if(u != null){
+			u.clear();
+		}
+		
 		// URLの生成
 		String url = "";
 		// DBアクセス用部品の生成

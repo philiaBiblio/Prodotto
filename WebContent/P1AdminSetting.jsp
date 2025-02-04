@@ -1,3 +1,5 @@
+<%@page import="apli.User"%>
+<%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -12,6 +14,15 @@
 	integrity="sha384-3B6NwesSXE7YJlcLI9RpRqGf2p/EgVH8BgoKTaUrmKNDkHPStTQ3EyoYjCGXaOTS"
 	crossorigin="anonymous" />
   </head>
+  
+<%
+	HttpSession ses = request.getSession();
+	ArrayList<User> u = (ArrayList<User>)ses.getAttribute("P1USERLIST");
+	if(u != null){
+		u.clear();
+	}
+%>
+  
   <body>
     <div class="container">
       <div class="header">
