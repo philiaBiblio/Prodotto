@@ -295,9 +295,12 @@ String noweventId = String.format("%04d%02d", year, month); // 西暦4桁+月2�
 						onclick="sendData('<%=up.getUserid()%>', 
 					'<%=postList.get(i).getPostId()%>', 
 					'<%=u.getUserid()%>')">▶️</button>
+					
+					<input type="hidden" value="<%=up.getName() %>" id="<%=i%>">
+					
 					<!-- 音声再生ボタン -->
 					<audio class="audio-player"
-						src="<%=postList.get(i).getAudioPath()%>"></audio>
+						src="audio/<%=postList.get(i).getAudioPath()%>"></audio>
 				</div>
 
 				<div class="video-info">
