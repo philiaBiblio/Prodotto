@@ -46,7 +46,7 @@ playlist = WaveformPlaylist.init({
 window.loadAudioFile = function(filePath) {
     playlist.load([{
         "src": filePath,  // 動的に設定された音声ファイルのパス
-        "name": "username"  // ユーザー名やIDを必要に応じて設定
+        "name": Name  // ユーザー名やIDを必要に応じて設定
     }]).then(function() {
         playlist.initExporter();  // 初期化
     }).catch(function(err) {

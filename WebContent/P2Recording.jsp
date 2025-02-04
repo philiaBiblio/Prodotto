@@ -2,6 +2,9 @@
 <%
     String audioFile = (String) request.getAttribute("audioFile");  // サーブレットから音声ファイル名を取得
 %>
+<%
+    String Name = (String) request.getAttribute("Name");  // サーブレットから音声ファイル名を取得
+%>
 <%@ page contentType="text/html; charset=UTF-8" language="java"%>
 <!DOCTYPE html>
 <html lang="ja">
@@ -233,6 +236,12 @@
 	<!-- 音声ファイルのパスをrecord.jsに渡す -->
     <script type="text/javascript">
         const audioFilePath = "audio/<%= audioFile %>";  // サーブレットから渡された音声ファイルのパス
+        loadAudioFile(audioFilePath);  // record.js内で音声をロード
+    </script>
+    
+    <!-- 音声ファイルのパスをrecord.jsに渡す -->
+    <script type="text/javascript">
+        const Name = "<%= Name %>";  // サーブレットから渡された音声ファイルのパス
         loadAudioFile(audioFilePath);  // record.js内で音声をロード
     </script>
 </body>

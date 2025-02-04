@@ -6,6 +6,10 @@ body {
     color: #fff;
 }
 
+body::-webkit-scrollbar {
+    display: none;
+}
+
 .container {
     padding: 20px;
     width: 60%;
@@ -61,7 +65,6 @@ body {
     display: flex;
     gap: 20px;
     justify-content: space-between;
-    background: rgba(0, 0, 0, 0.3); /* ボタンセクションの背景 */
     padding: 20px;
     border-radius: 20px;
 }
