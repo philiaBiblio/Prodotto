@@ -276,7 +276,7 @@ window.onload = function(){
 					
 					<!-- 音声再生ボタン -->
 					<audio class="audio-player"
-						src="<%=postList.get(i).getAudioPath()%>"></audio>
+						src="audio/<%=postList.get(i).getAudioPath()%>"></audio>
 				</div>
 
 				<div class="video-info">
