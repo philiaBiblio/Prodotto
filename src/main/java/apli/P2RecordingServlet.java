@@ -16,8 +16,8 @@ import javax.servlet.http.Part;
 @WebServlet("/P2RecordingServlet")
 @MultipartConfig(location = "/org", 
 		fileSizeThreshold = 32768, 
-		maxFileSize = 1048576000,	//100MB
-		maxRequestSize = 1048576000) //100MB
+		maxFileSize = 1024 * 1024 * 200,	//200MB
+		maxRequestSize = 1024 * 1024 * 200) //200MB
 public class P2RecordingServlet extends HttpServlet {
 
 	// GETリクエスト処理（画面遷移）
