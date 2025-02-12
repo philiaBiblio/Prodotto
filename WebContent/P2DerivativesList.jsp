@@ -27,6 +27,7 @@
 	// ログイン情報の取得
 	User u = (User) ses.getAttribute("LOGIN");
 	// 音声情報の取得
+	ArrayList<Toukou> toukouList = (ArrayList) ses.getAttribute("TOUKOULIST");
 	ArrayList<Toukou> dtoukouList = (ArrayList) ses.getAttribute("DTOUKOULIST");
 	ArrayList<User> duserIconList = (ArrayList) ses.getAttribute("DICONLIST");
 	ArrayList<Post> dpostList = (ArrayList) ses.getAttribute("DPOSTLIST");
@@ -213,7 +214,7 @@ window.onload = function(){
 						<!-- セッションボタンイフ -->				
 						<%if(postIdPrefix.equals(noweventId)) {%>
 						<button class = session-btn>
-							<span> <a href="P2SessionParticipation?audioFile=<%= dtoukouList.get(i).getSound() %>&ID=<%=dtoukouList.get(i).getToukouid()%>&hitoride=2">
+							<span> <a href="P2SessionParticipation?audioFile=<%= dtoukouList.get(i).getSound() %>&ID=<%=dtoukouList.get(i).getToukouid()%>&hitoride=2&Name=<%=toukouList.get(i).getUserid()%>">
 
 									<div class="nav_icon">
 										<i class="gg-duplicate"></i>

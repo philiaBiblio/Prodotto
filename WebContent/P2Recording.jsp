@@ -205,14 +205,21 @@
         const loadingModal = document.getElementById('loadingModal');
         loadingModal.style.display = 'flex';
 
-        // `channel-0` 要素を取得
-        const channelElement = document.querySelector('.channel.channel-0');
-        const widthValue = parseInt(window.getComputedStyle(channelElement).width, 10);
-        const delay = widthValue * 5; // ミリ秒単位
-        console.log(`Redirecting after ${delay}ms based on channel width`);
+        // すべての `.channel-wrapper` の幅を取得し、一番大きい値を探す
+        const channelWrappers = document.querySelectorAll('.channel-wrapper');
+        let maxWidth = 0;
 
-        // 遷移の遅延処理
-        setTimeout(function() {
+        channelWrappers.forEach(wrapper => {
+            const width = parseInt(window.getComputedStyle(wrapper).width, 10);
+            if (width > maxWidth) {
+                maxWidth = width;
+            }
+        });
+
+        const delay = maxWidth * 5; // 遅延時間を計算（ミリ秒）
+        console.log(`Redirecting after ${delay}ms based on max channel-wrapper width`);
+
+        setTimeout(() => {
             location.href = 'P2RecordingServlet';
         }, delay);
     }
