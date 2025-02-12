@@ -142,7 +142,7 @@
 				<!-- 戻るボタン -->
 				<div class="btn-group">
 					<button type="button" class="btn btn-download btn-outline-primary"
-						onclick="location.href='P2PostAndRecording.jsp'">戻る</button>
+						onclick="history.back()">戻る</button>
 				</div>
 				
 <!-- 録音確定ボタン -->
@@ -231,10 +231,13 @@
 	<script type="text/javascript" src="emitter.js"></script>
 	
 	<!-- 音声ファイルのパスをrecord.jsに渡す -->
-    <script type="text/javascript">
-        const audioFilePath = "audio/<%= audioFile %>";  // サーブレットから渡された音声ファイルのパス
-        loadAudioFile(audioFilePath);  // record.js内で音声をロード
-    </script>
+	<script type="text/javascript">
+    	let audioFilePath = "audio/<%= (audioFile != null) ? audioFile : "" %>";  
+    	if (audioFilePath !== "audio/") {
+        	loadAudioFile(audioFilePath);
+    	}
+	</script>
+
     
     <!-- 音声ファイルのパスをrecord.jsに渡す -->
     <script type="text/javascript">
