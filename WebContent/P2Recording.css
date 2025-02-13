@@ -214,3 +214,33 @@ body {
 	height: 3rem;
 }
 
+.btn-group {
+    margin-top: 10px; /* 10px 下に移動 */
+}
+
+.volume {
+    margin-top: 15px; /* 15px 下に移動 */
+}
+
+.stereopan {
+    margin-top: 15px; /* 15px 下に移動 */
+}
+
+.btn-zoom-in,
+.btn-zoom-out,
+.btn-cursor,
+.btn-select,
+.btn-shift {
+    width: 70px; /* ボタンの横幅 */
+    height: 70px; /* ボタンの縦幅 */
+}
+
+.btn-pause,
+.btn-play,
+.btn-stop,
+.btn-rewind,
+.btn-fast-forward,
+.btn-record {
+    width: 70px; /* ボタンの横幅 */
+    height: 70px; /* ボタンの縦幅 */
+}

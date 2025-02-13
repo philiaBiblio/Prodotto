@@ -86,13 +86,27 @@ window.onload = function(){
 	<%}%>
 	<%ses.removeAttribute("DDDDELET");%>
 
-	// コメント表示用
+	let popupWindow = null;
+	let popupInterval = null;
+
 	function openPopup(toukouId) {
-	  window.open(
-	    "P2CommentJusinServlet?toukouId=" + toukouId,
-	    "popupWindow",
-	    "width=500,height=300,scrollbars=yes"
-	  );
+	  const url = "P2CommentJusinServlet?toukouId=" + encodeURIComponent(toukouId);
+	  
+	  if (!popupWindow || popupWindow.closed) {
+	    popupWindow = window.open(url, "popupWindow", "width=500,height=300,scrollbars=yes");
+	  } else {
+	    popupWindow.location.href = url;
+	    popupWindow.focus();
+	  }
+
+	  // 1秒ごとにポップアップを前面に持ってくる
+	  popupInterval = setInterval(() => {
+	    if (popupWindow && !popupWindow.closed) {
+	      popupWindow.focus();
+	    } else {
+	      clearInterval(popupInterval);
+	    }
+	  }, 1);
 	}
 
 	// 再生バーの名前
