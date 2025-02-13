@@ -120,9 +120,6 @@ public class P2DMServlet extends HttpServlet {
 			dba.closeDB();
 			dba2.closeDB();
 		}
-		
-		
-		
 	}
 
 }

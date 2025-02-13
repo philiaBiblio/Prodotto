@@ -147,7 +147,7 @@ document.addEventListener('DOMContentLoaded', function() {
 						<a href="P2TimelineServlet" class="nav_link navtop nav_soroe "
 							id="P2Timelineid"> <i class="fa fa-house nav_icon"></i> <span
 							class="nav_name">タイムライン</span>
-						</a> <a href="P2DM.jsp" class="nav_link navtop nav_soroe" id="P2DMid">
+						</a> <a href="P2DMgetServlet" class="nav_link navtop nav_soroe" id="P2DMid">
 							<!-- <i class="fa fa-compass nav_icon"></i> -->
 							<div class="nav_icon nav_soroe">
 								<i class="gg-mail"></i>
